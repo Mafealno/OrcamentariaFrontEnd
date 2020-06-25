@@ -1,0 +1,15 @@
+.dropdown-menu.show {
+  position: initial !important;
+  transform: none !important;
+  float: none !important;
+  background-color: darkred;
+}
+
+.dropdown-menu {
+  border: 0px;
+  border-radius: 0px;
+}
+
+.dropdown-toggle {
+  float: right;
+}
