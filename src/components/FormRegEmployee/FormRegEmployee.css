@@ -3,5 +3,5 @@
 }
 
 .col {
-  position: none;
+  position: initial !important;
 }

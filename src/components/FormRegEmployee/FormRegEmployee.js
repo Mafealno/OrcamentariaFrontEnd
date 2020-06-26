@@ -101,7 +101,7 @@ export default function FormRegEmployee() {
           <select
             id="select-status"
             name="status"
-            value={dadosCadastro.cargo}
+            value={dadosCadastro.status}
             className="form-control"
             onChange={(event) => handleInputChange(event)}
           >
