@@ -1,0 +1,8 @@
+.form-check-inline {
+  margin: 15px 30px 15px 30px !important;
+}
+
+div.form-group div.check {
+  text-align: center;
+  z-index: 999;
+}

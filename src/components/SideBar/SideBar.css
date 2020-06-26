@@ -6,17 +6,18 @@ ul {
   padding-left: 0px;
 }
 
+#inputSearch {
+  width: 100%;
+  background-clip: padding-box;
+  text-align: center;
+}
+
 .menu-toggle {
   display: inline-block;
   padding: 0.75em 15px;
   line-height: 1em;
   font-size: 1em;
-  color: #333;
-}
-
-.menu-toggle:hover,
-.menu-toggle:focus {
-  color: #c00;
+  color: rgb(68, 68, 68);
 }
 
 .main-menu {
@@ -40,7 +41,7 @@ ul {
   box-shadow: -8px 0 8px rgba(0, 0, 0, 0.5);
   min-height: 100%;
   width: 200px;
-  background: red;
+  background-color: #d40808;
 }
 
 .main-menu a {
@@ -106,12 +107,12 @@ ul {
 }
 
 ::-webkit-scrollbar-track {
-  background: red;
+  background: #d40808;
 }
 
 ::-webkit-scrollbar-thumb {
   background: white;
-  border-right: 1px red solid;
+  border-right: 1px #d40808 solid;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -137,5 +138,9 @@ ul {
   .inSideBar {
     width: 100%;
     height: 100%;
+  }
+
+  input {
+    width: 90%;
   }
 }

@@ -3,7 +3,7 @@ import "./DropdownOption.css";
 
 export default function DropdownOption(props) {
   return (
-    <a class="dropdown-item" href="#">
+    <a className="dropdown-item" href="#">
       {props.children}
     </a>
   );

@@ -1,0 +1,49 @@
+#containerPeople {
+  display: grid;
+  grid-template-areas:
+    "principal"
+    "contato"
+    "endereco";
+}
+
+#principal {
+  grid-area: principal;
+  padding: 5%;
+}
+
+#contato {
+  grid-area: contato;
+  padding: 10%;
+}
+
+#endereco {
+  grid-area: endereco;
+  padding: 10%;
+}
+
+@media (min-width: 1200px) {
+  #containerPeople {
+    display: grid;
+    grid-template-areas:
+      "principal contato"
+      "principal endereco";
+    grid-template-columns: 50% auto;
+    grid-template-rows: 50%;
+    height: 100%;
+  }
+
+  #principal {
+    grid-area: principal;
+    padding: 10%;
+  }
+
+  #contato {
+    grid-area: contato;
+    padding: 10%;
+  }
+
+  #endereco {
+    grid-area: endereco;
+    padding: 10%;
+  }
+}

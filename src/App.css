@@ -3,25 +3,21 @@
   grid-template-areas:
     "topBar"
     "body";
-  grid-template-rows: 30px auto;
+  grid-template-rows: 40px auto;
+  position: relative;
 }
 
 #sideBar {
   grid-area: topBar;
-  background-color: gray;
+  background-color: white;
   width: 100%;
   position: fixed;
-  height: 30px;
+  height: 40px;
 }
 
 #body {
   grid-area: body;
-  background-color: gray;
   padding: 0px 10px 0px 10px;
-}
-
-#sideBar * {
-  color: white;
 }
 
 #sideBar li,
@@ -34,23 +30,31 @@ a.dropdown-item {
   padding-left: 10px;
 }
 
-@media (min-width: 1200px) and (max-width: 290px) {
-}
-
 @media (min-width: 1200px) {
   .App {
     display: grid;
     grid-template-areas: "sideBar body";
     grid-template-columns: 20% auto;
-    grid-template-rows: 100%;
   }
 
   #sideBar {
     grid-area: sideBar;
-    background-color: red;
+    background-color: #d40808;
     height: 100vh;
-    width: 20%;
     padding: 0px;
     width: 20%;
+  }
+
+  #body {
+    float: right;
+    height: 100vh;
+    position: fixed;
+    width: 80%;
+    margin-left: 20%;
+    overflow-y: auto;
+  }
+
+  #body::-webkit-scrollbar {
+    display: none;
   }
 }

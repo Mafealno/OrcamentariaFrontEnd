@@ -3,7 +3,7 @@ import "./DropdownButton.css";
 
 export default function DropdownButton(props) {
   return (
-    <div class="dropdown show">
+    <div className="dropdown show">
       <a
         href="#"
         role="button"
@@ -12,11 +12,12 @@ export default function DropdownButton(props) {
         aria-haspopup="true"
         aria-expanded="false"
       >
+        <span className={props.icon}></span>
         {props.name}
         <span className="dropdown-toggle"></span>
       </a>
 
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
         {props.children}
       </div>
     </div>

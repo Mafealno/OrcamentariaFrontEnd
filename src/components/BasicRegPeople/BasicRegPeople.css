@@ -1,0 +1,14 @@
+.form {
+  background-color: rgb(68, 68, 68);
+  width: 100%;
+  padding: 5%;
+  color: white;
+}
+
+#form-pessoa-id {
+  width: 30% !important;
+}
+
+.label-codigo {
+  margin-right: 10px;
+}
