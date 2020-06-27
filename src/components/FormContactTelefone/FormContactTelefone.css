@@ -1,0 +1,47 @@
+#item-contato-telefone {
+  width: 100%;
+  height: 75px;
+  background-color: rgb(68, 68, 68);
+  margin-bottom: 10px;
+  border-radius: 10px;
+  display: grid;
+  grid-template-areas:
+    "tipoContatoTelefone contatoPadraoTelefone"
+    "contatoTelefone ramalTelefone";
+  grid-template-rows: 50% 50%;
+  grid-template-columns: 50% 50%;
+  text-align: center;
+  padding: 5px;
+}
+
+div#item-contato-telefone label {
+  color: white;
+}
+
+#tipoContatoTelefone {
+  grid-area: tipoContatoTelefone;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#contatoPadraoTelefone {
+  grid-area: contatoPadraoTelefone;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#contatoTelefone {
+  grid-area: contatoTelefone;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#ramalTelefone {
+  grid-area: ramalTelefone;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

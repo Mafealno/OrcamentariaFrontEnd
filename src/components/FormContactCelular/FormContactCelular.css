@@ -1,0 +1,38 @@
+#item-contato-celular {
+  width: 100%;
+  height: 75px;
+  background-color: rgb(68, 68, 68);
+  margin-bottom: 10px;
+  border-radius: 10px;
+  display: grid;
+  grid-template-areas:
+    "tipoContatoCelular contatoPadraoCelular"
+    "contatoCelular contatoPadraoCelular";
+  grid-template-columns: 50% 50%;
+  text-align: center;
+}
+
+div#item-contato-celular label {
+  color: white;
+}
+
+#tipoContatoCelular {
+  grid-area: tipoContatoCelular;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#contatoPadraoCelular {
+  grid-area: contatoPadraoCelular;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#contatoCelular {
+  grid-area: contatoCelular;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

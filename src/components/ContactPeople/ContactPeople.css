@@ -1,0 +1,14 @@
+#quadrado {
+  height: 250px;
+  width: 100%;
+  padding: 5%;
+  overflow: auto;
+}
+
+#quadrado::-webkit-scrollbar-thumb {
+  background: white;
+  border-right: 1px rgb(68, 68, 68);
+}
+#quadrado::-webkit-scrollbar-track {
+  background-color: rgb(68, 68, 68);
+}

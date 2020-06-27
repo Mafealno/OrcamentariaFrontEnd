@@ -9,15 +9,16 @@
 
 #sideBar {
   grid-area: topBar;
-  background-color: white;
+  background-color: #e3e3e3;
   width: 100%;
   position: fixed;
   height: 40px;
 }
 
 #body {
+  width: 100%;
   grid-area: body;
-  padding: 0px 10px 0px 10px;
+  background-color: #e3e3e3;
 }
 
 #sideBar li,

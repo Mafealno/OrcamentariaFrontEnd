@@ -41,7 +41,7 @@ export default function BasicRegPeople() {
         {tipoCadastro === "funcionario" && <FormRegEmployee></FormRegEmployee>}
 
         <div className="form-group">
-          <button type="submit" className="btn btn-success">
+          <button type="submit" className="btn btn-primary">
             Salvar
           </button>
         </div>

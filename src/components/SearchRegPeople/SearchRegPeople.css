@@ -1,0 +1,10 @@
+#btn-buscar {
+  width: 100%;
+  background-color: #d40808;
+  border-color: #d40808;
+}
+
+.col-8,
+.col-4 {
+  position: static;
+}

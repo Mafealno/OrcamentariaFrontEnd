@@ -1,0 +1,38 @@
+#item-contato-email {
+  width: 100%;
+  height: 75px;
+  background-color: rgb(68, 68, 68);
+  margin-bottom: 10px;
+  border-radius: 10px;
+  display: grid;
+  grid-template-areas:
+    "tipoContatoEmail contatoPadraoEmail"
+    "contatoEmail contatoEmail";
+  grid-template-rows: 50% 50%;
+  text-align: center;
+}
+
+div#item-contato-email label {
+  color: white;
+}
+
+#tipoContatoEmail {
+  grid-area: tipoContatoEmail;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#contatoPadraoEmail {
+  grid-area: contatoPadraoEmail;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#contatoEmail {
+  grid-area: contatoEmail;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
