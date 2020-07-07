@@ -14,3 +14,26 @@
 .label-codigo {
   margin-right: 10px;
 }
+
+button.btn.btn-primary {
+  float: right;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-form {
+  flex-grow: 2;
+  order: 1;
+}
+
+.btn-salvar {
+  order: 2;
+  flex-grow: 0;
+  bottom: 0;
+}
+
+@media (min-width: 1200px) {
+}

@@ -1,17 +1,17 @@
-#quadrado-contato {
+#quadrado-endereco {
   max-height: 250px;
   width: 100%;
-  padding: 3px;
+  padding: 5px;
   overflow-y: auto;
   overflow-x: hidden;
   border: rgb(68, 68, 68) solid 2px;
 }
 
-#quadrado-contato::-webkit-scrollbar-thumb {
+#quadrado-endereco::-webkit-scrollbar-thumb {
   background: white;
   border-right: 1px rgb(68, 68, 68);
 }
-#quadrado-contato::-webkit-scrollbar-track {
+#quadrado-endereco::-webkit-scrollbar-track {
   background-color: rgb(68, 68, 68);
 }
 
@@ -21,7 +21,7 @@
 }
 
 @media (min-width: 1200px) {
-  #quadrado-contato {
+  #quadrado-endereco {
     max-height: 80%;
     padding: 10px;
   }

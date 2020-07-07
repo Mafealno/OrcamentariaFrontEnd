@@ -14,6 +14,30 @@
   padding: 5px;
 }
 
+.opcoes {
+  margin: 5px 0px 15px 0px;
+  width: 100%;
+  text-align: center;
+  display: grid;
+  grid-template-areas: "editarContato excluirContato";
+}
+
+.editarContato {
+  grid-area: editarContato;
+  background-color: rgb(182, 182, 55);
+  border-color: rgb(182, 182, 55);
+  color: white;
+  margin: 1px;
+}
+
+.excluirContato {
+  grid-area: excluirContato;
+  background-color: rgb(177, 36, 36);
+  border-color: rgb(177, 36, 36);
+  color: white;
+  margin: 1px;
+}
+
 div#item-contato-telefone label {
   color: white;
 }

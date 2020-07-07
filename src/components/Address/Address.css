@@ -1,0 +1,59 @@
+#item-endereco {
+  width: 100%;
+  min-height: 100px;
+  background-color: rgb(68, 68, 68);
+  margin-bottom: 10px;
+  border-radius: 10px;
+  display: grid;
+  grid-template-areas:
+    "logradouro logradouro"
+    "complemento complemento"
+    "bairro cidade"
+    "enderecoPadrao vazio";
+  text-align: center;
+  padding: 10px;
+}
+
+.opcoes {
+  margin: 5px 0px 15px 0px;
+  width: 100%;
+  text-align: center;
+  display: grid;
+  grid-template-areas: "editarContato excluirContato";
+}
+
+#logradouro {
+  grid-area: logradouro;
+  display: flex;
+  text-align: left;
+}
+
+#enderecoPadrao {
+  grid-area: enderecoPadrao;
+  display: flex;
+  align-items: center;
+}
+
+#cidade {
+  grid-area: cidade;
+  display: flex;
+}
+
+#bairro {
+  grid-area: bairro;
+  display: flex;
+}
+
+#complemento {
+  grid-area: complemento;
+  display: flex;
+}
+
+.label-endereco {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+div#item-endereco label {
+  color: white;
+}

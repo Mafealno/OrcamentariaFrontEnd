@@ -6,3 +6,8 @@ div.form-group div.check {
   text-align: center;
   z-index: 999;
 }
+
+@media (min-width: 1200px) {
+  input.form-check-input {
+  }
+}

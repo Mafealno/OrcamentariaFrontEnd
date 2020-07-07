@@ -140,7 +140,7 @@ ul {
     height: 100%;
   }
 
-  input {
+  input.form-control-sm {
     width: 90%;
   }
 }

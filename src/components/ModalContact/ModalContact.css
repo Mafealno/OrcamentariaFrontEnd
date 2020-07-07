@@ -1,0 +1,37 @@
+.backgroundModal {
+  background-color: rgb(68, 68, 68);
+}
+
+.tituloModal {
+  color: white;
+}
+
+.div-tipo-contato {
+  margin-bottom: 30px;
+}
+
+.input-padrao {
+  height: 35%;
+  margin-top: 8px;
+}
+
+div.input-padrao {
+  text-align: center;
+  margin-top: 0px;
+}
+
+.input-codigo {
+  display: inline;
+  width: 100px;
+  margin-left: 20px;
+}
+
+#form-contato-id {
+  color: white;
+}
+
+@media (min-width: 1200px) {
+  .div-tipo-contato {
+    margin-bottom: 0px;
+  }
+}
