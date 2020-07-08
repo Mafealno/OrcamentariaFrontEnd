@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./AddressPeople.css";
 import Address from "../Address";
+import ModalAddress from "../ModalAddress/ModalAddress";
 
 export default function AddressPeople() {
+  const [modalShow, setModalShow] = useState(false);
   const enderecos = [
     {
       enderecoId: "1",
@@ -12,7 +14,8 @@ export default function AddressPeople() {
       complemento: "casa 03",
       bairro: "Jabaquara",
       cidade: "São Paulo",
-      estado: "SP",
+      estado: "São Paulo",
+      uf: "SP",
       enderecoPadrao: true,
     },
     {
@@ -23,7 +26,8 @@ export default function AddressPeople() {
       complemento: "",
       bairro: "Brooklyn",
       cidade: "São Paulo",
-      estado: "SP",
+      estado: "São Paulo",
+      uf: "SP",
       enderecoPadrao: false,
     },
   ];
@@ -31,13 +35,15 @@ export default function AddressPeople() {
   const enderecoDisplay = enderecos.map((endereco) => (
     <Address
       key={endereco.enderecoId}
-      logradouro={endereco.logradouro}
+      enderecoId={endereco.enderecoId}
       cep={endereco.cep}
+      logradouro={endereco.logradouro}
       numeroEndereco={endereco.numeroEndereco}
       complemento={endereco.complemento}
       bairro={endereco.bairro}
       cidade={endereco.cidade}
       estado={endereco.estado}
+      uf={endereco.uf}
       enderecoPadrao={endereco.enderecoPadrao}
     ></Address>
   ));
@@ -46,9 +52,14 @@ export default function AddressPeople() {
     <>
       <div id="quadrado-endereco">{enderecoDisplay}</div>
       <div className="btn-adicionar">
-        <button className="btn btn-primary" type="button">
+        <button
+          className="btn btn-primary"
+          type="button"
+          onClick={() => setModalShow(true)}
+        >
           Adicionar endereço
         </button>
+        <ModalAddress show={modalShow} onHide={() => setModalShow(false)} />
       </div>
     </>
   );

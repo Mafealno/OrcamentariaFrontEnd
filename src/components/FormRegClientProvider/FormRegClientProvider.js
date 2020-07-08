@@ -42,39 +42,43 @@ export default function FormClientReg() {
         </div>
       </div>
       <div className="form-group">
-        <label>Nome</label>
-        <input
-          type="text"
-          className="form-control"
-          id="nome"
-          placeholder="João da Silva"
-        />
+        <div className="form-row">
+          <label>Nome</label>
+          <input
+            type="text"
+            className="form-control"
+            id="nome"
+            placeholder="João da Silva"
+          />
+        </div>
       </div>
       {dadosCadastro.tipo === "F" && (
         <div className="form-group">
-          <div className="form-group">
-            <label>RG</label>
-            <input
-              type="text"
-              value={dadosCadastro.rg}
-              className="form-control"
-              id="txt-rg"
-              name="rg"
-              placeholder="00.000.000-0"
-              onChange={(event) => handleInputChange(event)}
-            />
-          </div>
-          <div className="form-group">
-            <label>CPF</label>
-            <input
-              type="text"
-              name="cpf"
-              className="form-control"
-              value={dadosCadastro.cpf}
-              id="txt-cpf"
-              placeholder="000.000.000-00"
-              onChange={(event) => handleInputChange(event)}
-            />
+          <div className="form-row">
+            <div className="col-xl-6">
+              <label>RG</label>
+              <input
+                type="text"
+                value={dadosCadastro.rg}
+                className="form-control"
+                id="txt-rg"
+                name="rg"
+                placeholder="00.000.000-0"
+                onChange={(event) => handleInputChange(event)}
+              />
+            </div>
+            <div className="col-xl-6">
+              <label>CPF</label>
+              <input
+                type="text"
+                name="cpf"
+                className="form-control"
+                value={dadosCadastro.cpf}
+                id="txt-cpf"
+                placeholder="000.000.000-00"
+                onChange={(event) => handleInputChange(event)}
+              />
+            </div>
           </div>
         </div>
       )}

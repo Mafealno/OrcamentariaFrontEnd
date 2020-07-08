@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./ModalContact.css";
 import ModalControl from "../ModalControl/ModalControl";
 
-export default function ModelContact(props) {
+export default function ModalContact(props) {
   const [telefone, setTelefone] = useState(true);
   const [celular, setCelular] = useState(true);
   const [email, setEmail] = useState(true);
@@ -41,7 +41,11 @@ export default function ModelContact(props) {
         setRamal(event.target.value);
         break;
       case "contatoPadrao":
-        setContatoPadrao(event.target.value);
+        if (contatoPadrao) {
+          setContatoPadrao(false);
+        } else {
+          setContatoPadrao(true);
+        }
         break;
       default:
         break;
@@ -110,17 +114,7 @@ export default function ModelContact(props) {
                           name="tipoContato"
                           onChange={(event) => tipoContatoSeleciondo(event)}
                         >
-                          {tipoContato != undefined ? (
-                            ""
-                          ) : (
-                            <>
-                              {" "}
-                              <option value="naoSelecionado">
-                                Escolher...
-                              </option>
-                            </>
-                          )}
-
+                          <option value="naoSelecionado">Escolher...</option>
                           <option value="celular">Celular</option>
                           <option value="telefone">Telefone</option>
                           <option value="email">Email</option>
@@ -130,7 +124,7 @@ export default function ModelContact(props) {
                         <label>Contato</label>
                         <input
                           value={contato}
-                          disabled={tipoContato != undefined ? false : email}
+                          disabled={tipoContato ? false : email}
                           type="text"
                           name="contato"
                           className="form-control"
@@ -142,7 +136,7 @@ export default function ModelContact(props) {
                   </div>
                   <div className="form-group">
                     <div className="form-row">
-                      <div className="col-4">
+                      <div className="col-3">
                         <label>DDD</label>
                         <input
                           value={ddd}
@@ -160,7 +154,7 @@ export default function ModelContact(props) {
                           onChange={(event) => handleInputChange(event)}
                         />
                       </div>
-                      <div className="col-4">
+                      <div className="col-6">
                         <label>Ramal</label>
                         <input
                           value={ramal}
@@ -176,15 +170,15 @@ export default function ModelContact(props) {
                           onChange={(event) => handleInputChange(event)}
                         />
                       </div>
-                      <div className="col-4 input-padrao">
+                      <div className="col-3">
                         <label>Padrão</label>
                         <input
                           checked={contatoPadrao}
-                          disabled={tipoContato != undefined ? false : email}
+                          disabled={tipoContato ? false : email}
                           name="contatoPadrao"
                           type="checkbox"
                           id="form-contato-padrao"
-                          defaultValue={false}
+                          value={false}
                           className="form-control"
                           onChange={(event) => handleInputChange(event)}
                         />

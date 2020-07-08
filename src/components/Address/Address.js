@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Address.css";
+import ModalAddress from "../ModalAddress/ModalAddress";
 
 export default function Address(props) {
+  const [modalShow, setModalShow] = useState(false);
   return (
     <>
       <div
@@ -42,8 +44,18 @@ export default function Address(props) {
         </div>
       </div>
       <div id={"opcoes-" + props.cep} className="collapse opcoes">
-        <button className="btn editarContato">Editar</button>
+        <button
+          className="btn editarContato"
+          onClick={() => setModalShow(true)}
+        >
+          Editar
+        </button>
         <button className="btn excluirContato">Excluir</button>
+        <ModalAddress
+          {...props}
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+        />
       </div>
     </>
   );

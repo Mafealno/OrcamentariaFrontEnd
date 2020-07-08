@@ -1,2 +1,2 @@
-import DropdownButton from "./DropdownButton";
+import DropdownButton from "../DropdownButton/DropdownButton";
 export default DropdownButton;

@@ -1,7 +1,7 @@
 import React from "react";
 import "./MenuOption.css";
 
-function MenuOption(props) {
+export default function MenuOption(props) {
   return (
     <li>
       <a href="#">
@@ -11,5 +11,3 @@ function MenuOption(props) {
     </li>
   );
 }
-
-export default MenuOption;

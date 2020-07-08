@@ -6,7 +6,7 @@ import DropdownOption from "./components/DropdownOption";
 import DropdownButton from "./components/DropdownButton";
 import People from "./components/People";
 
-function App() {
+export default function App() {
   return (
     <div className="App">
       <div id="sideBar">
@@ -47,5 +47,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

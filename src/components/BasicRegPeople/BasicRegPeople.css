@@ -11,6 +11,10 @@
   width: 30% !important;
 }
 
+.div-rg {
+  margin-bottom: 30px;
+}
+
 .label-codigo {
   margin-right: 10px;
 }
@@ -36,4 +40,8 @@ button.btn.btn-primary {
 }
 
 @media (min-width: 1200px) {
+  .form {
+    min-height: 100%;
+    height: auto;
+  }
 }

@@ -1,2 +1,2 @@
-import MenuOption from "./MenuOption";
+import MenuOption from "../MenuOption/MenuOption";
 export default MenuOption;

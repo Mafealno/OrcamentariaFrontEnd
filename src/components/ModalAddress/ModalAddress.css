@@ -1,0 +1,17 @@
+.backgroundModal {
+  background-color: rgb(68, 68, 68);
+}
+
+.tituloModal {
+  color: white;
+}
+
+.div-margin-bottom {
+  margin-bottom: 30px;
+}
+
+@media (min-width: 1200px) {
+  .div-margin-bottom {
+    margin-bottom: 0px;
+  }
+}

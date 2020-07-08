@@ -6,6 +6,16 @@
   position: initial !important;
 }
 
+.div-rg {
+  margin-bottom: 30px;
+}
+
 .form-group {
   margin-bottom: 0.5rem;
+}
+
+@media (min-width: 1200px) {
+  .div-rg {
+    margin-bottom: 0px;
+  }
 }

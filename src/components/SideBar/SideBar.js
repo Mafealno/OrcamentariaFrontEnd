@@ -1,7 +1,7 @@
 import React from "react";
 import "./SideBar.css";
 
-function SideBar(props) {
+export default function SideBar(props) {
   return (
     <div className="inSideBar">
       <a href="#main-menu" id="main-menu-toggle" className="menu-toggle">
@@ -34,5 +34,3 @@ function SideBar(props) {
     </div>
   );
 }
-
-export default SideBar;

@@ -43,7 +43,7 @@ export default function FormContactEmail(props) {
           {...props}
           show={modalShow}
           onHide={() => setModalShow(false)}
-        ></ModalContact>
+        />
       </div>
     </>
   );

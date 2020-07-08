@@ -10,27 +10,31 @@ export default function BasicRegPeople() {
     <div className="form">
       <div className="container-form">
         <form>
-          <div className="form-inline">
-            <label className="label-codigo">Código</label>
-            <input
-              type="text"
-              className="form-control-plaintext"
-              id="form-pessoa-id"
-              readOnly
-            />
+          <div className="form-group">
+            <div className="form-row">
+              <label className="col-form-label">Código: </label>
+              <input
+                type="text"
+                className="form-control-plaintext"
+                id="form-pessoa-id"
+                readOnly
+              />
+            </div>
           </div>
           <div className="form-group">
-            <label>Tipo de Cadastro</label>
-            <select
-              id="select-tipo-cadstro"
-              className="form-control"
-              onChange={(event) => setCadastro(event.target.value)}
-            >
-              <option value="naoSelecionado">Escolher...</option>
-              <option value="cliente">Cliente</option>
-              <option value="fornecedor">Fornecedor</option>
-              <option value="funcionario">Funcionário</option>
-            </select>
+            <div className="form-row">
+              <label>Tipo de Cadastro</label>
+              <select
+                id="select-tipo-cadstro"
+                className="form-control"
+                onChange={(event) => setCadastro(event.target.value)}
+              >
+                <option value="naoSelecionado">Escolher...</option>
+                <option value="cliente">Cliente</option>
+                <option value="fornecedor">Fornecedor</option>
+                <option value="funcionario">Funcionário</option>
+              </select>
+            </div>
           </div>
           {tipoCadastro === "cliente" ? (
             <FormRegClientProvider></FormRegClientProvider>

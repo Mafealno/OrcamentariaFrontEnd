@@ -1,2 +1,2 @@
-import DropdownOption from "./DropdownOption";
+import DropdownOption from "../DropdownOption/DropdownOption";
 export default DropdownOption;

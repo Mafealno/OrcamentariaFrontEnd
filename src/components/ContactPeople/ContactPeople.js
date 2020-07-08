@@ -64,10 +64,7 @@ export default function ContactPeople(props) {
         >
           Adicionar contato
         </button>
-        <ModalContact
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-        ></ModalContact>
+        <ModalContact show={modalShow} onHide={() => setModalShow(false)} />
       </div>
     </>
   );

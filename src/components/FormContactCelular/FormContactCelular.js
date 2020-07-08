@@ -44,7 +44,7 @@ export default function FormContactCelular(props) {
           {...props}
           show={modalShow}
           onHide={() => setModalShow(false)}
-        ></ModalContact>
+        />
       </div>
     </>
   );
