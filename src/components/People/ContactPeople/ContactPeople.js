@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./ContactPeople.css";
-import Contact from "../../Contact/Contact";
-import ModalContact from "../../ModalContact/ModalContact";
+import Contact from "./Contact/Contact";
+import ModalContact from "./Contact/ModalContact/ModalContact";
 
 export default function ContactPeople(props) {
   const [modalShow, setModalShow] = useState(false);

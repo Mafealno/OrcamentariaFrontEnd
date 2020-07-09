@@ -1,9 +1,9 @@
 import React from "react";
 import "./People.css";
-import BasicRegPeople from "../BasicRegPeople/BasicRegPeople";
-import ContactPeople from "../ContactPeople/ContactPeople";
-import SearchRegPeople from "../SearchRegPeople/SearchRegPeople";
-import AddressPeople from "../AddressPeople/AddressPeople";
+import BasicRegPeople from "./BasicRegPeople/BasicRegPeople";
+import ContactPeople from "./ContactPeople/ContactPeople";
+import SearchRegPeople from "./SearchRegPeople/SearchRegPeople";
+import AddressPeople from "./AddressPeople/AddressPeople";
 
 export default function People() {
   return (

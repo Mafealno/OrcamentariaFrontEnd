@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./ModalAddress.css";
-import ModalControl from "../ModalControl/ModalControl";
+import ModalControl from "../../../ModalControl/ModalControl";
 
 export default function ModalAddress(props) {
   const [cep, setCep] = useState("");

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./AddressPeople.css";
-import Address from "../../Address";
-import ModalAddress from "../../ModalAddress/ModalAddress";
+import Address from "./Address/Address";
+import ModalAddress from "./ModalAddress/ModalAddress";
 
 export default function AddressPeople() {
   const [modalShow, setModalShow] = useState(false);

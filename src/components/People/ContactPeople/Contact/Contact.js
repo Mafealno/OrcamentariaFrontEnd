@@ -1,8 +1,8 @@
 import React from "react";
 import "./Contact.css";
-import FormContactCelular from "../FormContactCelular/FormContactCelular";
-import FormContactTelefone from "../FormContactTelefone/FormContactTelefone";
-import FormContactEmail from "../FormContactEmail/FormContactEmail";
+import FormContactCelular from "./FormContactCelular/FormContactCelular";
+import FormContactTelefone from "./FormContactTelefone/FormContactTelefone";
+import FormContactEmail from "./FormContactEmail/FormContactEmail";
 
 export default function Contact(props) {
   return (

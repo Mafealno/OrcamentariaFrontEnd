@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./BasicRegPeople.css";
-import FormRegClientProvider from "../FormRegClientProvider";
-import FormRegEmployee from "../FormRegEmployee";
+import FormRegClientProvider from "./FormRegClientProvider/FormRegClientProvider";
+import FormRegEmployee from "./FormRegEmployee/FormRegEmployee";
 
 export default function BasicRegPeople() {
   const [tipoCadastro, setCadastro] = useState("");
