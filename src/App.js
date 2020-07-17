@@ -23,21 +23,6 @@ export default function App() {
           <MenuOption name="Estoque"></MenuOption>
           <MenuOption name="Estoque"></MenuOption>
           <MenuOption name="Estoque"></MenuOption>
-          <MenuOption name="Estoque"></MenuOption>
-          <MenuOption name="Estoque"></MenuOption>
-          <MenuOption name="Estoque"></MenuOption>
-          <MenuOption name="Estoque"></MenuOption>
-          <MenuOption name="Estoque"></MenuOption>
-          <MenuOption name="Estoque"></MenuOption>
-          <MenuOption name="Estoque"></MenuOption>
-          <MenuOption name="Estoque"></MenuOption>
-          <MenuOption name="Estoque"></MenuOption>
-          <MenuOption name="Estoque"></MenuOption>
-          <MenuOption name="Estoque"></MenuOption>
-          <MenuOption name="Estoque"></MenuOption>
-          <MenuOption name="Estoque"></MenuOption>
-          <MenuOption name="Estoque"></MenuOption>
-          <MenuOption name="Estoque"></MenuOption>
         </SideBar>
       </div>
 

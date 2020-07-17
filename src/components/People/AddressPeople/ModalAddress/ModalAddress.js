@@ -1,69 +1,128 @@
 import React, { useState, useEffect } from "react";
 import "./ModalAddress.css";
 import ModalControl from "../../../ModalControl/ModalControl";
+import * as PeopleActions from "../../../../store/actions/people";
+import { connect } from "react-redux";
 
-export default function ModalAddress(props) {
-  const [cep, setCep] = useState("");
-  const [logradouro, setLogradouro] = useState("");
-  const [numero, setNumero] = useState("");
-  const [complemento, setComplemento] = useState("");
-  const [bairro, setBairro] = useState("");
-  const [cidade, setCidade] = useState("");
-  const [estado, setEstado] = useState("");
-  const [uf, setUf] = useState("");
-  const [enderecoPadrao, setEnderecoPadrao] = useState(false);
-
-  const enderecoId = !Boolean(props.enderecoId) ? "" : props.enderecoId;
-
-  const handleInputChange = (event) => {
-    switch (event.target.name) {
-      case "cep":
-        setCep(event.target.value);
-        break;
-      case "logradouro":
-        setLogradouro(event.target.value);
-        break;
-      case "numero":
-        setNumero(event.target.value);
-        break;
-      case "complemento":
-        setComplemento(event.target.value);
-        break;
-      case "bairro":
-        setBairro(event.target.value);
-        break;
-      case "cidade":
-        setCidade(event.target.value);
-        break;
-      case "estado":
-        setEstado(event.target.value);
-        setUf(event.target.value);
-        break;
-      case "enderecoPadrao":
-        if (enderecoPadrao) {
-          setEnderecoPadrao(false);
-        } else {
-          setEnderecoPadrao(true);
-        }
-
-        break;
-      default:
-        break;
-    }
-  };
+function ModalAddress(props) {
+  const [dadosCadastro, setDadosCadastro] = useState({
+    pessoaId: "",
+    enderecoId: "",
+    cep: "",
+    logradouro: "",
+    numero: "",
+    complemento: "",
+    bairro: "",
+    cidade: "",
+    estado: "",
+    uf: "",
+    enderecoPadrao: false,
+  });
 
   useEffect(() => {
-    setCep(props.cep);
-    setLogradouro(props.logradouro);
-    setNumero(props.numeroEndereco);
-    setComplemento(props.complemento);
-    setBairro(props.bairro);
-    setCidade(props.cidade);
-    setEstado(props.estado);
-    setUf(props.estado);
-    setEnderecoPadrao(props.enderecoPadrao);
-  }, [enderecoId]);
+    setDadosCadastro({
+      pessoaId: props.pessoA_ID,
+      enderecoId: props.enderecO_ID,
+      cep: props.cep,
+      logradouro: props.logradouro,
+      numero: props.numerO_ENDERECO,
+      complemento: props.complemento,
+      bairro: props.bairro,
+      cidade: props.cidade,
+      estado: props.estado,
+      uf: props.uf,
+      enderecoPadrao: props.enderecO_PADRAO,
+    });
+  }, [
+    props.pessoA_ID,
+    props.enderecO_ID,
+    props.cep,
+    props.logradouro,
+    props.numerO_ENDERECO,
+    props.complemento,
+    props.bairro,
+    props.cidade,
+    props.estado,
+    props.uf,
+    props.enderecO_PADRAO,
+    props.show,
+  ]);
 
+  const editarEndereco = (objEnderecoAtualizar) => {
+    fetch(props.linkBackEnd + "/endereco/" + props.enderecO_ID, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(objEnderecoAtualizar),
+    }).then(() => {
+      props.recarregarPessoa(objEnderecoAtualizar.pessoA_ID, props.linkBackEnd);
+    });
+  };
+
+  const salvarEndereco = (objEnderecoNovo) => {
+    fetch(props.linkBackEnd + "/endereco/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(objEnderecoNovo),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setDadosCadastro({
+          pessoaId: objEnderecoNovo.pessoA_ID,
+          enderecoId: data.enderecO_ID,
+          cep: objEnderecoNovo.cep,
+          logradouro: objEnderecoNovo.logradouro,
+          numero: objEnderecoNovo.numerO_ENDERECO,
+          complemento: objEnderecoNovo.complemento,
+          bairro: objEnderecoNovo.bairro,
+          cidade: objEnderecoNovo.cidade,
+          estado: objEnderecoNovo.estado,
+          uf: objEnderecoNovo.uf,
+          enderecoPadrao: objEnderecoNovo.enderecO_PADRAO,
+        });
+      })
+      .then(() => {
+        props.recarregarPessoa(objEnderecoNovo.pessoA_ID, props.linkBackEnd);
+      });
+  };
+
+  const montarObj = () => {
+    return {
+      pessoA_ID: props.pessoaSelecionada.pessoA_ID,
+      endererO_ID: dadosCadastro.enderecoId,
+      cep: dadosCadastro.cep,
+      logradouro: dadosCadastro.logradouro,
+      numerO_ENDERECO: dadosCadastro.numero,
+      complemento: dadosCadastro.complemento,
+      bairro: dadosCadastro.bairro,
+      cidade: dadosCadastro.cidade,
+      estado: dadosCadastro.estado,
+      uf: document.querySelector("#form-uf option:checked").innerHTML,
+      enderecO_PADRAO: document.querySelector("#form-endereco-padrao").checked,
+    };
+  };
+
+  const limparCampos = () => {
+    setDadosCadastro({
+      pessoaId: "",
+      enderecoId: undefined,
+      cep: "",
+      logradouro: "",
+      numero: "",
+      complemento: "",
+      bairro: "",
+      cidade: "",
+      estado: "",
+      uf: "",
+      enderecoPadrao: false,
+    });
+  };
+
+  const handleInputChange = (event) => {
+    setDadosCadastro({
+      ...dadosCadastro,
+      [event.target.name]: event.target.value,
+    });
+  };
   return (
     <>
       <ModalControl
@@ -73,7 +132,14 @@ export default function ModalAddress(props) {
         estiloModalBody="backgroundModal"
         estiloModalFooter="backgroundModal"
         tituloModal="Novo endereço"
-        conteudoModal={
+        conteudoHeader={
+          <div className="close-modal-contact">
+            <a href="#" onClick={() => props.onHide(limparCampos())}>
+              <span className="fa fa-close close-select-people"></span>
+            </a>
+          </div>
+        }
+        conteudoBody={
           <>
             <div className="form">
               <div className="container-form">
@@ -82,10 +148,10 @@ export default function ModalAddress(props) {
                     <div className="form-row">
                       <label className="col-form-label">Código:</label>
                       <input
-                        value={enderecoId}
+                        value={dadosCadastro.enderecoId}
                         type="text"
                         className="form-control-plaintext input-codigo"
-                        id="form-contato-id"
+                        id="input-address-id"
                         readOnly
                       />
                     </div>
@@ -100,7 +166,7 @@ export default function ModalAddress(props) {
                           id="form-cep"
                           className="form-control"
                           placeholder="000.00-000"
-                          value={cep}
+                          value={dadosCadastro.cep}
                           onChange={(event) => handleInputChange(event)}
                         />
                       </div>
@@ -112,7 +178,7 @@ export default function ModalAddress(props) {
                           placeholder="Rua Aristides Alves"
                           id="form-logradouro"
                           className="form-control"
-                          value={logradouro}
+                          value={dadosCadastro.logradouro}
                           onChange={(event) => handleInputChange(event)}
                         />
                       </div>
@@ -128,7 +194,7 @@ export default function ModalAddress(props) {
                           placeholder="56"
                           id="form-numero"
                           className="form-control"
-                          value={numero}
+                          value={dadosCadastro.numero}
                           onChange={(event) => handleInputChange(event)}
                         />
                       </div>
@@ -137,10 +203,10 @@ export default function ModalAddress(props) {
                         <input
                           type="text"
                           name="complemento"
-                          placeholder={enderecoId ? "Perto do açougue" : ""}
+                          placeholder="Perto do açougue"
                           id="form-complemento"
                           className="form-control"
-                          value={complemento}
+                          value={dadosCadastro.complemento}
                           onChange={(event) => handleInputChange(event)}
                         />
                       </div>
@@ -152,7 +218,7 @@ export default function ModalAddress(props) {
                           placeholder="Praça da Árvore"
                           id="form-bairro"
                           className="form-control"
-                          value={bairro}
+                          value={dadosCadastro.bairro}
                           onChange={(event) => handleInputChange(event)}
                         />
                       </div>
@@ -168,7 +234,7 @@ export default function ModalAddress(props) {
                           placeholder="São Paulo"
                           id="form-cidade"
                           className="form-control"
-                          value={cidade}
+                          value={dadosCadastro.cidade}
                           onChange={(event) => handleInputChange(event)}
                         />
                       </div>
@@ -177,7 +243,7 @@ export default function ModalAddress(props) {
                         <select
                           name="estado"
                           id="select-estado"
-                          value={estado}
+                          value={dadosCadastro.estado}
                           className="form-control"
                           onChange={(event) => handleInputChange(event)}
                         >
@@ -224,8 +290,9 @@ export default function ModalAddress(props) {
                       <div className="col-4 col-xl-2">
                         <label>UF</label>
                         <select
+                          id="form-uf"
                           name="uf"
-                          value={estado}
+                          value={dadosCadastro.estado}
                           className="form-control"
                           readOnly
                         >
@@ -263,9 +330,9 @@ export default function ModalAddress(props) {
                         <input
                           type="checkbox"
                           name="enderecoPadrao"
-                          id="form-enderecoPadrao"
-                          value={true}
-                          checked={enderecoPadrao}
+                          id="form-endereco-padrao"
+                          value={false}
+                          checked={dadosCadastro.enderecoPadrao}
                           className="form-control"
                           onChange={(event) => handleInputChange(event)}
                         />
@@ -277,19 +344,43 @@ export default function ModalAddress(props) {
             </div>
           </>
         }
-        opcoesModal={
+        opcoesFooter={
           <>
-            <div>
-              <button onClick={props.onHide} className="btn btn-danger">
-                Fechar
-              </button>
-            </div>
-            <div>
-              <button className="btn btn-success">Salvar</button>
-            </div>
+            {!dadosCadastro.enderecoId && (
+              <div>
+                <button
+                  className="btn btn-primary"
+                  onClick={(objContatoNovo) => salvarEndereco(montarObj())}
+                >
+                  Salvar
+                </button>
+              </div>
+            )}
+            {dadosCadastro.enderecoId && (
+              <div>
+                <button
+                  onClick={(objContatoAtualizar) => editarEndereco(montarObj())}
+                  className="btn btn-success"
+                >
+                  Atualizar
+                </button>
+              </div>
+            )}
           </>
         }
       />
     </>
   );
 }
+
+const mapStateToProps = (state) => ({
+  pessoaSelecionada: state.people.pessoaSelecionada,
+  linkBackEnd: state.backEnd.link,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  recarregarPessoa: (pessoaId, linkBackEnd) =>
+    dispatch(PeopleActions.recarregarPessoa(pessoaId, linkBackEnd)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ModalAddress);

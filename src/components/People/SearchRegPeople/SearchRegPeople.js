@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./SearchRegPeople.css";
 import ResultSearchPeople from "./ResultSearchPeople/ResultSearchPeople";
+import { getElementError } from "@testing-library/react";
 
 export default function SearchRegPeople() {
   const [data, setData] = useState([]);
@@ -9,7 +10,9 @@ export default function SearchRegPeople() {
 
   const buscarPessoa = (stringPesquisa) => {
     if (!stringPesquisa) {
-      fetch("http://localhost:5000/api/pessoas/")
+      fetch("http://localhost:5000/api/pessoas/", {
+        method: "GET",
+      })
         .then((response) => response.json())
         .then((data) => {
           setData(data);
@@ -22,7 +25,9 @@ export default function SearchRegPeople() {
         stringPesquisa = "buscar?nomePessoa=" + stringPesquisa;
       }
 
-      fetch("http://localhost:5000/api/pessoas/" + stringPesquisa)
+      fetch("http://localhost:5000/api/pessoas/" + stringPesquisa, {
+        method: "GET",
+      })
         .then((response) => response.json())
         .then((data) => {
           setData(data);
@@ -31,22 +36,39 @@ export default function SearchRegPeople() {
     }
   };
 
+  const pressEnter = (event) => {
+    if (event.key === "Enter") {
+      buscarPessoa(stringPesquisa);
+    }
+  };
+
+  const listenerClick = () => {
+    setShowResultado(false);
+  };
+
+  if (showResultado) {
+    window.addEventListener("click", listenerClick);
+  } else {
+    window.removeEventListener("click", listenerClick);
+  }
+
   return (
     <>
       <div className="row">
-        <div className="col-8">
+        <div className="col">
           <input
             type="text"
             name="buscaCadastro"
             className="form-control"
             id="text-busca-cliente"
             onChange={(event) => setStringPesquisa(event.target.value)}
+            onKeyDown={(event) => pressEnter(event)}
           />
         </div>
-        <div className="col-4">
+        <div className="col-4 div-buscar-pessoas">
           <button
             type="submit"
-            id="btn-buscar"
+            id="btn-buscar-pessoas"
             className="btn btn-primary"
             onClick={() => buscarPessoa(stringPesquisa)}
           >
@@ -55,9 +77,14 @@ export default function SearchRegPeople() {
         </div>
       </div>
       <div className="row">
-        <div className="col-8">
-          <ResultSearchPeople show={showResultado} resultados={data} />{" "}
+        <div className="col">
+          <ResultSearchPeople
+            id="id-resultados"
+            show={showResultado}
+            resultados={data}
+          ></ResultSearchPeople>
         </div>
+        <div className="col-4 div-buscar-pessoas"></div>
       </div>
     </>
   );

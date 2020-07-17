@@ -1,66 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AddressPeople.css";
 import Address from "./Address/Address";
 import ModalAddress from "./ModalAddress/ModalAddress";
+import { connect } from "react-redux";
 
-export default function AddressPeople() {
+function AddressPeople({ pessoaSelecionada }) {
   const [modalShow, setModalShow] = useState(false);
-  const enderecos = [
-    {
-      enderecoId: "1",
-      logradouro: "Rua Agapito José da Silva",
-      cep: "04334010",
-      numeroEndereco: "101",
-      complemento: "casa 03",
-      bairro: "Jabaquara",
-      cidade: "São Paulo",
-      estado: "São Paulo",
-      uf: "SP",
-      enderecoPadrao: true,
-    },
-    {
-      enderecoId: "2",
-      logradouro: "Rua Xavier Golveia",
-      cep: "0000000",
-      numeroEndereco: "24B",
-      complemento: "",
-      bairro: "Brooklyn",
-      cidade: "São Paulo",
-      estado: "São Paulo",
-      uf: "SP",
-      enderecoPadrao: false,
-    },
-  ];
+  const [enderecoDisplay, setEnderecoDisplay] = useState([]);
 
-  const enderecoDisplay = enderecos.map((endereco) => (
-    <Address
-      key={endereco.enderecoId}
-      enderecoId={endereco.enderecoId}
-      cep={endereco.cep}
-      logradouro={endereco.logradouro}
-      numeroEndereco={endereco.numeroEndereco}
-      complemento={endereco.complemento}
-      bairro={endereco.bairro}
-      cidade={endereco.cidade}
-      estado={endereco.estado}
-      uf={endereco.uf}
-      enderecoPadrao={endereco.enderecoPadrao}
-    ></Address>
-  ));
+  useEffect(() => {
+    if (pessoaSelecionada.pessoA_ID) {
+      setEnderecoDisplay(
+        pessoaSelecionada.lisT_ENDERECO.map((endereco) => (
+          <Address key={endereco.enderecO_ID} objEndereco={endereco ?? {}} />
+        ))
+      );
+    } else {
+      setEnderecoDisplay([]);
+    }
+  }, [pessoaSelecionada.lisT_CONTATO]);
 
   return (
     <>
-      <div id="quadrado-endereco">{enderecoDisplay}</div>
-      <div className="btn-adicionar">
-        <button
-          className="btn btn-primary"
-          type="button"
-          onClick={() => setModalShow(true)}
-        >
-          Adicionar endereço
-        </button>
-        <ModalAddress show={modalShow} onHide={() => setModalShow(false)} />
-      </div>
+      <div id="container-endereco">{enderecoDisplay}</div>
+
+      {pessoaSelecionada.pessoA_ID && (
+        <div className="btn-adicionar">
+          <button
+            className="btn btn-primary"
+            type="button"
+            onClick={() => setModalShow(true)}
+          >
+            Adicionar endereço
+          </button>
+        </div>
+      )}
+      <ModalAddress
+        show={modalShow}
+        onHide={(limparCampos) => setModalShow(false)}
+      />
     </>
   );
 }
+
+const mapStateToProps = (state) => ({
+  pessoaSelecionada: state.people.pessoaSelecionada,
+});
+
+const mapDispatchToProps = (dispatch) => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddressPeople);

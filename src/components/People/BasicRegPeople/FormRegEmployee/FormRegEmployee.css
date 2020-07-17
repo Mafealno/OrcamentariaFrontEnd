@@ -10,6 +10,12 @@
   margin-bottom: 30px;
 }
 
+.btn-options {
+  width: 100px;
+  margin-left: 10px;
+  float: right;
+}
+
 .form-group {
   margin-bottom: 0.5rem;
 }

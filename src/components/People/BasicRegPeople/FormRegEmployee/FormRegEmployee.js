@@ -1,16 +1,99 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./FormRegEmployee.css";
+import { connect } from "react-redux";
+import * as PeopleActions from "../../../../store/actions/people";
 
-export default function FormRegEmployee() {
+function FormRegEmployee({
+  pessoaSelecionada,
+  selecionarPessoa,
+  linkBackEnd,
+  recarregarPessoa,
+}) {
   const [dadosCadastro, setDados] = useState({
+    nome: "",
     tipo: "F",
     rg: "",
     cpf: "",
     cargo: "pintor",
-    valorDiario: "",
+    valorDiario: 0,
     dataAdmissao: "",
-    status: "ativo",
+    status: "Ativo",
   });
+
+  const montarObj = (pessoaId) => {
+    return {
+      pessoA_ID: dadosCadastro.pessoaId ?? pessoaId,
+      nomE_PESSOA: dadosCadastro.nome,
+      rg: dadosCadastro.rg,
+      cpf: dadosCadastro.cpf,
+      cnpj: dadosCadastro.cnpj,
+      cargO_FUNCIONARIO: dadosCadastro.cargo,
+      valoR_DIARIO: dadosCadastro.valorDiario,
+      datA_ADMISSAO: dadosCadastro.dataAdmissao,
+      valoR_DIA_TRABALHADO: parseFloat(dadosCadastro.valorDiario),
+      statuS_FUNCIONARIO: dadosCadastro.status,
+      tipO_CADASTRO: "Funcionario",
+      tipO_PESSOA: dadosCadastro.tipo,
+      lisT_ENDERECO: [],
+      lisT_CONTATO: [],
+    };
+  };
+  useEffect(() => {
+    if (
+      pessoaSelecionada.pessoA_ID &&
+      pessoaSelecionada.tipO_CADASTRO == "Funcionario"
+    ) {
+      fetch(
+        linkBackEnd +
+          "/funcionario/buscar?pessoaId=" +
+          pessoaSelecionada.pessoA_ID,
+        { method: "GET" }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setDados({
+            nome: data[0].nomE_PESSOA,
+            tipo: data[0].tipO_PESSOA,
+            rg: data[0].rg,
+            cpf: data[0].cpf,
+            cargo: data[0].cargO_FUNCIONARIO,
+            valorDiario: data[0].valoR_DIA_TRABALHADO,
+            dataAdmissao: data[0].datA_ADMISSAO.replace("T00:00:00", ""),
+            status: data[0].statuS_FUNCIONARIO,
+          });
+        });
+    }
+  }, [pessoaSelecionada.pessoA_ID]);
+
+  const salvarCadastroFuncionario = () => {
+    fetch(linkBackEnd + "/funcionario/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(montarObj()),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        recarregarPessoa(data.pessoA_ID, linkBackEnd);
+      });
+  };
+
+  const atualizarCadastro = () => {
+    fetch(linkBackEnd + "/funcionario/" + pessoaSelecionada.pessoA_ID, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(montarObj()),
+    }).then(() => {
+      recarregarPessoa(dadosCadastro.pessoaId, linkBackEnd);
+    });
+  };
+
+  const deletarCadastroFuncionario = () => {
+    fetch(linkBackEnd + "/funcionario/" + pessoaSelecionada.pessoA_ID, {
+      method: "DELETE",
+    }).then(() => {
+      selecionarPessoa({});
+    });
+  };
 
   const handleInputChange = (event) => {
     setDados({
@@ -25,8 +108,10 @@ export default function FormRegEmployee() {
         <input
           type="text"
           className="form-control"
-          id="nome"
+          name="nome"
+          value={dadosCadastro.nome}
           placeholder="João da Silva"
+          onChange={(event) => handleInputChange(event)}
         />
       </div>
       <div className="form-group">
@@ -68,9 +153,9 @@ export default function FormRegEmployee() {
               className="form-control"
               onChange={(event) => handleInputChange(event)}
             >
-              <option value="pintor">Pintor</option>
-              <option value="ajudante">Ajudante</option>
-              <option value="outro">Outro</option>
+              <option value="Pintor">Pintor</option>
+              <option value="Ajudante">Ajudante</option>
+              <option value="Outro">Outro</option>
             </select>
           </div>
           <div className="col">
@@ -110,12 +195,55 @@ export default function FormRegEmployee() {
               className="form-control"
               onChange={(event) => handleInputChange(event)}
             >
-              <option value="ativo">Ativo</option>
-              <option value="nao_ativo">Não Ativo</option>
+              <option value="Ativo">Ativo</option>
+              <option value="Nao_Ativo">Não Ativo</option>
             </select>
           </div>
+        </div>
+        <div className="form-group btn-salvar">
+          {!pessoaSelecionada.pessoA_ID && (
+            <>
+              <button
+                className="btn btn-primary btn-options"
+                onClick={() => salvarCadastroFuncionario()}
+              >
+                Salvar
+              </button>
+            </>
+          )}
+          {pessoaSelecionada.pessoA_ID && (
+            <>
+              <button
+                className="btn btn-success btn-options"
+                onClick={() => atualizarCadastro()}
+              >
+                Atualizar
+              </button>
+
+              <button
+                className="btn btn-danger btn-options"
+                onClick={() => deletarCadastroFuncionario()}
+              >
+                Deletar
+              </button>
+            </>
+          )}
         </div>
       </div>
     </>
   );
 }
+
+const mapStateToProps = (state) => ({
+  pessoaSelecionada: state.people.pessoaSelecionada,
+  linkBackEnd: state.backEnd.link,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  selecionarPessoa: (pessoa) =>
+    dispatch(PeopleActions.selecionarPessoa(pessoa)),
+  recarregarPessoa: (pessoaId, linkBackEnd) =>
+    dispatch(PeopleActions.recarregarPessoa(pessoaId, linkBackEnd)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormRegEmployee);

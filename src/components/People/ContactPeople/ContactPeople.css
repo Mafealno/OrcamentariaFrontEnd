@@ -1,5 +1,5 @@
-#quadrado-contato {
-  max-height: 250px;
+#container-contato {
+  height: 250px;
   width: 100%;
   padding: 3px;
   overflow-y: auto;
@@ -7,11 +7,11 @@
   border: rgb(68, 68, 68) solid 2px;
 }
 
-#quadrado-contato::-webkit-scrollbar-thumb {
+#container-contato::-webkit-scrollbar-thumb {
   background: white;
   border-right: 1px rgb(68, 68, 68);
 }
-#quadrado-contato::-webkit-scrollbar-track {
+#container-contato::-webkit-scrollbar-track {
   background-color: rgb(68, 68, 68);
 }
 
@@ -21,8 +21,8 @@
 }
 
 @media (min-width: 1200px) {
-  #quadrado-contato {
-    max-height: 80%;
+  #container-contato {
+    height: 80%;
     padding: 10px;
   }
 }

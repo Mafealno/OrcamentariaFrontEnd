@@ -7,6 +7,16 @@ div.form-group div.check {
   z-index: 999;
 }
 
+.btn-options {
+  width: 100px;
+  margin-left: 10px;
+  float: right;
+}
+
+.col-xl-6 {
+  position: initial !important;
+}
+
 @media (min-width: 1200px) {
   input.form-check-input {
   }

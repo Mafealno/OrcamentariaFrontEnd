@@ -2,24 +2,24 @@ import React, { useState } from "react";
 import "./FormContactCelular.css";
 import ModalContact from "../ModalContact/ModalContact";
 
-export default function FormContactCelular(props) {
+export default function FormContactCelular({ objContato, deletarContato }) {
   const [modalShow, setModalShow] = useState(false);
   return (
     <>
       <div
         id="item-contato-celular"
         data-toggle="collapse"
-        data-target={"#opcoes-" + props.contato}
-        aria-expanded={"opcoes-" + props.contato}
-        aria-controls={"opcoes-" + props.contato}
+        data-target={"#opcoes-" + objContato.contatO_ID}
+        aria-expanded={"opcoes-" + objContato.contatO_ID}
+        aria-controls={"opcoes-" + objContato.contatO_ID}
       >
         <div id="tipoContatoCelular">
           <label className="label-contato">Tipo: </label>
-          <label>{props.tipoContato}</label>
+          <label>{objContato.tipO_CONTATO}</label>
         </div>
         <div id="contatoCelular">
-          <label>({props.ddd})</label>
-          <label>{props.contato}</label>
+          <label>({objContato.ddd})</label>
+          <label>{objContato.contato}</label>
         </div>
         <div id="contatoPadraoCelular">
           <label className="label-contato">Padrão</label>
@@ -27,21 +27,23 @@ export default function FormContactCelular(props) {
             type="checkbox"
             value="true"
             name="contatoPadrao"
-            checked={props.contatoPadrao}
+            checked={objContato.contatO_PADRAO}
             readOnly
           />
         </div>
       </div>
-      <div id={"opcoes-" + props.contato} className="collapse opcoes">
+      <div id={"opcoes-" + objContato.contatO_ID} className="collapse opcoes">
         <button
           className="btn editarContato"
           onClick={() => setModalShow(true)}
         >
           Editar
         </button>
-        <button className="btn excluirContato">Excluir</button>
+        <button className="btn excluirContato" onClick={() => deletarContato()}>
+          Excluir
+        </button>
         <ModalContact
-          {...props}
+          {...objContato}
           show={modalShow}
           onHide={() => setModalShow(false)}
         />

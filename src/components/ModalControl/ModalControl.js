@@ -16,12 +16,13 @@ export default function ModalControl(props) {
       >
         <ModalHeader className={props.estiloModalHeader}>
           <ModalTitle>{props.tituloModal}</ModalTitle>
+          {props.conteudoHeader}
         </ModalHeader>
         <ModalBody className={props.estiloModalBody}>
-          {props.conteudoModal}
+          {props.conteudoBody}
         </ModalBody>
         <ModalFooter className={props.estiloModalFooter}>
-          {props.opcoesModal}
+          {props.opcoesFooter}
         </ModalFooter>
       </Modal>
     </>

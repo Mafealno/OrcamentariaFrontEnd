@@ -26,12 +26,17 @@ div.input-padrao {
   margin-left: 20px;
 }
 
-#form-contato-id {
+#input-contato-id {
   color: white;
+  font-weight: bold;
 }
 
 @media (min-width: 1200px) {
   .div-tipo-contato {
     margin-bottom: 0px;
+  }
+
+  .close-modal-contact {
+    font-size: 1.5rem;
   }
 }

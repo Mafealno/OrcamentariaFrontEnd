@@ -7,8 +7,11 @@
   min-height: 300px;
 }
 
-#form-pessoa-id {
+#input-pessoa-id {
   width: 30% !important;
+  font-weight: bold;
+  color: white;
+  margin-left: 15px;
 }
 
 .div-rg {
@@ -17,6 +20,15 @@
 
 .label-codigo {
   margin-right: 10px;
+}
+
+.close-select-people {
+  color: white;
+}
+
+.close-select-people {
+  float: right;
+  flex-grow: 1;
 }
 
 button.btn.btn-primary {

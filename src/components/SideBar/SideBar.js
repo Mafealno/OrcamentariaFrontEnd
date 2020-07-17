@@ -14,7 +14,7 @@ export default function SideBar(props) {
         </a>
         <ul>
           <li>
-            <div id="inputSearch">
+            <div id="input-search-menu">
               <input
                 type="text"
                 className="form-control-sm"
