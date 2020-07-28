@@ -1,0 +1,126 @@
+#container-fabricante {
+  display: grid;
+  grid-template-areas:
+    "buscaFabricante"
+    "principalFabricante";
+  grid-template-rows: 70px auto;
+}
+
+#buscaFabricante {
+  grid-area: buscaFabricante;
+}
+
+#principalFabricante {
+  grid-area: principalFabricante;
+}
+
+.form {
+  background-color: rgb(68, 68, 68);
+  width: 100%;
+  height: 100%;
+  padding: 5%;
+  color: white;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.width-99-5 {
+  width: 99.5%;
+}
+
+fieldset {
+  border: black solid 1px;
+  padding: 15px;
+  height: 100%;
+}
+
+legend {
+  width: auto;
+  margin: 10px 0px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+#btn-buscar-fabricante {
+  width: 100%;
+  background-color: #d40808;
+  border-color: #d40808;
+  color: white;
+}
+
+.div-btn-buscar-fabricante {
+  display: none;
+}
+
+#input-equipamento-id {
+  width: 30% !important;
+  font-weight: bold;
+  color: white;
+  margin-left: 15px;
+}
+
+.col-xl-8,
+.col-xl-4,
+.col-xl-6,
+.col-xl-3,
+.col-xl-9,
+.col-xl {
+  position: initial !important;
+}
+
+.label-codigo {
+  margin-right: 10px;
+}
+
+.div-nome-equipamento,
+.div-codigo-fabricante {
+  margin-bottom: 30px;
+}
+
+.close-select-equipamento {
+  color: white;
+  float: right;
+  flex-grow: 1;
+}
+
+button.btn.btn-primary {
+  float: right;
+}
+
+.container-form {
+  flex-grow: 2;
+  order: 1;
+}
+
+.btn-salvar {
+  order: 2;
+  flex-grow: 0;
+  bottom: 0;
+}
+
+.btn-options {
+  width: 100px;
+  margin-top: 30px;
+  margin-left: 10px;
+}
+
+.options {
+  float: right;
+}
+
+@media (min-width: 1200px) {
+  .form {
+    min-height: 100%;
+    height: auto;
+  }
+
+  .div-nome-equipamento,
+  .div-codigo-fabricante {
+    margin-bottom: 0px;
+  }
+
+  .div-btn-buscar-fabricante {
+    display: block;
+  }
+}

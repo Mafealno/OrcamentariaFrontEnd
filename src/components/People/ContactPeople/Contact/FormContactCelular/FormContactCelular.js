@@ -1,25 +1,27 @@
 import React, { useState } from "react";
 import "./FormContactCelular.css";
 import ModalContact from "../ModalContact/ModalContact";
+import ModalConfirm from "../../../ModalConfirm/ModalConfirm";
 
-export default function FormContactCelular({ objContato, deletarContato }) {
-  const [modalShow, setModalShow] = useState(false);
+export default function FormContactCelular(props) {
+  let [showModalConfirm, setShowModalConfirm] = useState(false);
+  let [modalShow, setModalShow] = useState(false);
   return (
     <>
       <div
         id="item-contato-celular"
         data-toggle="collapse"
-        data-target={"#opcoes-" + objContato.contatO_ID}
-        aria-expanded={"opcoes-" + objContato.contatO_ID}
-        aria-controls={"opcoes-" + objContato.contatO_ID}
+        data-target={"#opcoes-" + props.objContato.contatO_ID}
+        aria-expanded={"opcoes-" + props.objContato.contatO_ID}
+        aria-controls={"opcoes-" + props.objContato.contatO_ID}
       >
         <div id="tipoContatoCelular">
           <label className="label-contato">Tipo: </label>
-          <label>{objContato.tipO_CONTATO}</label>
+          <label>{props.objContato.tipO_CONTATO}</label>
         </div>
         <div id="contatoCelular">
-          <label>({objContato.ddd})</label>
-          <label>{objContato.contato}</label>
+          <label>({props.objContato.ddd})</label>
+          <label>{props.objContato.contato}</label>
         </div>
         <div id="contatoPadraoCelular">
           <label className="label-contato">Padrão</label>
@@ -27,25 +29,41 @@ export default function FormContactCelular({ objContato, deletarContato }) {
             type="checkbox"
             value="true"
             name="contatoPadrao"
-            checked={objContato.contatO_PADRAO}
+            checked={props.objContato.contatO_PADRAO}
             readOnly
           />
         </div>
       </div>
-      <div id={"opcoes-" + objContato.contatO_ID} className="collapse opcoes">
+      <div
+        id={"opcoes-" + props.objContato.contatO_ID}
+        className="collapse opcoes"
+      >
         <button
           className="btn editarContato"
           onClick={() => setModalShow(true)}
         >
           Editar
         </button>
-        <button className="btn excluirContato" onClick={() => deletarContato()}>
+        <button
+          className="btn excluirContato"
+          onClick={() => setShowModalConfirm(true)}
+        >
           Excluir
         </button>
-        <ModalContact
-          {...objContato}
-          show={modalShow}
-          onHide={() => setModalShow(false)}
+      </div>
+      <ModalContact
+        {...props.objContato}
+        editarContato={(objAtualizar) => props.editarContato(objAtualizar)}
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
+
+      <div>
+        <ModalConfirm
+          show={showModalConfirm}
+          onHide={() => setShowModalConfirm(false)}
+          acaoConfirmada={() => props.deletarContato(props.objContato)}
+          tituloModalConfirm={"Confirmar exclusão?"}
         />
       </div>
     </>

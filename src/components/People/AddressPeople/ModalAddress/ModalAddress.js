@@ -48,47 +48,26 @@ function ModalAddress(props) {
     props.show,
   ]);
 
-  const editarEndereco = (objEnderecoAtualizar) => {
-    fetch(props.linkBackEnd + "/endereco/" + props.enderecO_ID, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(objEnderecoAtualizar),
-    }).then(() => {
-      props.recarregarPessoa(objEnderecoAtualizar.pessoA_ID, props.linkBackEnd);
+  useEffect(() => {
+    setDadosCadastro({
+      pessoaId: dadosCadastro.pessoaId,
+      enderecoId: props.novoEnderecoId,
+      cep: dadosCadastro.cep,
+      logradouro: dadosCadastro.logradouro,
+      numero: dadosCadastro.numero,
+      complemento: dadosCadastro.complemento,
+      bairro: dadosCadastro.bairro,
+      cidade: dadosCadastro.cidade,
+      estado: dadosCadastro.estado,
+      uf: dadosCadastro.uf,
+      enderecoPadrao: dadosCadastro.enderecoPadrao,
     });
-  };
-
-  const salvarEndereco = (objEnderecoNovo) => {
-    fetch(props.linkBackEnd + "/endereco/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(objEnderecoNovo),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setDadosCadastro({
-          pessoaId: objEnderecoNovo.pessoA_ID,
-          enderecoId: data.enderecO_ID,
-          cep: objEnderecoNovo.cep,
-          logradouro: objEnderecoNovo.logradouro,
-          numero: objEnderecoNovo.numerO_ENDERECO,
-          complemento: objEnderecoNovo.complemento,
-          bairro: objEnderecoNovo.bairro,
-          cidade: objEnderecoNovo.cidade,
-          estado: objEnderecoNovo.estado,
-          uf: objEnderecoNovo.uf,
-          enderecoPadrao: objEnderecoNovo.enderecO_PADRAO,
-        });
-      })
-      .then(() => {
-        props.recarregarPessoa(objEnderecoNovo.pessoA_ID, props.linkBackEnd);
-      });
-  };
+  }, [props.novoEnderecoId]);
 
   const montarObj = () => {
     return {
       pessoA_ID: props.pessoaSelecionada.pessoA_ID,
-      endererO_ID: dadosCadastro.enderecoId,
+      enderecO_ID: dadosCadastro.enderecoId,
       cep: dadosCadastro.cep,
       logradouro: dadosCadastro.logradouro,
       numerO_ENDERECO: dadosCadastro.numero,
@@ -344,13 +323,13 @@ function ModalAddress(props) {
             </div>
           </>
         }
-        opcoesFooter={
+        conteudoFooter={
           <>
             {!dadosCadastro.enderecoId && (
               <div>
                 <button
                   className="btn btn-primary"
-                  onClick={(objContatoNovo) => salvarEndereco(montarObj())}
+                  onClick={() => props.salvarEndereco(montarObj())}
                 >
                   Salvar
                 </button>
@@ -359,7 +338,7 @@ function ModalAddress(props) {
             {dadosCadastro.enderecoId && (
               <div>
                 <button
-                  onClick={(objContatoAtualizar) => editarEndereco(montarObj())}
+                  onClick={() => props.editarEndereco(montarObj())}
                   className="btn btn-success"
                 >
                   Atualizar

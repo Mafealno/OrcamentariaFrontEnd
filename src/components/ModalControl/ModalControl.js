@@ -22,7 +22,7 @@ export default function ModalControl(props) {
           {props.conteudoBody}
         </ModalBody>
         <ModalFooter className={props.estiloModalFooter}>
-          {props.opcoesFooter}
+          {props.conteudoFooter}
         </ModalFooter>
       </Modal>
     </>

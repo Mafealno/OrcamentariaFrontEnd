@@ -3,7 +3,7 @@ import "./ResultSearchPeople.css";
 import { connect } from "react-redux";
 import * as PeopleActions from "../../../../store/actions/people";
 
-function ResultSearchPeople({ show, resultados, onHide, selecionarPessoa }) {
+function ResultSearchPeople({ show, resultados, selecionarPessoa }) {
   const itemDisplay = resultados.map((pessoa) => (
     <div
       className="row container-result"

@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import "./SearchRegPeople.css";
 import ResultSearchPeople from "./ResultSearchPeople/ResultSearchPeople";
-import { getElementError } from "@testing-library/react";
+import { connect } from "react-redux";
 
-export default function SearchRegPeople() {
+function SearchRegPeople(props) {
   const [data, setData] = useState([]);
-  const [stringPesquisa, setStringPesquisa] = useState("");
   const [showResultado, setShowResultado] = useState(false);
+  let [stringPesquisa, setStringPesquisa] = useState("");
 
-  const buscarPessoa = (stringPesquisa) => {
+  const buscarPessoa = () => {
     if (!stringPesquisa) {
-      fetch("http://localhost:5000/api/pessoas/", {
+      fetch(props.linkBackEnd + "/pessoas/", {
         method: "GET",
       })
         .then((response) => response.json())
@@ -25,7 +25,7 @@ export default function SearchRegPeople() {
         stringPesquisa = "buscar?nomePessoa=" + stringPesquisa;
       }
 
-      fetch("http://localhost:5000/api/pessoas/" + stringPesquisa, {
+      fetch(props.linkBackEnd + "/pessoas/" + stringPesquisa, {
         method: "GET",
       })
         .then((response) => response.json())
@@ -38,7 +38,7 @@ export default function SearchRegPeople() {
 
   const pressEnter = (event) => {
     if (event.key === "Enter") {
-      buscarPessoa(stringPesquisa);
+      buscarPessoa();
     }
   };
 
@@ -70,7 +70,7 @@ export default function SearchRegPeople() {
             type="submit"
             id="btn-buscar-pessoas"
             className="btn btn-primary"
-            onClick={() => buscarPessoa(stringPesquisa)}
+            onClick={() => buscarPessoa()}
           >
             Buscar
           </button>
@@ -82,10 +82,18 @@ export default function SearchRegPeople() {
             id="id-resultados"
             show={showResultado}
             resultados={data}
-          ></ResultSearchPeople>
+          />
         </div>
         <div className="col-4 div-buscar-pessoas"></div>
       </div>
     </>
   );
 }
+
+const mapStateToProps = (state) => ({
+  linkBackEnd: state.backEnd.link,
+});
+
+const mapDispatchToProps = (dispatch) => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchRegPeople);

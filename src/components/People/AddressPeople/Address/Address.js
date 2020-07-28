@@ -2,19 +2,23 @@ import React, { useState } from "react";
 import "./Address.css";
 import ModalAddress from "../ModalAddress/ModalAddress";
 import * as PeopleActions from "../../../../store/actions/people";
+import ModalConfirm from "../../ModalConfirm/ModalConfirm";
 import { connect } from "react-redux";
 
-function Address({ objEndereco, linkBackEnd, recarregarPessoa }) {
-  const [modalShow, setModalShow] = useState(false);
+function Address(props) {
+  const [showModal, setShowModal] = useState(false);
+  const [showModalConfirm, setShowModalConfirm] = useState(false);
 
   const deletarEndereco = () => {
     fetch(
-      linkBackEnd + "/endereco/deletar?enderecoId=" + objEndereco.enderecO_ID,
+      props.linkBackEnd +
+        "/endereco/deletar?enderecoId=" +
+        props.objEndereco.enderecO_ID,
       {
         method: "DELETE",
       }
     ).then(() => {
-      recarregarPessoa(objEndereco.pessoA_ID, linkBackEnd);
+      props.recarregarPessoa(props.objEndereco.pessoA_ID, props.linkBackEnd);
     });
   };
 
@@ -23,22 +27,22 @@ function Address({ objEndereco, linkBackEnd, recarregarPessoa }) {
       <div
         id="item-endereco"
         data-toggle="collapse"
-        data-target={"#opcoes-" + objEndereco.enderecO_ID}
-        aria-expanded={"opcoes-" + objEndereco.enderecO_ID}
-        aria-controls={"opcoes-" + objEndereco.enderecO_ID}
+        data-target={"#opcoes-" + props.objEndereco.enderecO_ID}
+        aria-expanded={"opcoes-" + props.objEndereco.enderecO_ID}
+        aria-controls={"opcoes-" + props.objEndereco.enderecO_ID}
       >
         <div id="logradouro">
           <label className="label-endereco">Logradouro: </label>
           <label>
-            {objEndereco.logradouro}{" "}
-            {objEndereco.numerO_ENDERECO !== false
-              ? ", " + objEndereco.numerO_ENDERECO
+            {props.objEndereco.logradouro}{" "}
+            {props.objEndereco.numerO_ENDERECO !== false
+              ? ", " + props.objEndereco.numerO_ENDERECO
               : ""}
           </label>
         </div>
         <div id="complemento">
           <label className="label-endereco">Complemento: </label>
-          <label>{objEndereco.complemento}</label>
+          <label>{props.objEndereco.complemento}</label>
         </div>
         <div id="enderecoPadrao">
           <label className="label-endereco">Padrão</label>
@@ -46,36 +50,49 @@ function Address({ objEndereco, linkBackEnd, recarregarPessoa }) {
             type="checkbox"
             value="true"
             name="enderecoPadrao"
-            checked={objEndereco.enderecO_PADRAO}
+            checked={props.objEndereco.enderecO_PADRAO}
             readOnly
           />
         </div>
         <div id="bairro">
           <label className="label-endereco">Bairro: </label>
-          <label>{objEndereco.bairro}</label>
+          <label>{props.objEndereco.bairro}</label>
         </div>
         <div id="cidade">
           <label className="label-endereco">Cidade: </label>
-          <label>{objEndereco.cidade}</label>
+          <label>{props.objEndereco.cidade}</label>
         </div>
       </div>
-      <div id={"opcoes-" + objEndereco.enderecO_ID} className="collapse opcoes">
+      <div
+        id={"opcoes-" + props.objEndereco.enderecO_ID}
+        className="collapse opcoes"
+      >
         <button
           className="btn editarContato"
-          onClick={() => setModalShow(true)}
+          onClick={() => setShowModal(true)}
         >
           Editar
         </button>
         <button
           className="btn excluirContato"
-          onClick={() => deletarEndereco()}
+          onClick={() => setShowModalConfirm(true)}
         >
           Excluir
         </button>
         <ModalAddress
-          {...objEndereco}
-          show={modalShow}
-          onHide={() => setModalShow(false)}
+          {...props.objEndereco}
+          editarEndereco={(objAtualizar) => props.editarEndereco(objAtualizar)}
+          show={showModal}
+          onHide={() => setShowModal(false)}
+        />
+      </div>
+
+      <div>
+        <ModalConfirm
+          show={showModalConfirm}
+          onHide={() => setShowModalConfirm(false)}
+          acaoConfirmada={() => props.deletarEndereco(props.objEndereco)}
+          tituloModalConfirm={"Confirmar exclusão?"}
         />
       </div>
     </>

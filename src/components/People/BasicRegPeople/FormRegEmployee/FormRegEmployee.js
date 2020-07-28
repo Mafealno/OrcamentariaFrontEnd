@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./FormRegEmployee.css";
 import { connect } from "react-redux";
-import * as PeopleActions from "../../../../store/actions/people";
+import ModalConfirm from "../../ModalConfirm/ModalConfirm";
 
-function FormRegEmployee({
-  pessoaSelecionada,
-  selecionarPessoa,
-  linkBackEnd,
-  recarregarPessoa,
-}) {
+function FormRegEmployee(props) {
+  const [showModal, setShowModal] = useState(false);
   const [dadosCadastro, setDados] = useState({
     nome: "",
     tipo: "F",
@@ -20,9 +16,9 @@ function FormRegEmployee({
     status: "Ativo",
   });
 
-  const montarObj = (pessoaId) => {
+  const montarObj = () => {
     return {
-      pessoA_ID: dadosCadastro.pessoaId ?? pessoaId,
+      pessoA_ID: dadosCadastro.pessoaId,
       nomE_PESSOA: dadosCadastro.nome,
       rg: dadosCadastro.rg,
       cpf: dadosCadastro.cpf,
@@ -38,15 +34,16 @@ function FormRegEmployee({
       lisT_CONTATO: [],
     };
   };
+
   useEffect(() => {
     if (
-      pessoaSelecionada.pessoA_ID &&
-      pessoaSelecionada.tipO_CADASTRO == "Funcionario"
+      props.pessoaSelecionada.pessoA_ID &&
+      props.pessoaSelecionada.tipO_CADASTRO == "Funcionario"
     ) {
       fetch(
-        linkBackEnd +
+        props.linkBackEnd +
           "/funcionario/buscar?pessoaId=" +
-          pessoaSelecionada.pessoA_ID,
+          props.pessoaSelecionada.pessoA_ID,
         { method: "GET" }
       )
         .then((response) => response.json())
@@ -63,37 +60,10 @@ function FormRegEmployee({
           });
         });
     }
-  }, [pessoaSelecionada.pessoA_ID]);
-
-  const salvarCadastroFuncionario = () => {
-    fetch(linkBackEnd + "/funcionario/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(montarObj()),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        recarregarPessoa(data.pessoA_ID, linkBackEnd);
-      });
-  };
-
-  const atualizarCadastro = () => {
-    fetch(linkBackEnd + "/funcionario/" + pessoaSelecionada.pessoA_ID, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(montarObj()),
-    }).then(() => {
-      recarregarPessoa(dadosCadastro.pessoaId, linkBackEnd);
-    });
-  };
-
-  const deletarCadastroFuncionario = () => {
-    fetch(linkBackEnd + "/funcionario/" + pessoaSelecionada.pessoA_ID, {
-      method: "DELETE",
-    }).then(() => {
-      selecionarPessoa({});
-    });
-  };
+  }, [
+    props.pessoaSelecionada.pessoA_ID,
+    props.pessoaSelecionada.tipO_CADASTRO,
+  ]);
 
   const handleInputChange = (event) => {
     setDados({
@@ -110,7 +80,7 @@ function FormRegEmployee({
           className="form-control"
           name="nome"
           value={dadosCadastro.nome}
-          placeholder="João da Silva"
+          placeholder="Ex: João da Silva"
           onChange={(event) => handleInputChange(event)}
         />
       </div>
@@ -124,7 +94,7 @@ function FormRegEmployee({
               className="form-control"
               id="txt-rg"
               name="rg"
-              placeholder="00.000.000-0"
+              placeholder="Ex: 00.000.000-0"
               onChange={(event) => handleInputChange(event)}
             />
           </div>
@@ -136,7 +106,7 @@ function FormRegEmployee({
               className="form-control"
               value={dadosCadastro.cpf}
               id="txt-cpf"
-              placeholder="000.000.000-00"
+              placeholder="Ex: 000.000.000-00"
               onChange={(event) => handleInputChange(event)}
             />
           </div>
@@ -166,7 +136,7 @@ function FormRegEmployee({
               value={dadosCadastro.valorDiario}
               className="form-control"
               id="txt-valorDiario"
-              placeholder="100"
+              placeholder="Ex: 100"
               onChange={(event) => handleInputChange(event)}
             />
           </div>
@@ -182,7 +152,7 @@ function FormRegEmployee({
               value={dadosCadastro.dataAdmissao}
               className="form-control"
               id="txt-data-admissao"
-              placeholder="00/00/0000"
+              placeholder="Ex: 00/00/0000"
               onChange={(event) => handleInputChange(event)}
             />
           </div>
@@ -200,35 +170,44 @@ function FormRegEmployee({
             </select>
           </div>
         </div>
-        <div className="form-group btn-salvar">
-          {!pessoaSelecionada.pessoA_ID && (
+        <div className="form-group">
+          {!props.pessoaSelecionada.pessoA_ID && (
             <>
               <button
                 className="btn btn-primary btn-options"
-                onClick={() => salvarCadastroFuncionario()}
+                onClick={() => props.salvarCadastro(montarObj())}
               >
                 Salvar
               </button>
             </>
           )}
-          {pessoaSelecionada.pessoA_ID && (
+          {props.pessoaSelecionada.pessoA_ID && (
             <>
               <button
                 className="btn btn-success btn-options"
-                onClick={() => atualizarCadastro()}
+                onClick={() => props.atualizarCadastro(montarObj())}
               >
                 Atualizar
               </button>
 
               <button
                 className="btn btn-danger btn-options"
-                onClick={() => deletarCadastroFuncionario()}
+                onClick={() => setShowModal(true)}
               >
                 Deletar
               </button>
             </>
           )}
         </div>
+      </div>
+
+      <div>
+        <ModalConfirm
+          show={showModal}
+          onHide={() => setShowModal(false)}
+          acaoConfirmada={() => props.deletarCadastro(setShowModal(false))}
+          tituloModalConfirm={"Confirmar exclusão de " + dadosCadastro.nome}
+        />
       </div>
     </>
   );
@@ -239,11 +218,6 @@ const mapStateToProps = (state) => ({
   linkBackEnd: state.backEnd.link,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  selecionarPessoa: (pessoa) =>
-    dispatch(PeopleActions.selecionarPessoa(pessoa)),
-  recarregarPessoa: (pessoaId, linkBackEnd) =>
-    dispatch(PeopleActions.recarregarPessoa(pessoaId, linkBackEnd)),
-});
+const mapDispatchToProps = (dispatch) => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormRegEmployee);

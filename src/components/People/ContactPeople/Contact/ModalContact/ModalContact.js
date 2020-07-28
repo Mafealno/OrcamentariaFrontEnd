@@ -40,45 +40,17 @@ function ModalContact(props) {
     props.show,
   ]);
 
-  const editarContato = (objContatoAtualizar) => {
-    fetch(props.linkBackEnd + "/contato/" + objContatoAtualizar.contatO_ID, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(objContatoAtualizar),
-    }).then(() => {
-      props.recarregarPessoa(objContatoAtualizar.pessoA_ID, props.linkBackEnd);
+  useEffect(() => {
+    setDadosCadastro({
+      pessoaId: props.pessoaSelecionada.pessoA_ID,
+      contatoId: props.novoContatoId,
+      tipoContato: props.tipoContato,
+      contato: dadosCadastro.contato,
+      ddd: dadosCadastro.ddd ?? "",
+      ramal: dadosCadastro.ramal ?? "",
+      contatoPadrao: dadosCadastro.contatoPadrao,
     });
-  };
-
-  const salvarContato = (objContatoNovo) => {
-    if (
-      objContatoNovo.tipoContato ||
-      objContatoNovo.tipoContato == "naoSelecionado"
-    ) {
-      return;
-    }
-
-    fetch(props.linkBackEnd + "/contato/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(objContatoNovo),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setDadosCadastro({
-          pessoaId: objContatoNovo.pessoA_ID,
-          contatoId: data.contatO_ID,
-          tipoContato: objContatoNovo.tipO_CONTATO,
-          contato: objContatoNovo.contato,
-          ddd: objContatoNovo.ddd ?? "",
-          ramal: objContatoNovo.ramal ?? "",
-          contatoPadrao: objContatoNovo.contatO_PADRAO,
-        });
-      })
-      .then(() => {
-        props.recarregarPessoa(objContatoNovo.pessoA_ID, props.linkBackEnd);
-      });
-  };
+  }, [props.novoContatoId, props.tipoContato, props.contatoPadrao]);
 
   const handleInputChange = (event) => {
     setDadosCadastro({
@@ -259,13 +231,13 @@ function ModalContact(props) {
             </div>
           </div>
         }
-        opcoesFooter={
+        conteudoFooter={
           <>
             {!dadosCadastro.contatoId && (
               <div>
                 <button
                   className="btn btn-primary"
-                  onClick={(objContatoNovo) => salvarContato(montarObj())}
+                  onClick={() => props.salvarContato(montarObj())}
                 >
                   Salvar
                 </button>
@@ -274,7 +246,7 @@ function ModalContact(props) {
             {dadosCadastro.contatoId && (
               <div>
                 <button
-                  onClick={(objContatoAtualizar) => editarContato(montarObj())}
+                  onClick={() => props.editarContato(montarObj())}
                   className="btn btn-success"
                 >
                   Atualizar

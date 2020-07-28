@@ -6,33 +6,41 @@ import FormContactEmail from "./FormContactEmail/FormContactEmail";
 import * as PeopleActions from "../../../../store/actions/people";
 import { connect } from "react-redux";
 
-function Contact({ objContato, linkBackEnd, recarregarPessoa }) {
+function Contact(props) {
   const deletarContato = () => {
-    fetch(linkBackEnd + "/contato/deletar?contatoId=" + objContato.contatO_ID, {
-      method: "DELETE",
-    }).then(() => {
-      recarregarPessoa(objContato.pessoA_ID, linkBackEnd);
+    fetch(
+      props.linkBackEnd +
+        "/contato/deletar?contatoId=" +
+        props.objContato.contatO_ID,
+      {
+        method: "DELETE",
+      }
+    ).then(() => {
+      props.recarregarPessoa(props.objContato.pessoA_ID, props.linkBackEnd);
     });
   };
 
   return (
     <>
-      {objContato.tipO_CONTATO === "Telefone" && (
+      {props.objContato.tipO_CONTATO === "Telefone" && (
         <FormContactTelefone
-          objContato={objContato}
-          deletarContato={() => deletarContato()}
+          objContato={props.objContato}
+          editarContato={(objAtualizar) => props.editarContato(objAtualizar)}
+          deletarContato={(objContato) => props.deletarContato(objContato)}
         />
       )}
-      {objContato.tipO_CONTATO === "Celular" && (
+      {props.objContato.tipO_CONTATO === "Celular" && (
         <FormContactCelular
-          objContato={objContato}
-          deletarContato={() => deletarContato()}
+          objContato={props.objContato}
+          editarContato={(objAtualizar) => props.editarContato(objAtualizar)}
+          deletarContato={(objContato) => props.deletarContato(objContato)}
         />
       )}
-      {objContato.tipO_CONTATO === "Email" && (
+      {props.objContato.tipO_CONTATO === "Email" && (
         <FormContactEmail
-          objContato={objContato}
-          deletarContato={() => deletarContato()}
+          objContato={props.objContato}
+          editarContato={(objAtualizar) => props.editarContato(objAtualizar)}
+          deletarContato={(objContato) => props.deletarContato(objContato)}
         />
       )}
     </>
