@@ -1,0 +1,74 @@
+#containerCartaCobertura {
+  display: grid;
+  grid-template-areas:
+    "busca-material-carta-cobertura"
+    "cadastro-basico-carta-cobertura"
+    "container-itens-carta-cobertura"
+    "confirmar-acao";
+  grid-template-rows: 80px auto 40% 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+#busca-material-carta-cobertura {
+  grid-area: busca-material-carta-cobertura;
+  width: 100%;
+  height: 100%;
+  padding: 3%;
+}
+
+#cadastro-basico-carta-cobertura {
+  grid-area: cadastro-basico-carta-cobertura;
+  display: grid;
+  grid-template-areas: "cadastro-basico-carta-cobertura-aux";
+  padding: 3%;
+}
+
+#container-itens-carta-cobertura {
+  grid-area: container-itens-carta-cobertura;
+  padding: 3%;
+  padding-top: 0%;
+}
+
+#confirmar-acao {
+  grid-area: confirmar-acao;
+  padding: 3%;
+}
+
+textarea {
+  min-height: 150px;
+}
+
+@media (min-width: 1200px) {
+  #containerCartaCobertura {
+    grid-template-rows: 100px 30% auto 100px;
+  }
+
+  #cadastro-basico-carta-cobertura-aux {
+    grid-area: cadastro-basico-carta-cobertura-aux;
+    display: grid;
+    grid-template-areas:
+      "id-material nome-material descricao-material"
+      "fabricante fabricante descricao-material";
+    grid-template-rows: 50% 50%;
+    grid-template-columns: 20% 40% 40%;
+    padding: 1%;
+  }
+
+  #fabricante {
+    grid-area: fabricante;
+    padding: 0px 10px 0px 7px;
+  }
+
+  #container-itens-carta-cobertura {
+    grid-area: container-itens-carta-cobertura;
+    padding: 3%;
+    padding-top: 0%;
+  }
+
+  textarea {
+    min-height: 75%;
+    max-height: 75%;
+  }
+}

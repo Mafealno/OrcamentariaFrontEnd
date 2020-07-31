@@ -16,7 +16,7 @@ export default function equipamento(state = ESTADO_INICIAL, action) {
         })),
       };
     case "RECARREGAR_EQUIPAMENTO_SELECIONADO_CONCLUIDA":
-      var equipamento = action.equipamento;
+      let equipamento = action.equipamento;
       return {
         ...(state = Object.assign({}, state, {
           equipamentoSelecionado: equipamento,

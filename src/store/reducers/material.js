@@ -16,7 +16,7 @@ export default function material(state = ESTADO_INICIAL, action) {
         })),
       };
     case "RECARREGAR_MATERIAL_SELECIONADO_CONCLUIDA":
-      var material = action.material;
+      let material = action.material;
       return {
         ...(state = Object.assign({}, state, {
           materialSelecionado: material,

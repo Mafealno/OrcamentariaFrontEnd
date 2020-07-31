@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import "./Address.css";
 import ModalAddress from "../ModalAddress/ModalAddress";
 import * as PeopleActions from "../../../../store/actions/people";
-import ModalConfirm from "../../ModalConfirm/ModalConfirm";
+import ModalConfirm from "../../../ModalConfirm/ModalConfirm";
 import { connect } from "react-redux";
 
 function Address(props) {
-  const [showModal, setShowModal] = useState(false);
-  const [showModalConfirm, setShowModalConfirm] = useState(false);
+  let [showModal, setShowModal] = useState(false);
+  let [showModalConfirm, setShowModalConfirm] = useState(false);
 
   const deletarEndereco = () => {
     fetch(

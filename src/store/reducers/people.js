@@ -16,7 +16,7 @@ export default function people(state = ESTADO_INICIAL, action) {
         })),
       };
     case "RECARREGAR_PESSOA_SELECIONADA_CONCLUIDA":
-      var pessoa = action.pessoa;
+      let pessoa = action.pessoa;
       return {
         ...(state = Object.assign({}, state, {
           pessoaSelecionada: pessoa,

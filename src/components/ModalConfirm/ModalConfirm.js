@@ -1,6 +1,7 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import "./ModalConfirm.css";
-import ModalControl from "../../ModalControl/ModalControl";
+import ModalControl from "../ModalControl/ModalControl";
 
 export default function ModalConfirm(props) {
   return (
@@ -16,7 +17,7 @@ export default function ModalConfirm(props) {
           conteudoHeader={
             <div className="close-modal">
               <a href="#" onClick={() => props.onHide()}>
-                <span className="fa fa-close close"></span>
+                <span className="fa fa-close tituloModal"></span>
               </a>
             </div>
           }

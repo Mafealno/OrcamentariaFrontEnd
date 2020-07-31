@@ -5,11 +5,11 @@ import * as PeopleActions from "../../../../../store/actions/people";
 import { connect } from "react-redux";
 
 function ModalContact(props) {
-  const [telefone, setTelefone] = useState(true);
-  const [celular, setCelular] = useState(true);
-  const [email, setEmail] = useState(true);
+  let [telefone, setTelefone] = useState(true);
+  let [celular, setCelular] = useState(true);
+  let [email, setEmail] = useState(true);
 
-  const [dadosCadastro, setDadosCadastro] = useState({
+  let [dadosCadastro, setDadosCadastro] = useState({
     pessoaId: "",
     contatoId: "",
     tipoContato: "",
@@ -122,9 +122,9 @@ function ModalContact(props) {
         estiloModalFooter="backgroundModal"
         tituloModal="Novo contato"
         conteudoHeader={
-          <div className="close-modal-contact">
+          <div className="close-contact">
             <a href="#" onClick={() => props.onHide(limparCampos())}>
-              <span className="fa fa-close close-select-people"></span>
+              <span className="fa fa-close close-contact"></span>
             </a>
           </div>
         }

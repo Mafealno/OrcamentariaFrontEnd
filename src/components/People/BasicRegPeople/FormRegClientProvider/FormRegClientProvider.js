@@ -1,12 +1,14 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import "./FormRegClientProvider.css";
 import { connect } from "react-redux";
-import ModalConfirm from "../../ModalConfirm/ModalConfirm";
+import ModalConfirm from "../../../ModalConfirm/ModalConfirm";
 
 function FormClientReg(props) {
-  const [showModal, setShowModal] = useState(false);
-  const [tipoCadastro, setTipoCadastro] = useState("");
-  const [dadosCadastro, setDadosCadastro] = useState({
+  let [showModal, setShowModal] = useState(false);
+  let [tipoCadastro, setTipoCadastro] = useState("");
+  let [dadosCadastro, setDadosCadastro] = useState({
     tipoPessoa: "",
     nome: "",
     rg: "",
@@ -30,13 +32,13 @@ function FormClientReg(props) {
     setTipoCadastro(props.pessoaSelecionada.tipO_CADASTRO);
   }, [props.pessoaSelecionada.pessoA_ID]);
 
-  const monstarObjPessoa = () => {
+  const monstarObj = () => {
     return {
       pessoA_ID: dadosCadastro.pessoaId,
       nomE_PESSOA: dadosCadastro.nome,
-      rg: dadosCadastro.rg,
-      cpf: dadosCadastro.cpf,
-      cnpj: dadosCadastro.cnpj,
+      rg: dadosCadastro.tipoPessoa == "J" ? "" : dadosCadastro.rg,
+      cpf: dadosCadastro.tipoPessoa == "J" ? "" : dadosCadastro.cpf,
+      cnpj: dadosCadastro.tipoPessoa == "F" ? "" : dadosCadastro.cnpj,
       tipO_CADASTRO: tipoCadastro,
       tipO_PESSOA: dadosCadastro.tipoPessoa,
       lisT_ENDERECO: [],
@@ -144,7 +146,7 @@ function FormClientReg(props) {
             <>
               <button
                 className="btn btn-primary btn-options"
-                onClick={() => props.salvarCadastro(monstarObjPessoa())}
+                onClick={() => props.salvarCadastro(monstarObj())}
               >
                 Salvar
               </button>
@@ -155,7 +157,7 @@ function FormClientReg(props) {
             <>
               <button
                 className="btn btn-success btn-options"
-                onClick={() => props.atualizarCadastro(monstarObjPessoa())}
+                onClick={() => props.atualizarCadastro(monstarObj())}
               >
                 Atualizar
               </button>
@@ -176,7 +178,7 @@ function FormClientReg(props) {
           show={showModal}
           onHide={() => setShowModal(false)}
           acaoConfirmada={() => props.deletarCadastro(setShowModal(false))}
-          tituloModalConfirm={"Confirmar exclusão de " + dadosCadastro.nome}
+          tituloModalConfirm={"Confirmar exclusão: " + dadosCadastro.nome}
         />
       </div>
     </>

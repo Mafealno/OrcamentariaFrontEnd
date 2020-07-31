@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./FormRegEmployee.css";
 import { connect } from "react-redux";
-import ModalConfirm from "../../ModalConfirm/ModalConfirm";
+import ModalConfirm from "../../../ModalConfirm/ModalConfirm";
 
 function FormRegEmployee(props) {
-  const [showModal, setShowModal] = useState(false);
-  const [dadosCadastro, setDados] = useState({
+  let [showModal, setShowModal] = useState(false);
+  let [dadosCadastro, setDados] = useState({
     nome: "",
     tipo: "F",
     rg: "",
@@ -206,7 +206,7 @@ function FormRegEmployee(props) {
           show={showModal}
           onHide={() => setShowModal(false)}
           acaoConfirmada={() => props.deletarCadastro(setShowModal(false))}
-          tituloModalConfirm={"Confirmar exclusão de " + dadosCadastro.nome}
+          tituloModalConfirm={"Confirmar exclusão: " + dadosCadastro.nome}
         />
       </div>
     </>

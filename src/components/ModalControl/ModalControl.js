@@ -12,6 +12,7 @@ export default function ModalControl(props) {
         show={props.show}
         size={props.tamanhoModal ?? "lg"}
         aria-labelledby="contained-modal-title-vcenter"
+        className={props.estiloModal}
         centered
       >
         <ModalHeader className={props.estiloModalHeader}>

@@ -5,17 +5,17 @@ import { connect } from "react-redux";
 import * as EquipamentoActions from "../../../store/actions/equipamento";
 
 function BasicRegEquipamento(props) {
-  var [stringBuscaFabricante, setStringBuscaFabricante] = useState("");
-  const [showResultadoFabricante, setShowResultadoFabricante] = useState(false);
-  const [dataFabricantes, setDataFabricantes] = useState([]);
+  let [stringBuscaFabricante, setStringBuscaFabricante] = useState("");
+  let [showResultadoFabricante, setShowResultadoFabricante] = useState(false);
+  let [dataFabricantes, setDataFabricantes] = useState([]);
 
-  const [dadosCadastro, setDadosCadastro] = useState({
+  let [dadosCadastro, setDadosCadastro] = useState({
     equipamentoId: "",
     nomeEquipamento: "",
     descricao: "",
   });
 
-  const [dadosFabricante, setDadosFabricante] = useState({
+  let [dadosFabricante, setDadosFabricante] = useState({
     pessoaId: "",
     nomePessoa: "",
   });

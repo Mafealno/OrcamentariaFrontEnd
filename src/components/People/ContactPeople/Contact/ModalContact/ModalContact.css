@@ -31,12 +31,14 @@ div.input-padrao {
   font-weight: bold;
 }
 
+.close-contact {
+  font-size: 1.5rem;
+  color: white;
+  float: right;
+}
+
 @media (min-width: 1200px) {
   .div-tipo-contato {
     margin-bottom: 0px;
-  }
-
-  .close-modal-contact {
-    font-size: 1.5rem;
   }
 }

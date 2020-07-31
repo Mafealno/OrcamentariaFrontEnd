@@ -1,0 +1,31 @@
+.containerAddItensCartaCobertura {
+  height: 100%;
+  width: 100%;
+  min-width: 95%;
+  margin: 0px 10px;
+  border-radius: 5px;
+}
+
+.containerAddItensCartaCobertura .form {
+  padding: 8%;
+}
+
+.btn-add-item {
+  width: 100%;
+  margin-top: 25px;
+}
+
+.close-add {
+  color: white;
+  float: right;
+  flex-grow: 1;
+  font-size: 15px;
+}
+
+@media (min-width: 1200px) {
+  .containerAddItensCartaCobertura {
+    height: 100%;
+    width: 30%;
+    min-width: 30%;
+  }
+}

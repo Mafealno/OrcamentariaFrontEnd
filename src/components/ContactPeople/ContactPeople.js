@@ -4,7 +4,7 @@ import Contact from "../../Contact/Contact";
 import ModalContact from "../../ModalContact/ModalContact";
 
 export default function ContactPeople(props) {
-  const [modalShow, setModalShow] = useState(false);
+  let [modalShow, setModalShow] = useState(false);
 
   const contatos = [
     {

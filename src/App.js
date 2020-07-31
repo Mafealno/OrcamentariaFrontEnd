@@ -11,6 +11,7 @@ import People from "./components/People";
 import "./components/Material";
 import Material from "./components/Material";
 import Equipamento from "./components/Equipamento";
+import CartaCobertura from "./components/CartaCobertura";
 
 export default function App() {
   return (
@@ -25,14 +26,13 @@ export default function App() {
               icon="fa fa-bars"
               path="/equipamentos"
             />
-            <MenuOption name="Estoque" />
-            <MenuOption name="Estoque" />
-            <MenuOption name="Estoque" />
-            <DropdownButton name="Orçamento" icon="fa fa-bars">
-              <DropdownOption path="pessoas">Orça1</DropdownOption>
-              <DropdownOption>Orça2</DropdownOption>
-              <DropdownOption>Orça3</DropdownOption>
-              <DropdownOption>Orça4</DropdownOption>
+            <DropdownButton name="Carta de Cobertura" icon="fa fa-bars">
+              <DropdownOption path="/cartaCobertura">
+                Cadastrar/Editar
+              </DropdownOption>
+              <DropdownOption path="/buscarCartaCobertura">
+                Buscar
+              </DropdownOption>
             </DropdownButton>
           </SideBar>
         </div>
@@ -47,6 +47,9 @@ export default function App() {
             </Route>
             <Route path="/equipamentos">
               <Equipamento />
+            </Route>
+            <Route path="/cartaCobertura">
+              <CartaCobertura />
             </Route>
           </Switch>
         </div>

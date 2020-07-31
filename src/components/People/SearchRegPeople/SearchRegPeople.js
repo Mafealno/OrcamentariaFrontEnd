@@ -4,8 +4,8 @@ import ResultSearchPeople from "./ResultSearchPeople/ResultSearchPeople";
 import { connect } from "react-redux";
 
 function SearchRegPeople(props) {
-  const [data, setData] = useState([]);
-  const [showResultado, setShowResultado] = useState(false);
+  let [data, setData] = useState([]);
+  let [showResultado, setShowResultado] = useState(false);
   let [stringPesquisa, setStringPesquisa] = useState("");
 
   const buscarPessoa = () => {

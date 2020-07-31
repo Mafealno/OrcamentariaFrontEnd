@@ -10,10 +10,10 @@ export default function Equipamento() {
   return (
     <div id="containerEquipamento">
       <Provider store={store}>
-        <div id="busca">
+        <div id="busca-equipamento">
           <SearchRegEquipamento />
         </div>
-        <div id="principal">
+        <div id="principal-equipamento">
           <BasicRegEquipamento />
         </div>
       </Provider>

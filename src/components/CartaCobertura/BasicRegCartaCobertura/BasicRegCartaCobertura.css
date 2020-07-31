@@ -1,0 +1,57 @@
+#cadastro-basico-carta-cobertura-aux {
+  grid-area: cadastro-basico-carta-cobertura-aux;
+  display: grid;
+  grid-template-areas:
+    "id-material"
+    "nome-material"
+    "fabricante"
+    "descricao-material";
+  grid-template-rows: auto auto auto auto;
+  padding: 3%;
+  padding-bottom: 5%;
+}
+
+#id-material {
+  grid-area: id-material;
+  padding: 0px 10px;
+  width: 100%;
+  height: 100%;
+}
+
+#nome-material {
+  grid-area: nome-material;
+  padding: 0px 10px;
+}
+
+#fabricante {
+  grid-area: fabricante;
+  padding: 8px 10px 0px 7px;
+}
+
+#descricao-material {
+  grid-area: descricao-material;
+  padding: 0px 10px;
+}
+
+@media (min-width: 1200px) {
+  #cadastro-basico-carta-cobertura-aux {
+    grid-area: cadastro-basico-carta-cobertura-aux;
+    display: grid;
+    grid-template-areas:
+      "id-material nome-material descricao-material"
+      "fabricante fabricante descricao-material";
+    grid-template-rows: 50% 50%;
+    grid-template-columns: 13% 47% 40%;
+    padding: 1%;
+  }
+
+  #fabricante {
+    grid-area: fabricante;
+    padding: 0px 10px 0px 7px;
+  }
+
+  textarea {
+    min-height: 75%;
+    max-height: 75%;
+  }
+}

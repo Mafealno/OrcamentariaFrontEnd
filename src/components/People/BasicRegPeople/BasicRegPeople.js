@@ -7,11 +7,11 @@ import { connect } from "react-redux";
 import ToastControl from "../../ToastControl/ToastControl";
 
 function BasicRegPeople(props) {
-  const [tipoCadastro, setTipoCadastro] = useState("naoSelecionado");
-  const [pessoaId, setPessoaId] = useState("");
-  const [showToast, setShowToast] = useState(false);
+  let [tipoCadastro, setTipoCadastro] = useState("naoSelecionado");
+  let [pessoaId, setPessoaId] = useState("");
+  let [showToast, setShowToast] = useState(false);
 
-  const [configToast, setConfigToast] = useState({
+  let [configToast, setConfigToast] = useState({
     estiloToast: "",
     estiloToastHeader: "",
     estiloToastBody: "",
@@ -29,7 +29,7 @@ function BasicRegPeople(props) {
   }, [props.pessoaSelecionada.pessoA_ID]);
 
   const deletarCadastroPessoa = () => {
-    var linkTipo = "/pessoas/";
+    let linkTipo = "/pessoas/";
     if (props.pessoaSelecionada.tipO_CADASTRO == "Funcionario") {
       linkTipo = "/funcionario/";
     }
@@ -69,7 +69,7 @@ function BasicRegPeople(props) {
   };
 
   const salvarCadastroPessoa = (objCadastro) => {
-    var linkTipo = "/pessoas/";
+    let linkTipo = "/pessoas/";
     if (objCadastro.tipO_CADASTRO == "Funcionario") {
       linkTipo = "/funcionario/";
     }
@@ -112,7 +112,7 @@ function BasicRegPeople(props) {
   };
 
   const atualizarCadastroPessoa = (objAtualizar) => {
-    var linkTipo = "/pessoas/";
+    let linkTipo = "/pessoas/";
     if (objAtualizar.tipO_CADASTRO == "Funcionario") {
       linkTipo = "/funcionario/";
     }

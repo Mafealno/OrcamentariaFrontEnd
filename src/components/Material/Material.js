@@ -10,10 +10,10 @@ export default function Material() {
   return (
     <div id="containerMaterial">
       <Provider store={store}>
-        <div id="busca">
+        <div id="busca-material">
           <SearchRegMaterial />
         </div>
-        <div id="principal">
+        <div id="principal-material">
           <BasicRegMaterial />
         </div>
       </Provider>

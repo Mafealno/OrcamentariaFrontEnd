@@ -32,7 +32,7 @@
 fieldset {
   border: black solid 1px;
   padding: 15px;
-  height: 100%;
+  max-height: 40%;
 }
 
 legend {
@@ -58,6 +58,10 @@ legend {
   font-weight: bold;
   color: white;
   margin-left: 15px;
+}
+
+.form-row {
+  margin-bottom: 15px !important;
 }
 
 .col-xl-8,

@@ -5,9 +5,9 @@ import ResultSearchEquipamento from "./ResultSearchEquipamento/ResultSearchEquip
 import { connect } from "react-redux";
 
 function SearchRegEquipamento(props) {
-  const [data, setData] = useState([]);
-  const [stringPesquisa, setStringPesquisa] = useState("");
-  const [showResultado, setShowResultado] = useState(false);
+  let [data, setData] = useState([]);
+  let [stringPesquisa, setStringPesquisa] = useState("");
+  let [showResultado, setShowResultado] = useState(false);
 
   const buscarEquipamento = () => {
     if (!stringPesquisa) {

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from "react";
 import "./ModalAddress.css";
 import ModalControl from "../../../ModalControl/ModalControl";
@@ -5,7 +6,7 @@ import * as PeopleActions from "../../../../store/actions/people";
 import { connect } from "react-redux";
 
 function ModalAddress(props) {
-  const [dadosCadastro, setDadosCadastro] = useState({
+  let [dadosCadastro, setDadosCadastro] = useState({
     pessoaId: "",
     enderecoId: "",
     cep: "",
@@ -62,6 +63,7 @@ function ModalAddress(props) {
       uf: dadosCadastro.uf,
       enderecoPadrao: dadosCadastro.enderecoPadrao,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.novoEnderecoId]);
 
   const montarObj = () => {
@@ -112,9 +114,9 @@ function ModalAddress(props) {
         estiloModalFooter="backgroundModal"
         tituloModal="Novo endereço"
         conteudoHeader={
-          <div className="close-modal-contact">
+          <div className="close-address">
             <a href="#" onClick={() => props.onHide(limparCampos())}>
-              <span className="fa fa-close close-select-people"></span>
+              <span className="fa fa-close close-address" />
             </a>
           </div>
         }
