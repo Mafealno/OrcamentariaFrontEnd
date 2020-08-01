@@ -11,32 +11,32 @@ function Contact(props) {
     fetch(
       props.linkBackEnd +
         "/contato/deletar?contatoId=" +
-        props.objContato.contatO_ID,
+        props.objContato.CONTATO_ID,
       {
         method: "DELETE",
       }
     ).then(() => {
-      props.recarregarPessoa(props.objContato.pessoA_ID, props.linkBackEnd);
+      props.recarregarPessoa(props.objContato.PESSOA_ID, props.linkBackEnd);
     });
   };
 
   return (
     <>
-      {props.objContato.tipO_CONTATO === "Telefone" && (
+      {props.objContato.TIPO_CONTATO === "Telefone" && (
         <FormContactTelefone
           objContato={props.objContato}
           editarContato={(objAtualizar) => props.editarContato(objAtualizar)}
           deletarContato={(objContato) => props.deletarContato(objContato)}
         />
       )}
-      {props.objContato.tipO_CONTATO === "Celular" && (
+      {props.objContato.TIPO_CONTATO === "Celular" && (
         <FormContactCelular
           objContato={props.objContato}
           editarContato={(objAtualizar) => props.editarContato(objAtualizar)}
           deletarContato={(objContato) => props.deletarContato(objContato)}
         />
       )}
-      {props.objContato.tipO_CONTATO === "Email" && (
+      {props.objContato.TIPO_CONTATO === "Email" && (
         <FormContactEmail
           objContato={props.objContato}
           editarContato={(objAtualizar) => props.editarContato(objAtualizar)}

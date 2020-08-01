@@ -27,11 +27,11 @@ function ContactPeople(props) {
   });
 
   useEffect(() => {
-    if (props.pessoaSelecionada.pessoA_ID) {
+    if (props.pessoaSelecionada.PESSOA_ID) {
       setContatoDisplay(
-        props.pessoaSelecionada.lisT_CONTATO.map((contato) => (
+        props.pessoaSelecionada.LIST_CONTATO.map((contato) => (
           <Contact
-            key={contato.contatO_ID}
+            key={contato.CONTATO_ID}
             objContato={contato ?? {}}
             editarContato={(objAtualizar) => editarContatoPessoa(objAtualizar)}
             deletarContato={(objContato) => deletarContatoPessoa(objContato)}
@@ -41,7 +41,7 @@ function ContactPeople(props) {
     } else {
       setContatoDisplay([]);
     }
-  }, [props.pessoaSelecionada.lisT_CONTATO]);
+  }, [props.pessoaSelecionada.LIST_CONTATO]);
 
   const salvarContatoPessoa = (objCadastro) => {
     if (
@@ -58,10 +58,10 @@ function ContactPeople(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        setNovoContatoId(data.contatO_ID);
-        setTipoContato(data.tipO_CONTATO);
-        setContatoPadrao(data.contatO_PADRAO);
-        props.recarregarPessoa(objCadastro.pessoA_ID, props.linkBackEnd);
+        setNovoContatoId(data.CONTATO_ID);
+        setTipoContato(data.TIPO_CONTATO);
+        setContatoPadrao(data.CONTATO_PADRAO);
+        props.recarregarPessoa(objCadastro.PESSOA_ID, props.linkBackEnd);
         setConfigToast({
           estiloToast: "",
           estiloToastHeader: "estiloToastSucesso",
@@ -92,13 +92,13 @@ function ContactPeople(props) {
   };
 
   const editarContatoPessoa = (objAtualizar) => {
-    fetch(props.linkBackEnd + "/contato/" + objAtualizar.contatO_ID, {
+    fetch(props.linkBackEnd + "/contato/" + objAtualizar.CONTATO_ID, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(objAtualizar),
     }).then((data) => {
       if (data.ok) {
-        props.recarregarPessoa(objAtualizar.pessoA_ID, props.linkBackEnd);
+        props.recarregarPessoa(objAtualizar.PESSOA_ID, props.linkBackEnd);
         setConfigToast({
           estiloToast: "",
           estiloToastHeader: "estiloToastSucesso",
@@ -130,13 +130,13 @@ function ContactPeople(props) {
 
   const deletarContatoPessoa = (objContato) => {
     fetch(
-      props.linkBackEnd + "/contato/deletar?contatoId=" + objContato.contatO_ID,
+      props.linkBackEnd + "/contato/deletar?contatoId=" + objContato.CONTATO_ID,
       {
         method: "DELETE",
       }
     ).then((data) => {
       if (data.ok) {
-        props.recarregarPessoa(objContato.pessoA_ID, props.linkBackEnd);
+        props.recarregarPessoa(objContato.PESSOA_ID, props.linkBackEnd);
         setConfigToast({
           estiloToast: "",
           estiloToastHeader: "estiloToastSucesso",
@@ -168,7 +168,7 @@ function ContactPeople(props) {
   return (
     <>
       <div id="container-contato">{contatoDisplay}</div>
-      {props.pessoaSelecionada.pessoA_ID && (
+      {props.pessoaSelecionada.PESSOA_ID && (
         <>
           <div className="btn-adicionar">
             <button

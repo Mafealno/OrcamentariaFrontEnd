@@ -18,51 +18,51 @@ function FormRegEmployee(props) {
 
   const montarObj = () => {
     return {
-      pessoA_ID: dadosCadastro.pessoaId,
-      nomE_PESSOA: dadosCadastro.nome,
-      rg: dadosCadastro.rg,
-      cpf: dadosCadastro.cpf,
-      cnpj: dadosCadastro.cnpj,
-      cargO_FUNCIONARIO: dadosCadastro.cargo,
-      valoR_DIARIO: dadosCadastro.valorDiario,
-      datA_ADMISSAO: dadosCadastro.dataAdmissao,
-      valoR_DIA_TRABALHADO: parseFloat(dadosCadastro.valorDiario),
-      statuS_FUNCIONARIO: dadosCadastro.status,
-      tipO_CADASTRO: "Funcionario",
-      tipO_PESSOA: dadosCadastro.tipo,
-      lisT_ENDERECO: [],
-      lisT_CONTATO: [],
+      PESSOA_ID: dadosCadastro.pessoaId,
+      NOME_PESSOA: dadosCadastro.nome,
+      RG: dadosCadastro.rg,
+      CPF: dadosCadastro.cpf,
+      CNPJ: dadosCadastro.cnpj,
+      CARGO_FUNCIONARIO: dadosCadastro.cargo,
+      VALOR_DIARIO: dadosCadastro.valorDiario,
+      DATA_ADMISSAO: dadosCadastro.dataAdmissao,
+      VALOR_DIA_TRABALHADO: parseFloat(dadosCadastro.valorDiario),
+      STATUS_FUNCIONARIO: dadosCadastro.status,
+      TIPO_CADASTRO: "Funcionario",
+      TIPO_PESSOA: dadosCadastro.tipo,
+      LIST_ENDERECO: [],
+      LIST_CONTATO: [],
     };
   };
 
   useEffect(() => {
     if (
-      props.pessoaSelecionada.pessoA_ID &&
-      props.pessoaSelecionada.tipO_CADASTRO == "Funcionario"
+      props.pessoaSelecionada.PESSOA_ID &&
+      props.pessoaSelecionada.TIPO_CADASTRO == "Funcionario"
     ) {
       fetch(
         props.linkBackEnd +
           "/funcionario/buscar?pessoaId=" +
-          props.pessoaSelecionada.pessoA_ID,
+          props.pessoaSelecionada.PESSOA_ID,
         { method: "GET" }
       )
         .then((response) => response.json())
         .then((data) => {
           setDados({
-            nome: data[0].nomE_PESSOA,
-            tipo: data[0].tipO_PESSOA,
-            rg: data[0].rg,
-            cpf: data[0].cpf,
-            cargo: data[0].cargO_FUNCIONARIO,
-            valorDiario: data[0].valoR_DIA_TRABALHADO,
-            dataAdmissao: data[0].datA_ADMISSAO.replace("T00:00:00", ""),
-            status: data[0].statuS_FUNCIONARIO,
+            nome: data[0].NOME_PESSOA,
+            tipo: data[0].TIPO_PESSOA,
+            rg: data[0].RG,
+            cpf: data[0].CPF,
+            cargo: data[0].CARGO_FUNCIONARIO,
+            valorDiario: data[0].VALOR_DIA_TRABALHADO,
+            dataAdmissao: data[0].DATA_ADMISSAO.replace("T00:00:00", ""),
+            status: data[0].STATUS_FUNCIONARIO,
           });
         });
     }
   }, [
-    props.pessoaSelecionada.pessoA_ID,
-    props.pessoaSelecionada.tipO_CADASTRO,
+    props.pessoaSelecionada.PESSOA_ID,
+    props.pessoaSelecionada.TIPO_CADASTRO,
   ]);
 
   const handleInputChange = (event) => {
@@ -171,7 +171,7 @@ function FormRegEmployee(props) {
           </div>
         </div>
         <div className="form-group">
-          {!props.pessoaSelecionada.pessoA_ID && (
+          {!props.pessoaSelecionada.PESSOA_ID && (
             <>
               <button
                 className="btn btn-primary btn-options"
@@ -181,7 +181,7 @@ function FormRegEmployee(props) {
               </button>
             </>
           )}
-          {props.pessoaSelecionada.pessoA_ID && (
+          {props.pessoaSelecionada.PESSOA_ID && (
             <>
               <button
                 className="btn btn-success btn-options"

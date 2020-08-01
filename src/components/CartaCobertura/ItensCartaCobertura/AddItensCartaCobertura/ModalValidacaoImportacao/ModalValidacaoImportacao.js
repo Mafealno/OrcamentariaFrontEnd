@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ModalValidacaoImportacao.css";
 import ModalControl from "../../../../ModalControl/ModalControl";
+import ModalConfirm from "../../../../ModalConfirm/ModalConfirm";
 import ReactDOM from "react-dom";
 
 export default function ModalValidacaoImportacao(props) {
   let [idLinhaInputAnterior, setIdLinhaInputAnterior] = useState("");
   let [idLinhaBotaoAnterior, setIdLinhaBotaoAnterior] = useState("");
+  let [valorAnterior, setValorAnterior] = useState();
+  let [showModal, setShowModal] = useState(false);
   let [valorEdicao, setValorEdicao] = useState();
   let tabelasValidacao = "";
+
+  useEffect(() => {
+    setIdLinhaInputAnterior("");
+    setIdLinhaBotaoAnterior("");
+  }, [props.show]);
 
   if (props.show) {
     tabelasValidacao = props.dadosValidacao.map((dados) => (
@@ -65,74 +73,76 @@ export default function ModalValidacaoImportacao(props) {
   }
 
   const showEditar = (idSubInput, idSubButton, indexEdicao, salvar) => {
-    if (salvar) {
-      let novoId =
-        idSubInput.split("-")[0] +
-        "-" +
-        idSubInput.split("-")[1] +
-        "-" +
-        document.getElementById("valor-edicao").value;
-      document.getElementById(idSubInput).id = novoId;
-      ReactDOM.render(
-        <>{document.getElementById("valor-edicao").value}</>,
-        document.getElementById(novoId)
-      );
-      setIdLinhaInputAnterior(novoId);
-      ReactDOM.unmountComponentAtNode(document.getElementById(idSubButton));
-      return;
-    }
-
-    if (document.getElementById(idSubInput)) {
-      if (document.getElementById(idSubInput).children.length == 0) {
-        setValorEdicao(document.getElementById(idSubInput).innerHTML);
-      } else {
+    if (!props.cartaCoberturaAprovada) {
+      if (salvar) {
+        let novoId =
+          idSubInput.split("-")[0] +
+          "-" +
+          idSubInput.split("-")[1] +
+          "-" +
+          document.getElementById("valor-edicao").value;
+        document.getElementById(idSubInput).id = novoId;
+        ReactDOM.render(
+          <>{document.getElementById("valor-edicao").value}</>,
+          document.getElementById(novoId)
+        );
+        setIdLinhaInputAnterior(novoId);
+        ReactDOM.unmountComponentAtNode(document.getElementById(idSubButton));
         return;
       }
-    }
 
-    if (idLinhaBotaoAnterior || idLinhaInputAnterior) {
-      ReactDOM.render(
-        <>{valorEdicao}</>,
-        document.getElementById(idLinhaInputAnterior)
-      );
-      ReactDOM.unmountComponentAtNode(
-        document.getElementById(idLinhaBotaoAnterior)
-      );
-    }
-
-    setIdLinhaInputAnterior(idSubInput);
-    setIdLinhaBotaoAnterior(idSubButton);
-
-    setValorEdicao(document.getElementById(idSubInput).innerHTML);
-
-    ReactDOM.render(
-      <input
-        type="text"
-        defaultValue={document.getElementById(idSubInput).innerHTML ?? 0}
-        className="form-control input-editar-espessura"
-        id="valor-edicao"
-        onChange={(event) => setValorEdicao(event.target.value)}
-      />,
-      document.getElementById(idSubInput)
-    );
-
-    ReactDOM.render(
-      <button
-        type="button"
-        className="btn btn-success btn-editar-espessura"
-        onClick={() =>
-          salvarValorEspessura(
-            indexEdicao.split("-")[0],
-            indexEdicao.split("-")[1],
-            idSubInput,
-            idSubButton
-          )
+      if (document.getElementById(idSubInput)) {
+        if (document.getElementById(idSubInput).children.length == 0) {
+          setValorAnterior(document.getElementById(idSubInput).innerHTML);
+        } else {
+          return;
         }
-      >
-        Salvar
-      </button>,
-      document.getElementById(idSubButton)
-    );
+      }
+
+      if (idLinhaBotaoAnterior || idLinhaInputAnterior) {
+        ReactDOM.render(
+          <>{valorAnterior}</>,
+          document.getElementById(idLinhaInputAnterior)
+        );
+        ReactDOM.unmountComponentAtNode(
+          document.getElementById(idLinhaBotaoAnterior)
+        );
+      }
+
+      setIdLinhaInputAnterior(idSubInput);
+      setIdLinhaBotaoAnterior(idSubButton);
+
+      setValorEdicao(document.getElementById(idSubInput).innerHTML);
+
+      ReactDOM.render(
+        <input
+          type="number"
+          defaultValue={document.getElementById(idSubInput).innerHTML ?? 0}
+          className="form-control input-editar-espessura"
+          id="valor-edicao"
+          onChange={(event) => setValorEdicao(event.target.value)}
+        />,
+        document.getElementById(idSubInput)
+      );
+
+      ReactDOM.render(
+        <button
+          type="button"
+          className="btn btn-success btn-editar-espessura"
+          onClick={() =>
+            salvarValorEspessura(
+              indexEdicao.split("-")[0],
+              indexEdicao.split("-")[1],
+              idSubInput,
+              idSubButton
+            )
+          }
+        >
+          Salvar
+        </button>,
+        document.getElementById(idSubButton)
+      );
+    }
   };
 
   const salvarValorEspessura = (
@@ -145,6 +155,15 @@ export default function ModalValidacaoImportacao(props) {
       document.getElementById("valor-edicao").value ?? 0.0;
 
     showEditar(idSubInput, idSubButton, 0, true);
+
+    setValorAnterior(document.getElementById("valor-edicao").value);
+  };
+
+  const montarObj = () => {
+    return {
+      referencia: props.referencia,
+      itens: props.dadosValidacao,
+    };
   };
 
   return (
@@ -176,11 +195,31 @@ export default function ModalValidacaoImportacao(props) {
           </>
         }
         conteudoFooter={
-          <div>
-            <button type="button" className="btn btn-aprovar">
-              Aprovar
-            </button>
-          </div>
+          <>
+            {!props.cartaCoberturaAprovada && (
+              <div>
+                <button
+                  type="button"
+                  className="btn btn-aprovar"
+                  onClick={() => setShowModal(true)}
+                >
+                  Aprovar
+                </button>
+              </div>
+            )}
+            <div>
+              <ModalConfirm
+                show={showModal}
+                onHide={() => setShowModal(false)}
+                acaoConfirmada={() =>
+                  props.aprovarCartaCobertura(montarObj(), props.onHide())
+                }
+                tituloModalConfirm={
+                  "Deseja aprovar importação? Os valores negativos serão zerados."
+                }
+              />
+            </div>
+          </>
         }
       />
     </>

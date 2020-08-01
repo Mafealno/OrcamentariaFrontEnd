@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 
 function ItensCartaCobertura(props) {
   let [keyComponente, setKeyComponente] = useState(0);
-
   let [showToast, setShowToast] = useState(false);
   let [configToast, setConfigToast] = useState({
     estiloToast: "",
@@ -52,11 +51,21 @@ function ItensCartaCobertura(props) {
       <AddItensCartaCobertura
         key={keyComponente}
         keyComponente={keyComponente}
+        aprovarCartaCobertura={(itensCartaCoberturaAprovado) =>
+          aprovarCartaCobertura(itensCartaCoberturaAprovado)
+        }
       />
     );
     setKeyComponente((keyComponente) => keyComponente + 1);
 
     return componenteCriado;
+  };
+
+  const aprovarCartaCobertura = (novoObjCartaCobertura) => {
+    props.adicionarCartaCoberturaSalvar(
+      props.listCartaCoberturaSalvar,
+      novoObjCartaCobertura
+    );
   };
 
   return (
@@ -65,7 +74,7 @@ function ItensCartaCobertura(props) {
         {props.listComponenteItems}
 
         <div id="button-add">
-          {props.materialCartaCobertura.materiaL_ID &&
+          {props.materialCartaCobertura.MATERIAL_ID &&
             props.listComponenteItems.length < 9 && (
               <button
                 type="button"
@@ -102,8 +111,8 @@ function ItensCartaCobertura(props) {
 
 const mapStateToProps = (state) => ({
   listComponenteItems: state.cartaCobertura.listComponenteItems,
-  materialCartaCobertura:
-    state.cartaCobertura.cartaCobertura.materialCartaCobertura,
+  materialCartaCobertura: state.cartaCobertura.materialCartaCobertura,
+  listCartaCoberturaSalvar: state.cartaCobertura.listCartaCoberturaSalvar,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -112,6 +121,16 @@ const mapDispatchToProps = (dispatch) => ({
       cartaCoberturaActions.adicionarComponenteItems(
         listComponenteItems,
         novoComponente
+      )
+    ),
+  adicionarCartaCoberturaSalvar: (
+    listCartaCoberturaSalvar,
+    novoObjCartaCobertura
+  ) =>
+    dispatch(
+      cartaCoberturaActions.adicionarCartaCoberturaSalvar(
+        listCartaCoberturaSalvar,
+        novoObjCartaCobertura
       )
     ),
 });

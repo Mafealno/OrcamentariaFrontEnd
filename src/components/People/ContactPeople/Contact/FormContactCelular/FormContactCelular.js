@@ -11,17 +11,17 @@ export default function FormContactCelular(props) {
       <div
         id="item-contato-celular"
         data-toggle="collapse"
-        data-target={"#opcoes-" + props.objContato.contatO_ID}
-        aria-expanded={"opcoes-" + props.objContato.contatO_ID}
-        aria-controls={"opcoes-" + props.objContato.contatO_ID}
+        data-target={"#opcoes-" + props.objContato.CONTATO_ID}
+        aria-expanded={"opcoes-" + props.objContato.CONTATO_ID}
+        aria-controls={"opcoes-" + props.objContato.CONTATO_ID}
       >
         <div id="tipoContatoCelular">
           <label className="label-contato">Tipo: </label>
-          <label>{props.objContato.tipO_CONTATO}</label>
+          <label>{props.objContato.TIPO_CONTATO}</label>
         </div>
         <div id="contatoCelular">
-          <label>({props.objContato.ddd})</label>
-          <label>{props.objContato.contato}</label>
+          <label>({props.objContato.DDD})</label>
+          <label>{props.objContato.CONTATO}</label>
         </div>
         <div id="contatoPadraoCelular">
           <label className="label-contato">Padrão</label>
@@ -29,13 +29,13 @@ export default function FormContactCelular(props) {
             type="checkbox"
             value="true"
             name="contatoPadrao"
-            checked={props.objContato.contatO_PADRAO}
+            checked={props.objContato.CONTATO_PADRAO}
             readOnly
           />
         </div>
       </div>
       <div
-        id={"opcoes-" + props.objContato.contatO_ID}
+        id={"opcoes-" + props.objContato.CONTATO_ID}
         className="collapse opcoes"
       >
         <button

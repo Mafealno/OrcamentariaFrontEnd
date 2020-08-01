@@ -1,14 +1,14 @@
 import React from "react";
 import "./CartaCobertura.css";
-import "../SearchRegMaterial/SearchRegMaterial";
 import SearchRegMaterial from "./SearchRegMaterial/SearchRegMaterial";
 import BasicRegCartaCobertura from "./BasicRegCartaCobertura/BasicRegCartaCobertura";
 import ItensCartaCobertura from "./ItensCartaCobertura/ItensCartaCobertura";
+import AcoesCartaCobertura from "./AcoesCartaCobertura/AcoesCartaCobertura";
 import { Provider } from "react-redux";
 
 import store from "../../store/store";
 
-export default function CartaCobertura(props) {
+export default function CartaCobertura() {
   return (
     <>
       <div id="containerCartaCobertura">
@@ -16,7 +16,6 @@ export default function CartaCobertura(props) {
           <div id="busca-material-carta-cobertura">
             <SearchRegMaterial />
           </div>
-
           <div id="cadastro-basico-carta-cobertura">
             <BasicRegCartaCobertura />
           </div>
@@ -24,11 +23,7 @@ export default function CartaCobertura(props) {
             <ItensCartaCobertura />
           </div>
           <div id="confirmar-acao">
-            <div>
-              <button type="button" className="btn btn-primary">
-                Salvar
-              </button>
-            </div>
+            <AcoesCartaCobertura />
           </div>
         </Provider>
       </div>

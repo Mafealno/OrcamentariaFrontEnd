@@ -5,6 +5,39 @@ export function selecionarMaterialCartaCobertura(materialCartaCobertura) {
   };
 }
 
+export function adicionarCartaCoberturaSalvar(
+  listCartaCoberturaSalvar,
+  novoObjCartaCobertura
+) {
+  listCartaCoberturaSalvar = [
+    ...listCartaCoberturaSalvar,
+    novoObjCartaCobertura,
+  ];
+
+  return {
+    type: "ADICIONAR_CARTA_COBERTURA_SALVAR",
+    listCartaCoberturaSalvar,
+  };
+}
+
+export function removerCartaCoberturaSalvar(
+  listCartaCoberturaSalvar,
+  ObjCartaCoberturaRemover
+) {
+  const indexComponente = listCartaCoberturaSalvar.indexOf(
+    ObjCartaCoberturaRemover
+  );
+
+  listCartaCoberturaSalvar.splice(indexComponente, 1);
+
+  listCartaCoberturaSalvar = [...listCartaCoberturaSalvar];
+
+  return {
+    type: "REMOVER_CARTA_COBERTURA_SALVAR",
+    listCartaCoberturaSalvar,
+  };
+}
+
 export function adicionarComponenteItems(listComponenteItems, novoComponente) {
   listComponenteItems = [...listComponenteItems, novoComponente];
 
@@ -14,11 +47,11 @@ export function adicionarComponenteItems(listComponenteItems, novoComponente) {
   };
 }
 export function removerComponenteItems(listComponenteItems, keyComponente) {
-  const c = listComponenteItems.find(
+  const componente = listComponenteItems.find(
     (elemento) => elemento.key == keyComponente
   );
 
-  const indexComponente = listComponenteItems.indexOf(c);
+  const indexComponente = listComponenteItems.indexOf(componente);
 
   listComponenteItems.splice(indexComponente, 1);
 

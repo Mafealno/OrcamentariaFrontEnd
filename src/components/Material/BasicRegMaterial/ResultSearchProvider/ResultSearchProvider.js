@@ -5,14 +5,14 @@ export default function ResultSearchProvider(props) {
   const itemDisplay = props.resultados.map((fabricante) => (
     <div
       className="row container-result-provider"
-      key={fabricante.pessoA_ID}
+      key={fabricante.PESSOA_ID}
       onClick={() => props.selecionarFabricante(fabricante)}
     >
       <div className="col-2 item-result item-center">
-        {fabricante.pessoA_ID}
+        {fabricante.PESSOA_ID}
       </div>
       <div className="col-10 item-result item-center">
-        {fabricante.nomE_PESSOA}
+        {fabricante.NOME_PESSOA}
       </div>
     </div>
   ));

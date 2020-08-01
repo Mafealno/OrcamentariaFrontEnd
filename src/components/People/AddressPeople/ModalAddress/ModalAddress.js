@@ -22,30 +22,30 @@ function ModalAddress(props) {
 
   useEffect(() => {
     setDadosCadastro({
-      pessoaId: props.pessoA_ID,
-      enderecoId: props.enderecO_ID,
-      cep: props.cep,
-      logradouro: props.logradouro,
-      numero: props.numerO_ENDERECO,
-      complemento: props.complemento,
-      bairro: props.bairro,
-      cidade: props.cidade,
-      estado: props.estado,
-      uf: props.uf,
-      enderecoPadrao: props.enderecO_PADRAO,
+      pessoaId: props.PESSOA_ID,
+      enderecoId: props.ENDERECO_ID,
+      cep: props.CEP,
+      logradouro: props.LOGRADOURO,
+      numero: props.NUMERO_ENDERECO,
+      complemento: props.COMPLEMENTO,
+      bairro: props.BAIRRO,
+      cidade: props.CIDADE,
+      estado: props.ESTADO,
+      uf: props.UF,
+      enderecoPadrao: props.ENDERECO_PADRAO,
     });
   }, [
-    props.pessoA_ID,
-    props.enderecO_ID,
-    props.cep,
-    props.logradouro,
-    props.numerO_ENDERECO,
-    props.complemento,
-    props.bairro,
-    props.cidade,
-    props.estado,
-    props.uf,
-    props.enderecO_PADRAO,
+    props.PESSOA_ID,
+    props.ENDERECO_ID,
+    props.CEP,
+    props.LOGRADOURO,
+    props.NUMERO_ENDERECO,
+    props.COMPLEMENTO,
+    props.BAIRRO,
+    props.CIDADE,
+    props.ESTADO,
+    props.UF,
+    props.ENDERECO_PADRAO,
     props.show,
   ]);
 
@@ -68,17 +68,17 @@ function ModalAddress(props) {
 
   const montarObj = () => {
     return {
-      pessoA_ID: props.pessoaSelecionada.pessoA_ID,
-      enderecO_ID: dadosCadastro.enderecoId,
-      cep: dadosCadastro.cep,
-      logradouro: dadosCadastro.logradouro,
-      numerO_ENDERECO: dadosCadastro.numero,
-      complemento: dadosCadastro.complemento,
-      bairro: dadosCadastro.bairro,
-      cidade: dadosCadastro.cidade,
-      estado: dadosCadastro.estado,
-      uf: document.querySelector("#form-uf option:checked").innerHTML,
-      enderecO_PADRAO: document.querySelector("#form-endereco-padrao").checked,
+      PESSOA_ID: props.pessoaSelecionada.PESSOA_ID,
+      ENDERECO_ID: dadosCadastro.enderecoId,
+      CEP: dadosCadastro.cep,
+      LOGRADOURO: dadosCadastro.logradouro,
+      NUMERO_ENDERECO: dadosCadastro.numero,
+      COMPLEMENTO: dadosCadastro.complemento,
+      BAIRRO: dadosCadastro.bairro,
+      CIDADE: dadosCadastro.cidade,
+      ESTADO: dadosCadastro.estado,
+      UF: document.querySelector("#form-uf option:checked").innerHTML,
+      ENDERECO_PADRAO: document.querySelector("#form-endereco-padrao").checked,
     };
   };
 
@@ -112,7 +112,9 @@ function ModalAddress(props) {
         estiloModalHeader="backgroundModal tituloModal"
         estiloModalBody="backgroundModal"
         estiloModalFooter="backgroundModal"
-        tituloModal="Novo endereço"
+        tituloModal={
+          dadosCadastro.enderecoId ? "Editar Endereço" : "Novo Endereço"
+        }
         conteudoHeader={
           <div className="close-address">
             <a href="#" onClick={() => props.onHide(limparCampos())}>

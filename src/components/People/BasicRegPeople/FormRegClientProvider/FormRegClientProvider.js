@@ -22,27 +22,27 @@ function FormClientReg(props) {
 
   useEffect(() => {
     setDadosCadastro({
-      nome: props.pessoaSelecionada.nomE_PESSOA,
-      tipoPessoa: props.pessoaSelecionada.tipO_PESSOA,
-      rg: props.pessoaSelecionada.rg ?? "",
-      cpf: props.pessoaSelecionada.cpf ?? "",
-      cnpj: props.pessoaSelecionada.cnpj ?? "",
+      nome: props.pessoaSelecionada.NOME_PESSOA,
+      tipoPessoa: props.pessoaSelecionada.TIPO_PESSOA,
+      rg: props.pessoaSelecionada.RG ?? "",
+      cpf: props.pessoaSelecionada.CPF ?? "",
+      cnpj: props.pessoaSelecionada.CNPJ ?? "",
     });
 
-    setTipoCadastro(props.pessoaSelecionada.tipO_CADASTRO);
-  }, [props.pessoaSelecionada.pessoA_ID]);
+    setTipoCadastro(props.pessoaSelecionada.TIPO_CADASTRO);
+  }, [props.pessoaSelecionada.PESSOA_ID]);
 
   const monstarObj = () => {
     return {
-      pessoA_ID: dadosCadastro.pessoaId,
-      nomE_PESSOA: dadosCadastro.nome,
-      rg: dadosCadastro.tipoPessoa == "J" ? "" : dadosCadastro.rg,
-      cpf: dadosCadastro.tipoPessoa == "J" ? "" : dadosCadastro.cpf,
-      cnpj: dadosCadastro.tipoPessoa == "F" ? "" : dadosCadastro.cnpj,
-      tipO_CADASTRO: tipoCadastro,
-      tipO_PESSOA: dadosCadastro.tipoPessoa,
-      lisT_ENDERECO: [],
-      lisT_CONTATO: [],
+      PESSOA_ID: props.pessoaSelecionada.PESSOA_ID ?? 0,
+      NOME_PESSOA: dadosCadastro.nome,
+      RG: dadosCadastro.tipoPessoa == "J" ? "" : dadosCadastro.rg,
+      CPF: dadosCadastro.tipoPessoa == "J" ? "" : dadosCadastro.cpf,
+      CNPJ: dadosCadastro.tipoPessoa == "F" ? "" : dadosCadastro.cnpj,
+      TIPO_CADASTRO: tipoCadastro,
+      TIPO_PESSOA: dadosCadastro.tipoPessoa,
+      LIST_ENDERECO: [],
+      LIST_CONTATO: [],
     };
   };
 
@@ -142,7 +142,7 @@ function FormClientReg(props) {
           </div>
         )}
         <div className="form-group">
-          {!props.pessoaSelecionada.pessoA_ID && (
+          {!props.pessoaSelecionada.PESSOA_ID && (
             <>
               <button
                 className="btn btn-primary btn-options"
@@ -153,7 +153,7 @@ function FormClientReg(props) {
             </>
           )}
 
-          {props.pessoaSelecionada.pessoA_ID && (
+          {props.pessoaSelecionada.PESSOA_ID && (
             <>
               <button
                 className="btn btn-success btn-options"

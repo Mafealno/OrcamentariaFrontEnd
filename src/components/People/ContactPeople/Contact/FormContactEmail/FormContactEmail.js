@@ -11,16 +11,16 @@ export default function FormContactEmail(props) {
       <div
         id="item-contato-email"
         data-toggle="collapse"
-        data-target={"#opcoes-" + props.objContato.contatO_ID}
-        aria-expanded={"opcoes-" + props.objContato.contatO_ID}
-        aria-controls={"opcoes-" + props.objContato.contatO_ID}
+        data-target={"#opcoes-" + props.objContato.CONTATO_ID}
+        aria-expanded={"opcoes-" + props.objContato.CONTATO_ID}
+        aria-controls={"opcoes-" + props.objContato.CONTATO_ID}
       >
         <div id="tipoContatoEmail">
           <label className="label-contato">Tipo: </label>
-          <label>{props.objContato.tipoContato}</label>
+          <label>{props.objContato.TIPO_CONTATO}</label>
         </div>
         <div id="contatoEmail">
-          <label>{props.objContato.contato}</label>
+          <label>{props.objContato.CONTATO}</label>
         </div>
         <div id="contatoPadraoEmail">
           <label className="label-contato">Padrão</label>
@@ -28,13 +28,13 @@ export default function FormContactEmail(props) {
             type="checkbox"
             value="true"
             name="contatoPadrao"
-            checked={props.objContato.contatO_PADRAO}
+            checked={props.objContato.CONTATO_PADRAO}
             readOnly
           />
         </div>
       </div>
       <div
-        id={"opcoes-" + props.objContato.contatO_ID}
+        id={"opcoes-" + props.objContato.CONTATO_ID}
         className="collapse opcoes"
       >
         <button

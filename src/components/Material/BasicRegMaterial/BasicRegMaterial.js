@@ -23,16 +23,16 @@ function BasicRegMaterial(props) {
 
   useEffect(() => {
     setDadosCadastro({
-      materialId: props.materialSelecionado.materiaL_ID ?? "",
-      nomeMaterial: props.materialSelecionado.nomE_MATERIAL ?? "",
-      descricaoMaterial: props.materialSelecionado.descricaO_MATERIAL ?? "",
-      tipoMaterial: props.materialSelecionado.tipO_MATERIAL ?? "",
+      materialId: props.materialSelecionado.MATERIAL_ID ?? "",
+      nomeMaterial: props.materialSelecionado.NOME_MATERIAL ?? "",
+      descricaoMaterial: props.materialSelecionado.DESCRICAO_MATERIAL ?? "",
+      tipoMaterial: props.materialSelecionado.TIPO_MATERIAL ?? "",
     });
 
-    if (props.materialSelecionado.materiaL_ID) {
+    if (props.materialSelecionado.MATERIAL_ID) {
       setDadosFabricante({
-        pessoaId: props.materialSelecionado.fabricante.pessoA_ID,
-        nomePessoa: props.materialSelecionado.fabricante.nomE_PESSOA,
+        pessoaId: props.materialSelecionado.FABRICANTE.PESSOA_ID,
+        nomePessoa: props.materialSelecionado.FABRICANTE.NOME_PESSOA,
       });
     } else {
       setDadosFabricante({
@@ -40,25 +40,25 @@ function BasicRegMaterial(props) {
         nomePessoa: "",
       });
     }
-  }, [props.materialSelecionado.materiaL_ID]);
+  }, [props.materialSelecionado.MATERIAL_ID]);
 
   const montarObj = () => {
     return {
-      materiaL_ID:
+      MATERIAL_ID:
         dadosCadastro.materialId == "" ? 0 : dadosCadastro.materialId,
-      nomE_MATERIAL: dadosCadastro.nomeMaterial,
-      descricaO_MATERIAL: dadosCadastro.descricaoMaterial,
-      tipO_MATERIAL: dadosCadastro.tipoMaterial,
-      fabricante: {
-        pessoA_ID: dadosFabricante.pessoaId,
-        nomE_PESSOA: dadosFabricante.nomePessoa,
-        rg: "",
-        cpf: "",
-        cnpj: "",
-        tipO_CADASTRO: "",
-        tipO_PESSOA: "",
-        lisT_ENDERECO: [],
-        lisT_CONTATO: [],
+      NOME_MATERIAL: dadosCadastro.nomeMaterial,
+      DESCRICAO_MATERIAL: dadosCadastro.descricaoMaterial,
+      TIPO_MATERIAL: dadosCadastro.tipoMaterial,
+      FABRICANTE: {
+        PESSOA_ID: dadosFabricante.pessoaId,
+        NOME_PESSOA: dadosFabricante.nomePessoa,
+        RG: "",
+        CPF: "",
+        CNPJ: "",
+        TIPO_CADASTRO: "",
+        TIPO_PESSOA: "",
+        LIST_ENDERECO: [],
+        LIST_CONTATO: [],
       },
     };
   };
@@ -71,13 +71,13 @@ function BasicRegMaterial(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        props.recarregarMaterial(data.materiaL_ID, props.linkBackEnd);
+        props.recarregarMaterial(data.MATERIAL_ID, props.linkBackEnd);
       });
   };
 
   const deletarCadastro = () => {
     fetch(
-      props.linkBackEnd + "/material/" + props.materialSelecionado.materiaL_ID,
+      props.linkBackEnd + "/material/" + props.materialSelecionado.MATERIAL_ID,
       {
         method: "DELETE",
       }
@@ -88,7 +88,7 @@ function BasicRegMaterial(props) {
 
   const atualizarCadastro = () => {
     fetch(
-      props.linkBackEnd + "/material/" + props.materialSelecionado.materiaL_ID,
+      props.linkBackEnd + "/material/" + props.materialSelecionado.MATERIAL_ID,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -111,7 +111,7 @@ function BasicRegMaterial(props) {
         .then((data) => {
           setDataFabricantes(
             data.filter((fabricante) => {
-              return fabricante.tipO_CADASTRO == "Fornecedor";
+              return fabricante.TIPO_CADASTRO == "Fornecedor";
             })
           );
           setShowResultadoFabricante(true);
@@ -130,7 +130,7 @@ function BasicRegMaterial(props) {
         .then((data) => {
           setDataFabricantes(
             data.filter((fabricante) => {
-              return fabricante.tipO_CADASTRO == "Fornecedor";
+              return fabricante.TIPO_CADASTRO == "Fornecedor";
             })
           );
           setShowResultadoFabricante(true);
@@ -175,7 +175,7 @@ function BasicRegMaterial(props) {
               id="input-material-id"
               readOnly
             />
-            {props.materialSelecionado.materiaL_ID && (
+            {props.materialSelecionado.MATERIAL_ID && (
               <>
                 <div className="close-select-material">
                   <a href="#" onClick={() => props.selecionarMaterial({})}>
@@ -263,8 +263,8 @@ function BasicRegMaterial(props) {
                       resultados={dataFabricantes}
                       selecionarFabricante={(fabricante) =>
                         setDadosFabricante({
-                          pessoaId: fabricante.pessoA_ID,
-                          nomePessoa: fabricante.nomE_PESSOA,
+                          pessoaId: fabricante.PESSOA_ID,
+                          nomePessoa: fabricante.NOME_PESSOA,
                         })
                       }
                     />
@@ -305,7 +305,7 @@ function BasicRegMaterial(props) {
         </fieldset>
         <div className="form-group width-99-5">
           <div className="form-row options">
-            {!props.materialSelecionado.materiaL_ID && (
+            {!props.materialSelecionado.MATERIAL_ID && (
               <button
                 type="button"
                 className="btn btn-primary btn-options"
@@ -315,7 +315,7 @@ function BasicRegMaterial(props) {
               </button>
             )}
 
-            {props.materialSelecionado.materiaL_ID && (
+            {props.materialSelecionado.MATERIAL_ID && (
               <>
                 <button
                   type="button"

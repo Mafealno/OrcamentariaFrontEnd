@@ -7,6 +7,7 @@ function BasicRegCartaCobertura(props) {
     materialId: "",
     nomeMaterial: "",
     descricaoMaterial: "",
+    tipoMaterial: "",
   });
 
   let [dadosFabricante, setDadosFabricante] = useState({
@@ -16,15 +17,16 @@ function BasicRegCartaCobertura(props) {
 
   useEffect(() => {
     setDadosCadastro({
-      materialId: props.materialCartaCobertura.materiaL_ID ?? "",
-      nomeMaterial: props.materialCartaCobertura.nomE_MATERIAL ?? "",
-      descricaoMaterial: props.materialCartaCobertura.descricaO_MATERIAL ?? "",
+      materialId: props.materialCartaCobertura.MATERIAL_ID ?? "",
+      nomeMaterial: props.materialCartaCobertura.NOME_MATERIAL ?? "",
+      descricaoMaterial: props.materialCartaCobertura.DESCRICAO_MATERIAL ?? "",
+      tipoMaterial: props.materialCartaCobertura.TIPO_MATERIAL ?? "",
     });
 
-    if (props.materialCartaCobertura.materiaL_ID) {
+    if (props.materialCartaCobertura.MATERIAL_ID) {
       setDadosFabricante({
-        pessoaId: props.materialCartaCobertura.fabricante.pessoA_ID,
-        nomePessoa: props.materialCartaCobertura.fabricante.nomE_PESSOA,
+        pessoaId: props.materialCartaCobertura.FABRICANTE.PESSOA_ID,
+        nomePessoa: props.materialCartaCobertura.FABRICANTE.NOME_PESSOA,
       });
     } else {
       setDadosFabricante({
@@ -32,7 +34,7 @@ function BasicRegCartaCobertura(props) {
         nomePessoa: "",
       });
     }
-  }, [props.materialCartaCobertura.materiaL_ID]);
+  }, [props.materialCartaCobertura.MATERIAL_ID]);
 
   return (
     <div id="cadastro-basico-carta-cobertura-aux" className="form">
@@ -81,8 +83,7 @@ function BasicRegCartaCobertura(props) {
 }
 
 const mapStateToProps = (state) => ({
-  materialCartaCobertura:
-    state.cartaCobertura.cartaCobertura.materialCartaCobertura,
+  materialCartaCobertura: state.cartaCobertura.materialCartaCobertura,
 });
 
 const mapDispatchToProps = (dispatch) => ({});

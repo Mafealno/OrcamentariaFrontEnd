@@ -18,6 +18,17 @@
   font-weight: bold;
 }
 
+.close {
+  flex-grow: 1;
+  text-align: right;
+  color: white;
+  font-weight: bold;
+}
+
+.close:hover {
+  color: white;
+}
+
 @media (min-width: 1200px) {
   .estiloPadraoToast {
     top: 0;

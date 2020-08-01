@@ -7,12 +7,12 @@ function ResultSearchPeople({ show, resultados, selecionarPessoa }) {
   const itemDisplay = resultados.map((pessoa) => (
     <div
       className="row container-result"
-      key={pessoa.pessoA_ID}
+      key={pessoa.PESSOA_ID}
       onClick={() => selecionarPessoa(pessoa)}
     >
-      <div className="col-2 item-result item-center">{pessoa.pessoA_ID}</div>
-      <div className="col-5 item-result item-center">{pessoa.nomE_PESSOA}</div>
-      <div className="col-5 item-result">{pessoa.tipO_CADASTRO}</div>
+      <div className="col-2 item-result item-center">{pessoa.PESSOA_ID}</div>
+      <div className="col-5 item-result item-center">{pessoa.NOME_PESSOA}</div>
+      <div className="col-5 item-result">{pessoa.TIPO_CADASTRO}</div>
     </div>
   ));
   return (

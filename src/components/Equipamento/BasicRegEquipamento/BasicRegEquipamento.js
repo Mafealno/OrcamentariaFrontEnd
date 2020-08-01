@@ -22,15 +22,15 @@ function BasicRegEquipamento(props) {
 
   useEffect(() => {
     setDadosCadastro({
-      equipamentoId: props.equipamentoSelecionado.equipamentO_ID ?? "",
-      nomeEquipamento: props.equipamentoSelecionado.nomE_EQUIPAMENTO ?? "",
-      descricao: props.equipamentoSelecionado.descricao ?? "",
+      equipamentoId: props.equipamentoSelecionado.EQUIPAMENTO_ID ?? "",
+      nomeEquipamento: props.equipamentoSelecionado.NOME_EQUIPAMENTO ?? "",
+      descricao: props.equipamentoSelecionado.DESCRICAO ?? "",
     });
 
-    if (props.equipamentoSelecionado.equipamentO_ID) {
+    if (props.equipamentoSelecionado.EQUIPAMENTO_ID) {
       setDadosFabricante({
-        pessoaId: props.equipamentoSelecionado.fabricante.pessoA_ID,
-        nomePessoa: props.equipamentoSelecionado.fabricante.nomE_PESSOA,
+        pessoaId: props.equipamentoSelecionado.FABRICANTE.PESSOA_ID,
+        nomePessoa: props.equipamentoSelecionado.FABRICANTE.NOME_PESSOA,
       });
     } else {
       setDadosFabricante({
@@ -38,24 +38,24 @@ function BasicRegEquipamento(props) {
         nomePessoa: "",
       });
     }
-  }, [props.equipamentoSelecionado.equipamentO_ID]);
+  }, [props.equipamentoSelecionado.EQUIPAMENTO_ID]);
 
   const montarObj = () => {
     return {
-      equipamentO_ID:
+      EQUIPAMENTO_ID:
         dadosCadastro.equipamentoId == "" ? 0 : dadosCadastro.equipamentoId,
-      nomE_EQUIPAMENTO: dadosCadastro.nomeEquipamento,
+      NOME_EQUIPAMENTO: dadosCadastro.nomeEquipamento,
       descricao: dadosCadastro.descricao,
-      fabricante: {
-        pessoA_ID: dadosFabricante.pessoaId,
-        nomE_PESSOA: dadosFabricante.nomePessoa,
+      FABRICANTE: {
+        PESSOA_ID: dadosFabricante.pessoaId,
+        NOME_PESSOA: dadosFabricante.nomePessoa,
         rg: "",
         cpf: "",
         cnpj: "",
-        tipO_CADASTRO: "",
-        tipO_PESSOA: "",
-        lisT_ENDERECO: [],
-        lisT_CONTATO: [],
+        TIPO_CADASTRO: "",
+        TIPO_PESSOA: "",
+        LIST_ENDERECO: [],
+        LIST_CONTATO: [],
       },
     };
   };
@@ -68,7 +68,7 @@ function BasicRegEquipamento(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        props.recarregarEquipamento(data.equipamentO_ID, props.linkBackEnd);
+        props.recarregarEquipamento(data.EQUIPAMENTO_ID, props.linkBackEnd);
       });
   };
 
@@ -76,7 +76,7 @@ function BasicRegEquipamento(props) {
     fetch(
       props.linkBackEnd +
         "/equipamento/" +
-        props.equipamentoSelecionado.equipamentO_ID,
+        props.equipamentoSelecionado.EQUIPAMENTO_ID,
       {
         method: "DELETE",
       }
@@ -89,7 +89,7 @@ function BasicRegEquipamento(props) {
     fetch(
       props.linkBackEnd +
         "/equipamento/" +
-        props.equipamentoSelecionado.equipamentO_ID,
+        props.equipamentoSelecionado.EQUIPAMENTO_ID,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -115,7 +115,7 @@ function BasicRegEquipamento(props) {
         .then((data) => {
           setDataFabricantes(
             data.filter((fabricante) => {
-              return fabricante.tipO_CADASTRO == "Fornecedor";
+              return fabricante.TIPO_CADASTRO == "Fornecedor";
             })
           );
           setShowResultadoFabricante(true);
@@ -134,7 +134,7 @@ function BasicRegEquipamento(props) {
         .then((data) => {
           setDataFabricantes(
             data.filter((fabricante) => {
-              return fabricante.tipO_CADASTRO == "Fornecedor";
+              return fabricante.TIPO_CADASTRO == "Fornecedor";
             })
           );
           setShowResultadoFabricante(true);
@@ -179,7 +179,7 @@ function BasicRegEquipamento(props) {
               id="input-equipamento-id"
               readOnly
             />
-            {props.equipamentoSelecionado.equipamentO_ID && (
+            {props.equipamentoSelecionado.EQUIPAMENTO_ID && (
               <>
                 <div className="close-select-equipamento">
                   <a href="#" onClick={() => props.selecionarEquipamento({})}>
@@ -255,8 +255,8 @@ function BasicRegEquipamento(props) {
                       resultados={dataFabricantes}
                       selecionarFabricante={(fabricante) =>
                         setDadosFabricante({
-                          pessoaId: fabricante.pessoA_ID,
-                          nomePessoa: fabricante.nomE_PESSOA,
+                          pessoaId: fabricante.PESSOA_ID,
+                          nomePessoa: fabricante.NOME_PESSOA,
                         })
                       }
                     />
@@ -297,7 +297,7 @@ function BasicRegEquipamento(props) {
         </fieldset>
         <div className="form-group width-99-5">
           <div className="form-row options">
-            {!props.equipamentoSelecionado.equipamentO_ID && (
+            {!props.equipamentoSelecionado.EQUIPAMENTO_ID && (
               <button
                 type="button"
                 className="btn btn-primary btn-options"
@@ -307,7 +307,7 @@ function BasicRegEquipamento(props) {
               </button>
             )}
 
-            {props.equipamentoSelecionado.equipamentO_ID && (
+            {props.equipamentoSelecionado.EQUIPAMENTO_ID && (
               <>
                 <button
                   type="button"

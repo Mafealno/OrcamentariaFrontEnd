@@ -8,8 +8,8 @@ import { connect } from "react-redux";
 import readXlsxFile from "read-excel-file";
 
 function AddItensCartaCobertura(props) {
-  let [estadoProcesso, setEstadoProcesso] = useState("Importar arquivo");
   let [referencia, setReferencia] = useState("naoSelecionado");
+  let [cartaCoberturaAprovada, setCartaCoberturaAprovada] = useState(undefined);
   let [arquivo, setArquivo] = useState("");
   let [btn, setBtn] = useState(<span></span>);
   let [showModal, setShowModal] = useState(false);
@@ -59,8 +59,12 @@ function AddItensCartaCobertura(props) {
   var dadosArquivo = [];
 
   useEffect(() => {
+    if (cartaCoberturaAprovada) {
+    }
+
     setBtn(btnImportar);
-  }, [arquivo]);
+    removerCartaAprovada();
+  }, [arquivo, referencia]);
 
   const lerArquivo = () => {
     const input = document.getElementById(
@@ -119,7 +123,7 @@ function AddItensCartaCobertura(props) {
               valorHpa = colunas[i];
             } else {
               const item = {
-                hpa: valorHpa,
+                hpa: valorHpa.toString(),
                 espessura: colunas[i],
               };
 
@@ -133,9 +137,102 @@ function AddItensCartaCobertura(props) {
       dadosArquivo.splice(0, 1);
       setDadosValidadao([...dadosArquivo]);
 
-      setEstadoProcesso("Validar");
       setBtn(btnValidar);
     });
+  };
+
+  const tratarValorEspessura = (valorEspessura) => {
+    let valorEspessuraFloat = parseFloat(
+      valorEspessura.toString().replace(",", ".")
+    );
+
+    if (!valorEspessuraFloat) {
+      valorEspessuraFloat = 0;
+    } else if (valorEspessuraFloat < 0) {
+      valorEspessuraFloat = 0;
+    }
+
+    return valorEspessuraFloat;
+  };
+
+  const adicionarCartaCoberturaAprovada = (itensCartaCoberturaAprovado) => {
+    let itensCartaCoberturaFormatado = [];
+
+    itensCartaCoberturaAprovado.itens.forEach((item) => {
+      const tempoFogo = item.nome;
+      item.valores.forEach((valor) => {
+        itensCartaCoberturaFormatado = [
+          ...itensCartaCoberturaFormatado,
+          {
+            ITENS_CARTA_COBERTURA_ID: 0,
+            CARTA_COBERTURA_ID: 0,
+            VALOR_HP_A: valor.hpa,
+            TEMPO_RESISTENCIA_FOGO: tempoFogo,
+            VALOR_ESPESSURA: tratarValorEspessura(valor.espessura),
+          },
+        ];
+      });
+    });
+
+    const cartaCobertura = {
+      CARTA_COBERTURA_ID: 0,
+      REFERENCIA: itensCartaCoberturaAprovado.referencia,
+      MATERIAL: {
+        MATERIAL_ID: props.materialCartaCobertura.MATERIAL_ID,
+        NOME_MATERIAL: props.materialCartaCobertura.NOME_MATERIAL,
+        DESCRICAO_MATERIAL: props.materialCartaCobertura.DESCRICAO_MATERIAL,
+        TIPO_MATERIAL: props.materialCartaCobertura.TIPO_MATERIAL,
+        FABRICANTE: {
+          PESSOA_ID: props.materialCartaCobertura.FABRICANTE.PESSOA_ID,
+          NOME_PESSOA: props.materialCartaCobertura.FABRICANTE.NOME_PESSOA,
+          RG: "",
+          CPF: "",
+          CNPJ: "",
+          TIPO_CADASTRO: "",
+          TIPO_PESSOA: "",
+          LIST_ENDERECO: [],
+          LIST_CONTATO: [],
+        },
+      },
+      LIST_ITENS_CARTA_COBERTURA: itensCartaCoberturaFormatado,
+    };
+
+    setCartaCoberturaAprovada(cartaCobertura);
+
+    props.aprovarCartaCobertura(
+      cartaCobertura,
+      setConfigToast({
+        estiloToast: "",
+        estiloToastHeader: "estiloToastSucesso",
+        estiloToastBody: "estiloToastSucesso",
+        delayToast: 3000,
+        autoHideToast: true,
+        hideToastHeader: false,
+        conteudoHeader: "",
+        conteudoBody: "Importação aprovada com sucesso",
+        closeToast: () => setShowToast(),
+      }),
+      setShowToast(true)
+    );
+  };
+
+  const removerCartaAprovada = () => {
+    if (cartaCoberturaAprovada) {
+      props.removerCartaCoberturaSalvar(
+        props.listCartaCoberturaSalvar,
+        cartaCoberturaAprovada
+      );
+      setCartaCoberturaAprovada(undefined);
+    }
+  };
+
+  const removerComponente = () => {
+    removerCartaAprovada();
+
+    props.removerComponenteItems(
+      props.listComponenteItems,
+      props.keyComponente
+    );
   };
 
   return (
@@ -195,20 +292,19 @@ function AddItensCartaCobertura(props) {
         <ModalValidacaoImportacao
           referencia={referencia}
           show={showModalValidadao}
+          cartaCoberturaAprovada={cartaCoberturaAprovada}
           onHide={() => setShowModalValidacao(false)}
           dadosValidacao={dadosValidacao}
+          aprovarCartaCobertura={(itensCartaCoberturaAprovado) =>
+            adicionarCartaCoberturaAprovada(itensCartaCoberturaAprovado)
+          }
         />
       </div>
       <div>
         <ModalConfirm
           show={showModal}
           onHide={() => setShowModal(false)}
-          acaoConfirmada={() =>
-            props.removerComponenteItems(
-              props.listComponenteItems,
-              props.keyComponente
-            )
-          }
+          acaoConfirmada={() => removerComponente()}
           tituloModalConfirm={"Remover elemento selecionado?"}
         />
       </div>
@@ -231,6 +327,8 @@ function AddItensCartaCobertura(props) {
 
 const mapStateToProps = (state) => ({
   listComponenteItems: state.cartaCobertura.listComponenteItems,
+  materialCartaCobertura: state.cartaCobertura.materialCartaCobertura,
+  listCartaCoberturaSalvar: state.cartaCobertura.listCartaCoberturaSalvar,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -239,6 +337,17 @@ const mapDispatchToProps = (dispatch) => ({
       cartaCoberturaActions.removerComponenteItems(
         listComponenteItems,
         indexComponente
+      )
+    ),
+
+  removerCartaCoberturaSalvar: (
+    listCartaCoberturaSalvar,
+    ObjCartaCoberturaRemover
+  ) =>
+    dispatch(
+      cartaCoberturaActions.removerCartaCoberturaSalvar(
+        listCartaCoberturaSalvar,
+        ObjCartaCoberturaRemover
       )
     ),
 });

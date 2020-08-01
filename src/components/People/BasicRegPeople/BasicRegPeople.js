@@ -24,17 +24,17 @@ function BasicRegPeople(props) {
   });
 
   useEffect(() => {
-    setPessoaId(props.pessoaSelecionada.pessoA_ID ?? "");
-    setTipoCadastro(props.pessoaSelecionada.tipO_CADASTRO ?? "");
-  }, [props.pessoaSelecionada.pessoA_ID]);
+    setPessoaId(props.pessoaSelecionada.PESSOA_ID ?? "");
+    setTipoCadastro(props.pessoaSelecionada.TIPO_CADASTRO ?? "");
+  }, [props.pessoaSelecionada.PESSOA_ID]);
 
   const deletarCadastroPessoa = () => {
     let linkTipo = "/pessoas/";
-    if (props.pessoaSelecionada.tipO_CADASTRO == "Funcionario") {
+    if (props.pessoaSelecionada.TIPO_CADASTRO == "Funcionario") {
       linkTipo = "/funcionario/";
     }
 
-    fetch(props.linkBackEnd + linkTipo + props.pessoaSelecionada.pessoA_ID, {
+    fetch(props.linkBackEnd + linkTipo + props.pessoaSelecionada.PESSOA_ID, {
       method: "DELETE",
     }).then((data) => {
       if (data.ok) {
@@ -70,7 +70,7 @@ function BasicRegPeople(props) {
 
   const salvarCadastroPessoa = (objCadastro) => {
     let linkTipo = "/pessoas/";
-    if (objCadastro.tipO_CADASTRO == "Funcionario") {
+    if (objCadastro.TIPO_CADASTRO == "Funcionario") {
       linkTipo = "/funcionario/";
     }
 
@@ -81,7 +81,7 @@ function BasicRegPeople(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        props.recarregarPessoa(data.pessoA_ID, props.linkBackEnd);
+        props.recarregarPessoa(data.PESSOA_ID, props.linkBackEnd);
         setConfigToast({
           estiloToast: "",
           estiloToastHeader: "estiloToastSucesso",
@@ -113,18 +113,18 @@ function BasicRegPeople(props) {
 
   const atualizarCadastroPessoa = (objAtualizar) => {
     let linkTipo = "/pessoas/";
-    if (objAtualizar.tipO_CADASTRO == "Funcionario") {
+    if (objAtualizar.TIPO_CADASTRO == "Funcionario") {
       linkTipo = "/funcionario/";
     }
 
-    fetch(props.linkBackEnd + linkTipo + props.pessoaSelecionada.pessoA_ID, {
+    fetch(props.linkBackEnd + linkTipo + props.pessoaSelecionada.PESSOA_ID, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(objAtualizar),
     }).then((data) => {
       if (data.ok) {
         props.recarregarPessoa(
-          props.pessoaSelecionada.pessoA_ID,
+          props.pessoaSelecionada.PESSOA_ID,
           props.linkBackEnd
         );
         setConfigToast({
@@ -172,7 +172,7 @@ function BasicRegPeople(props) {
                 onChange={(event) => setPessoaId(event.target.value)}
                 readOnly
               />
-              {props.pessoaSelecionada.pessoA_ID && (
+              {props.pessoaSelecionada.PESSOA_ID && (
                 <>
                   <div className="close-select-people">
                     <a href="#" onClick={() => props.selecionarPessoa({})}>

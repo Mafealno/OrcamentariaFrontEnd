@@ -34,7 +34,7 @@ export default function ModalConfirm(props) {
               <div className="col">
                 <button
                   className="btn btn-success"
-                  onClick={() => props.acaoConfirmada()}
+                  onClick={() => props.acaoConfirmada(props.onHide())}
                 >
                   Confirmar
                 </button>

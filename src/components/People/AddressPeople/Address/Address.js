@@ -9,40 +9,27 @@ function Address(props) {
   let [showModal, setShowModal] = useState(false);
   let [showModalConfirm, setShowModalConfirm] = useState(false);
 
-  const deletarEndereco = () => {
-    fetch(
-      props.linkBackEnd +
-        "/endereco/deletar?enderecoId=" +
-        props.objEndereco.enderecO_ID,
-      {
-        method: "DELETE",
-      }
-    ).then(() => {
-      props.recarregarPessoa(props.objEndereco.pessoA_ID, props.linkBackEnd);
-    });
-  };
-
   return (
     <>
       <div
         id="item-endereco"
         data-toggle="collapse"
-        data-target={"#opcoes-" + props.objEndereco.enderecO_ID}
-        aria-expanded={"opcoes-" + props.objEndereco.enderecO_ID}
-        aria-controls={"opcoes-" + props.objEndereco.enderecO_ID}
+        data-target={"#opcoes-" + props.objEndereco.ENDERECO_ID}
+        aria-expanded={"opcoes-" + props.objEndereco.ENDERECO_ID}
+        aria-controls={"opcoes-" + props.objEndereco.ENDERECO_ID}
       >
         <div id="logradouro">
           <label className="label-endereco">Logradouro: </label>
           <label>
-            {props.objEndereco.logradouro}{" "}
-            {props.objEndereco.numerO_ENDERECO !== false
-              ? ", " + props.objEndereco.numerO_ENDERECO
+            {props.objEndereco.LOGRADOURO}{" "}
+            {props.objEndereco.NUMERO_ENDERECO !== false
+              ? ", " + props.objEndereco.NUMERO_ENDERECO
               : ""}
           </label>
         </div>
         <div id="complemento">
           <label className="label-endereco">Complemento: </label>
-          <label>{props.objEndereco.complemento}</label>
+          <label>{props.objEndereco.COMPLEMENTO}</label>
         </div>
         <div id="enderecoPadrao">
           <label className="label-endereco">Padrão</label>
@@ -50,21 +37,21 @@ function Address(props) {
             type="checkbox"
             value="true"
             name="enderecoPadrao"
-            checked={props.objEndereco.enderecO_PADRAO}
+            checked={props.objEndereco.ENDERECO_PADRAO}
             readOnly
           />
         </div>
         <div id="bairro">
           <label className="label-endereco">Bairro: </label>
-          <label>{props.objEndereco.bairro}</label>
+          <label>{props.objEndereco.BAIRRO}</label>
         </div>
         <div id="cidade">
           <label className="label-endereco">Cidade: </label>
-          <label>{props.objEndereco.cidade}</label>
+          <label>{props.objEndereco.CIDADE}</label>
         </div>
       </div>
       <div
-        id={"opcoes-" + props.objEndereco.enderecO_ID}
+        id={"opcoes-" + props.objEndereco.ENDERECO_ID}
         className="collapse opcoes"
       >
         <button

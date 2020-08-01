@@ -7,14 +7,17 @@ function ResultSearchEquipamento(props) {
   const itemDisplay = props.resultados.map((equipamento) => (
     <div
       className="row container-result"
-      key={equipamento.equipamentO_ID}
+      key={equipamento.EQUIPAMENTO_ID}
       onClick={() => props.selecionarEquipamento(equipamento)}
     >
       <div className="col-2 item-result item-center">
-        {equipamento.equipamentO_ID}
+        {equipamento.EQUIPAMENTO_ID}
       </div>
       <div className="col-5 item-result item-center">
-        {equipamento.nomE_EQUIPAMENTO}
+        {equipamento.NOME_EQUIPAMENTO}
+      </div>
+      <div className="col-5 item-result item-center">
+        {equipamento.FABRICANTE.NOME_PESSOA}
       </div>
     </div>
   ));
@@ -22,7 +25,8 @@ function ResultSearchEquipamento(props) {
     <div id="container-result" className={props.show ? "show-result" : ""}>
       <div className="row result-cabecalho">
         <div className="col-2 item-center">Código</div>
-        <div className="col-10 item-center">Nome</div>
+        <div className="col-5 item-center">Nome</div>
+        <div className="col-5 item-center">Fabricante</div>
       </div>
       {itemDisplay}
     </div>

@@ -7,16 +7,16 @@ function ResultSearchMaterial({ show, resultados, selecionarMaterial }) {
   const itemDisplay = resultados.map((material) => (
     <div
       className="row container-result"
-      key={material.materiaL_ID}
+      key={material.MATERIAL_ID}
       onClick={() => selecionarMaterial(material)}
     >
       <div className="col-2 item-result item-center">
-        {material.materiaL_ID}
+        {material.MATERIAL_ID}
       </div>
       <div className="col-5 item-result item-center">
-        {material.nomE_MATERIAL}
+        {material.NOME_MATERIAL}
       </div>
-      <div className="col-5 item-result">{material.tipO_MATERIAL}</div>
+      <div className="col-5 item-result">{material.TIPO_MATERIAL}</div>
     </div>
   ));
   return (

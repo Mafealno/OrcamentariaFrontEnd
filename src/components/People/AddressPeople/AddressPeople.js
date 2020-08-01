@@ -25,11 +25,11 @@ function AddressPeople(props) {
   });
 
   useEffect(() => {
-    if (props.pessoaSelecionada.pessoA_ID) {
+    if (props.pessoaSelecionada.PESSOA_ID) {
       setEnderecoDisplay(
-        props.pessoaSelecionada.lisT_ENDERECO.map((endereco) => (
+        props.pessoaSelecionada.LIST_ENDERECO.map((endereco) => (
           <Address
-            key={endereco.enderecO_ID}
+            key={endereco.ENDERECO_ID}
             objEndereco={endereco ?? {}}
             editarEndereco={(objAtualizar) =>
               editarEnderecoPessoa(objAtualizar)
@@ -43,7 +43,7 @@ function AddressPeople(props) {
     } else {
       setEnderecoDisplay([]);
     }
-  }, [props.pessoaSelecionada.lisT_CONTATO]);
+  }, [props.pessoaSelecionada.LIST_CONTATO]);
 
   const salvarEnderecoPessoa = (objCadastro) => {
     fetch(props.linkBackEnd + "/endereco/", {
@@ -53,8 +53,8 @@ function AddressPeople(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        setNovoEnderecoId(data.enderecO_ID);
-        props.recarregarPessoa(objCadastro.pessoA_ID, props.linkBackEnd);
+        setNovoEnderecoId(data.ENDERECO_ID);
+        props.recarregarPessoa(objCadastro.PESSOA_ID, props.linkBackEnd);
         setConfigToast({
           estiloToast: "",
           estiloToastHeader: "estiloToastSucesso",
@@ -86,13 +86,13 @@ function AddressPeople(props) {
 
   const editarEnderecoPessoa = (objAtualizar) => {
     console.log(objAtualizar);
-    fetch(props.linkBackEnd + "/endereco/" + objAtualizar.enderecO_ID, {
+    fetch(props.linkBackEnd + "/endereco/" + objAtualizar.ENDERECO_ID, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(objAtualizar),
     }).then((data) => {
       if (data.ok) {
-        props.recarregarPessoa(objAtualizar.pessoA_ID, props.linkBackEnd);
+        props.recarregarPessoa(objAtualizar.PESSOA_ID, props.linkBackEnd);
         setConfigToast({
           estiloToast: "",
           estiloToastHeader: "estiloToastSucesso",
@@ -126,13 +126,13 @@ function AddressPeople(props) {
     fetch(
       props.linkBackEnd +
         "/endereco/deletar?enderecoId=" +
-        objEndereco.enderecO_ID,
+        objEndereco.ENDERECO_ID,
       {
         method: "DELETE",
       }
     ).then((data) => {
       if (data.ok) {
-        props.recarregarPessoa(objEndereco.pessoA_ID, props.linkBackEnd);
+        props.recarregarPessoa(objEndereco.PESSOA_ID, props.linkBackEnd);
         setConfigToast({
           estiloToast: "",
           estiloToastHeader: "estiloToastSucesso",
@@ -166,7 +166,7 @@ function AddressPeople(props) {
     <>
       <div id="container-endereco">{enderecoDisplay}</div>
 
-      {props.pessoaSelecionada.pessoA_ID && (
+      {props.pessoaSelecionada.PESSOA_ID && (
         <div className="btn-adicionar">
           <button
             className="btn btn-primary"

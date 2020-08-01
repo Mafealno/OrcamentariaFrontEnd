@@ -21,28 +21,28 @@ function ModalContact(props) {
 
   useEffect(() => {
     setDadosCadastro({
-      pessoaId: props.pessoA_ID,
-      contatoId: props.contatO_ID,
-      tipoContato: props.tipO_CONTATO,
-      contato: props.contato,
-      ddd: props.ddd ?? "",
-      ramal: props.ramal ?? "",
-      contatoPadrao: props.contatO_PADRAO,
+      pessoaId: props.PESSOA_ID,
+      contatoId: props.CONTATO_ID,
+      tipoContato: props.TIPO_CONTATO,
+      contato: props.CONTATO,
+      ddd: props.DDD ?? "",
+      ramal: props.RAMAL ?? "",
+      contatoPadrao: props.CONTATO_PADRAO,
     });
   }, [
-    props.pessoA_ID,
-    props.contatO_ID,
-    props.tipO_CONTATO,
+    props.PESSOA_ID,
+    props.CONTATO_ID,
+    props.TIPO_CONTATO,
     props.contato,
     props.ddd,
     props.ramal,
-    props.contatO_PADRAO,
+    props.CONTATO_PADRAO,
     props.show,
   ]);
 
   useEffect(() => {
     setDadosCadastro({
-      pessoaId: props.pessoaSelecionada.pessoA_ID,
+      pessoaId: props.pessoaSelecionada.PESSOA_ID,
       contatoId: props.novoContatoId,
       tipoContato: props.tipoContato,
       contato: dadosCadastro.contato,
@@ -61,13 +61,13 @@ function ModalContact(props) {
 
   const montarObj = () => {
     return {
-      pessoA_ID: props.pessoaSelecionada.pessoA_ID,
-      contatO_ID: dadosCadastro.contatoId,
-      tipO_CONTATO: dadosCadastro.tipoContato,
-      contato: dadosCadastro.contato,
-      ddd: dadosCadastro.tipoContato == "Email" ? "" : dadosCadastro.ddd,
-      ramal: dadosCadastro.tipoContato == "Email" ? "" : dadosCadastro.ramal,
-      contatO_PADRAO: document.querySelector("#form-contato-padrao").checked,
+      PESSOA_ID: props.pessoaSelecionada.PESSOA_ID,
+      CONTATO_ID: dadosCadastro.contatoId,
+      TIPO_CONTATO: dadosCadastro.tipoContato,
+      CONTATO: dadosCadastro.contato,
+      DDD: dadosCadastro.tipoContato == "Email" ? "" : dadosCadastro.ddd,
+      RAMAL: dadosCadastro.tipoContato == "Email" ? "" : dadosCadastro.ramal,
+      CONTATO_PADRAO: document.querySelector("#form-contato-padrao").checked,
     };
   };
 
@@ -120,7 +120,9 @@ function ModalContact(props) {
         estiloModalHeader="backgroundModal tituloModal"
         estiloModalBody="backgroundModal"
         estiloModalFooter="backgroundModal"
-        tituloModal="Novo contato"
+        tituloModal={
+          dadosCadastro.contatoId ? "Editar Contato" : "Novo contato"
+        }
         conteudoHeader={
           <div className="close-contact">
             <a href="#" onClick={() => props.onHide(limparCampos())}>
