@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AddItensCartaCobertura.css";
 import * as cartaCoberturaActions from "../../../../store/actions/cartaCobertura";
 import ModalValidacaoImportacao from "./ModalValidacaoImportacao/ModalValidacaoImportacao";
@@ -8,8 +8,10 @@ import { connect } from "react-redux";
 import readXlsxFile from "read-excel-file";
 
 function AddItensCartaCobertura(props) {
-  let [arquivoSelecionado, setArquivoSelecionado] = useState("");
-  let [referecia, setReferencia] = useState("");
+  let [estadoProcesso, setEstadoProcesso] = useState("Importar arquivo");
+  let [referencia, setReferencia] = useState("naoSelecionado");
+  let [arquivo, setArquivo] = useState("");
+  let [btn, setBtn] = useState(<span></span>);
   let [showModal, setShowModal] = useState(false);
   let [showModalValidadao, setShowModalValidacao] = useState(false);
   let [dadosValidacao, setDadosValidadao] = useState([]);
@@ -27,10 +29,43 @@ function AddItensCartaCobertura(props) {
     closeToast: {},
   });
 
+  const btnImportar = [
+    <>
+      <button
+        type="button"
+        onClick={() => lerArquivo()}
+        className="btn btn-danger btn-add-item"
+      >
+        Importar arquivo
+      </button>
+    </>,
+  ];
+  const btnValidar = [
+    <>
+      <button
+        type="button"
+        className="btn btn-success btn-add-item"
+        onClick={() => setShowModalValidacao(true)}
+      >
+        Validar
+      </button>
+    </>,
+  ];
+
+  const carregando = [
+    <span className="fa fa-spinner fa-spin carregando"></span>,
+  ];
+
   var dadosArquivo = [];
 
+  useEffect(() => {
+    setBtn(btnImportar);
+  }, [arquivo]);
+
   const lerArquivo = () => {
-    const input = document.getElementById("caminhoarquivo");
+    const input = document.getElementById(
+      "caminhoarquivo-" + props.keyComponente
+    );
 
     if (input.files.length == 0) {
       setConfigToast({
@@ -47,6 +82,8 @@ function AddItensCartaCobertura(props) {
       setShowToast(true);
       return;
     }
+
+    setBtn(carregando);
 
     if (input.files[0].name.split(".")[1] != "xlsx") {
       setConfigToast({
@@ -95,6 +132,9 @@ function AddItensCartaCobertura(props) {
       });
       dadosArquivo.splice(0, 1);
       setDadosValidadao([...dadosArquivo]);
+
+      setEstadoProcesso("Validar");
+      setBtn(btnValidar);
     });
   };
 
@@ -128,50 +168,32 @@ function AddItensCartaCobertura(props) {
           </div>
           <div className="form-group">
             <div className="form-row">
-              <label>Selecionar arquivo</label>
-              <div className="custom-file">
-                <label className="custom-file-label">
-                  {arquivoSelecionado ? "Arquivo Selecionado" : ""}
-                </label>
+              <div className="col">
+                <label>Selecionar arquivo</label>
                 <input
                   type="file"
-                  className="custom-file-input"
+                  className="form-control"
                   name="fileImportacao"
-                  id="caminhoarquivo"
-                  onChange={(event) =>
-                    setArquivoSelecionado(event.target.value)
-                  }
+                  value={arquivo}
+                  disabled={referencia == "naoSelecionado" ? true : false}
+                  id={"caminhoarquivo-" + props.keyComponente}
+                  onChange={(event) => setArquivo(event.target.value)}
                 />
               </div>
             </div>
           </div>
           <div className="form-group">
-            <div className="form-row">
-              {dadosValidacao.length == 0 && (
-                <button
-                  type="button"
-                  onClick={() => lerArquivo()}
-                  className="btn btn-danger btn-add-item"
-                >
-                  Importar arquivo
-                </button>
-              )}
+            <div className="form-row center">
+              {dadosValidacao.length == 0 && btn}
 
-              {dadosValidacao.length > 0 && (
-                <button
-                  type="button"
-                  className="btn btn-success btn-add-item"
-                  onClick={() => setShowModalValidacao(true)}
-                >
-                  Validar arquivo
-                </button>
-              )}
+              {dadosValidacao.length > 0 && btn}
             </div>
           </div>
         </div>
       </div>
       <div>
         <ModalValidacaoImportacao
+          referencia={referencia}
           show={showModalValidadao}
           onHide={() => setShowModalValidacao(false)}
           dadosValidacao={dadosValidacao}

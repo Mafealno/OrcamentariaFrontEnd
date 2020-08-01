@@ -12,8 +12,8 @@ export default function ModalValidacaoImportacao(props) {
   if (props.show) {
     tabelasValidacao = props.dadosValidacao.map((dados) => (
       <div className="tabela-validacao">
-        <div className="titulo-tabela-validacao">
-          Tempo: {dados.nome} minutos
+        <div className="titulo">
+          Tempo: <span className="titulo-linhas">{dados.nome} minutos</span>
         </div>
         <table className="table table-striped">
           <tr>
@@ -156,18 +156,32 @@ export default function ModalValidacaoImportacao(props) {
         estiloModalHeader="backgroundModal tituloModal"
         estiloModalBody="backgroundModal overflow-x padding-body"
         estiloModalFooter="backgroundModal"
-        tituloModal={props.tituloModalConfirm}
+        tituloModal="Validação dos dados importados"
         conteudoHeader={
-          <div className="close-modal">
-            <a href="#" onClick={() => props.onHide()}>
-              <span className="fa fa-close tituloModal"></span>
-            </a>
-          </div>
+          <>
+            <div className="close-modal">
+              <a href="#" onClick={() => props.onHide()}>
+                <span className="fa fa-close tituloModal"></span>
+              </a>
+            </div>
+          </>
         }
         conteudoBody={
-          <div id="container-tabela-validacao">{tabelasValidacao}</div>
+          <>
+            <div className="titulo titulo-referencia">
+              Referência:{" "}
+              <span className="titulo-linhas">{props.referencia}</span>
+            </div>
+            <div id="container-tabela-validacao">{tabelasValidacao}</div>
+          </>
         }
-        conteudoFooter={<div></div>}
+        conteudoFooter={
+          <div>
+            <button type="button" className="btn btn-aprovar">
+              Aprovar
+            </button>
+          </div>
+        }
       />
     </>
   );

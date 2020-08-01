@@ -1,7 +1,8 @@
 #containerItensCartaCobertura {
   border: 2px solid black;
   height: 100%;
-  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
   padding: 2%;
@@ -13,6 +14,10 @@
   height: 5px;
 }
 
+.props.listComponenteItems {
+  width: 50px;
+}
+
 #button-add {
   margin: 0px 10px;
   height: 100%;
@@ -20,7 +25,4 @@
 
 #button-add button {
   height: 100%;
-}
-
-@media (min-width: 1200px) {
 }

@@ -5,10 +5,9 @@
     "cadastro-basico-carta-cobertura"
     "container-itens-carta-cobertura"
     "confirmar-acao";
-  grid-template-rows: 80px auto 40% 100px;
-  overflow-y: auto;
+  grid-template-rows: 80px auto 400px 100px;
   overflow-x: hidden;
-  height: 100%;
+  width: 98%;
 }
 
 #busca-material-carta-cobertura {
@@ -43,6 +42,7 @@ textarea {
 @media (min-width: 1200px) {
   #containerCartaCobertura {
     grid-template-rows: 100px 30% auto 100px;
+    height: 100%;
   }
 
   #cadastro-basico-carta-cobertura-aux {

@@ -1,7 +1,6 @@
 .containerAddItensCartaCobertura {
-  height: 100%;
-  width: 100%;
   min-width: 95%;
+  max-width: 0.1rem;
   margin: 0px 10px;
   border-radius: 5px;
 }
@@ -15,6 +14,16 @@
   margin-top: 25px;
 }
 
+.carregando {
+  height: 100%;
+  width: 100%;
+  margin-top: 25px;
+}
+
+.center {
+  text-align: center;
+}
+
 .close-add {
   color: white;
   float: right;
@@ -25,7 +34,7 @@
 @media (min-width: 1200px) {
   .containerAddItensCartaCobertura {
     height: 100%;
-    width: 30%;
+    max-width: 0.1rem;
     min-width: 30%;
   }
 }

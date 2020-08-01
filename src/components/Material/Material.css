@@ -4,6 +4,10 @@
     "busca-material"
     "principal-material";
   grid-template-rows: 80px auto auto auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  width: 98%;
 }
 
 #busca-material {

@@ -1,8 +1,8 @@
 .estiloPadraoToast {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
-  margin-top: 10px;
+  margin-top: 11%;
   margin-right: 10px;
 }
 
@@ -16,4 +16,11 @@
   background-color: #d40808;
   color: white;
   font-weight: bold;
+}
+
+@media (min-width: 1200px) {
+  .estiloPadraoToast {
+    top: 0;
+    margin-top: 0px;
+  }
 }

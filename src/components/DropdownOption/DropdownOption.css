@@ -1,4 +1,4 @@
 .dropdown-item:focus,
 .dropdown-item:hover {
-  background-color: red;
+  background-color: #d40808;
 }
