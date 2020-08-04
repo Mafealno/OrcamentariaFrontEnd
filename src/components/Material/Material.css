@@ -6,8 +6,6 @@
   grid-template-rows: 80px auto auto auto;
   overflow-y: auto;
   overflow-x: hidden;
-  height: 100%;
-  width: 98%;
 }
 
 #busca-material {
@@ -26,6 +24,7 @@
 
 @media (min-width: 1200px) {
   #containerMaterial {
-    grid-template-rows: 120px auto auto auto;
+    grid-template-rows: 120px auto;
+    width: 98%;
   }
 }

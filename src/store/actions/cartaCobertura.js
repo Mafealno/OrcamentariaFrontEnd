@@ -14,6 +14,8 @@ export function adicionarCartaCoberturaSalvar(
     novoObjCartaCobertura,
   ];
 
+  listCartaCoberturaSalvar = [...listCartaCoberturaSalvar];
+
   return {
     type: "ADICIONAR_CARTA_COBERTURA_SALVAR",
     listCartaCoberturaSalvar,
@@ -46,6 +48,7 @@ export function adicionarComponenteItems(listComponenteItems, novoComponente) {
     listComponenteItems,
   };
 }
+
 export function removerComponenteItems(listComponenteItems, keyComponente) {
   const componente = listComponenteItems.find(
     (elemento) => elemento.key == keyComponente
@@ -59,6 +62,23 @@ export function removerComponenteItems(listComponenteItems, keyComponente) {
 
   return {
     type: "REMOVER_COMPONENTE_ITEM_LIST",
+    listComponenteItems,
+  };
+}
+
+export function alterarStatusComponente(
+  listComponenteItems,
+  keyComponente,
+  statusAlteracao
+) {
+  listComponenteItems
+    .find((elemento) => elemento.key == keyComponente)
+    .props.statusComponente.splice(0, 1, statusAlteracao);
+
+  listComponenteItems = [...listComponenteItems];
+
+  return {
+    type: "ALTERAR_STATUS_COMPONENTE",
     listComponenteItems,
   };
 }

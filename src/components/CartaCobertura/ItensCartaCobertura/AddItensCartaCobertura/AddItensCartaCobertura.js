@@ -8,11 +8,14 @@ import { connect } from "react-redux";
 import readXlsxFile from "read-excel-file";
 
 function AddItensCartaCobertura(props) {
+  let [componente, setComponente] = useState({
+    statusComponente: props.statusComponente,
+  });
   let [referencia, setReferencia] = useState("naoSelecionado");
   let [cartaCoberturaAprovada, setCartaCoberturaAprovada] = useState(undefined);
   let [arquivo, setArquivo] = useState("");
   let [btn, setBtn] = useState(<span></span>);
-  let [showModal, setShowModal] = useState(false);
+  let [showModalConfirm, setShowModalConfirm] = useState(false);
   let [showModalValidadao, setShowModalValidacao] = useState(false);
   let [dadosValidacao, setDadosValidadao] = useState([]);
   let [showToast, setShowToast] = useState(false);
@@ -28,6 +31,24 @@ function AddItensCartaCobertura(props) {
     conteudoBody: "",
     closeToast: {},
   });
+
+  useEffect(() => {
+    setBtn(btnImportar);
+    removerCartaAprovada();
+    props.alterarStatusComponente(
+      props.listComponenteItems,
+      props.keyComponente,
+      "Criado"
+    );
+  }, [arquivo, referencia, props.materialCartaCobertura.MATERIAL_ID]);
+
+  useEffect(() => {
+    setComponente(
+      props.listComponenteItems.find(
+        (elemento) => elemento.key == props.keyComponente
+      ).props
+    );
+  }, [props.listComponenteItems]);
 
   const btnImportar = [
     <>
@@ -57,14 +78,6 @@ function AddItensCartaCobertura(props) {
   ];
 
   var dadosArquivo = [];
-
-  useEffect(() => {
-    if (cartaCoberturaAprovada) {
-    }
-
-    setBtn(btnImportar);
-    removerCartaAprovada();
-  }, [arquivo, referencia]);
 
   const lerArquivo = () => {
     const input = document.getElementById(
@@ -131,8 +144,12 @@ function AddItensCartaCobertura(props) {
             }
           }
         }
-
         setDadosValidadao([...dadosArquivo, dadosArquivo]);
+        props.alterarStatusComponente(
+          props.listComponenteItems,
+          props.keyComponente,
+          "Importado"
+        );
       });
       dadosArquivo.splice(0, 1);
       setDadosValidadao([...dadosArquivo]);
@@ -197,10 +214,16 @@ function AddItensCartaCobertura(props) {
       LIST_ITENS_CARTA_COBERTURA: itensCartaCoberturaFormatado,
     };
 
+    const objCartaCoberturaCompleto = {
+      keyComponente: props.keyComponente,
+      cartaCobertura: cartaCobertura,
+    };
+
     setCartaCoberturaAprovada(cartaCobertura);
 
-    props.aprovarCartaCobertura(
-      cartaCobertura,
+    props.adicionarCartaCoberturaSalvar(
+      props.listCartaCoberturaSalvar,
+      objCartaCoberturaCompleto,
       setConfigToast({
         estiloToast: "",
         estiloToastHeader: "estiloToastSucesso",
@@ -212,7 +235,12 @@ function AddItensCartaCobertura(props) {
         conteudoBody: "Importação aprovada com sucesso",
         closeToast: () => setShowToast(),
       }),
-      setShowToast(true)
+      setShowToast(true),
+      props.alterarStatusComponente(
+        props.listComponenteItems,
+        props.keyComponente,
+        "Aprovado"
+      )
     );
   };
 
@@ -242,7 +270,7 @@ function AddItensCartaCobertura(props) {
           <div className="form-group">
             <div className="form-row">
               <div className="close-add">
-                <a href="#" onClick={() => setShowModal(true)}>
+                <a href="#" onClick={() => setShowModalConfirm(true)}>
                   <span className="fa fa-close close-add"></span>
                 </a>
               </div>
@@ -286,6 +314,9 @@ function AddItensCartaCobertura(props) {
               {dadosValidacao.length > 0 && btn}
             </div>
           </div>
+          <div className="form-group center status-componente">
+            Status: {componente.statusComponente[0]}
+          </div>
         </div>
       </div>
       <div>
@@ -302,8 +333,8 @@ function AddItensCartaCobertura(props) {
       </div>
       <div>
         <ModalConfirm
-          show={showModal}
-          onHide={() => setShowModal(false)}
+          show={showModalConfirm}
+          onHide={() => setShowModalConfirm(false)}
           acaoConfirmada={() => removerComponente()}
           tituloModalConfirm={"Remover elemento selecionado?"}
         />
@@ -348,6 +379,28 @@ const mapDispatchToProps = (dispatch) => ({
       cartaCoberturaActions.removerCartaCoberturaSalvar(
         listCartaCoberturaSalvar,
         ObjCartaCoberturaRemover
+      )
+    ),
+  adicionarCartaCoberturaSalvar: (
+    listCartaCoberturaSalvar,
+    novoObjCartaCobertura
+  ) =>
+    dispatch(
+      cartaCoberturaActions.adicionarCartaCoberturaSalvar(
+        listCartaCoberturaSalvar,
+        novoObjCartaCobertura
+      )
+    ),
+  alterarStatusComponente: (
+    listComponenteItems,
+    keyComponente,
+    statusAlteracao
+  ) =>
+    dispatch(
+      cartaCoberturaActions.alterarStatusComponente(
+        listComponenteItems,
+        keyComponente,
+        statusAlteracao
       )
     ),
 });

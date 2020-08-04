@@ -6,10 +6,29 @@ ul {
   padding-left: 0px;
 }
 
+.text-center {
+  max-width: 100%;
+}
+
+.img-logo {
+  max-width: 100%;
+}
+
+#sideBar li:first-child {
+  padding: 0px;
+}
+
+.container-logo {
+  max-width: 100%;
+  padding: 3%;
+  text-align: center;
+}
+
 #input-search-menu {
   width: 100%;
   background-clip: padding-box;
   text-align: center;
+  padding: 3%;
 }
 
 .menu-toggle {
@@ -23,7 +42,7 @@ ul {
 .main-menu {
   position: absolute;
   display: flex;
-  left: -210px;
+  left: -250px;
   top: 0;
   height: 100%;
   overflow-y: auto;
@@ -40,7 +59,7 @@ ul {
   -moz-box-shadow: -8px 0 8px rgba(0, 0, 0, 0.5);
   box-shadow: -8px 0 8px rgba(0, 0, 0, 0.5);
   min-height: 100%;
-  width: 200px;
+  max-width: 250px;
   background-color: #d40808;
 }
 
@@ -94,6 +113,16 @@ ul {
   cursor: default;
 }
 
+#sideBar li,
+div.dropdown,
+a.dropdown-item {
+  padding: 20px 0px 20px 0px;
+}
+
+.dropdown-item {
+  color: white;
+}
+
 @supports (position: fixed) {
   .main-menu,
   .main-menu:target + .backdrop,
@@ -125,6 +154,10 @@ ul {
     display: none;
   }
 
+  .main-menu ul {
+    padding: 0;
+  }
+
   .main-menu {
     position: relative;
     left: 0px;
@@ -133,6 +166,7 @@ ul {
 
   .main-menu ul {
     width: 100%;
+    max-width: 100%;
   }
 
   .inSideBar {

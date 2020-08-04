@@ -18,6 +18,12 @@
   font-weight: bold;
 }
 
+.estiloToastPadrao {
+  background-color: blue;
+  color: white;
+  font-weight: bold;
+}
+
 .close {
   flex-grow: 1;
   text-align: right;

@@ -27,11 +27,9 @@ export default function App() {
               path="/equipamentos"
             />
             <DropdownButton name="Carta de Cobertura" icon="fa fa-bars">
-              <DropdownOption path="/cartaCobertura">
-                Cadastrar/Editar
-              </DropdownOption>
+              <DropdownOption path="/cartaCobertura">Cadastrar</DropdownOption>
               <DropdownOption path="/buscarCartaCobertura">
-                Buscar
+                Consultar/Editar
               </DropdownOption>
             </DropdownButton>
           </SideBar>

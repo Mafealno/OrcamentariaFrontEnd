@@ -8,8 +8,7 @@ export default function ModalValidacaoImportacao(props) {
   let [idLinhaInputAnterior, setIdLinhaInputAnterior] = useState("");
   let [idLinhaBotaoAnterior, setIdLinhaBotaoAnterior] = useState("");
   let [valorAnterior, setValorAnterior] = useState();
-  let [showModal, setShowModal] = useState(false);
-  let [valorEdicao, setValorEdicao] = useState();
+  let [showModalConfirm, setShowModalConfirm] = useState(false);
   let tabelasValidacao = "";
 
   useEffect(() => {
@@ -112,15 +111,12 @@ export default function ModalValidacaoImportacao(props) {
       setIdLinhaInputAnterior(idSubInput);
       setIdLinhaBotaoAnterior(idSubButton);
 
-      setValorEdicao(document.getElementById(idSubInput).innerHTML);
-
       ReactDOM.render(
         <input
           type="number"
           defaultValue={document.getElementById(idSubInput).innerHTML ?? 0}
           className="form-control input-editar-espessura"
           id="valor-edicao"
-          onChange={(event) => setValorEdicao(event.target.value)}
         />,
         document.getElementById(idSubInput)
       );
@@ -201,7 +197,7 @@ export default function ModalValidacaoImportacao(props) {
                 <button
                   type="button"
                   className="btn btn-aprovar"
-                  onClick={() => setShowModal(true)}
+                  onClick={() => setShowModalConfirm(true)}
                 >
                   Aprovar
                 </button>
@@ -209,8 +205,8 @@ export default function ModalValidacaoImportacao(props) {
             )}
             <div>
               <ModalConfirm
-                show={showModal}
-                onHide={() => setShowModal(false)}
+                show={showModalConfirm}
+                onHide={() => setShowModalConfirm(false)}
                 acaoConfirmada={() =>
                   props.aprovarCartaCobertura(montarObj(), props.onHide())
                 }

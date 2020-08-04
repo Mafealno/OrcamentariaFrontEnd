@@ -11,6 +11,16 @@ export default function cartaCobertura(state = ESTADO_INICIAL, action) {
         ...state,
         materialCartaCobertura: action.materialCartaCobertura,
       };
+    case "ADICIONAR_CARTA_COBERTURA_SALVAR":
+      return {
+        ...state,
+        listCartaCoberturaSalvar: action.listCartaCoberturaSalvar,
+      };
+    case "REMOVER_CARTA_COBERTURA_SALVAR":
+      return {
+        ...state,
+        listCartaCoberturaSalvar: action.listCartaCoberturaSalvar,
+      };
     case "ADICIONAR_COMPONENTE_ITEM_LIST":
       return {
         ...state,
@@ -21,15 +31,10 @@ export default function cartaCobertura(state = ESTADO_INICIAL, action) {
         ...state,
         listComponenteItems: action.listComponenteItems,
       };
-    case "ADICIONAR_CARTA_COBERTURA_SALVAR":
+    case "ALTERAR_STATUS_COMPONENTE":
       return {
         ...state,
-        listCartaCoberturaSalvar: action.listCartaCoberturaSalvar,
-      };
-    case "REMOVER_CARTA_COBERTURA_SALVAR":
-      return {
-        ...state,
-        listCartaCoberturaSalvar: action.listCartaCoberturaSalvar,
+        listComponenteItems: action.listComponenteItems,
       };
     default:
       return state;

@@ -1,5 +1,6 @@
 import React from "react";
 import "./SideBar.css";
+import logo from "../../img/logo.png";
 
 export default function SideBar(props) {
   return (
@@ -14,10 +15,15 @@ export default function SideBar(props) {
         </a>
         <ul>
           <li>
+            <div className="container-logo">
+              <img src={logo} className="rounded img-logo" />
+            </div>
+          </li>
+          <li>
             <div id="input-search-menu">
               <input
                 type="text"
-                className="form-control-sm"
+                className="form-control"
                 placeholder="Procurar menu"
               ></input>
             </div>

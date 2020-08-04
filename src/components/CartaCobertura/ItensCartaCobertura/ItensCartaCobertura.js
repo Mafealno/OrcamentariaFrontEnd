@@ -44,28 +44,19 @@ function ItensCartaCobertura(props) {
         setShowToast(true);
       }
     }
-  }, [props.listComponenteItems]);
+  }, [props.listComponenteItems.length]);
 
   const criarCompornente = () => {
     const componenteCriado = (
       <AddItensCartaCobertura
         key={keyComponente}
+        statusComponente={["Criado"]}
         keyComponente={keyComponente}
-        aprovarCartaCobertura={(itensCartaCoberturaAprovado) =>
-          aprovarCartaCobertura(itensCartaCoberturaAprovado)
-        }
       />
     );
     setKeyComponente((keyComponente) => keyComponente + 1);
 
     return componenteCriado;
-  };
-
-  const aprovarCartaCobertura = (novoObjCartaCobertura) => {
-    props.adicionarCartaCoberturaSalvar(
-      props.listCartaCoberturaSalvar,
-      novoObjCartaCobertura
-    );
   };
 
   return (

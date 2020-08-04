@@ -23,6 +23,7 @@
 
 @media (min-width: 1200px) {
   #containerEquipamento {
-    grid-template-rows: 120px auto auto auto;
+    grid-template-rows: 120px auto;
+    width: 98%;
   }
 }

@@ -1,4 +1,5 @@
 .dropdown-item:focus,
 .dropdown-item:hover {
   background-color: #d40808;
+  color: white;
 }

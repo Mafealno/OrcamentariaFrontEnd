@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import ModalConfirm from "../../../ModalConfirm/ModalConfirm";
 
 function FormRegEmployee(props) {
-  let [showModal, setShowModal] = useState(false);
+  let [showModalConfirm, setShowModalConfirm] = useState(false);
   let [dadosCadastro, setDados] = useState({
     nome: "",
     tipo: "F",
@@ -192,7 +192,7 @@ function FormRegEmployee(props) {
 
               <button
                 className="btn btn-danger btn-options"
-                onClick={() => setShowModal(true)}
+                onClick={() => setShowModalConfirm(true)}
               >
                 Deletar
               </button>
@@ -203,9 +203,11 @@ function FormRegEmployee(props) {
 
       <div>
         <ModalConfirm
-          show={showModal}
-          onHide={() => setShowModal(false)}
-          acaoConfirmada={() => props.deletarCadastro(setShowModal(false))}
+          show={showModalConfirm}
+          onHide={() => setShowModalConfirm(false)}
+          acaoConfirmada={() =>
+            props.deletarCadastro(setShowModalConfirm(false))
+          }
           tituloModalConfirm={"Confirmar exclusão: " + dadosCadastro.nome}
         />
       </div>

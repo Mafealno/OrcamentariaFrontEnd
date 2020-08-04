@@ -21,16 +21,6 @@
   background-color: #e3e3e3;
 }
 
-#sideBar li,
-div.dropdown,
-a.dropdown-item {
-  padding: 20px 0px 20px 0px;
-}
-
-#sideBar .dropdown-item {
-  padding-left: 10px;
-}
-
 @media (min-width: 1200px) {
   .App {
     display: grid;

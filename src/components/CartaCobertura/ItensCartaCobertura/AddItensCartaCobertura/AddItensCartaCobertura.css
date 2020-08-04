@@ -18,6 +18,11 @@
   height: 100%;
   width: 100%;
   margin-top: 25px;
+  margin-bottom: 22px;
+}
+
+.status-componente {
+  font-weight: bold;
 }
 
 .center {

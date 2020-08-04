@@ -5,7 +5,7 @@
     "cadastro-basico-carta-cobertura"
     "container-itens-carta-cobertura"
     "confirmar-acao";
-  grid-template-rows: 80px auto 400px 100px;
+  grid-template-rows: 80px auto 425px 100px;
   overflow-x: hidden;
   width: 98%;
 }
@@ -32,16 +32,23 @@
 
 #confirmar-acao {
   grid-area: confirmar-acao;
-  padding: 3%;
+  padding: 5% 3%;
 }
 
 textarea {
   min-height: 150px;
 }
 
+@media (max-width: 1200px) and (min-width: 700px) {
+  #containerCartaCobertura {
+    grid-template-rows: 85px 40% 500px 80px;
+    height: 100%;
+  }
+}
+
 @media (min-width: 1200px) {
   #containerCartaCobertura {
-    grid-template-rows: 100px 30% auto 100px;
+    grid-template-rows: 85px 30% auto 80px;
     height: 100%;
   }
 
@@ -65,6 +72,10 @@ textarea {
     grid-area: container-itens-carta-cobertura;
     padding: 3%;
     padding-top: 0%;
+  }
+
+  #confirmar-acao {
+    padding: 0% 3%;
   }
 
   textarea {
