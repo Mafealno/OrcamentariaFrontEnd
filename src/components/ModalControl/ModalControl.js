@@ -22,9 +22,13 @@ export default function ModalControl(props) {
         <ModalBody className={props.estiloModalBody}>
           {props.conteudoBody}
         </ModalBody>
-        <ModalFooter className={props.estiloModalFooter}>
-          {props.conteudoFooter}
-        </ModalFooter>
+        {props.conteudoFooter && (
+          <>
+            <ModalFooter className={props.estiloModalFooter}>
+              {props.conteudoFooter}
+            </ModalFooter>
+          </>
+        )}
       </Modal>
     </>
   );
