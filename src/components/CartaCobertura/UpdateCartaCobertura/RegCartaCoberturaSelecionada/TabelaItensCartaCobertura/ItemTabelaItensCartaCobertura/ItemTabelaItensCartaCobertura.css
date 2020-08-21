@@ -1,0 +1,55 @@
+.container-item-carta-cobertura {
+  max-width: 250px;
+  min-width: 250px;
+  margin: 0px 10px;
+  height: 100%;
+  background-color: rgb(68, 68, 68);
+  padding: 3%;
+}
+
+.titulo-referencia {
+  width: 100%;
+}
+
+.container-btn-opcoes-carta-cobertura {
+  margin-top: 3%;
+  text-align: center;
+}
+
+.btn-opcoes-carta-cobertura {
+  width: 48%;
+  margin: 1%;
+}
+
+.container-tempo-fogo {
+  max-height: 50%;
+  min-height: 50%;
+  max-width: 100%;
+  overflow-x: auto;
+  background-color: #e3e3e3;
+  border-radius: 5px;
+}
+
+.container-item-carta-cobertura .referencia {
+  color: white;
+  width: 100%;
+  min-width: 100% !important;
+}
+
+.titulo-item-carta {
+  font-weight: bold;
+  min-width: 100% !important;
+  margin: 0px;
+  color: white;
+}
+
+.item-tempo-fogo {
+  width: 95%;
+  height: 25px;
+  margin: 5px;
+  background-color: rgb(68, 68, 68);
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  border-radius: 5px;
+}

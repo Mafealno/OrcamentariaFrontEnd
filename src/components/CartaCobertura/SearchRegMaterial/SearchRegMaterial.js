@@ -71,7 +71,7 @@ function SearchRegMaterial(props) {
             className="btn"
             onClick={() => buscarMaterial()}
           >
-            Buscar
+            {props.nomeBotao ?? "Buscar"}
           </button>
         </div>
       </div>

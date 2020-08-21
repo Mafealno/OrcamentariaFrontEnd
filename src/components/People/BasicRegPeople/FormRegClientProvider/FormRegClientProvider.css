@@ -16,8 +16,3 @@ div.form-group div.check {
 .col-xl-6 {
   position: initial !important;
 }
-
-@media (min-width: 1200px) {
-  input.form-check-input {
-  }
-}

@@ -1,0 +1,29 @@
+.estilo-body-modal-visualizacao-itens-carta-cobertura {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+}
+
+.titulo-modal-visualizacao-itens-carta-cobertura {
+  font-weight: bold;
+  font-size: 1.2rem;
+  background-color: rgb(68, 68, 68);
+  height: 40px;
+  color: #d40808;
+  margin: 0 10px;
+}
+
+.titulo-linhas-modal-visualizacao-itens-carta-cobertura {
+  font-weight: bold;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.excluir-modal-visualizacao-itens-carta-cobertura {
+  margin: 0 10px;
+}
+
+.btn-excluir-modal-visualizacao-itens-carta-cobertura {
+  width: 100%;
+  margin-top: 10px;
+}

@@ -34,10 +34,10 @@ function ResultSearchMaterial({ show, resultados, selecionarMaterial }) {
 const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => ({
-  selecionarMaterial: (materialCartaCobertura) =>
+  selecionarMaterial: (materialCartaCoberturaSalvar) =>
     dispatch(
       cartaCoberturaActions.selecionarMaterialCartaCobertura(
-        materialCartaCobertura
+        materialCartaCoberturaSalvar
       )
     ),
 });

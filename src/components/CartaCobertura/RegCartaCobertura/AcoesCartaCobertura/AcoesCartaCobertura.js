@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import "./AcoesCartaCobertura.css";
-import * as cartaCoberturaActions from "../../../store/actions/cartaCobertura";
-import ToastControl from "../../ToastControl/ToastControl";
-import ModalConfirm from "../../ModalConfirm/ModalConfirm";
+import * as cartaCoberturaActions from "../../../../store/actions/cartaCobertura";
+import ToastControl from "../../../ToastControl/ToastControl";
+import ModalConfirm from "../../../ModalConfirm/ModalConfirm";
 
 function AcoesCartaCobertura(props) {
   let [showToast, setShowToast] = useState(false);

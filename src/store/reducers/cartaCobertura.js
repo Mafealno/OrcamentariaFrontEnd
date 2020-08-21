@@ -1,6 +1,11 @@
 const ESTADO_INICIAL = {
-  materialCartaCobertura: {},
+  materialCartaCoberturaSalvar: {},
   listCartaCoberturaSalvar: [],
+  materialCartaCoberturaEditar: {},
+  listCartaCoberturaEditar: [],
+  cartaCoberturaEditar: {
+    LIST_CARTA_COBERTURA: [],
+  },
   listComponenteItems: [],
 };
 
@@ -9,7 +14,7 @@ export default function cartaCobertura(state = ESTADO_INICIAL, action) {
     case "SELCIONAR_MATERIAL_CARTA_COBERTURA":
       return {
         ...state,
-        materialCartaCobertura: action.materialCartaCobertura,
+        materialCartaCoberturaSalvar: action.materialCartaCoberturaSalvar,
       };
     case "ADICIONAR_CARTA_COBERTURA_SALVAR":
       return {
@@ -35,6 +40,29 @@ export default function cartaCobertura(state = ESTADO_INICIAL, action) {
       return {
         ...state,
         listComponenteItems: action.listComponenteItems,
+      };
+    case "LISTAR_CARTA_COBERTURA_INICIADA":
+      return {
+        ...(state = Object.assign({}, state, {
+          listCartaCoberturaEditar: state.listCartaCoberturaEditar,
+        })),
+      };
+    case "LISTAR_CARTA_COBERTURA_CONCLUIDA":
+      let listCartaCoberturaEditar = action.listCartaCoberturaEditar;
+      return {
+        ...(state = Object.assign({}, state, {
+          listCartaCoberturaEditar: listCartaCoberturaEditar,
+        })),
+      };
+    case "SELECIONAR_CARTA_COBERTURA_EDITAR":
+      return {
+        ...state,
+        cartaCoberturaEditar: action.cartaCoberturaEditar,
+      };
+    case "REMOVER_ITEM_CARTA_COBERTURA_EDITAR":
+      return {
+        ...state,
+        cartaCoberturaEditar: action.cartaCoberturaEditar,
       };
     default:
       return state;

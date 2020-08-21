@@ -1,4 +1,4 @@
-#containerCartaCobertura {
+#containerRegCartaCobertura {
   display: grid;
   grid-template-areas:
     "busca-material-carta-cobertura"
@@ -40,14 +40,14 @@ textarea {
 }
 
 @media (max-width: 1200px) and (min-width: 700px) {
-  #containerCartaCobertura {
+  #containerRegCartaCobertura {
     grid-template-rows: 85px 40% 500px 80px;
     height: 100%;
   }
 }
 
 @media (min-width: 1200px) {
-  #containerCartaCobertura {
+  #containerRegCartaCobertura {
     grid-template-rows: 85px 30% auto 80px;
     height: 100%;
   }

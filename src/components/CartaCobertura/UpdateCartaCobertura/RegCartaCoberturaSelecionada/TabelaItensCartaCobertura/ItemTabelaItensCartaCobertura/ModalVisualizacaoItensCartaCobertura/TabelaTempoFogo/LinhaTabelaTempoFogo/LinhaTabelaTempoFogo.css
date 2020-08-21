@@ -1,0 +1,46 @@
+.linha-tabela-tempo-fogo {
+  width: 250px;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+}
+
+.linha-tabela-tempo-fogo:hover {
+  text-decoration: none;
+}
+
+.linha-tabela-tempo-fogo:last-child {
+  border: 0px;
+}
+
+.titulo-tabela-tempo-fogo {
+  font-weight: bold;
+}
+
+.coluna-tabela-tempo-fogo {
+  color: white;
+  text-align: center;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.show-botoes-opcoes {
+  display: flex;
+}
+
+.hidden-botoes-opcoes {
+  display: none;
+}
+
+.botao-opcoes-visualizao {
+  width: 100%;
+}
+
+.input-editar-espessura-linha-tempo-fogo {
+  text-align: center;
+  width: 85%;
+}

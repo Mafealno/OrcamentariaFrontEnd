@@ -1,0 +1,25 @@
+#containerRegCartaCoberturaSelecionada {
+  display: grid;
+  grid-template-areas:
+    "dados-material-fabricante-carta-cobertura-selecionado"
+    "tabela-itens-carta-cobertura-selecionado";
+  grid-template-rows: 470px 470px;
+}
+
+#dados-material-fabricante-carta-cobertura-selecionado {
+  grid-area: dados-material-fabricante-carta-cobertura-selecionado;
+  padding: 0% 0% 3% 0%;
+}
+#tabela-itens-carta-cobertura-selecionado {
+  grid-area: tabela-itens-carta-cobertura-selecionado;
+  padding: 3% 0px;
+  padding-bottom: 0px;
+  height: 100%;
+}
+
+@media (min-width: 1200px) {
+  #containerRegCartaCoberturaSelecionada {
+    grid-template-rows: 210px calc(100% - 210px);
+    height: 100%;
+  }
+}

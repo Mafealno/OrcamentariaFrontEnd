@@ -1,18 +1,57 @@
-export function selecionarMaterialCartaCobertura(materialCartaCobertura) {
+export function selecionarMaterialCartaCobertura(materialCartaCoberturaSalvar) {
   return {
     type: "SELCIONAR_MATERIAL_CARTA_COBERTURA",
-    materialCartaCobertura,
+    materialCartaCoberturaSalvar,
   };
+}
+
+export function selecionarCartaCoberturaEditar(cartaCoberturaEditar) {
+  return {
+    type: "SELECIONAR_CARTA_COBERTURA_EDITAR",
+    cartaCoberturaEditar,
+  };
+}
+
+export function removerItemCartaCoberturaEditar(
+  cartaCoberturaEditar,
+  cartaCoberturaId
+) {
+  if (cartaCoberturaEditar.LIST_CARTA_COBERTURA.length == 1) {
+    cartaCoberturaEditar = {
+      LIST_CARTA_COBERTURA: [],
+    };
+
+    return {
+      type: "SELECIONAR_CARTA_COBERTURA_EDITAR",
+      cartaCoberturaEditar,
+    };
+  } else {
+    const objCartaCobertura = cartaCoberturaEditar.LIST_CARTA_COBERTURA.find(
+      (elemento) => elemento.CARTA_COBERTURA_ID == cartaCoberturaId
+    );
+
+    const indexComponente = cartaCoberturaEditar.LIST_CARTA_COBERTURA.indexOf(
+      objCartaCobertura
+    );
+
+    cartaCoberturaEditar.LIST_CARTA_COBERTURA.splice(indexComponente, 1);
+
+    cartaCoberturaEditar.LIST_CARTA_COBERTURA = [
+      ...cartaCoberturaEditar.LIST_CARTA_COBERTURA,
+    ];
+
+    return {
+      type: "REMOVER_ITEM_CARTA_COBERTURA_EDITAR",
+      cartaCoberturaEditar,
+    };
+  }
 }
 
 export function adicionarCartaCoberturaSalvar(
   listCartaCoberturaSalvar,
   novoObjCartaCobertura
 ) {
-  listCartaCoberturaSalvar = [
-    ...listCartaCoberturaSalvar,
-    novoObjCartaCobertura,
-  ];
+  listCartaCoberturaSalvar.push(novoObjCartaCobertura);
 
   listCartaCoberturaSalvar = [...listCartaCoberturaSalvar];
 
@@ -41,7 +80,9 @@ export function removerCartaCoberturaSalvar(
 }
 
 export function adicionarComponenteItems(listComponenteItems, novoComponente) {
-  listComponenteItems = [...listComponenteItems, novoComponente];
+  listComponenteItems.push(novoComponente);
+
+  listComponenteItems = [...listComponenteItems];
 
   return {
     type: "ADICIONAR_COMPONENTE_ITEM_LIST",
@@ -80,5 +121,20 @@ export function alterarStatusComponente(
   return {
     type: "ALTERAR_STATUS_COMPONENTE",
     listComponenteItems,
+  };
+}
+
+export function listarCartaCoberturaEditar(linkBackEnd) {
+  return (dispatch) => {
+    fetch(linkBackEnd + "/cartaCobertura/", {
+      method: "GET",
+    })
+      .then((responde) => responde.json())
+      .then((data) => {
+        dispatch({
+          type: "LISTAR_CARTA_COBERTURA_CONCLUIDA",
+          listCartaCoberturaEditar: data,
+        });
+      });
   };
 }

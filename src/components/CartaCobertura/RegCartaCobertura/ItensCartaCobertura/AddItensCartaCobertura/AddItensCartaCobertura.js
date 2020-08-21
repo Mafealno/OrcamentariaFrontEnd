@@ -1,9 +1,12 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable eqeqeq */
 import React, { useState, useEffect } from "react";
 import "./AddItensCartaCobertura.css";
-import * as cartaCoberturaActions from "../../../../store/actions/cartaCobertura";
+import * as cartaCoberturaActions from "../../../../../store/actions/cartaCobertura";
 import ModalValidacaoImportacao from "./ModalValidacaoImportacao/ModalValidacaoImportacao";
-import ModalConfirm from "../../../ModalConfirm/ModalConfirm";
-import ToastControl from "../../../ToastControl/ToastControl";
+import ModalConfirm from "../../../../ModalConfirm/ModalConfirm";
+import ToastControl from "../../../../ToastControl/ToastControl";
 import { connect } from "react-redux";
 import readXlsxFile from "read-excel-file";
 
@@ -40,7 +43,8 @@ function AddItensCartaCobertura(props) {
       props.keyComponente,
       "Criado"
     );
-  }, [arquivo, referencia, props.materialCartaCobertura.MATERIAL_ID]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [arquivo, referencia, props.materialCartaCoberturaSalvar.MATERIAL_ID]);
 
   useEffect(() => {
     setComponente(
@@ -128,7 +132,7 @@ function AddItensCartaCobertura(props) {
               nome: cabecalho.replace(/[^\d]+/g, ""),
               valores: [],
             };
-            dadosArquivo = [...dadosArquivo, item];
+            dadosArquivo.push(item);
           });
         } else {
           for (let i = 0; i < dadosArquivo.length; i++) {
@@ -140,7 +144,7 @@ function AddItensCartaCobertura(props) {
                 espessura: colunas[i],
               };
 
-              dadosArquivo[i].valores = [...dadosArquivo[i].valores, item];
+              dadosArquivo[i].valores.push(item);
             }
           }
         }
@@ -195,13 +199,15 @@ function AddItensCartaCobertura(props) {
       CARTA_COBERTURA_ID: 0,
       REFERENCIA: itensCartaCoberturaAprovado.referencia,
       MATERIAL: {
-        MATERIAL_ID: props.materialCartaCobertura.MATERIAL_ID,
-        NOME_MATERIAL: props.materialCartaCobertura.NOME_MATERIAL,
-        DESCRICAO_MATERIAL: props.materialCartaCobertura.DESCRICAO_MATERIAL,
-        TIPO_MATERIAL: props.materialCartaCobertura.TIPO_MATERIAL,
+        MATERIAL_ID: props.materialCartaCoberturaSalvar.MATERIAL_ID,
+        NOME_MATERIAL: props.materialCartaCoberturaSalvar.NOME_MATERIAL,
+        DESCRICAO_MATERIAL:
+          props.materialCartaCoberturaSalvar.DESCRICAO_MATERIAL,
+        TIPO_MATERIAL: props.materialCartaCoberturaSalvar.TIPO_MATERIAL,
         FABRICANTE: {
-          PESSOA_ID: props.materialCartaCobertura.FABRICANTE.PESSOA_ID,
-          NOME_PESSOA: props.materialCartaCobertura.FABRICANTE.NOME_PESSOA,
+          PESSOA_ID: props.materialCartaCoberturaSalvar.FABRICANTE.PESSOA_ID,
+          NOME_PESSOA:
+            props.materialCartaCoberturaSalvar.FABRICANTE.NOME_PESSOA,
           RG: "",
           CPF: "",
           CNPJ: "",
@@ -358,7 +364,8 @@ function AddItensCartaCobertura(props) {
 
 const mapStateToProps = (state) => ({
   listComponenteItems: state.cartaCobertura.listComponenteItems,
-  materialCartaCobertura: state.cartaCobertura.materialCartaCobertura,
+  materialCartaCoberturaSalvar:
+    state.cartaCobertura.materialCartaCoberturaSalvar,
   listCartaCoberturaSalvar: state.cartaCobertura.listCartaCoberturaSalvar,
 });
 

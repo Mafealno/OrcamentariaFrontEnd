@@ -1,0 +1,21 @@
+.form-check-inline-filter {
+  margin: 5px 15px;
+}
+
+.form-check-input {
+  position: initial;
+}
+
+.form-check-inline-filter:first-child {
+  margin-left: 1px;
+}
+
+.padding {
+  padding: 0px 15px;
+}
+
+@media (min-width: 1200px) {
+  .form-check-inline-filter {
+    margin: 15px 25px;
+  }
+}

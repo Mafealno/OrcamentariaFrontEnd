@@ -1,0 +1,46 @@
+#containerUpdateCartaCobertura {
+  display: grid;
+  grid-template-areas:
+    "filtro-carta-cobertura"
+    "list-carta-cobertura"
+    "carta-cobertura-selecionada"
+    "confirmar-acao";
+  grid-template-rows: 80px 425px 425px 100px;
+  overflow-x: hidden;
+}
+
+#filtro-carta-cobertura {
+  grid-area: filtro-carta-cobertura;
+  width: 100%;
+  height: 100%;
+  padding: 3%;
+}
+
+#list-carta-cobertura {
+  grid-area: list-carta-cobertura;
+  padding: 30px 30px;
+}
+
+#carta-cobertura-selecionada {
+  grid-area: carta-cobertura-selecionada;
+  padding: 30px 30px;
+}
+
+#confirmar-acao {
+  grid-area: confirmar-acao;
+  padding: 30px 30px;
+}
+
+@media (min-width: 1200px) {
+  #containerUpdateCartaCobertura {
+    display: grid;
+    grid-template-areas:
+      "filtro-carta-cobertura filtro-carta-cobertura"
+      "list-carta-cobertura carta-cobertura-selecionada"
+      "list-carta-cobertura confirmar-acao";
+    grid-template-rows: 120px calc(100% - 220px) 100px;
+    grid-template-columns: 30% 70%;
+    overflow-x: hidden;
+    height: 100%;
+  }
+}

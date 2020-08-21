@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import "./BasicRegCartaCobertura.css";
+import * as cartaCoberturaActions from "../../../../../store/actions/cartaCobertura";
+
 import { connect } from "react-redux";
 
-function BasicRegCartaCobertura(props) {
+function DadosMaterialCartaCobertura(props) {
   let [dadosCadastro, setDadosCadastro] = useState({
     materialId: "",
     nomeMaterial: "",
+    nomePessoa: "",
     descricaoMaterial: "",
-    tipoMaterial: "",
   });
 
   let [dadosFabricante, setDadosFabricante] = useState({
@@ -16,25 +17,31 @@ function BasicRegCartaCobertura(props) {
   });
 
   useEffect(() => {
-    setDadosCadastro({
-      materialId: props.materialCartaCobertura.MATERIAL_ID ?? "",
-      nomeMaterial: props.materialCartaCobertura.NOME_MATERIAL ?? "",
-      descricaoMaterial: props.materialCartaCobertura.DESCRICAO_MATERIAL ?? "",
-      tipoMaterial: props.materialCartaCobertura.TIPO_MATERIAL ?? "",
-    });
+    if (props.materialCartaCoberturaEditar) {
+      setDadosCadastro({
+        materialId: props.materialCartaCoberturaEditar.MATERIAL_ID,
+        nomeMaterial: props.materialCartaCoberturaEditar.NOME_MATERIAL,
+        descricaoMaterial:
+          props.materialCartaCoberturaEditar.DESCRICAO_MATERIAL,
+      });
 
-    if (props.materialCartaCobertura.MATERIAL_ID) {
       setDadosFabricante({
-        pessoaId: props.materialCartaCobertura.FABRICANTE.PESSOA_ID,
-        nomePessoa: props.materialCartaCobertura.FABRICANTE.NOME_PESSOA,
+        pessoaId: props.materialCartaCoberturaEditar.FABRICANTE.PESSOA_ID,
+        nomePessoa: props.materialCartaCoberturaEditar.FABRICANTE.NOME_PESSOA,
       });
     } else {
+      setDadosCadastro({
+        materialId: "",
+        nomeMaterial: "",
+        descricaoMaterial: "",
+      });
+
       setDadosFabricante({
         pessoaId: "",
         nomePessoa: "",
       });
     }
-  }, [props.materialCartaCobertura.MATERIAL_ID]);
+  }, [props.materialCartaCoberturaEditar]);
 
   return (
     <div id="cadastro-basico-carta-cobertura-aux" className="form">
@@ -83,7 +90,9 @@ function BasicRegCartaCobertura(props) {
 }
 
 const mapStateToProps = (state) => ({
-  materialCartaCobertura: state.cartaCobertura.materialCartaCobertura,
+  materialCartaCoberturaEditar:
+    state.cartaCobertura.cartaCoberturaEditar.MATERIAL,
+  cartaCoberturaEditar: state.cartaCobertura.cartaCoberturaEditar,
 });
 
 const mapDispatchToProps = (dispatch) => ({});
@@ -91,4 +100,4 @@ const mapDispatchToProps = (dispatch) => ({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(BasicRegCartaCobertura);
+)(DadosMaterialCartaCobertura);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./ModalValidacaoImportacao.css";
-import ModalControl from "../../../../ModalControl/ModalControl";
-import ModalConfirm from "../../../../ModalConfirm/ModalConfirm";
+import ModalControl from "../../../../../ModalControl/ModalControl";
+import ModalConfirm from "../../../../../ModalConfirm/ModalConfirm";
 import ReactDOM from "react-dom";
 
 export default function ModalValidacaoImportacao(props) {

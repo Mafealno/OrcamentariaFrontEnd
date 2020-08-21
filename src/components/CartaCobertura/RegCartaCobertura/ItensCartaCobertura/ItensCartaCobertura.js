@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./ItensCartaCobertura.css";
 import AddItensCartaCobertura from "./AddItensCartaCobertura/AddItensCartaCobertura";
-import ToastControl from "../../ToastControl/ToastControl";
-import * as cartaCoberturaActions from "../../../store/actions/cartaCobertura";
+import ToastControl from "../../../ToastControl/ToastControl";
+import * as cartaCoberturaActions from "../../../../store/actions/cartaCobertura";
 import { connect } from "react-redux";
 
 function ItensCartaCobertura(props) {
@@ -65,7 +65,7 @@ function ItensCartaCobertura(props) {
         {props.listComponenteItems}
 
         <div id="button-add">
-          {props.materialCartaCobertura.MATERIAL_ID &&
+          {props.materialCartaCoberturaSalvar.MATERIAL_ID &&
             props.listComponenteItems.length < 9 && (
               <button
                 type="button"
@@ -102,7 +102,8 @@ function ItensCartaCobertura(props) {
 
 const mapStateToProps = (state) => ({
   listComponenteItems: state.cartaCobertura.listComponenteItems,
-  materialCartaCobertura: state.cartaCobertura.materialCartaCobertura,
+  materialCartaCoberturaSalvar:
+    state.cartaCobertura.materialCartaCoberturaSalvar,
   listCartaCoberturaSalvar: state.cartaCobertura.listCartaCoberturaSalvar,
 });
 
