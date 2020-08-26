@@ -14,8 +14,6 @@ function ListCartaCobertura(props) {
     setMaterialListCartaCoberturaDisplay,
   ] = useState([]);
 
-  let [montandoItemCartaCobertura, setMontandoItemCartaCobertura] = useState();
-
   useEffect(() => {
     props.listarCartaCoberturaEditar(props.linkBackEnd);
   }, [props.cartaCoberturaEditar]);
@@ -31,13 +29,11 @@ function ListCartaCobertura(props) {
   }, [listMaterialCartaCobertura.length]);
 
   const ordernarCartaCoberturaPorMaterial = () => {
-    setMontandoItemCartaCobertura(true);
-
     let listCartaCoberturaAux = [];
     props.listCartaCoberturaEditar.map((elementoAtual) => {
       const material = listCartaCoberturaAux.find(
         (elemento) =>
-          (elemento.MATERIAL.MATERIAL_ID = elementoAtual.MATERIAL.MATERIAL_ID)
+          elemento.MATERIAL.MATERIAL_ID == elementoAtual.MATERIAL.MATERIAL_ID
       );
 
       if (material) {
@@ -46,6 +42,7 @@ function ListCartaCobertura(props) {
         const objCartaCobertura = {
           CARTA_COBERTURA_ID: elementoAtual.CARTA_COBERTURA_ID,
           LIST_ITENS_CARTA_COBERTURA: elementoAtual.LIST_ITENS_CARTA_COBERTURA,
+
           REFERENCIA: elementoAtual.REFERENCIA,
         };
 
@@ -60,7 +57,7 @@ function ListCartaCobertura(props) {
         };
 
         const objMaterialCartaCobertura = {
-          MATERIAL: elementoAtual.MATERIAL,
+          MATERIAL: Object.assign({}, elementoAtual.MATERIAL),
           LIST_CARTA_COBERTURA: [objCartaCobertura],
         };
 
@@ -69,7 +66,6 @@ function ListCartaCobertura(props) {
     });
 
     if (listCartaCoberturaAux.length == 0) {
-      setMontandoItemCartaCobertura(false);
       setMaterialListCartaCoberturaDisplay([]);
     } else {
       setMaterialListCartaCobertura(listCartaCoberturaAux);
@@ -87,18 +83,11 @@ function ListCartaCobertura(props) {
     );
 
     setMaterialListCartaCoberturaDisplay(materialListCartaCoberturaDisplayAux);
-
-    setMontandoItemCartaCobertura(false);
   };
 
   return (
     <div id="container-list-carta-cobertura">
-      {montandoItemCartaCobertura && (
-        <div className="container-carregando-list-carta-cobertura">
-          <span className="fa fa-spinner fa-spin"></span>
-        </div>
-      )}
-      {!montandoItemCartaCobertura && listMaterialCartaCoberturaDisplay}
+      {listMaterialCartaCoberturaDisplay}
     </div>
   );
 }
