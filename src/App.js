@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import SideBar from "./components/SideBar";
 import MenuOption from "./components/MenuOption";
@@ -37,23 +37,14 @@ export default function App() {
         </div>
 
         <div id="body">
-          <Switch>
-            <Route path="/pessoas">
-              <People />
-            </Route>
-            <Route path="/materiais">
-              <Material />
-            </Route>
-            <Route path="/equipamentos">
-              <Equipamento />
-            </Route>
-            <Route path="/cartaCobertura">
-              <RegCartaCobertura />
-            </Route>
-            <Route path="/consultarCartaCobertura">
-              <UpdateCartaCobertura />
-            </Route>
-          </Switch>
+          <Route path="/pessoas" render={() => <People />} />
+          <Route path="/materiais" render={() => <Material />} />
+          <Route path="/equipamentos" render={() => <Equipamento />} />
+          <Route path="/cartaCobertura" render={() => <RegCartaCobertura />} />
+          <Route
+            path="/consultarCartaCobertura"
+            render={() => <UpdateCartaCobertura />}
+          />
         </div>
       </Router>
     </div>
