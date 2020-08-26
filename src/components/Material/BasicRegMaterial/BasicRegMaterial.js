@@ -1,13 +1,29 @@
 import React, { useState, useEffect } from "react";
 import "./BasicRegMaterial.css";
 import ResultSearchProvider from "./ResultSearchProvider/ResultSearchProvider";
-import { connect } from "react-redux";
+import ModalConfirm from "../../ModalConfirm/ModalConfirm";
+import ToastControl from "../../ToastControl/ToastControl";
 import * as MaterialActions from "../../../store/actions/material";
+import { connect } from "react-redux";
 
 function BasicRegMaterial(props) {
   let [stringBuscaFabricante, setStringBuscaFabricante] = useState("");
   let [showResultadoFabricante, setShowResultadoFabricante] = useState(false);
   let [dataFabricantes, setDataFabricantes] = useState([]);
+  let [showModalConfirm, setShowModalConfirm] = useState(false);
+  let [showToast, setShowToast] = useState(false);
+
+  let [configToast, setConfigToast] = useState({
+    estiloToast: "",
+    estiloToastHeader: "",
+    estiloToastBody: "",
+    delayToast: 0,
+    autoHideToast: false,
+    hideToastHeader: true,
+    conteudoHeader: "",
+    conteudoBody: "",
+    closeToast: {},
+  });
 
   let [dadosCadastro, setDadosCadastro] = useState({
     materialId: "",
@@ -72,6 +88,32 @@ function BasicRegMaterial(props) {
       .then((response) => response.json())
       .then((data) => {
         props.recarregarMaterial(data.MATERIAL_ID, props.linkBackEnd);
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastSucesso",
+          estiloToastBody: "estiloToastSucesso",
+          delayToast: 3000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: "Cadastro efetuado com sucesso",
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+      })
+      .catch(() => {
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastErro",
+          estiloToastBody: "estiloToastErro",
+          delayToast: 3000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: "Erro ao efetuar cadastro",
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
       });
   };
 
@@ -81,8 +123,35 @@ function BasicRegMaterial(props) {
       {
         method: "DELETE",
       }
-    ).then(() => {
-      props.selecionarMaterial({});
+    ).then((data) => {
+      if (data.ok) {
+        props.selecionarMaterial({});
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastSucesso",
+          estiloToastBody: "estiloToastSucesso",
+          delayToast: 3000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: "Exclusão efetuada com sucesso",
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+      } else {
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastErro",
+          estiloToastBody: "estiloToastErro",
+          delayToast: 3000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: "Erro ao efetuar exclusão",
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+      }
     });
   };
 
@@ -94,8 +163,35 @@ function BasicRegMaterial(props) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(montarObj()),
       }
-    ).then(() => {
-      props.recarregarMaterial(dadosCadastro.materialId, props.linkBackEnd);
+    ).then((data) => {
+      if (data.ok) {
+        props.recarregarMaterial(dadosCadastro.materialId, props.linkBackEnd);
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastSucesso",
+          estiloToastBody: "estiloToastSucesso",
+          delayToast: 3000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: "Atualização efetuada com sucesso",
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+      } else {
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastErro",
+          estiloToastBody: "estiloToastErro",
+          delayToast: 3000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: "Erro ao efetuar atualização",
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+      }
     });
   };
 
@@ -327,7 +423,7 @@ function BasicRegMaterial(props) {
                 <button
                   type="button"
                   className="btn btn-danger btn-options"
-                  onClick={() => deletarCadastro()}
+                  onClick={() => setShowModalConfirm(true)}
                 >
                   Deletar
                 </button>
@@ -335,6 +431,29 @@ function BasicRegMaterial(props) {
             )}
           </div>
         </div>
+      </div>
+      <div>
+        <ToastControl
+          showToast={showToast}
+          closeToast={configToast.closeToast}
+          delayToast={configToast.delayToast}
+          autoHideToast={configToast.autoHideToast}
+          estiloToastHeader={configToast.estiloToastHeader}
+          estiloToastBody={configToast.estiloToastBody}
+          hideToastHeader={configToast.hideToastHeader}
+          conteudoHeader={configToast.conteudoHeader}
+          conteudoBody={configToast.conteudoBody}
+        ></ToastControl>
+      </div>
+      <div>
+        <ModalConfirm
+          show={showModalConfirm}
+          onHide={() => setShowModalConfirm(false)}
+          acaoConfirmada={() => deletarCadastro()}
+          tituloModalConfirm={
+            "Confirma exclusão? O dados não poderão ser recuperados"
+          }
+        />
       </div>
     </div>
   );
