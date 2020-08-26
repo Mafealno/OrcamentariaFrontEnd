@@ -10,6 +10,7 @@ function TabelaTempoFogo(props) {
     setLinhaTempoFogoDisplay(
       props.tempoFogo.LIST_ITENS_CARTA_COBERTURA.map((itemCartaCobertura) => (
         <LinhaTabelaTempoFogo
+          key={itemCartaCobertura.ITENS_CARTA_COBERTURA_ID}
           tempoResistenciaFogo={props.tempoFogo.TEMPO_RESISTENCIA_FOGO}
           cartaCoberturaId={itemCartaCobertura.CARTA_COBERTURA_ID}
           itensCartaCoberturaId={itemCartaCobertura.ITENS_CARTA_COBERTURA_ID}

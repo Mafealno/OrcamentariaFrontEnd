@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from "react";
 import "./AddItensCartaCobertura.css";
 import * as cartaCoberturaActions from "../../../../../store/actions/cartaCobertura";
-import ModalValidacaoImportacao from "./ModalValidacaoImportacao/ModalValidacaoImportacao";
+import ModalVisualizacaoItensCartaCobertura from "../../../../CartaCobertura/ModalVisualizacaoItensCartaCobertura/ModalVisualizacaoItensCartaCobertura";
 import ModalConfirm from "../../../../ModalConfirm/ModalConfirm";
 import ToastControl from "../../../../ToastControl/ToastControl";
 import { connect } from "react-redux";
@@ -19,9 +19,10 @@ function AddItensCartaCobertura(props) {
   let [arquivo, setArquivo] = useState("");
   let [btn, setBtn] = useState(<span></span>);
   let [showModalConfirm, setShowModalConfirm] = useState(false);
-  let [showModalValidadao, setShowModalValidacao] = useState(false);
-  let [dadosValidacao, setDadosValidadao] = useState([]);
+  let [showModalVisualizacao, setShowModalVisualizacao] = useState(false);
+  let [dadosValidacao, setDadosValidacao] = useState([]);
   let [showToast, setShowToast] = useState(false);
+  let [idLinha, setIdLinha] = useState(0);
 
   let [configToast, setConfigToast] = useState({
     estiloToast: "",
@@ -70,7 +71,7 @@ function AddItensCartaCobertura(props) {
       <button
         type="button"
         className="btn btn-success btn-add-item"
-        onClick={() => setShowModalValidacao(true)}
+        onClick={() => setShowModalVisualizacao(true)}
       >
         Validar
       </button>
@@ -129,8 +130,8 @@ function AddItensCartaCobertura(props) {
         if (linhas.indexOf(colunas) == 0) {
           colunas.forEach((cabecalho) => {
             const item = {
-              nome: cabecalho.replace(/[^\d]+/g, ""),
-              valores: [],
+              TEMPO_RESISTENCIA_FOGO: cabecalho.replace(/[^\d]+/g, ""),
+              LIST_ITENS_CARTA_COBERTURA: [],
             };
             dadosArquivo.push(item);
           });
@@ -139,16 +140,19 @@ function AddItensCartaCobertura(props) {
             if (i == 0) {
               valorHpa = colunas[i];
             } else {
+              setIdLinha((idLinha = idLinha + 1));
+
               const item = {
-                hpa: valorHpa.toString(),
-                espessura: colunas[i],
+                idLinha: idLinha + dadosArquivo[i].TEMPO_RESISTENCIA_FOGO,
+                VALOR_HP_A: valorHpa.toString(),
+                VALOR_ESPESSURA: colunas[i],
               };
 
-              dadosArquivo[i].valores.push(item);
+              dadosArquivo[i].LIST_ITENS_CARTA_COBERTURA.push(item);
             }
           }
         }
-        setDadosValidadao([...dadosArquivo, dadosArquivo]);
+        setDadosValidacao([...dadosArquivo, dadosArquivo]);
         props.alterarStatusComponente(
           props.listComponenteItems,
           props.keyComponente,
@@ -156,7 +160,7 @@ function AddItensCartaCobertura(props) {
         );
       });
       dadosArquivo.splice(0, 1);
-      setDadosValidadao([...dadosArquivo]);
+      setDadosValidacao([...dadosArquivo]);
 
       setBtn(btnValidar);
     });
@@ -180,16 +184,16 @@ function AddItensCartaCobertura(props) {
     let itensCartaCoberturaFormatado = [];
 
     itensCartaCoberturaAprovado.itens.forEach((item) => {
-      const tempoFogo = item.nome;
-      item.valores.forEach((valor) => {
+      const tempoFogo = item.TEMPO_RESISTENCIA_FOGO;
+      item.LIST_ITENS_CARTA_COBERTURA.forEach((valor) => {
         itensCartaCoberturaFormatado = [
           ...itensCartaCoberturaFormatado,
           {
             ITENS_CARTA_COBERTURA_ID: 0,
             CARTA_COBERTURA_ID: 0,
-            VALOR_HP_A: valor.hpa,
+            VALOR_HP_A: valor.VALOR_HP_A,
             TEMPO_RESISTENCIA_FOGO: tempoFogo,
-            VALOR_ESPESSURA: tratarValorEspessura(valor.espessura),
+            VALOR_ESPESSURA: tratarValorEspessura(valor.VALOR_ESPESSURA),
           },
         ];
       });
@@ -248,6 +252,56 @@ function AddItensCartaCobertura(props) {
         "Aprovado"
       )
     );
+  };
+
+  const deletarItensCartaCobertura = (tempoResistenciaFogo, idLinha) => {
+    const componentePai = dadosValidacao.find(
+      (elemento) => elemento.TEMPO_RESISTENCIA_FOGO == tempoResistenciaFogo
+    );
+
+    const indexComponentePai = dadosValidacao.indexOf(componentePai);
+
+    const componenteFilho = componentePai.LIST_ITENS_CARTA_COBERTURA.find(
+      (elemento) => elemento.idLinha == idLinha
+    );
+
+    const indexComponenteFilho = componentePai.LIST_ITENS_CARTA_COBERTURA.indexOf(
+      componenteFilho
+    );
+
+    dadosValidacao[indexComponentePai].LIST_ITENS_CARTA_COBERTURA.splice(
+      indexComponenteFilho,
+      1
+    );
+  };
+
+  const atualizarItensCartaCobertura = (
+    tempoResistenciaFogo,
+    objItensCartaCobertura
+  ) => {
+    const indexComponentePai = dadosValidacao.findIndex(
+      (elemento) => elemento.TEMPO_RESISTENCIA_FOGO == tempoResistenciaFogo
+    );
+
+    const indexComponenteFilho = dadosValidacao[
+      indexComponentePai
+    ].LIST_ITENS_CARTA_COBERTURA.findIndex(
+      (elemento) => elemento.idLinha == objItensCartaCobertura.idLinha
+    );
+
+    dadosValidacao[indexComponentePai].LIST_ITENS_CARTA_COBERTURA[
+      indexComponenteFilho
+    ].VALOR_ESPESSURA = objItensCartaCobertura.VALOR_ESPESSURA;
+  };
+
+  const deletarItensPorTempoResistenciaFogo = (tempoFogo) => {
+    const indexItensCartaCobertura = dadosValidacao.findIndex(
+      (elemento) => elemento.TEMPO_RESISTENCIA_FOGO == tempoFogo
+    );
+
+    dadosValidacao.splice(indexItensCartaCobertura, 1);
+
+    setDadosValidacao([...dadosValidacao]);
   };
 
   const removerCartaAprovada = () => {
@@ -326,13 +380,26 @@ function AddItensCartaCobertura(props) {
         </div>
       </div>
       <div>
-        <ModalValidacaoImportacao
+        <ModalVisualizacaoItensCartaCobertura
+          show={showModalVisualizacao}
+          editarReferecia={false}
           referencia={referencia}
-          show={showModalValidadao}
           cartaCoberturaAprovada={cartaCoberturaAprovada}
-          onHide={() => setShowModalValidacao(false)}
-          dadosValidacao={dadosValidacao}
-          aprovarCartaCobertura={(itensCartaCoberturaAprovado) =>
+          listTempoFogo={dadosValidacao}
+          onHide={() => setShowModalVisualizacao(false)}
+          acaoRemover={(tempoResistenciaFogo, idLinha) =>
+            deletarItensCartaCobertura(tempoResistenciaFogo, idLinha)
+          }
+          acaoDeletarItensCartaCobertura={(tempoFogo) =>
+            deletarItensPorTempoResistenciaFogo(tempoFogo)
+          }
+          acaoAtualizar={(tempoResistenciaFogo, objItensCartaCobertura) =>
+            atualizarItensCartaCobertura(
+              tempoResistenciaFogo,
+              objItensCartaCobertura
+            )
+          }
+          acaoAprovarCartaCobertura={(itensCartaCoberturaAprovado) =>
             adicionarCartaCoberturaAprovada(itensCartaCoberturaAprovado)
           }
         />

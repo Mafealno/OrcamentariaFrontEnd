@@ -69,7 +69,6 @@ function AcoesCartaCobertura(props) {
               return;
             } else {
               contador++;
-              ItemCartaCobertura.cartaCobertura.CARTA_COBERTURA_ID = contador;
 
               fetch(props.linkBackEnd + "/cartaCobertura/", {
                 method: "POST",
@@ -77,7 +76,7 @@ function AcoesCartaCobertura(props) {
                 body: JSON.stringify(ItemCartaCobertura.cartaCobertura),
               })
                 .then((response) => response.json())
-                .then(() => {
+                .then((data) => {
                   setConfigToast({
                     estiloToast: "",
                     estiloToastHeader: "estiloToastSucesso",
@@ -97,6 +96,8 @@ function AcoesCartaCobertura(props) {
                     ItemCartaCobertura.keyComponente,
                     "Concluido"
                   );
+
+                  props.listarCartaCoberturaEditar(props.linkBackEnd);
                 })
                 .catch((data) => {});
             }
@@ -165,6 +166,8 @@ const mapDispatchToProps = (dispatch) => ({
         statusAlteracao
       )
     ),
+  listarCartaCoberturaEditar: (linkBackEnd) =>
+    dispatch(cartaCoberturaActions.listarCartaCoberturaEditar(linkBackEnd)),
 });
 
 export default connect(

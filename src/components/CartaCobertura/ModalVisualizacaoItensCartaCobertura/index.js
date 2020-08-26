@@ -1,0 +1,2 @@
+import ModalVisualizacaoItensCartaCobertura from "./ModalVisualizacaoItensCartaCobertura";
+export default ModalVisualizacaoItensCartaCobertura;

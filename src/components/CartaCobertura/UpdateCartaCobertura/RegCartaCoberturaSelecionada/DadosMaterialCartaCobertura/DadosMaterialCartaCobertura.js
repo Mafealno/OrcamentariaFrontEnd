@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import * as cartaCoberturaActions from "../../../../../store/actions/cartaCobertura";
 
 import { connect } from "react-redux";
 
@@ -92,7 +91,6 @@ function DadosMaterialCartaCobertura(props) {
 const mapStateToProps = (state) => ({
   materialCartaCoberturaEditar:
     state.cartaCobertura.cartaCoberturaEditar.MATERIAL,
-  cartaCoberturaEditar: state.cartaCobertura.cartaCoberturaEditar,
 });
 
 const mapDispatchToProps = (dispatch) => ({});

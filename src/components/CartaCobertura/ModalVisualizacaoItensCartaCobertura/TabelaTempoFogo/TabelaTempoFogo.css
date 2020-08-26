@@ -1,0 +1,9 @@
+.containerTabelaTempoFogo {
+  min-width: 250px;
+  max-width: 250px;
+  max-height: 60vh;
+  border: 1px solid white;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 0 10px;
+}
