@@ -3,7 +3,7 @@
   grid-template-areas:
     "referencia-modal-visualizacao-itens-carta-cobertura"
     "tabela-tempo-fogo-modal-visualizacao-itens-carta-cobertura";
-  grid-template-rows: 100px calc(100%-100px);
+  grid-template-rows: 45px;
   min-width: 100%;
   max-width: 100%;
 }
@@ -50,4 +50,14 @@
 .btn-excluir-modal-visualizacao-itens-carta-cobertura {
   width: 100%;
   margin-top: 10px;
+}
+
+.btn-aprovar-carta-cobertura {
+  color: white;
+  background-color: #ffc1078e !important;
+  border-color: #ffc1078e;
+}
+
+.btn:hover {
+  color: rgba(255, 255, 255, 0.719);
 }

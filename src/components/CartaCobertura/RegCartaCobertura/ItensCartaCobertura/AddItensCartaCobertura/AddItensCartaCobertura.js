@@ -357,7 +357,7 @@ function AddItensCartaCobertura(props) {
                 <label>Selecionar arquivo</label>
                 <input
                   type="file"
-                  className="form-control"
+                  className="form-control importacao-arquivo-carta-cobertura"
                   name="fileImportacao"
                   value={arquivo}
                   disabled={referencia == "naoSelecionado" ? true : false}

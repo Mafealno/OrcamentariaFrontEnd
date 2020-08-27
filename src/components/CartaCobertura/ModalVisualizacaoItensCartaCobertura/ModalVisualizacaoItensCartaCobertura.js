@@ -144,7 +144,7 @@ export default function ModalVisualizacaoItensCartaCobertura(props) {
               <div>
                 <button
                   type="button"
-                  className="btn btn-aprovar"
+                  className="btn btn-aprovar-carta-cobertura"
                   onClick={() => setShowModalConfirm(true)}
                 >
                   Aprovar
