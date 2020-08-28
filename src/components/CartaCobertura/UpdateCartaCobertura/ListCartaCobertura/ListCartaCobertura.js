@@ -6,12 +6,13 @@ import * as cartaCoberturaActions from "../../../../store/actions/cartaCobertura
 import { connect } from "react-redux";
 
 function ListCartaCobertura(props) {
-  let [listMaterialCartaCobertura, setMaterialListCartaCobertura] = useState(
-    []
-  );
+  let [
+    listMaterialCartaCobertura,
+    setListMaterialListCartaCobertura,
+  ] = useState([]);
   let [
     listMaterialCartaCoberturaDisplay,
-    setMaterialListCartaCoberturaDisplay,
+    setListMaterialListCartaCoberturaDisplay,
   ] = useState([]);
 
   useEffect(() => {
@@ -20,7 +21,7 @@ function ListCartaCobertura(props) {
 
   useEffect(() => {
     ordernarCartaCoberturaPorMaterial();
-  }, [props.listCartaCoberturaEditar.length]);
+  }, [props.listCartaCoberturaEditar]);
 
   useEffect(() => {
     if (props.listCartaCoberturaEditar.length > 0) {
@@ -65,10 +66,12 @@ function ListCartaCobertura(props) {
       }
     });
 
+    setListMaterialListCartaCobertura([]);
+
     if (listCartaCoberturaAux.length == 0) {
-      setMaterialListCartaCoberturaDisplay([]);
+      setListMaterialListCartaCoberturaDisplay([]);
     } else {
-      setMaterialListCartaCobertura(listCartaCoberturaAux);
+      setListMaterialListCartaCobertura(listCartaCoberturaAux);
     }
   };
 
@@ -82,7 +85,9 @@ function ListCartaCobertura(props) {
       )
     );
 
-    setMaterialListCartaCoberturaDisplay(materialListCartaCoberturaDisplayAux);
+    setListMaterialListCartaCoberturaDisplay(
+      materialListCartaCoberturaDisplayAux
+    );
   };
 
   return (
