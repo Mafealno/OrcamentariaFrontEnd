@@ -6,10 +6,24 @@
   overflow-y: auto;
   max-height: 100%;
   padding: 2%;
+  display: flex;
+  flex-direction: column;
 }
 
 .container-carregando-list-carta-cobertura {
   width: 100%;
   min-height: 100%;
   text-align: center;
+}
+
+.recarregar-list-carta-cobertura {
+  width: 100%;
+  margin-bottom: 3px;
+}
+
+.recarregar-list-carta-cobertura > button {
+  background-color: #d40808;
+  border: #d40808;
+  font-size: 13px;
+  color: white;
 }

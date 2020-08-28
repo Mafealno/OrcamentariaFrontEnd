@@ -16,7 +16,7 @@ function ListCartaCobertura(props) {
 
   useEffect(() => {
     props.listarCartaCoberturaEditar(props.linkBackEnd);
-  }, [props.cartaCoberturaEditar]);
+  }, []);
 
   useEffect(() => {
     ordernarCartaCoberturaPorMaterial();
@@ -87,6 +87,15 @@ function ListCartaCobertura(props) {
 
   return (
     <div id="container-list-carta-cobertura">
+      <div className="recarregar-list-carta-cobertura">
+        <button
+          type="button"
+          className="btn recarregar-list-carta-cobertura"
+          onClick={() => props.listarCartaCoberturaEditar(props.linkBackEnd)}
+        >
+          Recarregar
+        </button>
+      </div>
       {listMaterialCartaCoberturaDisplay}
     </div>
   );
