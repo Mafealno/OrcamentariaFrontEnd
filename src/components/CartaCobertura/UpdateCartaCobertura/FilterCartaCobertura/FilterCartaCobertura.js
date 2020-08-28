@@ -1,11 +1,27 @@
 import React, { useState } from "react";
 import "./FilterCartaCobertura.css";
-import ItemCartaCobertura from "../ListCartaCobertura/ItemCartaCobertura";
+import * as cartaCoberturaActions from "../../../../store/actions/cartaCobertura";
+import { connect } from "react-redux";
 
-export default function FilterCartaCobertura() {
+function FilterCartaCobertura(props) {
   let [stringPesquisa, setStringPesquisa] = useState("");
+  let [filtrarPor, setFiltrarPor] = useState("Material");
+  let [filtrado, setFiltrado] = useState(false);
 
-  const filtrarCartaCobertura = () => {};
+  const filtrarCartaCobertura = () => {
+    if (stringPesquisa && !filtrado) {
+      props.filtrarListCartaCoberturaEditar(
+        props.listCartaCoberturaEditar,
+        filtrarPor,
+        stringPesquisa,
+        setFiltrado(true)
+      );
+    }
+  };
+
+  const resetarFiltro = () => {
+    props.listarCartaCoberturaEditar(props.linkBackEnd, setFiltrado(false));
+  };
 
   const pressEnter = (event) => {
     if (event.key === "Enter") {
@@ -16,7 +32,7 @@ export default function FilterCartaCobertura() {
   return (
     <>
       <div className="row">
-        <div className="col">
+        <div className="col-8">
           <input
             type="text"
             name="buscaCadastro"
@@ -26,9 +42,23 @@ export default function FilterCartaCobertura() {
             onKeyDown={(event) => pressEnter(event)}
           />
         </div>
-
-        <div className="col-4 div-buscar-material">
-          <button type="submit" id="btn-buscar-material" className="btn">
+        <div className={filtrado ? "col showReset" : "hideReset"}>
+          <button
+            type="button"
+            className="btn btn-resetar-filtro"
+            onClick={() => resetarFiltro()}
+          >
+            Resetar
+          </button>
+        </div>
+        <div className="col div-buscar-material">
+          <button
+            type="submit"
+            id="btn-buscar-material"
+            className="btn"
+            disabled={filtrado}
+            onClick={() => filtrarCartaCobertura()}
+          >
             Buscar
           </button>
         </div>
@@ -41,7 +71,8 @@ export default function FilterCartaCobertura() {
             type="radio"
             name="tipoFiltro"
             id="radio-material"
-            value="material"
+            value="Material"
+            onChange={(event) => setFiltrarPor(event.target.value)}
             defaultChecked
           />
           <label className="form-check-label">Material</label>
@@ -53,7 +84,8 @@ export default function FilterCartaCobertura() {
             type="radio"
             name="tipoFiltro"
             id="radio-fabricante"
-            value="fabricante"
+            value="Fabricante"
+            onChange={(event) => setFiltrarPor(event.target.value)}
           />
           <label className="form-check-label">Fabricante</label>
         </div>
@@ -61,3 +93,30 @@ export default function FilterCartaCobertura() {
     </>
   );
 }
+
+const mapStateToProps = (state) => ({
+  linkBackEnd: state.backEnd.link,
+  listCartaCoberturaEditar: state.cartaCobertura.listCartaCoberturaEditar,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  filtrarListCartaCoberturaEditar: (
+    listCartaCoberturaEditar,
+    filtrarPor,
+    stringFiltro
+  ) =>
+    dispatch(
+      cartaCoberturaActions.filtrarListCartaCoberturaEditar(
+        listCartaCoberturaEditar,
+        filtrarPor,
+        stringFiltro
+      )
+    ),
+  listarCartaCoberturaEditar: (linkBackEnd) =>
+    dispatch(cartaCoberturaActions.listarCartaCoberturaEditar(linkBackEnd)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FilterCartaCobertura);

@@ -138,3 +138,42 @@ export function listarCartaCoberturaEditar(linkBackEnd) {
       });
   };
 }
+
+export function filtrarListCartaCoberturaEditar(
+  listCartaCoberturaEditar,
+  filtrarPor,
+  stringFiltro
+) {
+  let listCartaCoberturaEditarAux = [...listCartaCoberturaEditar];
+
+  switch (filtrarPor) {
+    case "Material":
+      listCartaCoberturaEditarAux = listCartaCoberturaEditarAux.filter(
+        (elemento) =>
+          elemento.MATERIAL.NOME_MATERIAL.toLowerCase().indexOf(
+            stringFiltro.toLowerCase()
+          ) > -1
+      );
+      break;
+    case "Fabricante":
+      listCartaCoberturaEditarAux = listCartaCoberturaEditarAux.filter(
+        (elemento) =>
+          elemento.MATERIAL.FABRICANTE.NOME_PESSOA.indexOf(stringFiltro) > -1
+      );
+      break;
+    default:
+      listCartaCoberturaEditarAux = listCartaCoberturaEditarAux.filter(
+        (elemento) => elemento.MATERIAL.NOME_MATERIAL.indexOf(stringFiltro) > -1
+      );
+      break;
+  }
+
+  if (listCartaCoberturaEditarAux) {
+    listCartaCoberturaEditar = [...listCartaCoberturaEditarAux];
+  }
+
+  return {
+    type: "FILTRAR_LIST_CARTA_COBERTURA_EDITAR",
+    listCartaCoberturaEditar,
+  };
+}

@@ -54,6 +54,11 @@ export default function cartaCobertura(state = ESTADO_INICIAL, action) {
           listCartaCoberturaEditar: listCartaCoberturaEditar,
         })),
       };
+    case "FILTRAR_LIST_CARTA_COBERTURA_EDITAR":
+      return {
+        ...state,
+        listCartaCoberturaEditar: action.listCartaCoberturaEditar,
+      };
     case "SELECIONAR_CARTA_COBERTURA_EDITAR":
       return {
         ...state,
