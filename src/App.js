@@ -13,6 +13,7 @@ import Material from "./components/Material";
 import Equipamento from "./components/Equipamento";
 import RegCartaCobertura from "./components/CartaCobertura/RegCartaCobertura";
 import UpdateCartaCobertura from "./components/CartaCobertura/UpdateCartaCobertura";
+import Custos from "./components/Custos/Custos";
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
               icon="fa fa-bars"
               path="/equipamentos"
             />
+            <MenuOption name="Custos" icon="fa fa-bars" path="/custos" />
             <DropdownButton name="Carta de Cobertura" icon="fa fa-bars">
               <DropdownOption path="/cartaCobertura">Cadastrar</DropdownOption>
               <DropdownOption path="/consultarCartaCobertura">
@@ -40,6 +42,7 @@ export default function App() {
           <Route path="/pessoas" render={() => <People />} />
           <Route path="/materiais" render={() => <Material />} />
           <Route path="/equipamentos" render={() => <Equipamento />} />
+          <Route path="/custos" render={() => <Custos />} />
           <Route path="/cartaCobertura" render={() => <RegCartaCobertura />} />
           <Route
             path="/consultarCartaCobertura"

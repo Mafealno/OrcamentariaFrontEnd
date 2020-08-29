@@ -285,7 +285,7 @@ function BasicRegMaterial(props) {
         <div className="form-group">
           <div className="form-row">
             <div className="col-xl-8 div-nome-material">
-              <label className="col-form-label">Nome</label>
+              <label className="col-form-label">Nome do material</label>
               <input
                 type="text"
                 placeholder="Ex: Tinta Acrílica"

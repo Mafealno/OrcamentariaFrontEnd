@@ -1,0 +1,36 @@
+#containerBasicRegCusto {
+}
+
+#input-custo-id {
+  width: 30% !important;
+  font-weight: bold;
+  color: white;
+  margin-left: 15px;
+}
+
+.close-select-custo {
+  color: white;
+  float: right;
+  flex-grow: 1;
+}
+
+.container-form {
+  flex-grow: 2;
+  order: 1;
+}
+
+.options {
+  float: right;
+}
+
+.position-initial {
+  position: initial !important;
+}
+
+.margin-bottom-15 {
+  margin-bottom: 15px !important;
+}
+
+#containerBasicRegCusto .form {
+  padding-bottom: 0px !important;
+}

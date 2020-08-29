@@ -32,7 +32,7 @@ function FilterCartaCobertura(props) {
   return (
     <>
       <div className="row">
-        <div className="col col-xl-8">
+        <div className="col-xl-8 col">
           <input
             type="text"
             name="buscaCadastro"
@@ -42,7 +42,7 @@ function FilterCartaCobertura(props) {
             onKeyDown={(event) => pressEnter(event)}
           />
         </div>
-        <div className={filtrado ? "col-4 showReset" : "hideReset"}>
+        <div className={filtrado ? "col-xl col-4  showReset" : "hideReset"}>
           <button
             type="button"
             className="btn btn-resetar-filtro"
