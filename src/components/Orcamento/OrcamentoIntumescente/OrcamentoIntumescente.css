@@ -1,0 +1,21 @@
+#containerOrcamentoIntumescente {
+  padding: 3%;
+  overflow-y: auto;
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+  color: white;
+  background-color: #d40808;
+  border-color: #d40808;
+  font-weight: bold;
+}
+
+.nav-tabs a:hover {
+  color: #d40808;
+  border-color: #d40808;
+}
+
+a {
+  color: #d40808;
+}
