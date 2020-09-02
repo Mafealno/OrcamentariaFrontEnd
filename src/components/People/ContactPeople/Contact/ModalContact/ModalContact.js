@@ -71,22 +71,6 @@ function ModalContact(props) {
     };
   };
 
-  const limparCampos = () => {
-    setDadosCadastro({
-      pessoaId: 0,
-      contatoId: undefined,
-      tipoContato: "",
-      contato: "",
-      ddd: "",
-      ramal: "",
-      contatoPadrao: "",
-    });
-
-    setTelefone(true);
-    setCelular(true);
-    setEmail(true);
-  };
-
   function tipoContatoSeleciondo(event) {
     switch (event.target.value) {
       case "Telefone":
@@ -122,13 +106,6 @@ function ModalContact(props) {
         estiloModalFooter="backgroundModal"
         tituloModal={
           dadosCadastro.contatoId ? "Editar Contato" : "Novo contato"
-        }
-        conteudoHeader={
-          <div className="close-contact">
-            <a href="#" onClick={() => props.onHide(limparCampos())}>
-              <span className="fa fa-close close-contact"></span>
-            </a>
-          </div>
         }
         conteudoBody={
           <div className="form">

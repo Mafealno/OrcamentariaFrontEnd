@@ -14,13 +14,6 @@ export default function ModalConfirm(props) {
           estiloModalBody="backgroundModal"
           estiloModalFooter="backgroundModal"
           tituloModal={props.tituloModalConfirm}
-          conteudoHeader={
-            <div className="close-modal">
-              <a href="#" onClick={() => props.onHide()}>
-                <span className="fa fa-close tituloModal"></span>
-              </a>
-            </div>
-          }
           conteudoBody={
             <div className="row centralizar">
               <div className="col">

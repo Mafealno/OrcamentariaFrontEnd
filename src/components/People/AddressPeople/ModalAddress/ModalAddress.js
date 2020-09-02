@@ -82,22 +82,6 @@ function ModalAddress(props) {
     };
   };
 
-  const limparCampos = () => {
-    setDadosCadastro({
-      pessoaId: "",
-      enderecoId: undefined,
-      cep: "",
-      logradouro: "",
-      numero: "",
-      complemento: "",
-      bairro: "",
-      cidade: "",
-      estado: "",
-      uf: "",
-      enderecoPadrao: false,
-    });
-  };
-
   const handleInputChange = (event) => {
     setDadosCadastro({
       ...dadosCadastro,
@@ -114,13 +98,6 @@ function ModalAddress(props) {
         estiloModalFooter="backgroundModal"
         tituloModal={
           dadosCadastro.enderecoId ? "Editar Endereço" : "Novo Endereço"
-        }
-        conteudoHeader={
-          <div className="close-address">
-            <a href="#" onClick={() => props.onHide(limparCampos())}>
-              <span className="fa fa-close close-address" />
-            </a>
-          </div>
         }
         conteudoBody={
           <>
