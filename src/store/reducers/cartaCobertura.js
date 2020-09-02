@@ -48,10 +48,9 @@ export default function cartaCobertura(state = ESTADO_INICIAL, action) {
         })),
       };
     case "LISTAR_CARTA_COBERTURA_CONCLUIDA":
-      let listCartaCoberturaEditar = action.listCartaCoberturaEditar;
       return {
         ...(state = Object.assign({}, state, {
-          listCartaCoberturaEditar: listCartaCoberturaEditar,
+          listCartaCoberturaEditar: action.listCartaCoberturaEditar,
         })),
       };
     case "FILTRAR_LIST_CARTA_COBERTURA_EDITAR":
