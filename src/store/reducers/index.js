@@ -6,6 +6,7 @@ import material from "./material";
 import equipamento from "./equipamento";
 import custo from "./custo";
 import cartaCobertura from "./cartaCobertura";
+import orcamento from "./orcamento";
 export default combineReducers({
   backEnd,
   people,
@@ -13,4 +14,5 @@ export default combineReducers({
   equipamento,
   custo,
   cartaCobertura,
+  orcamento,
 });

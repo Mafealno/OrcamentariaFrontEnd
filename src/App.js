@@ -11,9 +11,12 @@ import People from "./components/People";
 import "./components/Material";
 import Material from "./components/Material";
 import Equipamento from "./components/Equipamento";
+import Custos from "./components/Custos/Custos";
 import RegCartaCobertura from "./components/CartaCobertura/RegCartaCobertura";
 import UpdateCartaCobertura from "./components/CartaCobertura/UpdateCartaCobertura";
-import Custos from "./components/Custos/Custos";
+import OrcamentoGeral from "./components/Orcamento/OrcamentoGeral/OrcamentoGeral";
+import OrcamentoIntumescente from "./components/Orcamento/OrcamentoIntumescente/OrcamentoIntumescente";
+import SearchOrcamento from "./components/Orcamento/SearchOrcamento/SearchOrcamento";
 
 export default function App() {
   return (
@@ -35,6 +38,17 @@ export default function App() {
                 Consultar/Editar
               </DropdownOption>
             </DropdownButton>
+            <DropdownButton name="Orçamento" icon="fa fa-bars">
+              <DropdownOption path="/orcamentoIntumescente">
+                Orçamento Intumescente
+              </DropdownOption>
+              <DropdownOption path="/orcamentoGeral">
+                Orçamento Geral
+              </DropdownOption>
+              <DropdownOption path="/consultarOrcamento">
+                Consultar/Editar
+              </DropdownOption>
+            </DropdownButton>
           </SideBar>
         </div>
 
@@ -47,6 +61,15 @@ export default function App() {
           <Route
             path="/consultarCartaCobertura"
             render={() => <UpdateCartaCobertura />}
+          />
+          <Route path="/orcamentoGeral" render={() => <OrcamentoGeral />} />
+          <Route
+            path="/orcamentoIntumescente"
+            render={() => <OrcamentoIntumescente />}
+          />
+          <Route
+            path="/consultarOrcamento"
+            render={() => <SearchOrcamento />}
           />
         </div>
       </Router>
