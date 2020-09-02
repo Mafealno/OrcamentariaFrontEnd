@@ -4,6 +4,7 @@ import ModalHeader from "react-bootstrap/ModalHeader";
 import ModalTitle from "react-bootstrap/ModalTitle";
 import ModalBody from "react-bootstrap/ModalBody";
 import ModalFooter from "react-bootstrap/ModalFooter";
+import "./ModalControl.css";
 
 export default function ModalControl(props) {
   return (
@@ -17,7 +18,13 @@ export default function ModalControl(props) {
       >
         <ModalHeader className={props.estiloModalHeader}>
           <ModalTitle>{props.tituloModal}</ModalTitle>
-          {props.conteudoHeader}
+          {props.conteudoHeader ?? (
+            <div className="close-modal">
+              <a href="#" onClick={() => props.onHide()}>
+                <span className="fa fa-close close-modal" />
+              </a>
+            </div>
+          )}
         </ModalHeader>
         <ModalBody className={props.estiloModalBody}>
           {props.conteudoBody}
