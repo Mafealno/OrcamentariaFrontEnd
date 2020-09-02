@@ -35,6 +35,41 @@ function TabelaItensCartaCobertura(props) {
     props.listCartaCoberturaEditar,
   ]);
 
+  const exibirTost = (tipo, mensagem) => {
+    switch (tipo) {
+      case "sucesso":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastSucesso",
+          estiloToastBody: "estiloToastSucesso",
+          delayToast: 3000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: mensagem,
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      case "erro":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastErro",
+          estiloToastBody: "estiloToastErro",
+          delayToast: 6000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: mensagem,
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      default:
+        break;
+    }
+  };
+
   const montarItemCartaCobertura = () => {
     setItemTabelaItensCartaCoberturaDisplay(
       props.listCartaCoberturaEditar.map((elementoAtual) => (
@@ -68,19 +103,11 @@ function TabelaItensCartaCobertura(props) {
       }
     ).then((data) => {
       if (data.ok) {
-        setConfigToast({
-          estiloToast: "",
-          estiloToastHeader: "estiloToastSucesso",
-          estiloToastBody: "estiloToastSucesso",
-          delayToast: 3000,
-          autoHideToast: true,
-          hideToastHeader: false,
-          conteudoHeader: "",
-          conteudoBody: "Referência deletada com sucesso",
-          closeToast: () => setShowToast(),
-        });
-        setShowToast(
-          true,
+        const msg = "Referência deletada com sucesso";
+
+        exibirTost(
+          "sucesso",
+          msg,
           props.removerItemCartaCoberturaEditar(
             props.cartaCoberturaEditar,
             cartaCobertura.CARTA_COBERTURA_ID
@@ -117,23 +144,14 @@ function TabelaItensCartaCobertura(props) {
       .then((response) => response.json())
       .then((data) => {
         if (data[0]) {
-          setConfigToast({
-            estiloToast: "",
-            estiloToastHeader: "estiloToastErro",
-            estiloToastBody: "estiloToastErro",
-            delayToast: 3000,
-            autoHideToast: false,
-            hideToastHeader: true,
-            conteudoHeader: "",
-            conteudoBody:
-              "Já existe uma carta de cobertura para o item " +
-              cartaCobertura.MATERIAL.NOME_MATERIAL +
-              " e referência " +
-              cartaCobertura.REFERENCIA +
-              ". Altere a referencia e tente novamente.",
-            closeToast: () => setShowToast(),
-          });
-          setShowToast(true);
+          const msg =
+            "Já existe uma carta de cobertura para o item " +
+            cartaCobertura.MATERIAL.NOME_MATERIAL +
+            " e referência " +
+            cartaCobertura.REFERENCIA +
+            ". Altere a referencia e tente novamente.";
+
+          exibirTost("erro", msg);
 
           return;
         } else {
@@ -143,33 +161,13 @@ function TabelaItensCartaCobertura(props) {
             body: JSON.stringify(cartaCobertura),
           }).then((data) => {
             if (data.ok) {
-              setConfigToast({
-                estiloToast: "",
-                estiloToastHeader: "estiloToastSucesso",
-                estiloToastBody: "estiloToastSucesso",
-                delayToast: 3000,
-                autoHideToast: true,
-                hideToastHeader: false,
-                conteudoHeader: "",
-                conteudoBody: "Referência atualizada com sucesso",
-                closeToast: () => setShowToast(),
-              });
-              setShowToast(true);
+              const msg = "Referência atualizada com sucesso";
+              exibirTost("sucesso", msg);
               setReferencia(novaReferecia);
-              return;
             } else {
-              setConfigToast({
-                estiloToast: "",
-                estiloToastHeader: "estiloToastErro",
-                estiloToastBody: "estiloToastErro",
-                delayToast: 3000,
-                autoHideToast: true,
-                hideToastHeader: false,
-                conteudoHeader: "",
-                conteudoBody: "Erro inexperado ao salvar referência",
-                closeToast: () => setShowToast(),
-              });
-              setShowToast(true);
+              const msg = "Erro inexperado ao salvar referência";
+              exibirTost("erro", msg);
+
               return data;
             }
           });

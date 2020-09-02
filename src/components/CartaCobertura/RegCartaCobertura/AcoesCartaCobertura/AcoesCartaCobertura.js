@@ -22,6 +22,41 @@ function AcoesCartaCobertura(props) {
 
   let contador = 0;
 
+  const exibirTost = (tipo, mensagem) => {
+    switch (tipo) {
+      case "sucesso":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastSucesso",
+          estiloToastBody: "estiloToastSucesso",
+          delayToast: 3000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: mensagem,
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      case "erro":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastErro",
+          estiloToastBody: "estiloToastErro",
+          delayToast: 6000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: mensagem,
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      default:
+        break;
+    }
+  };
+
   const salvarCadastro = () => {
     const qdtdeItensSalvar = props.listComponenteItems.filter(
       (elemento) => elemento.props.statusComponente[0] == "Aprovado"
@@ -48,25 +83,14 @@ function AcoesCartaCobertura(props) {
           .then((response) => response.json())
           .then((data) => {
             if (data[0]) {
-              setConfigToast({
-                estiloToast: "",
-                estiloToastHeader: "estiloToastErro",
-                estiloToastBody: "estiloToastErro",
-                delayToast: 0,
-                autoHideToast: false,
-                hideToastHeader: true,
-                conteudoHeader: "",
-                conteudoBody:
-                  "Já existe uma carta de cobertura para o item " +
-                  ItemCartaCobertura.cartaCobertura.MATERIAL.NOME_MATERIAL +
-                  " e referência " +
-                  ItemCartaCobertura.cartaCobertura.REFERENCIA +
-                  ". Altere a referencia e/ou item e tente novamente.",
-                closeToast: () => setShowToast(),
-              });
-              setShowToast(true);
+              const msg =
+                "Já existe uma carta de cobertura para o item " +
+                ItemCartaCobertura.cartaCobertura.MATERIAL.NOME_MATERIAL +
+                " e referência " +
+                ItemCartaCobertura.cartaCobertura.REFERENCIA +
+                ". Altere a referencia e/ou item e tente novamente.";
 
-              return;
+              exibirTost("erro", msg);
             } else {
               contador++;
 
@@ -76,20 +100,11 @@ function AcoesCartaCobertura(props) {
                 body: JSON.stringify(ItemCartaCobertura.cartaCobertura),
               })
                 .then((response) => response.json())
-                .then((data) => {
-                  setConfigToast({
-                    estiloToast: "",
-                    estiloToastHeader: "estiloToastSucesso",
-                    estiloToastBody: "estiloToastSucesso",
-                    delayToast: 3000,
-                    autoHideToast: true,
-                    hideToastHeader: false,
-                    conteudoHeader: "",
-                    conteudoBody:
-                      contador + "/" + qdtdeItensSalvar + " concluido(s)",
-                    closeToast: () => setShowToast(),
-                  });
-                  setShowToast(true);
+                .then(() => {
+                  const msg =
+                    contador + "/" + qdtdeItensSalvar + " concluido(s)";
+
+                  exibirTost("sucesso", msg);
 
                   props.alterarStatusComponente(
                     props.listComponenteItems,
@@ -99,7 +114,11 @@ function AcoesCartaCobertura(props) {
 
                   props.listarCartaCoberturaEditar(props.linkBackEnd);
                 })
-                .catch((data) => {});
+                .catch(() => {
+                  const msg = "Houve um erro.";
+
+                  exibirTost("erro", msg);
+                });
             }
           });
       }
