@@ -7,19 +7,6 @@ import * as PeopleActions from "../../../../store/actions/people";
 import { connect } from "react-redux";
 
 function Contact(props) {
-  const deletarContato = () => {
-    fetch(
-      props.linkBackEnd +
-        "/contato/deletar?contatoId=" +
-        props.objContato.CONTATO_ID,
-      {
-        method: "DELETE",
-      }
-    ).then(() => {
-      props.recarregarPessoa(props.objContato.PESSOA_ID, props.linkBackEnd);
-    });
-  };
-
   return (
     <>
       {props.objContato.TIPO_CONTATO === "Telefone" && (
