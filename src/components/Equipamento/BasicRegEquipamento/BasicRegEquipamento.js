@@ -76,6 +76,41 @@ function BasicRegEquipamento(props) {
     };
   };
 
+  const exibirTost = (tipo, origem) => {
+    switch (tipo) {
+      case "sucesso":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastSucesso",
+          estiloToastBody: "estiloToastSucesso",
+          delayToast: 3000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: origem + " efetuado(a) com sucesso",
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      case "erro":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastErro",
+          estiloToastBody: "estiloToastErro",
+          delayToast: 3000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: "Erro ao efetuar " + origem,
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      default:
+        break;
+    }
+  };
+
   const salvarCadastro = () => {
     fetch(props.linkBackEnd + "/equipamento/", {
       method: "POST",
@@ -85,32 +120,15 @@ function BasicRegEquipamento(props) {
       .then((response) => response.json())
       .then((data) => {
         props.recarregarEquipamento(data.EQUIPAMENTO_ID, props.linkBackEnd);
-        setConfigToast({
-          estiloToast: "",
-          estiloToastHeader: "estiloToastSucesso",
-          estiloToastBody: "estiloToastSucesso",
-          delayToast: 3000,
-          autoHideToast: true,
-          hideToastHeader: false,
-          conteudoHeader: "",
-          conteudoBody: "Cadastro efetuado com sucesso",
-          closeToast: () => setShowToast(),
-        });
-        setShowToast(true);
+
+        const msg = "Cadastro efetuado com sucesso";
+
+        exibirTost("sucesso", msg);
       })
       .catch(() => {
-        setConfigToast({
-          estiloToast: "",
-          estiloToastHeader: "estiloToastErro",
-          estiloToastBody: "estiloToastErro",
-          delayToast: 3000,
-          autoHideToast: true,
-          hideToastHeader: false,
-          conteudoHeader: "",
-          conteudoBody: "Erro ao efetuar cadastro",
-          closeToast: () => setShowToast(),
-        });
-        setShowToast(true);
+        const msg = "Erro ao efetuar cadastro";
+
+        exibirTost("erro", msg);
       });
   };
 
@@ -125,31 +143,14 @@ function BasicRegEquipamento(props) {
     ).then((data) => {
       if (data.ok) {
         props.selecionarEquipamento({});
-        setConfigToast({
-          estiloToast: "",
-          estiloToastHeader: "estiloToastSucesso",
-          estiloToastBody: "estiloToastSucesso",
-          delayToast: 3000,
-          autoHideToast: true,
-          hideToastHeader: false,
-          conteudoHeader: "",
-          conteudoBody: "Exclusão efetuada com sucesso",
-          closeToast: () => setShowToast(),
-        });
-        setShowToast(true);
+
+        const msg = "Exclusão efetuada com sucesso";
+
+        exibirTost("sucesso", msg);
       } else {
-        setConfigToast({
-          estiloToast: "",
-          estiloToastHeader: "estiloToastErro",
-          estiloToastBody: "estiloToastErro",
-          delayToast: 3000,
-          autoHideToast: true,
-          hideToastHeader: false,
-          conteudoHeader: "",
-          conteudoBody: "Erro ao efetuar exclusão",
-          closeToast: () => setShowToast(),
-        });
-        setShowToast(true);
+        const msg = "Erro ao efetuar exclusão";
+
+        exibirTost("erro", msg);
       }
     });
   };
@@ -170,31 +171,14 @@ function BasicRegEquipamento(props) {
           dadosCadastro.equipamentoId,
           props.linkBackEnd
         );
-        setConfigToast({
-          estiloToast: "",
-          estiloToastHeader: "estiloToastSucesso",
-          estiloToastBody: "estiloToastSucesso",
-          delayToast: 3000,
-          autoHideToast: true,
-          hideToastHeader: false,
-          conteudoHeader: "",
-          conteudoBody: "Atualização efetuada com sucesso",
-          closeToast: () => setShowToast(),
-        });
-        setShowToast(true);
+
+        const msg = "Atualização efetuada com sucesso";
+
+        exibirTost("sucesso", msg);
       } else {
-        setConfigToast({
-          estiloToast: "",
-          estiloToastHeader: "estiloToastErro",
-          estiloToastBody: "estiloToastErro",
-          delayToast: 3000,
-          autoHideToast: true,
-          hideToastHeader: false,
-          conteudoHeader: "",
-          conteudoBody: "Erro ao efetuar atualização",
-          closeToast: () => setShowToast(),
-        });
-        setShowToast(true);
+        const msg = "Erro ao efetuar atualização";
+
+        exibirTost("sucesso", msg);
       }
     });
   };

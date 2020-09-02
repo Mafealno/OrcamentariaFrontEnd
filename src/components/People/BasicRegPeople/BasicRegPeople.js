@@ -28,17 +28,9 @@ function BasicRegPeople(props) {
     setTipoCadastro(props.pessoaSelecionada.TIPO_CADASTRO ?? "");
   }, [props.pessoaSelecionada.PESSOA_ID]);
 
-  const deletarCadastroPessoa = () => {
-    let linkTipo = "/pessoas/";
-    if (props.pessoaSelecionada.TIPO_CADASTRO == "Funcionario") {
-      linkTipo = "/funcionario/";
-    }
-
-    fetch(props.linkBackEnd + linkTipo + props.pessoaSelecionada.PESSOA_ID, {
-      method: "DELETE",
-    }).then((data) => {
-      if (data.ok) {
-        props.selecionarPessoa({});
+  const exibirTost = (tipo, mensagem) => {
+    switch (tipo) {
+      case "sucesso":
         setConfigToast({
           estiloToast: "",
           estiloToastHeader: "estiloToastSucesso",
@@ -47,11 +39,12 @@ function BasicRegPeople(props) {
           autoHideToast: true,
           hideToastHeader: false,
           conteudoHeader: "",
-          conteudoBody: "Exclusão efetuada com sucesso",
+          conteudoBody: mensagem,
           closeToast: () => setShowToast(),
         });
         setShowToast(true);
-      } else {
+        break;
+      case "erro":
         setConfigToast({
           estiloToast: "",
           estiloToastHeader: "estiloToastErro",
@@ -60,12 +53,14 @@ function BasicRegPeople(props) {
           autoHideToast: true,
           hideToastHeader: false,
           conteudoHeader: "",
-          conteudoBody: "Houve um erro",
+          conteudoBody: mensagem,
           closeToast: () => setShowToast(),
         });
         setShowToast(true);
-      }
-    });
+        break;
+      default:
+        break;
+    }
   };
 
   const salvarCadastroPessoa = (objCadastro) => {
@@ -82,33 +77,37 @@ function BasicRegPeople(props) {
       .then((response) => response.json())
       .then((data) => {
         props.recarregarPessoa(data.PESSOA_ID, props.linkBackEnd);
-        setConfigToast({
-          estiloToast: "",
-          estiloToastHeader: "estiloToastSucesso",
-          estiloToastBody: "estiloToastSucesso",
-          delayToast: 3000,
-          autoHideToast: true,
-          hideToastHeader: false,
-          conteudoHeader: "",
-          conteudoBody: "Cadastro efetuado com sucesso",
-          closeToast: () => setShowToast(),
-        });
-        setShowToast(true);
+        const msg = "Cadastro efetuado com sucesso";
+
+        exibirTost("sucesso", msg);
       })
       .catch(() => {
-        setConfigToast({
-          estiloToast: "",
-          estiloToastHeader: "estiloToastErro",
-          estiloToastBody: "estiloToastErro",
-          delayToast: 3000,
-          autoHideToast: true,
-          hideToastHeader: false,
-          conteudoHeader: "",
-          conteudoBody: "Houve um erro",
-          closeToast: () => setShowToast(),
-        });
-        setShowToast(true);
+        const msg = "Erro ao efetuar cadastro";
+
+        exibirTost("erro", msg);
       });
+  };
+
+  const deletarCadastroPessoa = () => {
+    let linkTipo = "/pessoas/";
+    if (props.pessoaSelecionada.TIPO_CADASTRO == "Funcionario") {
+      linkTipo = "/funcionario/";
+    }
+
+    fetch(props.linkBackEnd + linkTipo + props.pessoaSelecionada.PESSOA_ID, {
+      method: "DELETE",
+    }).then((data) => {
+      if (data.ok) {
+        props.selecionarPessoa({});
+        const msg = "Exclusão efetuada com sucesso";
+
+        exibirTost("sucesso", msg);
+      } else {
+        const msg = "Erro ao efetuar exclusão";
+
+        exibirTost("erro", msg);
+      }
+    });
   };
 
   const atualizarCadastroPessoa = (objAtualizar) => {
@@ -127,31 +126,13 @@ function BasicRegPeople(props) {
           props.pessoaSelecionada.PESSOA_ID,
           props.linkBackEnd
         );
-        setConfigToast({
-          estiloToast: "",
-          estiloToastHeader: "estiloToastSucesso",
-          estiloToastBody: "estiloToastSucesso",
-          delayToast: 3000,
-          autoHideToast: true,
-          hideToastHeader: false,
-          conteudoHeader: "",
-          conteudoBody: "Cadastro atualizado com sucesso",
-          closeToast: () => setShowToast(),
-        });
-        setShowToast(true);
+        const msg = "Cadastro atualizado com sucesso";
+
+        exibirTost("sucesso", msg);
       } else {
-        setConfigToast({
-          estiloToast: "",
-          estiloToastHeader: "estiloToastErro",
-          estiloToastBody: "estiloToastErro",
-          delayToast: 3000,
-          autoHideToast: true,
-          hideToastHeader: false,
-          conteudoHeader: "",
-          conteudoBody: "Houve um erro",
-          closeToast: () => setShowToast(),
-        });
-        setShowToast(true);
+        const msg = "Erro ao efetuar atualização";
+
+        exibirTost("erro", msg);
       }
     });
   };

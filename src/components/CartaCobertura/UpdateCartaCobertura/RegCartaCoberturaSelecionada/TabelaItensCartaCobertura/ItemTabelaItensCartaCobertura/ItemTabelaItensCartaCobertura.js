@@ -42,6 +42,41 @@ function ItemTabelaItensCartaCobertura(props) {
     setReferencia(props.dados.REFERENCIA);
   }, [props.dados.CARTA_COBERTURA_ID]);
 
+  const exibirTost = (tipo, mensagem) => {
+    switch (tipo) {
+      case "sucesso":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastSucesso",
+          estiloToastBody: "estiloToastSucesso",
+          delayToast: 3000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: mensagem,
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      case "erro":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastErro",
+          estiloToastBody: "estiloToastErro",
+          delayToast: 6000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: mensagem,
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      default:
+        break;
+    }
+  };
+
   const deletarItensPorTempoResistenciaFogo = (tempoFogo) => {
     fetch(
       props.linkBackEnd +
@@ -64,6 +99,10 @@ function ItemTabelaItensCartaCobertura(props) {
 
         setListTempoFogo([...listTempoFogo]);
 
+        const msg = "Exclusão realizada com sucesso";
+
+        exibirTost("sucesso", msg);
+
         if (!listTempoFogo.length) {
           props.deletarCartaCobertura(
             props.dados,
@@ -71,19 +110,9 @@ function ItemTabelaItensCartaCobertura(props) {
           );
         }
       } else {
-        setConfigToast({
-          estiloToast: "",
-          estiloToastHeader: "estiloToastErro",
-          estiloToastBody: "estiloToastErro",
-          delayToast: 3000,
-          autoHideToast: false,
-          hideToastHeader: true,
-          conteudoHeader: "",
-          conteudoBody: "Erro ao deletar tempo " + tempoFogo + ".",
-          closeToast: () => setShowToast(),
-        });
-        setShowToast(true);
+        const msg = "Erro ao exluir tempo " + tempoFogo;
 
+        exibirTost("erro", msg);
         return;
       }
     });

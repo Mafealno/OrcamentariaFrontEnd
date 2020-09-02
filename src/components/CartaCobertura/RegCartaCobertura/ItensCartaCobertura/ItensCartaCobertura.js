@@ -30,21 +30,46 @@ function ItensCartaCobertura(props) {
       }
 
       if (props.listComponenteItems.length == 9) {
+        const msg = "Limite de componentes atingido";
+        exibirTost("erro", msg);
+      }
+    }
+  }, [props.listComponenteItems.length]);
+
+  const exibirTost = (tipo, mensagem) => {
+    switch (tipo) {
+      case "sucesso":
         setConfigToast({
           estiloToast: "",
-          estiloToastHeader: "estiloToastErro",
-          estiloToastBody: "estiloToastErro",
+          estiloToastHeader: "estiloToastSucesso",
+          estiloToastBody: "estiloToastSucesso",
           delayToast: 3000,
           autoHideToast: true,
           hideToastHeader: false,
           conteudoHeader: "",
-          conteudoBody: "Limite de componentes atingido",
+          conteudoBody: mensagem,
           closeToast: () => setShowToast(),
         });
         setShowToast(true);
-      }
+        break;
+      case "erro":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastErro",
+          estiloToastBody: "estiloToastErro",
+          delayToast: 6000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: mensagem,
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      default:
+        break;
     }
-  }, [props.listComponenteItems.length]);
+  };
 
   const criarCompornente = () => {
     const componenteCriado = (

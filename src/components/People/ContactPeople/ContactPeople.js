@@ -43,6 +43,41 @@ function ContactPeople(props) {
     }
   }, [props.pessoaSelecionada.LIST_CONTATO]);
 
+  const exibirTost = (tipo, origem) => {
+    switch (tipo) {
+      case "sucesso":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastSucesso",
+          estiloToastBody: "estiloToastSucesso",
+          delayToast: 3000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: origem + " efetuado(a) com sucesso",
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      case "erro":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastErro",
+          estiloToastBody: "estiloToastErro",
+          delayToast: 3000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: "Erro ao efetuar " + origem,
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      default:
+        break;
+    }
+  };
+
   const salvarContatoPessoa = (objCadastro) => {
     if (
       objCadastro.tipoContato ||
@@ -62,32 +97,14 @@ function ContactPeople(props) {
         setTipoContato(data.TIPO_CONTATO);
         setContatoPadrao(data.CONTATO_PADRAO);
         props.recarregarPessoa(objCadastro.PESSOA_ID, props.linkBackEnd);
-        setConfigToast({
-          estiloToast: "",
-          estiloToastHeader: "estiloToastSucesso",
-          estiloToastBody: "estiloToastSucesso",
-          delayToast: 3000,
-          autoHideToast: true,
-          hideToastHeader: false,
-          conteudoHeader: "",
-          conteudoBody: "Cadastro efetuado com sucesso",
-          closeToast: () => setShowToast(),
-        });
-        setShowToast(true);
+        const msg = "Cadastro efetuado com sucesso";
+
+        exibirTost("sucesso", msg);
       })
       .catch(() => {
-        setConfigToast({
-          estiloToast: "",
-          estiloToastHeader: "estiloToastErro",
-          estiloToastBody: "estiloToastErro",
-          delayToast: 3000,
-          autoHideToast: true,
-          hideToastHeader: false,
-          conteudoHeader: "",
-          conteudoBody: "Houve um erro",
-          closeToast: () => setShowToast(),
-        });
-        setShowToast(true);
+        const msg = "Erro ao efetuar cadastro";
+
+        exibirTost("erro", msg);
       });
   };
 
@@ -99,31 +116,13 @@ function ContactPeople(props) {
     }).then((data) => {
       if (data.ok) {
         props.recarregarPessoa(objAtualizar.PESSOA_ID, props.linkBackEnd);
-        setConfigToast({
-          estiloToast: "",
-          estiloToastHeader: "estiloToastSucesso",
-          estiloToastBody: "estiloToastSucesso",
-          delayToast: 3000,
-          autoHideToast: true,
-          hideToastHeader: false,
-          conteudoHeader: "",
-          conteudoBody: "Cadastro atualizado com sucesso",
-          closeToast: () => setShowToast(),
-        });
-        setShowToast(true);
+        const msg = "Cadastro atualizado com sucesso";
+
+        exibirTost("sucesso", msg);
       } else {
-        setConfigToast({
-          estiloToast: "",
-          estiloToastHeader: "estiloToastErro",
-          estiloToastBody: "estiloToastErro",
-          delayToast: 3000,
-          autoHideToast: true,
-          hideToastHeader: false,
-          conteudoHeader: "",
-          conteudoBody: "Houve um erro",
-          closeToast: () => setShowToast(),
-        });
-        setShowToast(true);
+        const msg = "Erro ao efetuar atualização";
+
+        exibirTost("erro", msg);
       }
     });
   };
@@ -137,31 +136,13 @@ function ContactPeople(props) {
     ).then((data) => {
       if (data.ok) {
         props.recarregarPessoa(objContato.PESSOA_ID, props.linkBackEnd);
-        setConfigToast({
-          estiloToast: "",
-          estiloToastHeader: "estiloToastSucesso",
-          estiloToastBody: "estiloToastSucesso",
-          delayToast: 3000,
-          autoHideToast: true,
-          hideToastHeader: false,
-          conteudoHeader: "",
-          conteudoBody: "Exclusão efetuada com sucesso",
-          closeToast: () => setShowToast(),
-        });
-        setShowToast(true);
+        const msg = "Exclusão efetuada com sucesso";
+
+        exibirTost("sucesso", msg);
       } else {
-        setConfigToast({
-          estiloToast: "",
-          estiloToastHeader: "estiloToastErro",
-          estiloToastBody: "estiloToastErro",
-          delayToast: 3000,
-          autoHideToast: true,
-          hideToastHeader: false,
-          conteudoHeader: "",
-          conteudoBody: "Houve um erro",
-          closeToast: () => setShowToast(),
-        });
-        setShowToast(true);
+        const msg = "Erro ao efetuar exclusão";
+
+        exibirTost("erro", msg);
       }
     });
   };
@@ -189,7 +170,7 @@ function ContactPeople(props) {
         show={showModal}
         salvarContato={(objCadastro) => salvarContatoPessoa(objCadastro)}
         editarContato={(objAtualizar) => editarContatoPessoa(objAtualizar)}
-        onHide={(limparCampos) => setShowModal(false)}
+        onHide={() => setShowModal(false)}
       />
 
       <div>

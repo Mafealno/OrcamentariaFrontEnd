@@ -84,42 +84,57 @@ function AddItensCartaCobertura(props) {
 
   var dadosArquivo = [];
 
+  const exibirTost = (tipo, mensagem) => {
+    switch (tipo) {
+      case "sucesso":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastSucesso",
+          estiloToastBody: "estiloToastSucesso",
+          delayToast: 3000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: mensagem,
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      case "erro":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastErro",
+          estiloToastBody: "estiloToastErro",
+          delayToast: 6000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: mensagem,
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      default:
+        break;
+    }
+  };
+
   const lerArquivo = () => {
     const input = document.getElementById(
       "caminhoarquivo-" + props.keyComponente
     );
 
     if (input.files.length == 0) {
-      setConfigToast({
-        estiloToast: "",
-        estiloToastHeader: "estiloToastErro",
-        estiloToastBody: "estiloToastErro",
-        delayToast: 3000,
-        autoHideToast: true,
-        hideToastHeader: false,
-        conteudoHeader: "",
-        conteudoBody: "Selecione um aquivo para importação",
-        closeToast: () => setShowToast(),
-      });
-      setShowToast(true);
+      const msg = "Selecione um aquivo para importação";
+      exibirTost("erro", msg);
       return;
     }
 
     setBtn(carregando);
 
     if (input.files[0].name.split(".")[1] != "xlsx") {
-      setConfigToast({
-        estiloToast: "",
-        estiloToastHeader: "estiloToastErro",
-        estiloToastBody: "estiloToastErro",
-        delayToast: 3000,
-        autoHideToast: true,
-        hideToastHeader: false,
-        conteudoHeader: "",
-        conteudoBody: "Arquivo selecionado com formato inválido",
-        closeToast: () => setShowToast(),
-      });
-      setShowToast(true);
+      const msg = "Arquivo selecionado com formato inválido";
+      exibirTost("erro", msg);
       return;
     }
 
@@ -234,18 +249,7 @@ function AddItensCartaCobertura(props) {
     props.adicionarCartaCoberturaSalvar(
       props.listCartaCoberturaSalvar,
       objCartaCoberturaCompleto,
-      setConfigToast({
-        estiloToast: "",
-        estiloToastHeader: "estiloToastSucesso",
-        estiloToastBody: "estiloToastSucesso",
-        delayToast: 3000,
-        autoHideToast: true,
-        hideToastHeader: false,
-        conteudoHeader: "",
-        conteudoBody: "Importação aprovada com sucesso",
-        closeToast: () => setShowToast(),
-      }),
-      setShowToast(true),
+      exibirTost("sucesso", "Importação aprovada com sucesso"),
       props.alterarStatusComponente(
         props.listComponenteItems,
         props.keyComponente,
