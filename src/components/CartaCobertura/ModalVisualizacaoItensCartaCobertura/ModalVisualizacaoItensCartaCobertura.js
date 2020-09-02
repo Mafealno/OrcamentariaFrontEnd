@@ -9,11 +9,6 @@ export default function ModalVisualizacaoItensCartaCobertura(props) {
   let [tempoFogoDisplay, setTempoFogoDisplay] = useState([]);
   let [referencia, setReferencia] = useState("");
   let [showModalConfirm, setShowModalConfirm] = useState(false);
-  let [permiteEditar, setPermiteEditar] = useState(true);
-
-  useEffect(() => {
-    setPermiteEditar(!props.cartaCoberturaAprovada ? true : false);
-  }, [props.cartaCoberturaAprovada]);
 
   useEffect(() => {
     if (props.show) {
@@ -73,14 +68,7 @@ export default function ModalVisualizacaoItensCartaCobertura(props) {
         estiloModalHeader="backgroundModal tituloModal"
         estiloModalBody="backgroundModal estilo-body-modal-visualizacao-itens-carta-cobertura"
         estiloModalFooter="backgroundModal"
-        tituloModal="Teste"
-        conteudoHeader={
-          <div className="close-modal">
-            <a href="#" onClick={() => props.onHide()}>
-              <span className="fa fa-close tituloModal"></span>
-            </a>
-          </div>
-        }
+        tituloModal="Carta de Cobertura"
         conteudoBody={
           <div id="containerModalVisualizacaoItensCartaCobertura">
             <div id="referencia-modal-visualizacao-itens-carta-cobertura">
