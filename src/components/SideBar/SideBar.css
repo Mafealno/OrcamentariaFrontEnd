@@ -65,7 +65,7 @@ ul {
 
 .main-menu a {
   display: block;
-  padding: 0.75em 15px;
+  padding: 0 15px;
   line-height: 1em;
   font-size: 1em;
   color: #fff;
@@ -121,6 +121,10 @@ a.dropdown-item {
 
 .dropdown-item {
   color: white;
+}
+
+.dropdown-item {
+  margin: 1rem 0 !important;
 }
 
 @supports (position: fixed) {

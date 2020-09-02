@@ -194,9 +194,9 @@ function BasicRegCusto(props) {
             <div className="form-row">
               <div className="col-xl-6 col-12 margin-bottom-15">
                 <label>Valor do Custo</label>
-                <div class="input-group position-initial">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroupPrepend">
+                <div className="input-group position-initial">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text" id="inputGroupPrepend">
                       R$
                     </span>
                   </div>

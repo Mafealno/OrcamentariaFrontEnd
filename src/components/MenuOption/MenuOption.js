@@ -7,7 +7,7 @@ export default function MenuOption(props) {
   return (
     <li>
       <Link to={props.path}>
-        <p>
+        <p className="item-menu">
           <span className={props.icon} aria-hidden="true"></span>
           {props.name}
         </p>
