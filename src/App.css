@@ -42,7 +42,7 @@
     position: fixed;
     width: 80%;
     margin-left: 20%;
-    overflow-y: auto;
+    overflow: hidden !important;
   }
 
   #body::-webkit-scrollbar {
