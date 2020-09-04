@@ -11,7 +11,7 @@ const ESTADO_INICIAL = {
 
 export default function cartaCobertura(state = ESTADO_INICIAL, action) {
   switch (action.type) {
-    case "SELCIONAR_MATERIAL_CARTA_COBERTURA":
+    case "SELECIONAR_MATERIAL_CARTA_COBERTURA":
       return {
         ...state,
         materialCartaCoberturaSalvar: action.materialCartaCoberturaSalvar,

@@ -1,6 +1,6 @@
 export function selecionarMaterialCartaCobertura(materialCartaCoberturaSalvar) {
   return {
-    type: "SELCIONAR_MATERIAL_CARTA_COBERTURA",
+    type: "SELECIONAR_MATERIAL_CARTA_COBERTURA",
     materialCartaCoberturaSalvar,
   };
 }
