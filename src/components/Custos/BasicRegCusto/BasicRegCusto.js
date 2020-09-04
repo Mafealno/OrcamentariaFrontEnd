@@ -31,11 +31,11 @@ function BasicRegCusto(props) {
 
   useEffect(() => {
     setDadosCadastro({
-      custoId: props.custoSelecionado.CUSTO_ID ?? "",
-      nomeCusto: props.custoSelecionado.NOME_CUSTO ?? "",
-      descricaoCusto: props.custoSelecionado.DESCRICAO ?? "",
-      valorCusto: props.custoSelecionado.VALOR_CUSTO ?? "",
-      tipoCusto: props.custoSelecionado.TIPO_CUSTO ?? "naoSelecionado",
+      custoId: props.custoSelecionado.CUSTO_ID || "",
+      nomeCusto: props.custoSelecionado.NOME_CUSTO || "",
+      descricaoCusto: props.custoSelecionado.DESCRICAO || "",
+      valorCusto: props.custoSelecionado.VALOR_CUSTO || "",
+      tipoCusto: props.custoSelecionado.TIPO_CUSTO || "naoSelecionado",
     });
   }, [props.custoSelecionado.CUSTO_ID]);
 
@@ -49,7 +49,7 @@ function BasicRegCusto(props) {
     };
   };
 
-  const exibirTost = (tipo, origem) => {
+  const exibirTost = (tipo, mensagem) => {
     switch (tipo) {
       case "sucesso":
         setConfigToast({
@@ -60,7 +60,7 @@ function BasicRegCusto(props) {
           autoHideToast: true,
           hideToastHeader: false,
           conteudoHeader: "",
-          conteudoBody: origem + " efetuado(a) com sucesso",
+          conteudoBody: mensagem,
           closeToast: () => setShowToast(),
         });
         setShowToast(true);
@@ -74,7 +74,7 @@ function BasicRegCusto(props) {
           autoHideToast: true,
           hideToastHeader: false,
           conteudoHeader: "",
-          conteudoBody: "Erro ao efetuar " + origem,
+          conteudoBody: mensagem,
           closeToast: () => setShowToast(),
         });
         setShowToast(true);
@@ -93,10 +93,13 @@ function BasicRegCusto(props) {
       .then((response) => response.json())
       .then((data) => {
         props.recarregarCusto(data.CUSTO_ID, props.linkBackEnd);
-        exibirTost("sucesso", "cadastro");
+
+        const msg = "Cadastro efetuado com sucesso";
+        exibirTost("sucesso", msg);
       })
       .catch(() => {
-        exibirTost("erro", "cadastro");
+        const msg = "Erro ao efetuar cadastro";
+        exibirTost("erro", msg);
       });
   };
 
@@ -106,9 +109,13 @@ function BasicRegCusto(props) {
     }).then((data) => {
       if (data.ok) {
         props.selecionarCusto({});
-        exibirTost("sucesso", "exclusão");
+        const msg = "Exclusão efetuada com sucesso";
+
+        exibirTost("sucesso", msg);
       } else {
-        exibirTost("erro", "exclusão");
+        const msg = "Erro ao efetuar exclusão";
+
+        exibirTost("erro", msg);
       }
     });
   };
@@ -121,9 +128,14 @@ function BasicRegCusto(props) {
     }).then((data) => {
       if (data.ok) {
         props.recarregarCusto(dadosCadastro.custoId, props.linkBackEnd);
-        exibirTost("sucesso", "atualização");
+
+        const msg = "Atualização efetuada com sucesso";
+
+        exibirTost("sucesso", msg);
       } else {
-        exibirTost("erro", "atualização");
+        const msg = "Erro ao efetuar atualização";
+
+        exibirTost("erro", msg);
       }
     });
   };
@@ -150,7 +162,7 @@ function BasicRegCusto(props) {
                 value={dadosCadastro.custoId}
                 readOnly
               />
-              {props.custoSelecionado.CUSTO_ID && (
+              {dadosCadastro.custoId && (
                 <>
                   <div className="close-select-custo">
                     <a href="#" onClick={() => props.selecionarCusto({})}>
@@ -244,17 +256,17 @@ function BasicRegCusto(props) {
                 <>
                   <button
                     type="button"
+                    className="btn btn-orcamentaria btn-options"
+                    onClick={() => setShowModalConfirm(true)}
+                  >
+                    Deletar
+                  </button>
+                  <button
+                    type="button"
                     className="btn btn-success btn-options"
                     onClick={() => atualizarCadastro()}
                   >
                     Atualizar
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-danger btn-options"
-                    onClick={() => setShowModalConfirm(true)}
-                  >
-                    Deletar
                   </button>
                 </>
               )}

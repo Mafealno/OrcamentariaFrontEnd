@@ -25,8 +25,8 @@ function ModalContact(props) {
       contatoId: props.CONTATO_ID,
       tipoContato: props.TIPO_CONTATO,
       contato: props.CONTATO,
-      ddd: props.DDD ?? "",
-      ramal: props.RAMAL ?? "",
+      ddd: props.DDD || "",
+      ramal: props.RAMAL || "",
       contatoPadrao: props.CONTATO_PADRAO,
     });
   }, [
@@ -46,8 +46,8 @@ function ModalContact(props) {
       contatoId: props.novoContatoId,
       tipoContato: props.tipoContato,
       contato: dadosCadastro.contato,
-      ddd: dadosCadastro.ddd ?? "",
-      ramal: dadosCadastro.ramal ?? "",
+      ddd: dadosCadastro.ddd || "",
+      ramal: dadosCadastro.ramal || "",
       contatoPadrao: dadosCadastro.contatoPadrao,
     });
   }, [props.novoContatoId, props.tipoContato, props.contatoPadrao]);

@@ -38,9 +38,9 @@ function BasicRegEquipamento(props) {
 
   useEffect(() => {
     setDadosCadastro({
-      equipamentoId: props.equipamentoSelecionado.EQUIPAMENTO_ID ?? "",
-      nomeEquipamento: props.equipamentoSelecionado.NOME_EQUIPAMENTO ?? "",
-      descricao: props.equipamentoSelecionado.DESCRICAO ?? "",
+      equipamentoId: props.equipamentoSelecionado.EQUIPAMENTO_ID || "",
+      nomeEquipamento: props.equipamentoSelecionado.NOME_EQUIPAMENTO || "",
+      descricao: props.equipamentoSelecionado.DESCRICAO || "",
     });
 
     if (props.equipamentoSelecionado.EQUIPAMENTO_ID) {
@@ -76,7 +76,7 @@ function BasicRegEquipamento(props) {
     };
   };
 
-  const exibirTost = (tipo, origem) => {
+  const exibirTost = (tipo, mensagem) => {
     switch (tipo) {
       case "sucesso":
         setConfigToast({
@@ -87,7 +87,7 @@ function BasicRegEquipamento(props) {
           autoHideToast: true,
           hideToastHeader: false,
           conteudoHeader: "",
-          conteudoBody: origem + " efetuado(a) com sucesso",
+          conteudoBody: mensagem,
           closeToast: () => setShowToast(),
         });
         setShowToast(true);
@@ -101,7 +101,7 @@ function BasicRegEquipamento(props) {
           autoHideToast: true,
           hideToastHeader: false,
           conteudoHeader: "",
-          conteudoBody: "Erro ao efetuar " + origem,
+          conteudoBody: mensagem,
           closeToast: () => setShowToast(),
         });
         setShowToast(true);
@@ -233,7 +233,7 @@ function BasicRegEquipamento(props) {
   }
 
   const pressEnter = (event) => {
-    if (event.key === "Enter") {
+    if (event.key == "Enter") {
       buscarFabricantes();
     }
   };
@@ -391,17 +391,17 @@ function BasicRegEquipamento(props) {
               <>
                 <button
                   type="button"
+                  className="btn btn-orcamentaria btn-options"
+                  onClick={() => setShowModalConfirm(true)}
+                >
+                  Deletar
+                </button>
+                <button
+                  type="button"
                   className="btn btn-success btn-options"
                   onClick={() => atualizarCadastro()}
                 >
                   Atualizar
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-danger btn-options"
-                  onClick={() => setShowModalConfirm(true)}
-                >
-                  Deletar
                 </button>
               </>
             )}

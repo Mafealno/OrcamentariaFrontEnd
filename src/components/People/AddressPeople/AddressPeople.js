@@ -30,7 +30,7 @@ function AddressPeople(props) {
         props.pessoaSelecionada.LIST_ENDERECO.map((endereco) => (
           <Address
             key={endereco.ENDERECO_ID}
-            objEndereco={endereco ?? {}}
+            objEndereco={endereco || {}}
             editarEndereco={(objAtualizar) =>
               editarEnderecoPessoa(objAtualizar)
             }
@@ -45,7 +45,7 @@ function AddressPeople(props) {
     }
   }, [props.pessoaSelecionada.LIST_CONTATO]);
 
-  const exibirTost = (tipo, origem) => {
+  const exibirTost = (tipo, mensagem) => {
     switch (tipo) {
       case "sucesso":
         setConfigToast({
@@ -56,7 +56,7 @@ function AddressPeople(props) {
           autoHideToast: true,
           hideToastHeader: false,
           conteudoHeader: "",
-          conteudoBody: origem + " efetuado(a) com sucesso",
+          conteudoBody: mensagem,
           closeToast: () => setShowToast(),
         });
         setShowToast(true);
@@ -70,7 +70,7 @@ function AddressPeople(props) {
           autoHideToast: true,
           hideToastHeader: false,
           conteudoHeader: "",
-          conteudoBody: "Erro ao efetuar " + origem,
+          conteudoBody: mensagem,
           closeToast: () => setShowToast(),
         });
         setShowToast(true);

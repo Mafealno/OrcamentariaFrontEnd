@@ -31,7 +31,7 @@ function TabelaItensCartaCobertura(props) {
       montarItemCartaCobertura();
     }
   }, [
-    props.listCartaCoberturaEditar.length ?? [],
+    props.listCartaCoberturaEditar.length || [],
     props.listCartaCoberturaEditar,
   ]);
 

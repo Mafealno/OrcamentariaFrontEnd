@@ -11,14 +11,14 @@ export default function ModalControl(props) {
     <>
       <Modal
         show={props.show}
-        size={props.tamanhoModal ?? "lg"}
+        size={props.tamanhoModal || "lg"}
         aria-labelledby="contained-modal-title-vcenter"
         className={props.estiloModal}
         centered
       >
         <ModalHeader className={props.estiloModalHeader}>
           <ModalTitle>{props.tituloModal}</ModalTitle>
-          {props.conteudoHeader ?? (
+          {props.conteudoHeader || (
             <div className="close-modal">
               <a href="#" onClick={() => props.onHide()}>
                 <span className="fa fa-close close-modal" />

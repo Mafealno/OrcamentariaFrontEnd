@@ -11,9 +11,9 @@ export default function ToastControl(props) {
       {ReactDOM.createPortal(
         <>
           <Toast
-            className={props.estiloToast ?? "estiloPadraoToast"}
+            className={props.estiloToast || "estiloPadraoToast"}
             onClose={() => props.closeToast(false)}
-            show={props.showToast ?? false}
+            show={props.showToast || false}
             delay={props.delayTost}
             autohide={props.autoHideToast}
           >

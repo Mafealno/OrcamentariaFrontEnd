@@ -24,9 +24,9 @@ function FormClientReg(props) {
     setDadosCadastro({
       nome: props.pessoaSelecionada.NOME_PESSOA,
       tipoPessoa: props.pessoaSelecionada.TIPO_PESSOA,
-      rg: props.pessoaSelecionada.RG ?? "",
-      cpf: props.pessoaSelecionada.CPF ?? "",
-      cnpj: props.pessoaSelecionada.CNPJ ?? "",
+      rg: props.pessoaSelecionada.RG || "",
+      cpf: props.pessoaSelecionada.CPF || "",
+      cnpj: props.pessoaSelecionada.CNPJ || "",
     });
 
     setTipoCadastro(props.pessoaSelecionada.TIPO_CADASTRO);
@@ -34,7 +34,7 @@ function FormClientReg(props) {
 
   const monstarObj = () => {
     return {
-      PESSOA_ID: props.pessoaSelecionada.PESSOA_ID ?? 0,
+      PESSOA_ID: props.pessoaSelecionada.PESSOA_ID || 0,
       NOME_PESSOA: dadosCadastro.nome,
       RG: dadosCadastro.tipoPessoa == "J" ? "" : dadosCadastro.rg,
       CPF: dadosCadastro.tipoPessoa == "J" ? "" : dadosCadastro.cpf,
@@ -163,7 +163,7 @@ function FormClientReg(props) {
               </button>
 
               <button
-                className="btn btn-danger btn-options"
+                className="btn btn-orcamentaria btn-options"
                 onClick={() => setShowModalConfirm(true)}
               >
                 Deletar

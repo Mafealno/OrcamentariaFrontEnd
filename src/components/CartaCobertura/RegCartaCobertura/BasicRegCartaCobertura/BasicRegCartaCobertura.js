@@ -17,11 +17,11 @@ function BasicRegCartaCobertura(props) {
 
   useEffect(() => {
     setDadosCadastro({
-      materialId: props.materialCartaCoberturaSalvar.MATERIAL_ID ?? "",
-      nomeMaterial: props.materialCartaCoberturaSalvar.NOME_MATERIAL ?? "",
+      materialId: props.materialCartaCoberturaSalvar.MATERIAL_ID || "",
+      nomeMaterial: props.materialCartaCoberturaSalvar.NOME_MATERIAL || "",
       descricaoMaterial:
-        props.materialCartaCoberturaSalvar.DESCRICAO_MATERIAL ?? "",
-      tipoMaterial: props.materialCartaCoberturaSalvar.TIPO_MATERIAL ?? "",
+        props.materialCartaCoberturaSalvar.DESCRICAO_MATERIAL || "",
+      tipoMaterial: props.materialCartaCoberturaSalvar.TIPO_MATERIAL || "",
     });
 
     if (props.materialCartaCoberturaSalvar.MATERIAL_ID) {

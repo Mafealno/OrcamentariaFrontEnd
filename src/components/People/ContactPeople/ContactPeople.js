@@ -32,7 +32,7 @@ function ContactPeople(props) {
         props.pessoaSelecionada.LIST_CONTATO.map((contato) => (
           <Contact
             key={contato.CONTATO_ID}
-            objContato={contato ?? {}}
+            objContato={contato || {}}
             editarContato={(objAtualizar) => editarContatoPessoa(objAtualizar)}
             deletarContato={(objContato) => deletarContatoPessoa(objContato)}
           />
@@ -43,7 +43,7 @@ function ContactPeople(props) {
     }
   }, [props.pessoaSelecionada.LIST_CONTATO]);
 
-  const exibirTost = (tipo, origem) => {
+  const exibirTost = (tipo, mensagem) => {
     switch (tipo) {
       case "sucesso":
         setConfigToast({
@@ -54,7 +54,7 @@ function ContactPeople(props) {
           autoHideToast: true,
           hideToastHeader: false,
           conteudoHeader: "",
-          conteudoBody: origem + " efetuado(a) com sucesso",
+          conteudoBody: mensagem,
           closeToast: () => setShowToast(),
         });
         setShowToast(true);
@@ -68,7 +68,7 @@ function ContactPeople(props) {
           autoHideToast: true,
           hideToastHeader: false,
           conteudoHeader: "",
-          conteudoBody: "Erro ao efetuar " + origem,
+          conteudoBody: mensagem,
           closeToast: () => setShowToast(),
         });
         setShowToast(true);

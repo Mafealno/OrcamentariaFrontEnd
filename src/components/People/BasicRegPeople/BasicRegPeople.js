@@ -24,8 +24,8 @@ function BasicRegPeople(props) {
   });
 
   useEffect(() => {
-    setPessoaId(props.pessoaSelecionada.PESSOA_ID ?? "");
-    setTipoCadastro(props.pessoaSelecionada.TIPO_CADASTRO ?? "");
+    setPessoaId(props.pessoaSelecionada.PESSOA_ID || "");
+    setTipoCadastro(props.pessoaSelecionada.TIPO_CADASTRO || "");
   }, [props.pessoaSelecionada.PESSOA_ID]);
 
   const exibirTost = (tipo, mensagem) => {
@@ -180,7 +180,7 @@ function BasicRegPeople(props) {
               </select>
             </div>
           </div>
-          {tipoCadastro === "Cliente" || tipoCadastro === "Fornecedor" ? (
+          {tipoCadastro == "Cliente" || tipoCadastro == "Fornecedor" ? (
             <FormRegClientProvider
               tipoCadastroPessoa={tipoCadastro}
               salvarCadastro={(objCadastro) =>
@@ -192,7 +192,7 @@ function BasicRegPeople(props) {
               deletarCadastro={() => deletarCadastroPessoa()}
             />
           ) : (
-            tipoCadastro === "Fornecedor" && (
+            tipoCadastro == "Fornecedor" && (
               <FormRegClientProvider
                 tipoCadastroPessoa={tipoCadastro}
                 salvarCadastro={(objCadastro) =>
@@ -205,7 +205,7 @@ function BasicRegPeople(props) {
               />
             )
           )}
-          {tipoCadastro === "Funcionario" && (
+          {tipoCadastro == "Funcionario" && (
             <FormRegEmployee
               salvarCadastro={(objCadastro) =>
                 salvarCadastroPessoa(objCadastro)

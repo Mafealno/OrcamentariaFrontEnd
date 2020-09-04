@@ -39,10 +39,10 @@ function BasicRegMaterial(props) {
 
   useEffect(() => {
     setDadosCadastro({
-      materialId: props.materialSelecionado.MATERIAL_ID ?? "",
-      nomeMaterial: props.materialSelecionado.NOME_MATERIAL ?? "",
-      descricaoMaterial: props.materialSelecionado.DESCRICAO_MATERIAL ?? "",
-      tipoMaterial: props.materialSelecionado.TIPO_MATERIAL ?? "",
+      materialId: props.materialSelecionado.MATERIAL_ID || "",
+      nomeMaterial: props.materialSelecionado.NOME_MATERIAL || "",
+      descricaoMaterial: props.materialSelecionado.DESCRICAO_MATERIAL || "",
+      tipoMaterial: props.materialSelecionado.TIPO_MATERIAL || "",
     });
 
     if (props.materialSelecionado.MATERIAL_ID) {
@@ -229,7 +229,7 @@ function BasicRegMaterial(props) {
   }
 
   const pressEnter = (event) => {
-    if (event.key === "Enter") {
+    if (event.key == "Enter") {
       buscarFabricantes();
     }
   };
@@ -399,17 +399,17 @@ function BasicRegMaterial(props) {
               <>
                 <button
                   type="button"
+                  className="btn btn-orcamentaria btn-options"
+                  onClick={() => setShowModalConfirm(true)}
+                >
+                  Deletar
+                </button>
+                <button
+                  type="button"
                   className="btn btn-success btn-options"
                   onClick={() => atualizarCadastro()}
                 >
                   Atualizar
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-danger btn-options"
-                  onClick={() => setShowModalConfirm(true)}
-                >
-                  Deletar
                 </button>
               </>
             )}
