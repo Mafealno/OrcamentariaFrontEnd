@@ -84,6 +84,16 @@
   height: auto;
 }
 
+.btn-float-right {
+  margin-left: 10px;
+}
+
+.close-orcamento {
+  color: white;
+  float: right;
+  flex-grow: 1;
+}
+
 @media (min-width: 1200px) {
   .div-btn-buscar-cliente {
     display: block;

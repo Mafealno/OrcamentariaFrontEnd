@@ -58,54 +58,144 @@ function BasicRegOrcamento(props) {
   });
 
   useEffect(() => {
-    if (props.orcamentoGeral.ORCAMENTO_ID) {
-      setDadosCadastro({
-        orcamentoId: props.orcamentoGeral.ORCAMENTO_ID,
-        nomeObra: props.orcamentoGeral.NOME_OBRA,
-        a_c: props.orcamentoGeral.A_C,
-        prazoEntrega: props.orcamentoGeral.PRAZO_ENTREGA,
-        dataCriacaoOrcamento: formatatData(
-          props.orcamentoGeral.DATA_CRIACAO_ORCAMENTO
-        ),
-        tipoObra: props.orcamentoGeral.TIPO_OBRA,
-      });
+    if (dadosCadastro.orcamentoId) {
+      props.mostrarAbas(true);
+    } else {
+      props.mostrarAbas(false);
+      props.selecionarClienteOrcamento({});
+    }
 
-      setDadosCadastroCliente({
-        pessoaId: props.orcamentoGeral.CLIENTE_ORCAMENTO.PESSOA_ID,
-        nomePessoa: props.orcamentoGeral.CLIENTE_ORCAMENTO.NOME_PESSOA,
-        rg: props.orcamentoGeral.CLIENTE_ORCAMENTO.RG,
-        cpf: props.orcamentoGeral.CLIENTE_ORCAMENTO.CPF,
-        cnpj: props.orcamentoGeral.CLIENTE_ORCAMENTO.CNPJ,
-        listContato: props.orcamentoGeral.CLIENTE_ORCAMENTO.LIST_CONTATO.filter(
-          (contato) => contato.CONTATO_PADRAO == true
-        ),
-      });
+    setDadosCadastro({
+      orcamentoId: "",
+      nomeObra: "",
+      a_c: "",
+      prazoEntrega: "",
+      dataCriacaoOrcamento: undefined,
+      tipoObra: props.tipoObra,
+    });
 
-      const enderecoPadrao = props.orcamentoGeral.CLIENTE_ORCAMENTO.LIST_ENDERECO.filter(
-        (endereco) => endereco.ENDERECO_PADRAO == true
-      );
+    setDadosCadastroCliente({
+      pessoaId: "",
+      nomePessoa: "",
+      rg: "",
+      cpf: "",
+      cnpj: "",
+      listContato: [],
+    });
 
-      if (enderecoPadrao[0]) {
-        setDadosCadastroClienteEndereco({
-          enderecoId: enderecoPadrao[0].ENDERECO_ID,
-          logradouro: enderecoPadrao[0].LOGRADOURO,
-          numero: enderecoPadrao[0].NUMERO_ENDERECO,
-          bairro: enderecoPadrao[0].BAIRRO,
-          cidade: enderecoPadrao[0].CIDADE,
-          uf: enderecoPadrao[0].UF,
+    setDadosCadastroClienteEndereco({
+      enderecoId: "",
+      logradouro: "",
+      numero: "",
+      bairro: "",
+      cidade: "",
+      uf: "",
+    });
+
+    setItemContatoDisplay([]);
+
+    if (dadosCadastro.tipoObra == "Geral") {
+      if (props.orcamentoGeral.ORCAMENTO_ID) {
+        setDadosCadastro({
+          orcamentoId: props.orcamentoGeral.ORCAMENTO_ID,
+          nomeObra: props.orcamentoGeral.NOME_OBRA,
+          a_c: props.orcamentoGeral.A_C,
+          prazoEntrega: props.orcamentoGeral.PRAZO_ENTREGA,
+          dataCriacaoOrcamento: formatatData(
+            props.orcamentoGeral.DATA_CRIACAO_ORCAMENTO
+          ),
+          tipoObra: props.orcamentoGeral.TIPO_OBRA,
         });
-      } else {
-        setDadosCadastroClienteEndereco({
-          enderecoId: "",
-          logradouro: "",
-          numero: "",
-          bairro: "",
-          cidade: "",
-          uf: "",
+
+        setDadosCadastroCliente({
+          pessoaId: props.orcamentoGeral.CLIENTE_ORCAMENTO.PESSOA_ID,
+          nomePessoa: props.orcamentoGeral.CLIENTE_ORCAMENTO.NOME_PESSOA,
+          rg: props.orcamentoGeral.CLIENTE_ORCAMENTO.RG,
+          cpf: props.orcamentoGeral.CLIENTE_ORCAMENTO.CPF,
+          cnpj: props.orcamentoGeral.CLIENTE_ORCAMENTO.CNPJ,
+          listContato: props.orcamentoGeral.CLIENTE_ORCAMENTO.LIST_CONTATO.filter(
+            (contato) => contato.CONTATO_PADRAO == true
+          ),
         });
+
+        const enderecoPadrao = props.orcamentoGeral.CLIENTE_ORCAMENTO.LIST_ENDERECO.filter(
+          (endereco) => endereco.ENDERECO_PADRAO == true
+        );
+
+        if (enderecoPadrao[0]) {
+          setDadosCadastroClienteEndereco({
+            enderecoId: enderecoPadrao[0].ENDERECO_ID,
+            logradouro: enderecoPadrao[0].LOGRADOURO,
+            numero: enderecoPadrao[0].NUMERO_ENDERECO,
+            bairro: enderecoPadrao[0].BAIRRO,
+            cidade: enderecoPadrao[0].CIDADE,
+            uf: enderecoPadrao[0].UF,
+          });
+        } else {
+          setDadosCadastroClienteEndereco({
+            enderecoId: "",
+            logradouro: "",
+            numero: "",
+            bairro: "",
+            cidade: "",
+            uf: "",
+          });
+        }
+      }
+    } else {
+      if (props.orcamentoIntumescente.ORCAMENTO_ID) {
+        setDadosCadastro({
+          orcamentoId: props.orcamentoIntumescente.ORCAMENTO_ID,
+          nomeObra: props.orcamentoIntumescente.NOME_OBRA,
+          a_c: props.orcamentoIntumescente.A_C,
+          prazoEntrega: props.orcamentoIntumescente.PRAZO_ENTREGA,
+          dataCriacaoOrcamento: formatatData(
+            props.orcamentoIntumescente.DATA_CRIACAO_ORCAMENTO
+          ),
+          tipoObra: props.orcamentoIntumescente.TIPO_OBRA,
+        });
+
+        setDadosCadastroCliente({
+          pessoaId: props.orcamentoIntumescente.CLIENTE_ORCAMENTO.PESSOA_ID,
+          nomePessoa: props.orcamentoIntumescente.CLIENTE_ORCAMENTO.NOME_PESSOA,
+          rg: props.orcamentoIntumescente.CLIENTE_ORCAMENTO.RG,
+          cpf: props.orcamentoIntumescente.CLIENTE_ORCAMENTO.CPF,
+          cnpj: props.orcamentoIntumescente.CLIENTE_ORCAMENTO.CNPJ,
+          listContato: props.orcamentoIntumescente.CLIENTE_ORCAMENTO.LIST_CONTATO.filter(
+            (contato) => contato.CONTATO_PADRAO == true
+          ),
+        });
+
+        const enderecoPadrao = props.orcamentoIntumescente.CLIENTE_ORCAMENTO.LIST_ENDERECO.filter(
+          (endereco) => endereco.ENDERECO_PADRAO == true
+        );
+
+        if (enderecoPadrao[0]) {
+          setDadosCadastroClienteEndereco({
+            enderecoId: enderecoPadrao[0].ENDERECO_ID,
+            logradouro: enderecoPadrao[0].LOGRADOURO,
+            numero: enderecoPadrao[0].NUMERO_ENDERECO,
+            bairro: enderecoPadrao[0].BAIRRO,
+            cidade: enderecoPadrao[0].CIDADE,
+            uf: enderecoPadrao[0].UF,
+          });
+        } else {
+          setDadosCadastroClienteEndereco({
+            enderecoId: "",
+            logradouro: "",
+            numero: "",
+            bairro: "",
+            cidade: "",
+            uf: "",
+          });
+        }
       }
     }
-  }, [props.orcamentoGeral.ORCAMENTO_ID]);
+  }, [
+    props.orcamentoGeral.ORCAMENTO_ID,
+    props.orcamentoIntumescente.ORCAMENTO_ID,
+    dadosCadastro.orcamentoId,
+  ]);
 
   useEffect(() => {
     if (props.clienteOrcamento.PESSOA_ID) {
@@ -150,14 +240,20 @@ function BasicRegOrcamento(props) {
     if (dadosCadastroCliente.pessoaId) {
       setItemContatoDisplay(
         dadosCadastroCliente.listContato.map((contato) => {
+          let contatoFormatado = "";
           if (contato.TIPO_CONTATO != "Email") {
-            contato.CONTATO = "(" + contato.DDD + ") " + contato.CONTATO;
+            contatoFormatado = "(" + contato.DDD + ") " + contato.CONTATO;
+          } else {
+            contatoFormatado = contato.CONTATO;
           }
 
           return (
-            <div className="container-item-contato-cliente-orcamento">
+            <div
+              className="container-item-contato-cliente-orcamento"
+              key={contato.CONTATO_ID}
+            >
               <div>Tipo: {contato.TIPO_CONTATO}</div>
-              <div>{contato.CONTATO}</div>
+              <div>{contatoFormatado}</div>
             </div>
           );
         })
@@ -219,7 +315,7 @@ function BasicRegOrcamento(props) {
       REFERENCIA: props.referencia,
       PRAZO_ENTREGA: dadosCadastro.prazoEntrega,
       DATA_CRIACAO_ORCAMENTO:
-        dadosCadastro.dataCriacaoOrcamento ?? new Date().toJSON(),
+        dadosCadastro.dataCriacaoOrcamento || new Date().toJSON(),
       A_C: dadosCadastro.a_c,
       TIPO_OBRA: dadosCadastro.tipoObra,
       TOTAIS_ORCAMENTO: {},
@@ -280,7 +376,14 @@ function BasicRegOrcamento(props) {
   };
 
   const deletarOrcamento = () => {
-    fetch(props.linkBackEnd + "/orcamento/" + dadosCadastro.orcamentoId, {
+    let tipoRota = "";
+    if (dadosCadastro.tipoObra == "Geral") {
+      tipoRota = "/orcamento/";
+    } else {
+      tipoRota = "/orcamentoIntumescente/";
+    }
+
+    fetch(props.linkBackEnd + tipoRota + dadosCadastro.orcamentoId, {
       method: "DELETE",
     }).then((data) => {
       if (data.ok) {
@@ -295,7 +398,7 @@ function BasicRegOrcamento(props) {
       } else {
         const msg = "Erro ao efetuar exlusão";
 
-        exibirTost("sucesso", msg);
+        exibirTost("erro", msg);
       }
     });
   };
@@ -368,7 +471,7 @@ function BasicRegOrcamento(props) {
   }
 
   const pressEnter = (event) => {
-    if (event.key === "Enter") {
+    if (event.key == "Enter") {
       buscarClientes();
     }
   };
@@ -397,6 +500,23 @@ function BasicRegOrcamento(props) {
                     value={dadosCadastro.orcamentoId}
                     readOnly
                   />
+                  {dadosCadastro.orcamentoId && (
+                    <>
+                      <div className="close-select-custo">
+                        <a
+                          href="#"
+                          onClick={() =>
+                            props.selecionarOrcamentoGeral(
+                              {},
+                              props.selecionarOrcamentoIntumescente({})
+                            )
+                          }
+                        >
+                          <span className="fa fa-close close-orcamento"></span>
+                        </a>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
               <div className="form-group">
@@ -440,7 +560,6 @@ function BasicRegOrcamento(props) {
                     <input
                       type="date"
                       className="form-control"
-                      name="dataCriacaoOrcamento"
                       value={dadosCadastro.dataCriacaoOrcamento}
                       readOnly
                     />
@@ -649,7 +768,7 @@ function BasicRegOrcamento(props) {
           {!dadosCadastro.orcamentoId && (
             <button
               type="button"
-              className="btn btn-primary"
+              className="btn btn-primary btn-100-px btn-float-right"
               onClick={() => salvarOrcamento()}
             >
               Salvar
@@ -659,14 +778,14 @@ function BasicRegOrcamento(props) {
             <>
               <button
                 type="button"
-                className="btn btn-warning"
+                className="btn btn-success btn-100-px btn-float-right"
                 onClick={() => editarOrcamento()}
               >
                 Atualizar
               </button>
               <button
                 type="button"
-                className="btn btn-danger"
+                className="btn btn-orcamentaria btn-100-px btn-float-right"
                 onClick={() => setShowModalConfirm(true)}
               >
                 Excluir
@@ -706,11 +825,18 @@ const mapStateToProps = (state) => ({
   linkBackEnd: state.backEnd.link,
   clienteOrcamento: state.orcamento.clienteOrcamento,
   orcamentoGeral: state.orcamento.orcamentoGeral,
+  orcamentoIntumescente: state.orcamento.orcamentoIntumescente,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   selecionarOrcamentoGeral: (orcamentoGeral) =>
     dispatch(orcamentoActions.selecionarOrcamentoGeral(orcamentoGeral)),
+  selecionarOrcamentoIntumescente: (orcamentoIntumescente) =>
+    dispatch(
+      orcamentoActions.selecionarOrcamentoIntumescente(orcamentoIntumescente)
+    ),
+  selecionarClienteOrcamento: (clienteOrcamento) =>
+    dispatch(orcamentoActions.selecionarClienteOrcamento(clienteOrcamento)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BasicRegOrcamento);
