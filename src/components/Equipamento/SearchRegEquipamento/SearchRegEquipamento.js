@@ -48,7 +48,7 @@ function SearchRegEquipamento(props) {
   }
 
   const pressEnter = (event) => {
-    if (event.key === "Enter") {
+    if (event.key == "Enter") {
       buscarEquipamento();
     }
   };

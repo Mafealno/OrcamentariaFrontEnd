@@ -9,21 +9,21 @@ import { connect } from "react-redux";
 function Contact(props) {
   return (
     <>
-      {props.objContato.TIPO_CONTATO === "Telefone" && (
+      {props.objContato.TIPO_CONTATO == "Telefone" && (
         <FormContactTelefone
           objContato={props.objContato}
           editarContato={(objAtualizar) => props.editarContato(objAtualizar)}
           deletarContato={(objContato) => props.deletarContato(objContato)}
         />
       )}
-      {props.objContato.TIPO_CONTATO === "Celular" && (
+      {props.objContato.TIPO_CONTATO == "Celular" && (
         <FormContactCelular
           objContato={props.objContato}
           editarContato={(objAtualizar) => props.editarContato(objAtualizar)}
           deletarContato={(objContato) => props.deletarContato(objContato)}
         />
       )}
-      {props.objContato.TIPO_CONTATO === "Email" && (
+      {props.objContato.TIPO_CONTATO == "Email" && (
         <FormContactEmail
           objContato={props.objContato}
           editarContato={(objAtualizar) => props.editarContato(objAtualizar)}

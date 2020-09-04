@@ -37,7 +37,7 @@ function SearchRegPeople(props) {
   };
 
   const pressEnter = (event) => {
-    if (event.key === "Enter") {
+    if (event.key == "Enter") {
       buscarPessoa();
     }
   };

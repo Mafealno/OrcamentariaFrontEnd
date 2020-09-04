@@ -24,7 +24,7 @@ function FilterCartaCobertura(props) {
   };
 
   const pressEnter = (event) => {
-    if (event.key === "Enter") {
+    if (event.key == "Enter") {
       filtrarCartaCobertura();
     }
   };

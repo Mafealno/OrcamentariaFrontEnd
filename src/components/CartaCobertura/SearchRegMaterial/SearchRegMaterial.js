@@ -47,7 +47,7 @@ function SearchRegMaterial(props) {
   }
 
   const pressEnter = (event) => {
-    if (event.key === "Enter") {
+    if (event.key == "Enter") {
       buscarMaterial();
     }
   };
@@ -71,7 +71,7 @@ function SearchRegMaterial(props) {
             className="btn"
             onClick={() => buscarMaterial()}
           >
-            {props.nomeBotao ?? "Buscar"}
+            {props.nomeBotao || "Buscar"}
           </button>
         </div>
       </div>
