@@ -21,6 +21,21 @@
   background-color: #e3e3e3;
 }
 
+.btn-100-px {
+  width: 100px;
+  margin-left: 10px;
+}
+
+.btn-float-right {
+  float: right;
+}
+
+.btn-orcamentaria {
+  background-color: #d40808;
+  border-color: #d40808;
+  color: white;
+}
+
 @media (min-width: 1200px) {
   .App {
     display: grid;
