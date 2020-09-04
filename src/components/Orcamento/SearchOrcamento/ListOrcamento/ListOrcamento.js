@@ -7,7 +7,6 @@ import OrcamentoGeral from "../../OrcamentoGeral/OrcamentoGeral";
 import OrcamentoIntumescente from "../../OrcamentoIntumescente/OrcamentoIntumescente";
 
 import { connect } from "react-redux";
-import orcamento from "../../../../store/reducers/orcamento";
 
 function ListOrcamento(props) {
   let [itemOrcamentoDisplay, setItemOrcamentoDisplay] = useState([]);
@@ -26,7 +25,7 @@ function ListOrcamento(props) {
               : "orcamentoIntumescente";
 
           return (
-            <>
+            <div key={elemento.ORCAMENTO_ID}>
               <div
                 className="item-orcamento"
                 id={"opcoes-div-pai" + elemento.ORCAMENTO_ID}
@@ -63,7 +62,7 @@ function ListOrcamento(props) {
                   </button>
                 </Link>
               </div>
-            </>
+            </div>
           );
         })
       );
@@ -91,7 +90,7 @@ function ListOrcamento(props) {
   };
 
   return (
-    <div className="form" id="containerListOrcamento">
+    <div id="containerListOrcamento">
       <div id="cabecalho-list-item-orcamento">
         <div className="row">
           <div className="col-2 center">Código</div>

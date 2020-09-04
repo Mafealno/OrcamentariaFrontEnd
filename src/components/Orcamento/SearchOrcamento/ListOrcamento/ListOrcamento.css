@@ -1,26 +1,24 @@
 #containerListOrcamento {
   width: 100%;
   height: 100%;
-  border-radius: 10px;
+  border: 2px solid rgb(68, 68, 68);
 }
 
 .list-item-orcamento {
   width: 100%;
-  max-height: 100%;
-  background-color: #fff;
-  border-top: 2px solid #fff;
-  border-bottom: 2px solid #fff;
+  height: calc(100% - 27px);
   overflow-x: hidden;
   overflow-y: auto;
+  padding: 2px 5px;
 }
 
 .item-orcamento {
   height: 70px;
   width: 100%;
+  color: #fff;
   background-color: rgb(68, 68, 68);
-  border: 2px solid #fff;
+  margin-bottom: 3px;
   border-radius: 10px;
-
   align-items: center;
   justify-content: center;
 }
@@ -30,9 +28,11 @@
 }
 
 #cabecalho-list-item-orcamento {
-  color: #d40808;
+  color: #fff;
   font-weight: bold;
-  background-color: #fff;
+  background-color: #d40808;
+  padding: 2px 5px;
+  height: 27px;
 }
 
 .center-item {
@@ -43,5 +43,5 @@
 }
 
 .opcoes-item-orcamento {
-  border: 2px solid;
+  margin-bottom: 2px;
 }
