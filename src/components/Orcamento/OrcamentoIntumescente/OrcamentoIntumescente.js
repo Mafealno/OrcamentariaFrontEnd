@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./OrcamentoIntumescente.css";
 import BasicRegOrcamento from "../BasicRegOrcamento/BasicRegOrcamento";
 import { Provider } from "react-redux";
@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import store from "../../../store/store";
 
 export default function OrcamentoIntumescente() {
+  let [mostrarAbas, setMostrarAbas] = useState(false);
   return (
     <div id="containerOrcamentoIntumescente">
       <Provider store={store}>
@@ -19,22 +20,26 @@ export default function OrcamentoIntumescente() {
             >
               Cadastro básico
             </a>
-            <a
-              className="nav-item nav-link"
-              id="nav-profile-tab"
-              data-toggle="tab"
-              href="#nav-profile"
-            >
-              Itens
-            </a>
-            <a
-              className="nav-item nav-link "
-              id="nav-contact-tab"
-              data-toggle="tab"
-              href="#nav-contact"
-            >
-              Mão de obra
-            </a>
+            {mostrarAbas && (
+              <>
+                <a
+                  className="nav-item nav-link"
+                  id="nav-profile-tab"
+                  data-toggle="tab"
+                  href="#nav-profile"
+                >
+                  Itens
+                </a>
+                <a
+                  className="nav-item nav-link "
+                  id="nav-contact-tab"
+                  data-toggle="tab"
+                  href="#nav-contact"
+                >
+                  Mão de obra
+                </a>
+              </>
+            )}
           </div>
         </nav>
         <div className="tab-content" id="nav-tabContent">
@@ -44,7 +49,10 @@ export default function OrcamentoIntumescente() {
             role="tabpanel"
             aria-labelledby="aba-cadastro-basico"
           >
-            <BasicRegOrcamento tipoObra="Intumescente" />
+            <BasicRegOrcamento
+              tipoObra="Intumescente"
+              mostrarAbas={(valor) => setMostrarAbas(valor)}
+            />
           </div>
           <div
             className="tab-pane fade"
