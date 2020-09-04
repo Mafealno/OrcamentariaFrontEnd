@@ -272,7 +272,7 @@ function ItemTabelaItensCartaCobertura(props) {
         <div className="container-btn-opcoes-carta-cobertura">
           <button
             type="button"
-            className="btn btn-danger btn-opcoes-carta-cobertura"
+            className="btn btn-orcamentaria btn-opcoes-carta-cobertura"
             onClick={() => setShowModalConfirm(true)}
           >
             Excluir

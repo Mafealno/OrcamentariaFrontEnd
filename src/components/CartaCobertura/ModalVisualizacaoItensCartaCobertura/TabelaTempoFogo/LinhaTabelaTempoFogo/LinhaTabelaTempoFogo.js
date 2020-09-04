@@ -146,7 +146,7 @@ export default function LinhaTabelaTempoFogo(props) {
           <div className="coluna-tabela-tempo-fogo">
             <button
               type="button"
-              className="btn btn-danger botao-opcoes-visualizao"
+              className="btn btn-orcamentaria botao-opcoes-visualizao"
               onClick={() => setShowModalConfirm(true)}
             >
               Excluir

@@ -9,7 +9,7 @@ export default function BotaoExcluirCartaCobertura(props) {
       <button
         onClick={() => setShowModalConfirm(true)}
         type="type"
-        className="btn btn-danger btn-excluir-modal-visualizacao-itens-carta-cobertura"
+        className="btn btn-orcamentaria btn-excluir-modal-visualizacao-itens-carta-cobertura"
       >
         Excluir
       </button>

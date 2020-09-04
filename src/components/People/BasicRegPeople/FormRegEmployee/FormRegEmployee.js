@@ -191,7 +191,7 @@ function FormRegEmployee(props) {
               </button>
 
               <button
-                className="btn btn-danger btn-options"
+                className="btn btn-orcamentaria btn-options"
                 onClick={() => setShowModalConfirm(true)}
               >
                 Deletar

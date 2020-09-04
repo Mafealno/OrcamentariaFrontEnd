@@ -18,7 +18,7 @@ export default function ModalConfirm(props) {
             <div className="row centralizar">
               <div className="col">
                 <button
-                  className="btn btn-danger"
+                  className="btn btn-orcamentaria"
                   onClick={() => props.onHide()}
                 >
                   Cancelar

@@ -60,7 +60,7 @@ function AddItensCartaCobertura(props) {
       <button
         type="button"
         onClick={() => lerArquivo()}
-        className="btn btn-danger btn-add-item"
+        className="btn btn-orcamentaria btn-add-item"
       >
         Importar arquivo
       </button>
