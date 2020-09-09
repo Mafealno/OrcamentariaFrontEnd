@@ -21,9 +21,20 @@
   background-color: #e3e3e3;
 }
 
+.invalid-feedback {
+  width: auto !important;
+  margin-top: 0 !important;
+  color: #d40808;
+  font-weight: bold;
+}
+
 .btn-100-px {
   width: 100px;
   margin-left: 10px;
+}
+
+.margin-bottom-0 {
+  margin-bottom: 0 !important;
 }
 
 .btn-float-right {
@@ -34,6 +45,15 @@
   background-color: #d40808;
   border-color: #d40808;
   color: white;
+}
+
+.modal-open .modal {
+  overflow-y: hidden;
+}
+
+.modal-body {
+  max-height: 730px;
+  overflow-y: auto;
 }
 
 @media (min-width: 1200px) {
