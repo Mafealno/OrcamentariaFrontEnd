@@ -1,46 +1,85 @@
 import React, { useState, useEffect } from "react";
+import * as validacaoDadosUtils from "../../../../../utils/validacaoDados";
 
 import { connect } from "react-redux";
 
 function DadosMaterialCartaCobertura(props) {
+  let dadosCampo = { ...validacaoDadosUtils.dadosCampo };
+
   let [dadosCadastro, setDadosCadastro] = useState({
-    materialId: "",
-    nomeMaterial: "",
-    nomePessoa: "",
-    descricaoMaterial: "",
+    materialIdCartaCobertura: {
+      ...dadosCampo,
+      valorPadrao: 0,
+      requerido: true,
+    },
+    nomeMaterial: { ...dadosCampo },
+    descricaoMaterial: { ...dadosCampo },
   });
 
   let [dadosFabricante, setDadosFabricante] = useState({
-    pessoaId: "",
-    nomePessoa: "",
+    pessoaId: { ...dadosCampo, requerido: true },
+    nomePessoa: { ...dadosCampo },
   });
 
   useEffect(() => {
     if (props.materialCartaCoberturaEditar) {
       setDadosCadastro({
-        materialId: props.materialCartaCoberturaEditar.MATERIAL_ID,
-        nomeMaterial: props.materialCartaCoberturaEditar.NOME_MATERIAL,
-        descricaoMaterial:
-          props.materialCartaCoberturaEditar.DESCRICAO_MATERIAL,
+        materialIdCartaCobertura: {
+          ...dadosCadastro.materialIdCartaCobertura,
+          valor: props.materialCartaCoberturaEditar.MATERIAL_ID,
+        },
+        nomeMaterial: {
+          ...dadosCadastro.nomeMaterial,
+          valor: props.materialCartaCoberturaEditar.NOME_MATERIAL,
+        },
+        descricaoMaterial: {
+          ...dadosCadastro.descricaoMaterial,
+          valor: props.materialCartaCoberturaEditar.DESCRICAO_MATERIAL,
+        },
       });
 
       setDadosFabricante({
-        pessoaId: props.materialCartaCoberturaEditar.FABRICANTE.PESSOA_ID,
-        nomePessoa: props.materialCartaCoberturaEditar.FABRICANTE.NOME_PESSOA,
+        pessoaId: {
+          ...dadosFabricante.pessoaId,
+          valor: props.materialCartaCoberturaEditar.FABRICANTE.PESSOA_ID,
+        },
+        nomePessoa: {
+          ...dadosFabricante.nomePessoa,
+          valor: props.materialCartaCoberturaEditar.FABRICANTE.NOME_PESSOA,
+        },
       });
     } else {
-      setDadosCadastro({
-        materialId: "",
-        nomeMaterial: "",
-        descricaoMaterial: "",
-      });
-
-      setDadosFabricante({
-        pessoaId: "",
-        nomePessoa: "",
-      });
+      limparCampos();
     }
   }, [props.materialCartaCoberturaEditar]);
+
+  const limparCampos = () => {
+    setDadosCadastro({
+      materialIdCartaCobertura: {
+        ...dadosCadastro.materialIdCartaCobertura,
+        valor: dadosCadastro.materialIdCartaCobertura.valorPadrao,
+      },
+      nomeMaterial: {
+        ...dadosCadastro.nomeMaterial,
+        valor: dadosCadastro.nomeMaterial.valorPadrao,
+      },
+      descricaoMaterial: {
+        ...dadosCadastro.descricaoMaterial,
+        valor: dadosCadastro.descricaoMaterial.valorPadrao,
+      },
+    });
+
+    setDadosFabricante({
+      pessoaId: {
+        ...dadosFabricante.pessoaId,
+        valor: dadosFabricante.pessoaId.valorPadrao,
+      },
+      nomePessoa: {
+        ...dadosFabricante.nomePessoa,
+        valor: dadosFabricante.nomePessoa.valorPadrao,
+      },
+    });
+  };
 
   return (
     <div id="cadastro-basico-carta-cobertura-aux" className="form">
@@ -49,8 +88,9 @@ function DadosMaterialCartaCobertura(props) {
         <input
           type="text"
           className="form-control"
-          value={dadosCadastro.materialId}
-          name="idMaterialCartaCobertura"
+          name="materialIdCartaCobertura"
+          id="campo-materialIdCartaCobertura"
+          value={dadosCadastro.materialIdCartaCobertura.valor || ""}
           readOnly
         />
       </div>
@@ -59,8 +99,9 @@ function DadosMaterialCartaCobertura(props) {
         <input
           type="text"
           className="form-control"
-          name="NomeMaterialCartaCobertura"
-          value={dadosCadastro.nomeMaterial}
+          name="nomeMaterial"
+          id="campo-nomeMaterial"
+          value={dadosCadastro.nomeMaterial.valor}
           readOnly
         />
       </div>
@@ -69,9 +110,9 @@ function DadosMaterialCartaCobertura(props) {
         <input
           type="text"
           className="form-control"
-          name="fabricanteMaterialCartaCobertura"
-          value={dadosFabricante.nomePessoa}
-          id="inputFabricante"
+          name="nomePessoa"
+          id="campo-nomePessoa"
+          value={dadosFabricante.nomePessoa.valor}
           readOnly
         />
       </div>
@@ -79,8 +120,9 @@ function DadosMaterialCartaCobertura(props) {
         <label className="col-form-label">Descricao</label>
         <textarea
           className="form-control"
-          value={dadosCadastro.descricaoMaterial}
-          name="descricaoMaterialCartaCobertura"
+          name="descricaoMaterial"
+          id="campo-descricaoMaterial"
+          value={dadosCadastro.descricaoMaterial.valor}
           readOnly
         />
       </div>

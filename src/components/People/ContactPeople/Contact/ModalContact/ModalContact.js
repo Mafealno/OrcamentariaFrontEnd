@@ -2,100 +2,238 @@ import React, { useState, useEffect } from "react";
 import "./ModalContact.css";
 import ModalControl from "../../../../ModalControl/ModalControl";
 import * as PeopleActions from "../../../../../store/actions/people";
+import * as validacaoDadosUtils from "../../../../../utils/validacaoDados";
 import { connect } from "react-redux";
 
 function ModalContact(props) {
+  let dadosCampo = { ...validacaoDadosUtils.dadosCampo };
+
   let [telefone, setTelefone] = useState(true);
   let [celular, setCelular] = useState(true);
   let [email, setEmail] = useState(true);
 
   let [dadosCadastro, setDadosCadastro] = useState({
-    pessoaId: "",
-    contatoId: "",
-    tipoContato: "",
-    contato: "",
-    ddd: "",
-    ramal: "",
-    contatoPadrao: "",
+    pessoaId: { ...dadosCampo },
+    contatoId: { ...dadosCampo, valorPadrao: 0 },
+    tipoContato: { ...dadosCampo, requerido: true },
+    contato: { ...dadosCampo, requerido: true },
+    ddd: { ...dadosCampo, formato: /^[1-9]{1}[0-9]{1}$/ },
+    ramal: { ...dadosCampo, formato: /\d{10}/ },
+    contatoPadrao: { ...dadosCampo, valorPadrao: false },
   });
 
   useEffect(() => {
-    setDadosCadastro({
-      pessoaId: props.PESSOA_ID,
-      contatoId: props.CONTATO_ID,
-      tipoContato: props.TIPO_CONTATO,
-      contato: props.CONTATO,
-      ddd: props.DDD || "",
-      ramal: props.RAMAL || "",
-      contatoPadrao: props.CONTATO_PADRAO,
-    });
-  }, [
-    props.PESSOA_ID,
-    props.CONTATO_ID,
-    props.TIPO_CONTATO,
-    props.contato,
-    props.ddd,
-    props.ramal,
-    props.CONTATO_PADRAO,
-    props.show,
-  ]);
+    if (props.PESSOA_ID) {
+      setDadosCadastro({
+        pessoaId: { ...dadosCadastro.pessoaId, valor: props.PESSOA_ID },
+        contatoId: { ...dadosCadastro.contatoId, valor: props.CONTATO_ID },
+        tipoContato: {
+          ...dadosCadastro.tipoContato,
+          valor: props.TIPO_CONTATO,
+        },
+        contato: { ...dadosCadastro.contato, valor: props.CONTATO },
+        ddd: { ...dadosCadastro.ddd, valor: props.DDD },
+        ramal: { ...dadosCadastro.ramal, valor: props.RAMAL },
+        contatoPadrao: {
+          ...dadosCadastro.contatoPadrao,
+          valor: props.CONTATO_PADRAO,
+        },
+      });
+
+      tipoContatoSelecionado(props.TIPO_CONTATO);
+    } else {
+      limparCampos();
+    }
+  }, [props.show]);
 
   useEffect(() => {
     setDadosCadastro({
-      pessoaId: props.pessoaSelecionada.PESSOA_ID,
-      contatoId: props.novoContatoId,
-      tipoContato: props.tipoContato,
-      contato: dadosCadastro.contato,
-      ddd: dadosCadastro.ddd || "",
-      ramal: dadosCadastro.ramal || "",
-      contatoPadrao: dadosCadastro.contatoPadrao,
+      ...dadosCadastro,
+      pessoaId: {
+        ...dadosCadastro.pessoaId,
+        valor: props.pessoaSelecionada.PESSOA_ID,
+      },
+      contatoId: { ...dadosCadastro.contatoId, valor: props.novoContatoId },
     });
-  }, [props.novoContatoId, props.tipoContato, props.contatoPadrao]);
+  }, [
+    props.novoContatoId,
+    props.tipoContato,
+    props.contatoPadrao,
+    props.pessoaSelecionada.PESSOA_ID,
+  ]);
 
-  const handleInputChange = (event) => {
+  const limparCampos = () => {
     setDadosCadastro({
       ...dadosCadastro,
-      [event.target.name]: event.target.value,
+      contatoId: {
+        ...dadosCadastro.contatoId,
+        valor: dadosCadastro.contatoId.valorPadrao,
+      },
+      tipoContato: {
+        ...dadosCadastro.tipoContato,
+        valor: dadosCadastro.tipoContato.valorPadrao,
+      },
+      contato: {
+        ...dadosCadastro.contato,
+        valor: dadosCadastro.contato.valorPadrao,
+      },
+      ddd: { ...dadosCadastro.ddd, valor: dadosCadastro.ddd.valorPadrao },
+      ramal: { ...dadosCadastro.ramal, valor: dadosCadastro.ramal.valorPadrao },
+      contatoPadrao: {
+        ...dadosCadastro.contatoPadrao,
+        valor: dadosCadastro.contatoPadrao.valorPadrao,
+      },
     });
   };
 
-  const montarObj = () => {
+  const montarObj = (obj) => {
     return {
-      PESSOA_ID: props.pessoaSelecionada.PESSOA_ID,
-      CONTATO_ID: dadosCadastro.contatoId,
-      TIPO_CONTATO: dadosCadastro.tipoContato,
-      CONTATO: dadosCadastro.contato,
-      DDD: dadosCadastro.tipoContato == "Email" ? "" : dadosCadastro.ddd,
-      RAMAL: dadosCadastro.tipoContato == "Email" ? "" : dadosCadastro.ramal,
-      CONTATO_PADRAO: document.querySelector("#form-contato-padrao").checked,
+      PESSOA_ID: obj.pessoaId.valor,
+      CONTATO_ID: obj.contatoId.valor,
+      TIPO_CONTATO: obj.tipoContato.valor,
+      CONTATO: obj.contato.valor,
+      DDD: obj.tipoContato.valor == "Email" ? "" : obj.ddd.valor,
+      RAMAL: obj.tipoContato.valor == "Email" ? "" : obj.ramal.valor,
+      CONTATO_PADRAO: document.querySelector("#campo-contatoPadrao").checked,
     };
   };
 
-  function tipoContatoSeleciondo(event) {
-    switch (event.target.value) {
+  const exibirCamposErro = (dados, houveErro) => {
+    Object.keys(dados).map((nomeCampo) => {
+      if (!dados[nomeCampo].valido) {
+        houveErro = true;
+
+        if (document.getElementById("campo-" + nomeCampo)) {
+          document.getElementById("erro-" + nomeCampo).innerHTML =
+            dados[nomeCampo].msgErro;
+          document
+            .getElementById("campo-" + nomeCampo)
+            .classList.add("is-invalid");
+        }
+      }
+    });
+    return houveErro;
+  };
+
+  const removerErro = (id) => {
+    document.getElementById(id).classList.remove("is-invalid");
+  };
+
+  const definirFormatoPorTipoContato = (dadosCadastro) => {
+    switch (dadosCadastro.tipoContato.valor) {
+      case "Telefone":
+        dadosCadastro.contato.formato = /^(\d{4})(-)?(\d{4})$/;
+        break;
+      case "Celular":
+        dadosCadastro.contato.formato = /^(9\d{4})(-)?(\d{4})$/;
+        break;
+      case "Email":
+        dadosCadastro.contato.formato = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+        break;
+      default:
+        dadosCadastro.contato.formato = "";
+        break;
+    }
+
+    return dadosCadastro;
+  };
+
+  const salvarCadastro = () => {
+    let dadosContato = { ...dadosCadastro };
+
+    dadosContato = validacaoDadosUtils.validarDados(
+      definirFormatoPorTipoContato(dadosContato)
+    );
+
+    let houveErro = false;
+
+    houveErro = exibirCamposErro(dadosContato, houveErro);
+
+    if (houveErro) {
+      return;
+    }
+    props.salvarContato(montarObj(dadosContato));
+  };
+  const editarCadastro = () => {
+    let dadosContato = { ...dadosCadastro };
+
+    dadosContato = validacaoDadosUtils.validarDados(
+      definirFormatoPorTipoContato(dadosContato)
+    );
+
+    let houveErro = false;
+
+    houveErro = exibirCamposErro(dadosContato, houveErro);
+
+    if (houveErro) {
+      return;
+    }
+
+    props.editarContato(montarObj(dadosContato));
+  };
+
+  function tipoContatoSelecionado(value) {
+    switch (value) {
       case "Telefone":
         setTelefone(false);
         setCelular(false);
         setEmail(false);
+
         break;
       case "Celular":
         setCelular(false);
         setTelefone(true);
         setEmail(false);
+        setDadosCadastro({
+          ...dadosCadastro,
+          ramal: {
+            ...dadosCadastro.ramal,
+            valor: dadosCadastro.ramal.valorPadrao,
+          },
+        });
         break;
       case "Email":
         setEmail(false);
         setCelular(true);
         setTelefone(true);
+        setDadosCadastro({
+          ...dadosCadastro,
+          ddd: { ...dadosCadastro.ddd, valor: dadosCadastro.ddd.valorPadrao },
+          ramal: {
+            ...dadosCadastro.ramal,
+            valor: dadosCadastro.ramal.valorPadrao,
+          },
+        });
         break;
       default:
         setTelefone(true);
         setCelular(true);
         setEmail(true);
+        setDadosCadastro({
+          ...dadosCadastro,
+          contato: {
+            ...dadosCadastro.contato,
+            valor: dadosCadastro.contato.valorPadrao,
+          },
+          ddd: { ...dadosCadastro.ddd, valor: dadosCadastro.ddd.valorPadrao },
+          ramal: {
+            ...dadosCadastro.ramal,
+            valor: dadosCadastro.ramal.valorPadrao,
+          },
+        });
+        break;
     }
-
-    handleInputChange(event);
   }
+
+  const handleInputChange = (event) => {
+    setDadosCadastro({
+      ...dadosCadastro,
+      [event.target.name]: {
+        ...dadosCadastro[event.target.name],
+        valor: event.target.value,
+      },
+    });
+  };
 
   return (
     <>
@@ -105,7 +243,7 @@ function ModalContact(props) {
         estiloModalBody="backgroundModal"
         estiloModalFooter="backgroundModal"
         tituloModal={
-          dadosCadastro.contatoId ? "Editar Contato" : "Novo contato"
+          dadosCadastro.contatoId.valor ? "Editar Contato" : "Novo contato"
         }
         conteudoBody={
           <div className="form">
@@ -115,12 +253,13 @@ function ModalContact(props) {
                   <div className="form-row">
                     <label className="col-form-label">Código:</label>
                     <input
-                      value={dadosCadastro.contatoId}
-                      type="text"
                       className="form-control-plaintext input-codigo"
-                      id="input-contato-id"
+                      type="text"
+                      id="campo-contatoId"
+                      value={dadosCadastro.contatoId.valor || ""}
                       readOnly
                     />
+                    <span class="invalid-feedback" id="erro-constoId"></span>
                   </div>
                 </div>
                 <div className="form-group">
@@ -128,29 +267,46 @@ function ModalContact(props) {
                     <div className="col-xl-4 div-tipo-contato">
                       <label>Tipo de contato</label>
                       <select
-                        id="select-tipo-cadastro"
                         className="form-control"
-                        value={dadosCadastro.tipoContato}
                         name="tipoContato"
-                        onChange={(event) => tipoContatoSeleciondo(event)}
+                        id="campo-tipoContato"
+                        value={dadosCadastro.tipoContato.valor}
+                        onChange={(event) =>
+                          handleInputChange(
+                            event,
+                            tipoContatoSelecionado(
+                              event.target.value,
+                              handleInputChange(event)
+                            )
+                          )
+                        }
+                        onFocus={(event) => removerErro(event.target.id)}
                       >
-                        <option value="naoSelecionado">Escolher...</option>
+                        <option value="">Escolher...</option>
                         <option value="Celular">Celular</option>
                         <option value="Telefone">Telefone</option>
                         <option value="Email">Email</option>
                       </select>
+                      <span
+                        class="invalid-feedback"
+                        id="erro-tipoContato"
+                      ></span>
                     </div>
                     <div className="col-xl-8">
                       <label>Contato</label>
                       <input
-                        value={dadosCadastro.contato}
-                        disabled={dadosCadastro.tipoContato ? false : email}
+                        disabled={
+                          dadosCadastro.tipoContato.valor ? false : email
+                        }
                         type="text"
-                        name="contato"
                         className="form-control"
-                        id="form-contato"
+                        name="contato"
+                        id="campo-contato"
+                        value={dadosCadastro.contato.valor}
                         onChange={(event) => handleInputChange(event)}
+                        onFocus={(event) => removerErro(event.target.id)}
                       />
+                      <span class="invalid-feedback" id="erro-contato"></span>
                     </div>
                   </div>
                 </div>
@@ -159,50 +315,61 @@ function ModalContact(props) {
                     <div className="col-3">
                       <label>DDD</label>
                       <input
-                        value={dadosCadastro.ddd}
+                        type="text"
+                        className="form-control"
+                        name="ddd"
+                        id="campo-ddd"
                         disabled={
-                          dadosCadastro.contatoId != null &&
-                          (dadosCadastro.tipoContato == "telefone" ||
-                            dadosCadastro.tipoContato == "celular")
+                          dadosCadastro.contatoId.valor != null &&
+                          (dadosCadastro.tipoContato.valor == "telefone" ||
+                            dadosCadastro.tipoContato.valor == "celular")
                             ? false
                             : celular
                         }
-                        name="ddd"
-                        type="text"
-                        id="form-ddd"
-                        className="form-control"
+                        value={dadosCadastro.ddd.valor}
                         onChange={(event) => handleInputChange(event)}
+                        onFocus={(event) => removerErro(event.target.id)}
                       />
+                      <span class="invalid-feedback" id="erro-ddd"></span>
                     </div>
                     <div className="col-6">
                       <label>Ramal</label>
                       <input
-                        value={dadosCadastro.ramal}
+                        type="text"
+                        className="form-control"
+                        name="ramal"
+                        id="campo-ramal"
                         disabled={
-                          dadosCadastro.contatoId != null &&
-                          dadosCadastro.tipoContato == "telefone"
+                          dadosCadastro.contatoId.valor != null &&
+                          dadosCadastro.tipoContato.valor == "telefone"
                             ? false
                             : telefone
                         }
-                        name="ramal"
-                        type="text"
-                        id="form-ramal"
-                        className="form-control"
+                        value={dadosCadastro.ramal.valor}
                         onChange={(event) => handleInputChange(event)}
+                        onFocus={(event) => removerErro(event.target.id)}
                       />
+                      <span class="invalid-feedback" id="erro-ramal"></span>
                     </div>
                     <div className="col-3">
                       <label>Padrão</label>
                       <input
-                        disabled={dadosCadastro.tipoContato ? false : email}
-                        name="contatoPadrao"
                         type="checkbox"
-                        id="form-contato-padrao"
-                        value={false}
-                        checked={dadosCadastro.contatoPadrao}
                         className="form-control"
+                        name="contatoPadrao"
+                        id="campo-contatoPadrao"
+                        checked={dadosCadastro.contatoPadrao.valor}
+                        disabled={
+                          dadosCadastro.tipoContato.valor ? false : email
+                        }
+                        value={false}
                         onChange={(event) => handleInputChange(event)}
+                        onFocus={(event) => removerErro(event.target.id)}
                       />
+                      <span
+                        class="invalid-feedback"
+                        id="erro-contatoPadrao"
+                      ></span>
                     </div>
                   </div>
                 </div>
@@ -212,21 +379,21 @@ function ModalContact(props) {
         }
         conteudoFooter={
           <>
-            {!dadosCadastro.contatoId && (
+            {!dadosCadastro.contatoId.valor && (
               <div>
                 <button
-                  className="btn btn-primary"
-                  onClick={() => props.salvarContato(montarObj())}
+                  className="btn btn-primary btn-100-px"
+                  onClick={() => salvarCadastro()}
                 >
                   Salvar
                 </button>
               </div>
             )}
-            {dadosCadastro.contatoId && (
+            {dadosCadastro.contatoId.valor > 0 && (
               <div>
                 <button
-                  onClick={() => props.editarContato(montarObj())}
-                  className="btn btn-success"
+                  onClick={() => editarCadastro()}
+                  className="btn btn-success btn-100-px"
                 >
                   Atualizar
                 </button>

@@ -88,12 +88,17 @@ function AddressPeople(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        setNovoEnderecoId(data.ENDERECO_ID);
-        props.recarregarPessoa(objCadastro.PESSOA_ID, props.linkBackEnd);
+        if (data.errors) {
+          const msg = data.title;
 
-        const msg = "Cadastro efetuado com sucesso";
+          exibirTost("erro", msg);
+        } else {
+          setNovoEnderecoId(data.ENDERECO_ID);
+          props.recarregarPessoa(objCadastro.PESSOA_ID, props.linkBackEnd);
 
-        exibirTost("sucesso", msg);
+          const msg = "Cadastro efetuado com sucesso";
+          exibirTost("sucesso", msg);
+        }
       })
       .catch(() => {
         const msg = "Erro ao efetuar cadastro";

@@ -4,9 +4,11 @@ import ResultSearchProvider from "./ResultSearchProvider/ResultSearchProvider";
 import ModalConfirm from "../../ModalConfirm/ModalConfirm";
 import ToastControl from "../../ToastControl/ToastControl";
 import * as EquipamentoActions from "../../../store/actions/equipamento";
+import * as validacaoDadosUtils from "../../../utils/validacaoDados";
 import { connect } from "react-redux";
 
 function BasicRegEquipamento(props) {
+  let dadosCampo = { ...validacaoDadosUtils.dadosCampo };
   let [stringBuscaFabricante, setStringBuscaFabricante] = useState("");
   let [showResultadoFabricante, setShowResultadoFabricante] = useState(false);
   let [dataFabricantes, setDataFabricantes] = useState([]);
@@ -26,45 +28,83 @@ function BasicRegEquipamento(props) {
   });
 
   let [dadosCadastro, setDadosCadastro] = useState({
-    equipamentoId: "",
-    nomeEquipamento: "",
-    descricao: "",
+    equipamentoId: { ...dadosCampo, valorPadrao: 0 },
+    nomeEquipamento: { ...dadosCampo, requerido: true },
+    descricaoEquipamento: { ...dadosCampo },
   });
 
   let [dadosFabricante, setDadosFabricante] = useState({
-    pessoaId: "",
-    nomePessoa: "",
+    pessoaId: { ...dadosCampo, requerido: true },
+    nomePessoa: { ...dadosCampo },
   });
 
   useEffect(() => {
-    setDadosCadastro({
-      equipamentoId: props.equipamentoSelecionado.EQUIPAMENTO_ID || "",
-      nomeEquipamento: props.equipamentoSelecionado.NOME_EQUIPAMENTO || "",
-      descricao: props.equipamentoSelecionado.DESCRICAO || "",
-    });
-
     if (props.equipamentoSelecionado.EQUIPAMENTO_ID) {
+      setDadosCadastro({
+        equipamentoId: {
+          ...dadosCadastro.equipamentoId,
+          valor: props.equipamentoSelecionado.EQUIPAMENTO_ID,
+        },
+        nomeEquipamento: {
+          ...dadosCadastro.nomeEquipamento,
+          valor: props.equipamentoSelecionado.NOME_EQUIPAMENTO,
+        },
+        descricaoEquipamento: {
+          ...dadosCadastro.descricaoEquipamento,
+          valor: props.equipamentoSelecionado.descricaoEquipamento,
+        },
+      });
       setDadosFabricante({
-        pessoaId: props.equipamentoSelecionado.FABRICANTE.PESSOA_ID,
-        nomePessoa: props.equipamentoSelecionado.FABRICANTE.NOME_PESSOA,
+        pessoaId: {
+          ...dadosFabricante.pessoaId,
+          valor: props.equipamentoSelecionado.FABRICANTE.PESSOA_ID,
+        },
+        nomePessoa: {
+          ...dadosFabricante.nomePessoa,
+          valor: props.equipamentoSelecionado.FABRICANTE.NOME_PESSOA,
+        },
       });
     } else {
-      setDadosFabricante({
-        pessoaId: "",
-        nomePessoa: "",
-      });
+      limparCampos();
     }
   }, [props.equipamentoSelecionado.EQUIPAMENTO_ID]);
 
-  const montarObj = () => {
+  const limparCampos = () => {
+    setDadosCadastro({
+      equipamentoId: {
+        ...dadosCadastro.equipamentoId,
+        valor: dadosCadastro.equipamentoId.valorPadrao,
+      },
+      nomeEquipamento: {
+        ...dadosCadastro.nomeEquipamento,
+        valor: dadosCadastro.nomeEquipamento.valorPadrao,
+      },
+      descricaoEquipamento: {
+        ...dadosCadastro.descricaoEquipamento,
+        valor: dadosCadastro.descricaoEquipamento.valorPadrao,
+      },
+    });
+
+    setDadosFabricante({
+      pessoaId: {
+        ...dadosFabricante.pessoaId,
+        valor: dadosFabricante.pessoaId.valorPadrao,
+      },
+      nomePessoa: {
+        ...dadosFabricante.pessoaId,
+        valor: dadosFabricante.nomePessoa.valorPadrao,
+      },
+    });
+  };
+
+  const montarObj = (obj) => {
     return {
-      EQUIPAMENTO_ID:
-        dadosCadastro.equipamentoId == "" ? 0 : dadosCadastro.equipamentoId,
-      NOME_EQUIPAMENTO: dadosCadastro.nomeEquipamento,
-      descricao: dadosCadastro.descricao,
+      EQUIPAMENTO_ID: obj.equipamentoId.valor,
+      NOME_EQUIPAMENTO: obj.nomeEquipamento.valor,
+      DESCRICAO: obj.descricaoEquipamento.valor,
       FABRICANTE: {
-        PESSOA_ID: dadosFabricante.pessoaId,
-        NOME_PESSOA: dadosFabricante.nomePessoa,
+        PESSOA_ID: obj.pessoa.pessoaId.valor,
+        NOME_PESSOA: obj.pessoa.nomePessoa.valor,
         rg: "",
         cpf: "",
         cnpj: "",
@@ -111,11 +151,58 @@ function BasicRegEquipamento(props) {
     }
   };
 
+  const exibirCamposErro = (dados, houveErro) => {
+    Object.keys(dados).map((nomeCampo) => {
+      if (!dados[nomeCampo].valido) {
+        houveErro = true;
+
+        if (document.getElementById("campo-" + nomeCampo)) {
+          document.getElementById("erro-" + nomeCampo).innerHTML =
+            dados[nomeCampo].msgErro;
+          document
+            .getElementById("campo-" + nomeCampo)
+            .classList.add("is-invalid");
+        }
+      }
+    });
+    return houveErro;
+  };
+
+  const removerErro = (id) => {
+    document.getElementById(id).classList.remove("is-invalid");
+  };
+
+  const selecionarFabricanteEquipamento = (fabricante) => {
+    setDadosFabricante({
+      pessoaId: {
+        ...dadosFabricante.pessoaId,
+        valor: fabricante.PESSOA_ID,
+      },
+      nomePessoa: {
+        ...dadosFabricante.pessoaId,
+        valor: fabricante.NOME_PESSOA,
+      },
+    });
+  };
+
   const salvarCadastro = () => {
+    const dadosEquipameto = validacaoDadosUtils.validarDados(dadosCadastro);
+    const dadosPessoa = validacaoDadosUtils.validarDados(dadosFabricante);
+
+    let houveErro = false;
+    houveErro = exibirCamposErro(dadosEquipameto, houveErro);
+    houveErro = exibirCamposErro(dadosPessoa, houveErro);
+
+    if (houveErro) {
+      return;
+    }
+
+    dadosEquipameto.pessoa = dadosPessoa;
+
     fetch(props.linkBackEnd + "/equipamento/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(montarObj()),
+      body: JSON.stringify(montarObj(dadosEquipameto)),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -134,9 +221,7 @@ function BasicRegEquipamento(props) {
 
   const deletarCadastro = () => {
     fetch(
-      props.linkBackEnd +
-        "/equipamento/" +
-        props.equipamentoSelecionado.EQUIPAMENTO_ID,
+      props.linkBackEnd + "/equipamento/" + dadosCadastro.equipamentoId.valor,
       {
         method: "DELETE",
       }
@@ -156,19 +241,30 @@ function BasicRegEquipamento(props) {
   };
 
   const atualizarCadastro = () => {
+    const dadosEquipameto = validacaoDadosUtils.validarDados(dadosCadastro);
+    const dadosPessoa = validacaoDadosUtils.validarDados(dadosFabricante);
+
+    let houveErro = false;
+    houveErro = exibirCamposErro(dadosEquipameto, houveErro);
+    houveErro = exibirCamposErro(dadosPessoa, houveErro);
+
+    if (houveErro) {
+      return;
+    }
+
+    dadosEquipameto.pessoa = dadosPessoa;
+
     fetch(
-      props.linkBackEnd +
-        "/equipamento/" +
-        props.equipamentoSelecionado.EQUIPAMENTO_ID,
+      props.linkBackEnd + "/equipamento/" + dadosCadastro.equipamentoId.valor,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(montarObj()),
+        body: JSON.stringify(montarObj(dadosEquipameto)),
       }
     ).then((data) => {
       if (data.ok) {
         props.recarregarEquipamento(
-          dadosCadastro.equipamentoId,
+          dadosCadastro.equipamentoId.valor,
           props.linkBackEnd
         );
 
@@ -241,7 +337,10 @@ function BasicRegEquipamento(props) {
   const handleInputChange = (event) => {
     setDadosCadastro({
       ...dadosCadastro,
-      [event.target.name]: event.target.value,
+      [event.target.name]: {
+        ...dadosCadastro[event.target.name],
+        valor: event.target.value,
+      },
     });
   };
 
@@ -255,18 +354,17 @@ function BasicRegEquipamento(props) {
               type="text"
               className="form-control-plaintext"
               name="equipamentoId"
-              value={dadosCadastro.equipamentoId}
-              id="input-equipamento-id"
+              id="campo-equipamentoId"
+              value={dadosCadastro.equipamentoId.valor || ""}
               readOnly
             />
-            {props.equipamentoSelecionado.EQUIPAMENTO_ID && (
-              <>
-                <div className="close-select-equipamento">
-                  <a href="#" onClick={() => props.selecionarEquipamento({})}>
-                    <span className="fa fa-close close-select-equipamento"></span>
-                  </a>
-                </div>
-              </>
+            <span class="invalid-feedback" id="erro-equipamentoId"></span>
+            {dadosCadastro.equipamentoId.valor > 0 && (
+              <div className="close-select-equipamento">
+                <a href="#" onClick={() => props.selecionarEquipamento({})}>
+                  <span className="fa fa-close close-select-equipamento"></span>
+                </a>
+              </div>
             )}
           </div>
         </div>
@@ -279,10 +377,12 @@ function BasicRegEquipamento(props) {
                 placeholder="Ex: Lixadeira sem pó"
                 className="form-control"
                 name="nomeEquipamento"
-                value={dadosCadastro.nomeEquipamento}
-                id="input-equipamento-nome"
+                id="campo-nomeEquipamento"
+                value={dadosCadastro.nomeEquipamento.valor}
                 onChange={(event) => handleInputChange(event)}
+                onFocus={(event) => removerErro(event.target.id)}
               />
+              <span class="invalid-feedback" id="erro-nomeEquipamento"></span>
             </div>
           </div>
         </div>
@@ -292,17 +392,23 @@ function BasicRegEquipamento(props) {
             <textarea
               className="form-control"
               rows="5"
-              name="descricao"
-              value={dadosCadastro.descricao}
+              name="descricaoEquipamento"
+              id="campo-descricaoEquipamento"
+              value={dadosCadastro.descricaoEquipamento.valor}
               onChange={(event) => handleInputChange(event)}
+              onFocus={(event) => removerErro(event.target.id)}
             />
+            <span
+              class="invalid-feedback"
+              id="erro-descricaoEquipamento"
+            ></span>
           </div>
         </div>
-        <fieldset>
+        <fieldset id="campo-pessoaId">
           <legend>Dados do fabricante</legend>
           <div id="container-fabricante">
             <div id="buscaFabricante">
-              <div className="form-group">
+              <div className="form-group margin-bottom-0">
                 <div className="row">
                   <div className="col-xl">
                     <input
@@ -312,6 +418,7 @@ function BasicRegEquipamento(props) {
                       onChange={(event) =>
                         setStringBuscaFabricante(event.target.value)
                       }
+                      onFocus={() => removerErro("campo-pessoaId")}
                       onKeyDown={(event) => pressEnter(event)}
                     />
                   </div>
@@ -321,6 +428,7 @@ function BasicRegEquipamento(props) {
                       className="btn"
                       id="btn-buscar-fabricante"
                       onClick={() => buscarFabricantes()}
+                      onFocus={() => removerErro("campo-pessoaId")}
                     >
                       Buscar fabricante
                     </button>
@@ -334,10 +442,7 @@ function BasicRegEquipamento(props) {
                       show={showResultadoFabricante}
                       resultados={dataFabricantes}
                       selecionarFabricante={(fabricante) =>
-                        setDadosFabricante({
-                          pessoaId: fabricante.PESSOA_ID,
-                          nomePessoa: fabricante.NOME_PESSOA,
-                        })
+                        selecionarFabricanteEquipamento(fabricante)
                       }
                     />
                   </div>
@@ -355,8 +460,7 @@ function BasicRegEquipamento(props) {
                     <input
                       className="form-control"
                       name="pessoaId"
-                      value={dadosFabricante.pessoaId}
-                      onChange={(event) => handleInputChange(event)}
+                      value={dadosFabricante.pessoaId.valor}
                       readOnly
                     />
                   </div>
@@ -365,8 +469,7 @@ function BasicRegEquipamento(props) {
                     <input
                       className="form-control"
                       name="nomePessoa"
-                      value={dadosFabricante.nomePessoa}
-                      onChange={(event) => handleInputChange(event)}
+                      value={dadosFabricante.nomePessoa.valor}
                       readOnly
                     />
                   </div>
@@ -375,6 +478,7 @@ function BasicRegEquipamento(props) {
             </div>
           </div>
         </fieldset>
+        <span class="invalid-feedback" id="erro-pessoaId"></span>
         <div className="form-group width-99-5">
           <div className="form-row options">
             {!props.equipamentoSelecionado.EQUIPAMENTO_ID && (

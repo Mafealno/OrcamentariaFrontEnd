@@ -3,10 +3,13 @@ import "./ModalItemOrcamentoGeral.css";
 import ModalControl from "../../../../ModalControl/ModalControl";
 import ResultSearchMaterial from "./ResultSearchMaterial/ResultSearchMaterial";
 import ModalConfirm from "../../../../ModalConfirm/ModalConfirm";
+import * as validacaoDadosUtils from "../../../../../utils/validacaoDados";
 
 import { connect } from "react-redux";
 
 function ModalItemOrcamentoGeral(props) {
+  let dadosCampo = { ...validacaoDadosUtils.dadosCampo };
+
   let [optAmbienteDisplay, setOptAmbienteDisplay] = useState([]);
   let [stringBuscaMaterial, setStringBuscaMaterial] = useState("");
   let [showResultadoMaterial, setShowResultadoMaterial] = useState(false);
@@ -14,75 +17,99 @@ function ModalItemOrcamentoGeral(props) {
   let [showModalConfirm, setShowModalConfirm] = useState(false);
 
   let [dadosCadastro, setDadosCadastro] = useState({
-    orcamentoId: "",
-    itensOrcamentoId: "",
-    numeroLinha: "",
-    valorComprimento: 0,
-    valorLargura: 0,
-    valorM2: 0,
-    area: 0,
-    ambienteAplicacao: "",
-    localAplicacao: "",
-    acaoAplicar: "",
+    orcamentoId: { ...dadosCampo, valorPadrao: 0 },
+    itensOrcamentoId: { ...dadosCampo, valorPadrao: 0 },
+    numeroLinha: { ...dadosCampo, valorPadrao: 0 },
+    valorComprimento: { ...dadosCampo, valorPadrao: 0 },
+    valorLargura: { ...dadosCampo, valorPadrao: 0 },
+    valorM2: {
+      ...dadosCampo,
+      requerido: true,
+    },
+    area: {
+      ...dadosCampo,
+      requerido: true,
+    },
+    ambienteAplicacao: {
+      ...dadosCampo,
+      requerido: true,
+    },
+    localAplicacao: { ...dadosCampo },
+    acaoAplicar: { ...dadosCampo },
   });
 
   let [dadosCadastroMaterial, setDadosCadastroMaterial] = useState({
-    materialId: "",
-    nomeMaterial: "",
-    pessoaId: "",
-    nomePessoa: "",
+    materialIdItemOrcamentogeral: { ...dadosCampo, requerido: true },
+    nomeMaterial: { ...dadosCampo },
+    pessoaId: { ...dadosCampo },
+    nomePessoa: { ...dadosCampo },
   });
-
-  const limparCampos = () => {
-    setDadosCadastro({
-      orcamentoId: "",
-      itensOrcamentoId: "",
-      numeroLinha: "",
-      valorComprimento: 0,
-      valorLargura: 0,
-      valorM2: "",
-      area: 0,
-      ambienteAplicacao: "",
-      localAplicacao: "",
-      acaoAplicar: "",
-    });
-
-    setDadosCadastroMaterial({
-      materialId: "",
-      nomeMaterial: "",
-      pessoaId: "",
-      nomePessoa: "",
-    });
-  };
 
   useEffect(() => {
     setDadosCadastro({
       ...dadosCadastro,
-      orcamentoId: props.orcamentoGeral.ORCAMENTO_ID,
+      orcamentoId: {
+        ...dadosCadastro.orcamentoId,
+        valor: props.orcamentoGeral.ORCAMENTO_ID,
+      },
     });
     if (props.dados) {
       setDadosCadastro({
-        orcamentoId: props.dados.ORCAMENTO_ID,
-        itensOrcamentoId: props.dados.ITENS_ORCAMENTO_ID,
-        numeroLinha: props.dados.NUMERO_LINHA,
-        valorComprimento: props.dados.VALOR_COMPRIMENTO,
-        valorLargura: props.dados.VALOR_LARGURA,
-        valorM2: props.dados.VALOR_M_2,
-        area: props.dados.AREA,
-        ambienteAplicacao: props.dados.AMBIENTE_APLICACAO,
-        localAplicacao: props.dados.LOCAL_APLICACAO,
-        acaoAplicar: props.dados.AMBIENTE_APLICACAO,
+        orcamentoId: {
+          ...dadosCadastro.orcamentoId,
+          valor: props.dados.ORCAMENTO_ID,
+        },
+        itensOrcamentoId: {
+          ...dadosCadastro.itensOrcamentoId,
+          valor: props.dados.ITENS_ORCAMENTO_ID,
+        },
+        numeroLinha: {
+          ...dadosCadastro.numeroLinha,
+          valor: props.dados.NUMERO_LINHA,
+        },
+        valorComprimento: {
+          ...dadosCadastro.valorComprimento,
+          valor: props.dados.VALOR_COMPRIMENTO,
+        },
+        valorLargura: {
+          ...dadosCadastro.valorLargura,
+          valor: props.dados.VALOR_LARGURA,
+        },
+        valorM2: { ...dadosCadastro.valorM2, valor: props.dados.VALOR_M_2 },
+        area: { ...dadosCadastro.area, valor: props.dados.AREA },
+        ambienteAplicacao: {
+          ...dadosCadastro.ambienteAplicacao,
+          valor: props.dados.AMBIENTE_APLICACAO,
+        },
+        localAplicacao: {
+          ...dadosCadastro.localAplicacao,
+          valor: props.dados.LOCAL_APLICACAO,
+        },
+        acaoAplicar: {
+          ...dadosCadastro.acaoAplicar,
+          valor: props.dados.ACAO_APLICAR,
+        },
       });
       setDadosCadastroMaterial({
-        materialId: props.dados.PRODUTO.MATERIAL_ID,
-        nomeMaterial: props.dados.PRODUTO.NOME_MATERIAL,
-        pessoaId: props.dados.PRODUTO.PESSOA_ID,
-        nomePessoa: props.dados.PRODUTO.FABRICANTE.NOME_PESSOA,
+        materialIdItemOrcamentogeral: {
+          ...dadosCadastroMaterial,
+          valor: props.dados.PRODUTO.MATERIAL_ID,
+        },
+        nomeMaterial: {
+          ...dadosCadastroMaterial,
+          valor: props.dados.PRODUTO.NOME_MATERIAL,
+        },
+        pessoaId: {
+          ...dadosCadastroMaterial,
+          valor: props.dados.PRODUTO.PESSOA_ID,
+        },
+        nomePessoa: {
+          ...dadosCadastroMaterial,
+          valor: props.dados.PRODUTO.FABRICANTE.NOME_PESSOA,
+        },
       });
     }
-  }, [props.show]);
 
-  useEffect(() => {
     if (props.listItensOrcamentoGeral.length > 0) {
       let arrAux = [];
       props.listItensOrcamentoGeral.map((elementoAtual) => {
@@ -116,31 +143,87 @@ function ModalItemOrcamentoGeral(props) {
     }
   }, [props.show]);
 
-  const montarObj = () => {
+  const limparCampos = () => {
+    setDadosCadastro({
+      orcamentoId: {
+        ...dadosCadastro.orcamentoId,
+        valor: dadosCadastro.orcamentoId.valorPadrao,
+      },
+      itensOrcamentoId: {
+        ...dadosCadastro.itensOrcamentoId,
+        valor: dadosCadastro.itensOrcamentoId.valorPadrao,
+      },
+      numeroLinha: {
+        ...dadosCadastro.numeroLinha,
+        valor: dadosCadastro.numeroLinha.valorPadrao,
+      },
+      valorComprimento: {
+        ...dadosCadastro.valorComprimento,
+        valor: dadosCadastro.valorComprimento.valorPadrao,
+      },
+      valorLargura: {
+        ...dadosCadastro.valorLargura,
+        valor: dadosCadastro.valorLargura.valorPadrao,
+      },
+      valorM2: {
+        ...dadosCadastro.valorM2,
+        valor: dadosCadastro.valorM2.valorPadrao,
+      },
+      area: { ...dadosCadastro.area, valor: dadosCadastro.area.valorPadrao },
+      ambienteAplicacao: {
+        ...dadosCadastro.ambienteAplicacao,
+        valor: dadosCadastro.ambienteAplicacao.valorPadrao,
+      },
+      localAplicacao: {
+        ...dadosCadastro.localAplicacao,
+        valor: dadosCadastro.localAplicacao.valorPadrao,
+      },
+      acaoAplicar: {
+        ...dadosCadastro.acaoAplicar,
+        valor: dadosCadastro.acaoAplicar.valorPadrao,
+      },
+    });
+
+    setDadosCadastroMaterial({
+      materialIdItemOrcamentogeral: {
+        ...dadosCadastroMaterial.materialIdItemOrcamentogeral,
+        valor: dadosCadastroMaterial.materialIdItemOrcamentogeral.valorPadrao,
+      },
+      nomeMaterial: {
+        ...dadosCadastroMaterial.nomeMaterial,
+        valor: dadosCadastroMaterial.nomeMaterial.valorPadrao,
+      },
+      pessoaId: {
+        ...dadosCadastroMaterial.pessoaId,
+        valor: dadosCadastroMaterial.pessoaId.valorPadrao,
+      },
+      nomePessoa: {
+        ...dadosCadastroMaterial.nomePessoa,
+        valor: dadosCadastroMaterial.nomePessoa.valorPadrao,
+      },
+    });
+  };
+
+  const montarObj = (obj) => {
     return {
-      ORCAMENTO_ID:
-        dadosCadastro.orcamentoId == "" ? 0 : dadosCadastro.orcamentoId,
-      ITENS_ORCAMENTO_ID:
-        dadosCadastro.itensOrcamentoId == ""
-          ? 0
-          : dadosCadastro.itensOrcamentoId,
-      NUMERO_LINHA: dadosCadastro.numeroLinha || 0,
-      VALOR_COMPRIMENTO:
-        parseFloat(dadosCadastro.valorComprimento) || parseFloat(0),
-      VALOR_LARGURA: parseFloat(dadosCadastro.valorLargura) || parseFloat(0),
-      VALOR_M_2: parseFloat(dadosCadastro.valorM2) || parseFloat(0),
-      AREA: parseFloat(dadosCadastro.area),
-      AMBIENTE_APLICACAO: dadosCadastro.ambienteAplicacao,
-      LOCAL_APLICACAO: dadosCadastro.localAplicacao,
-      ACAO_APLICAR: dadosCadastro.acaoAplicar,
+      ORCAMENTO_ID: obj.orcamentoId.valor,
+      ITENS_ORCAMENTO_ID: obj.itensOrcamentoId.valor,
+      NUMERO_LINHA: obj.numeroLinha.valor,
+      VALOR_COMPRIMENTO: parseFloat(obj.valorComprimento.valor),
+      VALOR_LARGURA: parseFloat(obj.valorLargura.valor),
+      VALOR_M_2: parseFloat(obj.valorM2.valor),
+      AREA: parseFloat(obj.area.valor),
+      AMBIENTE_APLICACAO: obj.ambienteAplicacao.valor,
+      LOCAL_APLICACAO: obj.localAplicacao.valor,
+      ACAO_APLICAR: obj.acaoAplicar.valor,
       PRODUTO: {
-        MATERIAL_ID: dadosCadastroMaterial.materialId,
-        NOME_MATERIAL: dadosCadastroMaterial.nomeMaterial,
+        MATERIAL_ID: obj.material.materialIdItemOrcamentogeral.valor,
+        NOME_MATERIAL: obj.material.nomeMaterial.valor,
         DESCRICAO_MATERIAL: "",
         TIPO_MATERIAL: "",
         FABRICANTE: {
-          PESSOA_ID: dadosCadastroMaterial.pessoaId,
-          NOME_PESSOA: dadosCadastroMaterial.nomePessoa,
+          PESSOA_ID: obj.material.pessoaId.valor,
+          NOME_PESSOA: obj.material.nomePessoa.valor,
           RG: "",
           CPF: "",
           CNPJ: "",
@@ -151,6 +234,85 @@ function ModalItemOrcamentoGeral(props) {
         },
       },
     };
+  };
+
+  const salvarItemOrcamentoGeral = () => {
+    const dadosItemOrcamentoGeral = validacaoDadosUtils.validarDados(
+      dadosCadastro
+    );
+    const dadosMaterialItemOrcamentoGeral = validacaoDadosUtils.validarDados(
+      dadosCadastroMaterial
+    );
+    let houveErro = false;
+    houveErro = exibirCamposErro(dadosItemOrcamentoGeral, houveErro);
+
+    houveErro = exibirCamposErro(dadosMaterialItemOrcamentoGeral, houveErro);
+    if (houveErro) {
+      return;
+    }
+
+    dadosItemOrcamentoGeral.material = dadosMaterialItemOrcamentoGeral;
+
+    props.salvarItemOrcamentoGeral(
+      montarObj(dadosItemOrcamentoGeral),
+      fazerAposCadastrar
+    );
+  };
+
+  const atualizarItemOrcamentoGeral = () => {
+    const dadosItemOrcamentoGeral = validacaoDadosUtils.validarDados(
+      dadosCadastro
+    );
+    const dadosMaterialItemOrcamentoGeral = validacaoDadosUtils.validarDados(
+      dadosCadastroMaterial
+    );
+    let houveErro = false;
+    houveErro = exibirCamposErro(dadosItemOrcamentoGeral, houveErro);
+
+    houveErro = exibirCamposErro(dadosMaterialItemOrcamentoGeral, houveErro);
+    if (houveErro) {
+      return;
+    }
+
+    dadosItemOrcamentoGeral.material = dadosMaterialItemOrcamentoGeral;
+
+    props.atualizarItemOrcamentoGeral(montarObj(dadosItemOrcamentoGeral));
+  };
+
+  const fazerAposCadastrar = (objCadastrado) => {
+    setDadosCadastro({
+      ...dadosCadastro,
+      itensOrcamentoId: {
+        ...dadosCadastro.itensOrcamentoId,
+        valor: objCadastrado.ITENS_ORCAMENTO_ID,
+      },
+      numeroLinha: {
+        ...dadosCadastro.numeroLinha,
+        valor: objCadastrado.NUMERO_LINHA,
+      },
+    });
+  };
+
+  const exibirCamposErro = (dados, houveErro) => {
+    Object.keys(dados).map((nomeCampo) => {
+      if (!dados[nomeCampo].valido) {
+        houveErro = true;
+
+        if (document.getElementById("campo-" + nomeCampo)) {
+          document.getElementById("erro-" + nomeCampo).innerHTML =
+            dados[nomeCampo].msgErro;
+          document
+            .getElementById("campo-" + nomeCampo)
+            .classList.add("is-invalid");
+        }
+      }
+    });
+
+    return houveErro;
+  };
+
+  const removerErro = (id) => {
+    document.getElementById(id).classList.remove("is-invalid");
   };
 
   const buscarMaterial = () => {
@@ -184,20 +346,21 @@ function ModalItemOrcamentoGeral(props) {
     }
   };
 
-  const fazerAposCadastrar = (objCadastrado) => {
-    setDadosCadastro({
-      ...dadosCadastro,
-      itensOrcamentoId: objCadastrado.ITENS_ORCAMENTO_ID,
-      numeroLinha: objCadastrado.NUMERO_LINHA,
-    });
-  };
-
   const selecionarMaterialItemOrcamentoGeral = (material) => {
     setDadosCadastroMaterial({
-      materialId: material.MATERIAL_ID,
-      nomeMaterial: material.NOME_MATERIAL,
-      pessoaId: material.FABRICANTE.PESSOA_ID,
-      nomePessoa: material.FABRICANTE.NOME_PESSOA,
+      materialIdItemOrcamentogeral: {
+        ...dadosCadastroMaterial,
+        valor: material.MATERIAL_ID,
+      },
+      nomeMaterial: { ...dadosCadastroMaterial, valor: material.NOME_MATERIAL },
+      pessoaId: {
+        ...dadosCadastroMaterial,
+        valor: material.FABRICANTE.PESSOA_ID,
+      },
+      nomePessoa: {
+        ...dadosCadastroMaterial,
+        valor: material.FABRICANTE.NOME_PESSOA,
+      },
     });
   };
 
@@ -220,7 +383,10 @@ function ModalItemOrcamentoGeral(props) {
   const handleInputChange = (event) => {
     setDadosCadastro({
       ...dadosCadastro,
-      [event.target.name]: event.target.value,
+      [event.target.name]: {
+        ...dadosCadastro[event.target.name],
+        valor: event.target.value,
+      },
     });
   };
 
@@ -241,12 +407,16 @@ function ModalItemOrcamentoGeral(props) {
                     <div className="form-row">
                       <label className="col-form-label">Linha:</label>
                       <input
-                        value={dadosCadastro.numeroLinha}
                         type="text"
+                        value={dadosCadastro.numeroLinha.valor || ""}
+                        id="campo-orcamentoId"
                         className="form-control-plaintext input-numero-linha"
-                        id="input-linha-item-orcamento-geral"
                         readOnly
                       />
+                      <span
+                        class="invalid-feedback"
+                        id="erro-numeroLinha"
+                      ></span>
                     </div>
                   </div>
                   <div className="form-group">
@@ -257,12 +427,17 @@ function ModalItemOrcamentoGeral(props) {
                           type="text"
                           className="form-control"
                           name="ambienteAplicacao"
-                          value={dadosCadastro.ambienteAplicacao}
+                          id="campo-ambienteAplicacao"
+                          value={dadosCadastro.ambienteAplicacao.valor}
                           onChange={(event) => handleInputChange(event)}
+                          onFocus={(event) => removerErro(event.target.id)}
                           list={"ambiente"}
-                          required
                         />
                         <datalist id="ambiente">{optAmbienteDisplay}</datalist>
+                        <span
+                          class="invalid-feedback"
+                          id="erro-ambienteAplicacao"
+                        ></span>
                       </div>
                       <div className="col">
                         <label>Local</label>
@@ -270,9 +445,10 @@ function ModalItemOrcamentoGeral(props) {
                           type="text"
                           className="form-control"
                           name="localAplicacao"
-                          value={dadosCadastro.localAplicacao}
+                          id="campo-localAplicacao"
+                          value={dadosCadastro.localAplicacao.valor}
                           onChange={(event) => handleInputChange(event)}
-                          required
+                          onFocus={(event) => removerErro(event.target.id)}
                         />
                       </div>
                     </div>
@@ -284,13 +460,18 @@ function ModalItemOrcamentoGeral(props) {
                         <textarea
                           className="form-control"
                           name="acaoAplicar"
+                          id="campo-acaoAplicar"
                           rows="3"
-                          value={dadosCadastro.acaoAplicar}
+                          value={dadosCadastro.acaoAplicar.valor}
                           onChange={(event) => handleInputChange(event)}
-                          required
+                          onFocus={(event) => removerErro(event.target.id)}
                         />
+                        <span
+                          class="invalid-feedback"
+                          id="erro-acaoAplicar"
+                        ></span>
                       </div>
-                      <div className="col-xl-4 col-12">
+                      <div className="col-xl-6 col-12">
                         <div className="form-group">
                           <div className="form-row">
                             <div className="col">
@@ -299,9 +480,17 @@ function ModalItemOrcamentoGeral(props) {
                                 type="text"
                                 className="form-control"
                                 name="valorComprimento"
-                                value={dadosCadastro.valorComprimento}
+                                id="campo-valorComprimento"
+                                value={dadosCadastro.valorComprimento.valor}
                                 onChange={(event) => handleInputChange(event)}
+                                onFocus={(event) =>
+                                  removerErro(event.target.id)
+                                }
                               />
+                              <span
+                                class="invalid-feedback"
+                                id="erro-valorComprimento"
+                              ></span>
                             </div>
                             <div className="col">
                               <label>Largura</label>
@@ -309,9 +498,17 @@ function ModalItemOrcamentoGeral(props) {
                                 type="text"
                                 className="form-control"
                                 name="valorLargura"
-                                value={dadosCadastro.valorLargura}
+                                id="campo-valorLargura"
+                                value={dadosCadastro.valorLargura.valor}
                                 onChange={(event) => handleInputChange(event)}
+                                onFocus={(event) =>
+                                  removerErro(event.target.id)
+                                }
                               />
+                              <span
+                                class="invalid-feedback"
+                                id="erro-valorLargura"
+                              ></span>
                             </div>
                           </div>
                         </div>
@@ -323,9 +520,17 @@ function ModalItemOrcamentoGeral(props) {
                                 type="text"
                                 className="form-control"
                                 name="valorM2"
-                                value={dadosCadastro.valorM2}
+                                id="campo-valorM2"
+                                value={dadosCadastro.valorM2.valor}
                                 onChange={(event) => handleInputChange(event)}
+                                onFocus={(event) =>
+                                  removerErro(event.target.id)
+                                }
                               />
+                              <span
+                                class="invalid-feedback"
+                                id="erro-valorM2"
+                              ></span>
                             </div>
                             <div className="col">
                               <label>Área (M²)</label>
@@ -333,9 +538,17 @@ function ModalItemOrcamentoGeral(props) {
                                 type="text"
                                 className="form-control"
                                 name="area"
-                                value={dadosCadastro.area}
+                                id="campo-area"
+                                value={dadosCadastro.area.valor}
                                 onChange={(event) => handleInputChange(event)}
+                                onFocus={(event) =>
+                                  removerErro(event.target.id)
+                                }
                               />
+                              <span
+                                class="invalid-feedback"
+                                id="erro-area"
+                              ></span>
                             </div>
                           </div>
                         </div>
@@ -345,11 +558,14 @@ function ModalItemOrcamentoGeral(props) {
                   <div className="form-group">
                     <div className="form-row">
                       <div className="col">
-                        <fieldset className="fieldset-height-100">
+                        <fieldset
+                          className="fieldset-height-100"
+                          id="campo-materialIdItemOrcamentogeral"
+                        >
                           <legend>Dados do material</legend>
                           <div id="informacoes-material-orcamento-geral">
                             <div id="busca-material-orcamento-geral">
-                              <div className="form-group">
+                              <div className="form-group margin-bottom-0">
                                 <div className="row">
                                   <div className="col-xl">
                                     <input
@@ -362,6 +578,11 @@ function ModalItemOrcamentoGeral(props) {
                                         )
                                       }
                                       onKeyDown={(event) => pressEnter(event)}
+                                      onFocus={() =>
+                                        removerErro(
+                                          "campo-materialIdItemOrcamentogeral"
+                                        )
+                                      }
                                     />
                                   </div>
                                   <div className="col-xl-3 div-btn-buscar-material">
@@ -370,6 +591,11 @@ function ModalItemOrcamentoGeral(props) {
                                       className="btn"
                                       id="btn-buscar-material"
                                       onClick={() => buscarMaterial()}
+                                      onFocus={() =>
+                                        removerErro(
+                                          "campo-materialIdItemOrcamentogeral"
+                                        )
+                                      }
                                     >
                                       Buscar material
                                     </button>
@@ -403,8 +629,11 @@ function ModalItemOrcamentoGeral(props) {
                                     <input
                                       type="text"
                                       className="form-control"
-                                      name="materialId"
-                                      value={dadosCadastroMaterial.materialId}
+                                      name="materialIdItemOrcamentogeral"
+                                      value={
+                                        dadosCadastroMaterial
+                                          .materialIdItemOrcamentogeral.valor
+                                      }
                                       readOnly
                                     />
                                   </div>
@@ -413,7 +642,9 @@ function ModalItemOrcamentoGeral(props) {
                                     <input
                                       type="text"
                                       className="form-control"
-                                      value={dadosCadastroMaterial.nomeMaterial}
+                                      value={
+                                        dadosCadastroMaterial.nomeMaterial.valor
+                                      }
                                       name="nomeMaterial"
                                       readOnly
                                     />
@@ -428,7 +659,9 @@ function ModalItemOrcamentoGeral(props) {
                                       type="text"
                                       className="form-control"
                                       name="nomePessoa"
-                                      value={dadosCadastroMaterial.nomePessoa}
+                                      value={
+                                        dadosCadastroMaterial.nomePessoa.valor
+                                      }
                                       readOnly
                                     />
                                   </div>
@@ -437,6 +670,10 @@ function ModalItemOrcamentoGeral(props) {
                             </div>
                           </div>
                         </fieldset>
+                        <span
+                          class="invalid-feedback"
+                          id="erro-materialIdItemOrcamentogeral"
+                        ></span>
                       </div>
                     </div>
                   </div>
@@ -447,23 +684,18 @@ function ModalItemOrcamentoGeral(props) {
         }
         conteudoFooter={
           <>
-            {!dadosCadastro.itensOrcamentoId && (
+            {!dadosCadastro.itensOrcamentoId.valor && (
               <div>
                 <button
                   type="submit"
                   className="btn btn-primary btn-100-px"
-                  onClick={() =>
-                    props.salvarItemOrcamentoGeral(
-                      montarObj(),
-                      fazerAposCadastrar
-                    )
-                  }
+                  onClick={() => salvarItemOrcamentoGeral()}
                 >
                   Salvar
                 </button>
               </div>
             )}
-            {dadosCadastro.itensOrcamentoId && (
+            {dadosCadastro.itensOrcamentoId.valor > 0 && (
               <div>
                 <button
                   onClick={() => setShowModalConfirm(true)}
@@ -473,7 +705,7 @@ function ModalItemOrcamentoGeral(props) {
                 </button>
                 <button
                   type="submit"
-                  onClick={() => props.atualizarItemOrcamentoGeral(montarObj())}
+                  onClick={() => atualizarItemOrcamentoGeral()}
                   className="btn btn-success btn-100-px"
                 >
                   Atualizar
@@ -489,7 +721,9 @@ function ModalItemOrcamentoGeral(props) {
           show={showModalConfirm}
           onHide={() => setShowModalConfirm(false)}
           acaoConfirmada={() =>
-            props.deletarItemOrcamentoGeral(dadosCadastro.itensOrcamentoId)
+            props.deletarItemOrcamentoGeral(
+              dadosCadastro.itensOrcamentoId.valor
+            )
           }
           tituloModalConfirm={
             "Confirma exclusão? O dados não poderão ser recuperados"

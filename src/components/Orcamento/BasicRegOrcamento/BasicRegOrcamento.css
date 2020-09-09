@@ -19,11 +19,15 @@
   padding-top: 3%;
 }
 
-#input-orcamento-id {
+#campo-orcamentoId {
   width: 30% !important;
   font-weight: bold;
   color: white;
   margin-left: 15px;
+}
+
+.msg-erro-orcamento {
+  position: relative;
 }
 
 #container-cliente {

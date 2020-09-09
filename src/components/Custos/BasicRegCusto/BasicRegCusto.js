@@ -3,10 +3,13 @@ import "./BasicRegCusto.css";
 import * as CustoActions from "../../../store/actions/custo";
 import ModalConfirm from "../../ModalConfirm/ModalConfirm";
 import ToastControl from "../../ToastControl/ToastControl";
+import * as validacaoDadosUtils from "../../../utils/validacaoDados";
 
 import { connect } from "react-redux";
 
 function BasicRegCusto(props) {
+  let dadosCampo = { ...validacaoDadosUtils.dadosCampo };
+
   let [showModalConfirm, setShowModalConfirm] = useState(false);
   let [showToast, setShowToast] = useState(false);
 
@@ -22,30 +25,77 @@ function BasicRegCusto(props) {
     closeToast: {},
   });
   let [dadosCadastro, setDadosCadastro] = useState({
-    custoId: "",
-    nomeCusto: "",
-    descricaoCusto: "",
-    valorCusto: "",
-    tipoCusto: "naoSelecionado",
+    custoId: { ...dadosCampo, valorPadrao: 0 },
+    nomeCusto: { ...dadosCampo, requerido: true },
+    descricaoCusto: { ...dadosCampo },
+    valorCusto: { ...dadosCampo, requerido: true },
+    tipoCusto: {
+      ...dadosCampo,
+      requerido: true,
+    },
   });
 
   useEffect(() => {
-    setDadosCadastro({
-      custoId: props.custoSelecionado.CUSTO_ID || "",
-      nomeCusto: props.custoSelecionado.NOME_CUSTO || "",
-      descricaoCusto: props.custoSelecionado.DESCRICAO || "",
-      valorCusto: props.custoSelecionado.VALOR_CUSTO || "",
-      tipoCusto: props.custoSelecionado.TIPO_CUSTO || "naoSelecionado",
-    });
+    if (props.custoSelecionado.CUSTO_ID) {
+      setDadosCadastro({
+        custoId: {
+          ...dadosCadastro.custoId,
+          valor: props.custoSelecionado.CUSTO_ID,
+        },
+        nomeCusto: {
+          ...dadosCadastro.nomeCusto,
+          valor: props.custoSelecionado.NOME_CUSTO,
+        },
+        descricaoCusto: {
+          ...dadosCadastro.descricaoCusto,
+          valor: props.custoSelecionado.DESCRICAO,
+        },
+        valorCusto: {
+          ...dadosCadastro.valorCusto,
+          valor: props.custoSelecionado.VALOR_CUSTO,
+        },
+        tipoCusto: {
+          ...dadosCadastro.tipoCusto,
+          valor: props.custoSelecionado.TIPO_CUSTO,
+        },
+      });
+    } else {
+      limparCampos();
+    }
   }, [props.custoSelecionado.CUSTO_ID]);
 
-  const montarObj = () => {
+  const limparCampos = () => {
+    setDadosCadastro({
+      custoId: {
+        ...dadosCadastro.custoId,
+        valor: dadosCadastro.custoId.valorPadrao,
+      },
+      nomeCusto: {
+        ...dadosCadastro.nomeCusto,
+        valor: dadosCadastro.nomeCusto.valorPadrao,
+      },
+      descricaoCusto: {
+        ...dadosCadastro.descricaoCusto,
+        valor: dadosCadastro.descricaoCusto.valorPadrao,
+      },
+      valorCusto: {
+        ...dadosCadastro.valorCusto,
+        valor: dadosCadastro.valorCusto.valorPadrao,
+      },
+      tipoCusto: {
+        ...dadosCadastro.tipoCusto,
+        valor: dadosCadastro.tipoCusto.valorPadrao,
+      },
+    });
+  };
+
+  const montarObj = (obj) => {
     return {
-      CUSTO_ID: dadosCadastro.custoId == "" ? 0 : dadosCadastro.custoId,
-      NOME_CUSTO: dadosCadastro.nomeCusto,
-      DESCRICAO: dadosCadastro.descricaoCusto,
-      VALOR_CUSTO: parseFloat(dadosCadastro.valorCusto),
-      TIPO_CUSTO: dadosCadastro.tipoCusto,
+      CUSTO_ID: obj.custoId.valor,
+      NOME_CUSTO: obj.nomeCusto.valor,
+      DESCRICAO: obj.descricaoCusto.valor,
+      VALOR_CUSTO: parseFloat(obj.valorCusto.valor),
+      TIPO_CUSTO: obj.tipoCusto.valor,
     };
   };
 
@@ -84,11 +134,47 @@ function BasicRegCusto(props) {
     }
   };
 
+  const exibirCamposErro = (dados, houveErro) => {
+    Object.keys(dados).map((nomeCampo) => {
+      if (!dados[nomeCampo].valido) {
+        houveErro = true;
+
+        if (document.getElementById("campo-" + nomeCampo)) {
+          document.getElementById("erro-" + nomeCampo).innerHTML =
+            dados[nomeCampo].msgErro;
+          document
+            .getElementById("campo-" + nomeCampo)
+            .classList.add("is-invalid");
+        }
+      }
+    });
+    return houveErro;
+  };
+
+  const removerErro = (id) => {
+    document.getElementById(id).classList.remove("is-invalid");
+  };
+
   const salvarCadastro = () => {
+    const dadosCusto = validacaoDadosUtils.validarDados(dadosCadastro);
+
+    let houveErro = false;
+    houveErro = exibirCamposErro(dadosCusto, houveErro);
+
+    if (houveErro) {
+      return;
+    }
+
+    if (dadosCusto.valorCusto.valor < 1) {
+      const msg = "O valor deve ser maior que 0";
+      exibirTost("erro", msg);
+      return;
+    }
+
     fetch(props.linkBackEnd + "/custo/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(montarObj()),
+      body: JSON.stringify(montarObj(dadosCusto)),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -104,7 +190,7 @@ function BasicRegCusto(props) {
   };
 
   const deletarCadastro = () => {
-    fetch(props.linkBackEnd + "/custo/" + props.custoSelecionado.CUSTO_ID, {
+    fetch(props.linkBackEnd + "/custo/" + dadosCadastro.custoId.valor, {
       method: "DELETE",
     }).then((data) => {
       if (data.ok) {
@@ -121,13 +207,22 @@ function BasicRegCusto(props) {
   };
 
   const atualizarCadastro = () => {
-    fetch(props.linkBackEnd + "/custo/" + props.custoSelecionado.CUSTO_ID, {
+    const dadosCusto = validacaoDadosUtils.validarDados(dadosCadastro);
+
+    let houveErro = false;
+    houveErro = exibirCamposErro(dadosCusto, houveErro);
+
+    if (houveErro) {
+      return;
+    }
+
+    fetch(props.linkBackEnd + "/custo/" + dadosCadastro.custoId.valor, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(montarObj()),
+      body: JSON.stringify(montarObj(dadosCusto)),
     }).then((data) => {
       if (data.ok) {
-        props.recarregarCusto(dadosCadastro.custoId, props.linkBackEnd);
+        props.recarregarCusto(dadosCadastro.custoId.valor, props.linkBackEnd);
 
         const msg = "Atualização efetuada com sucesso";
 
@@ -143,7 +238,10 @@ function BasicRegCusto(props) {
   const handleInputChange = (event) => {
     setDadosCadastro({
       ...dadosCadastro,
-      [event.target.name]: event.target.value,
+      [event.target.name]: {
+        ...dadosCadastro[event.target.name],
+        valor: event.target.value,
+      },
     });
   };
 
@@ -157,19 +255,17 @@ function BasicRegCusto(props) {
               <input
                 type="text"
                 className="form-control-plaintext"
-                name="custoId"
-                id="input-custo-id"
-                value={dadosCadastro.custoId}
+                id="campo-custoId"
+                value={dadosCadastro.custoId.valor || ""}
                 readOnly
               />
-              {dadosCadastro.custoId && (
-                <>
-                  <div className="close-select-custo">
-                    <a href="#" onClick={() => props.selecionarCusto({})}>
-                      <span className="fa fa-close close-select-custo"></span>
-                    </a>
-                  </div>
-                </>
+              <span class="invalid-feedback" id="erro-custoId"></span>
+              {dadosCadastro.custoId.valor > 0 && (
+                <div className="close-select-custo">
+                  <a href="#" onClick={() => props.selecionarCusto({})}>
+                    <span className="fa fa-close close-select-custo"></span>
+                  </a>
+                </div>
               )}
             </div>
           </div>
@@ -182,9 +278,12 @@ function BasicRegCusto(props) {
                   className="form-control"
                   placeholder="Vale Transposte"
                   name="nomeCusto"
-                  value={dadosCadastro.nomeCusto}
+                  id="campo-nomeCusto"
+                  value={dadosCadastro.nomeCusto.valor}
                   onChange={(event) => handleInputChange(event)}
+                  onFocus={(event) => removerErro(event.target.id)}
                 />
+                <span class="invalid-feedback" id="erro-nomeCusto"></span>
               </div>
             </div>
           </div>
@@ -196,9 +295,12 @@ function BasicRegCusto(props) {
                   className="form-control"
                   rows="11"
                   name="descricaoCusto"
-                  value={dadosCadastro.descricaoCusto}
+                  id="campo-descricaoCusto"
+                  value={dadosCadastro.descricaoCusto.valor}
                   onChange={(event) => handleInputChange(event)}
+                  onFocus={(event) => removerErro(event.target.id)}
                 />
+                <span class="invalid-feedback" id="erro-descricaoCusto"></span>
               </div>
             </div>
           </div>
@@ -206,37 +308,36 @@ function BasicRegCusto(props) {
             <div className="form-row">
               <div className="col-xl-6 col-12 margin-bottom-15">
                 <label>Valor do Custo</label>
-                <div className="input-group position-initial">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text" id="inputGroupPrepend">
-                      R$
-                    </span>
-                  </div>
 
-                  <input
-                    type="number"
-                    className="form-control position-initial"
-                    name="valorCusto"
-                    value={dadosCadastro.valorCusto}
-                    onChange={(event) => handleInputChange(event)}
-                  />
-                </div>
+                <input
+                  type="number"
+                  className="form-control"
+                  name="valorCusto"
+                  id="campo-valorCusto"
+                  value={dadosCadastro.valorCusto.valor}
+                  onChange={(event) => handleInputChange(event)}
+                  onFocus={(event) => removerErro(event.target.id)}
+                />
+                <span class="invalid-feedback" id="erro-valorCusto"></span>
               </div>
               <div className="col-xl-6 col-12">
                 <label>Tipo do Custo</label>
                 <select
                   className="form-control"
                   name="tipoCusto"
-                  value={dadosCadastro.tipoCusto}
+                  id="campo-tipoCusto"
+                  value={dadosCadastro.tipoCusto.valor}
                   onChange={(event) => handleInputChange(event)}
+                  onFocus={(event) => removerErro(event.target.id)}
                 >
-                  <option value="naoSelecionado">Não Selecionado</option>
+                  <option value="">Não Selecionado</option>
                   <option value="DIARIO">Diário</option>
                   <option value="SEMANAL">Semanal</option>
                   <option value="MENSAL">Mensal</option>
                   <option value="ANUAL">Anual</option>
                   <option value="UNICO">Único</option>
                 </select>
+                <span class="invalid-feedback" id="erro-tipoCusto"></span>
               </div>
             </div>
           </div>

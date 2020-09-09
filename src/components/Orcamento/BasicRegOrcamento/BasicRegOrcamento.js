@@ -1,20 +1,23 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from "react";
 import "./BasicRegOrcamento.css";
 import ResultSearchClient from "./ResultSearchClient/ResultSearchClient";
 import * as orcamentoActions from "../../../store/actions/orcamento";
 import ModalConfirm from "../../ModalConfirm/ModalConfirm";
 import ToastControl from "../../ToastControl/ToastControl";
-
+import * as validacaoDadosUtils from "../../../utils/validacaoDados";
 import { connect } from "react-redux";
 
 function BasicRegOrcamento(props) {
+  let dadosCampo = { ...validacaoDadosUtils.dadosCampo };
+
   let [stringBuscaCliente, setStringBuscaCliente] = useState("");
   let [showResultadoCliente, setShowResultadoCliente] = useState(false);
   let [dataClientes, setDataClientes] = useState([]);
   let [itemContatoDisplay, setItemContatoDisplay] = useState([]);
-
   let [showToast, setShowToast] = useState(false);
   let [showModalConfirm, setShowModalConfirm] = useState(false);
+
   let [configToast, setConfigToast] = useState({
     estiloToast: "",
     estiloToastHeader: "",
@@ -28,186 +31,180 @@ function BasicRegOrcamento(props) {
   });
 
   let [dadosCadastro, setDadosCadastro] = useState({
-    orcamentoId: "",
-    nomeObra: "",
-    a_c: "",
-    prazoEntrega: "",
-    dataCriacaoOrcamento: undefined,
-    tipoObra: props.tipoObra,
+    orcamentoId: { ...dadosCampo, valorPadrao: 0 },
+    nomeObra: { ...dadosCampo, requerido: true },
+    a_c: { ...dadosCampo, requerido: true },
+    prazoEntrega: { ...dadosCampo, requerido: true },
+    dataCriacaoOrcamento: { ...dadosCampo, valorPadrao: new Date().toJSON() },
+    tipoObra: {
+      ...dadosCampo,
+      valor: props.tipoObra,
+      valorPadrao: props.tipoObra,
+    },
   });
 
   let [dadosCadastroCliente, setDadosCadastroCliente] = useState({
-    pessoaId: "",
-    nomePessoa: "",
-    rg: "",
-    cpf: "",
-    cnpj: "",
-    listContato: [],
+    pessoaId: { ...dadosCampo, requerido: true },
+    nomePessoa: { ...dadosCampo },
+    rg: { ...dadosCampo },
+    cpf: { ...dadosCampo },
+    cnpj: { ...dadosCampo },
+    listContato: { ...dadosCampo, valorPadrao: [] },
   });
 
   let [
     dadosCadastroClienteEndereco,
     setDadosCadastroClienteEndereco,
   ] = useState({
-    enderecoId: "",
-    logradouro: "",
-    numero: "",
-    bairro: "",
-    cidade: "",
-    uf: "",
+    enderecoId: { ...dadosCampo },
+    logradouro: { ...dadosCampo },
+    numero: { ...dadosCampo },
+    bairro: { ...dadosCampo },
+    cidade: { ...dadosCampo },
+    uf: { ...dadosCampo },
   });
 
   useEffect(() => {
-    if (dadosCadastro.orcamentoId) {
+    if (dadosCadastro.orcamentoId.valor) {
       props.mostrarAbas(true);
     } else {
       props.mostrarAbas(false);
       props.selecionarClienteOrcamento({});
     }
 
-    setDadosCadastro({
-      orcamentoId: "",
-      nomeObra: "",
-      a_c: "",
-      prazoEntrega: "",
-      dataCriacaoOrcamento: undefined,
-      tipoObra: props.tipoObra,
-    });
-
-    setDadosCadastroCliente({
-      pessoaId: "",
-      nomePessoa: "",
-      rg: "",
-      cpf: "",
-      cnpj: "",
-      listContato: [],
-    });
-
-    setDadosCadastroClienteEndereco({
-      enderecoId: "",
-      logradouro: "",
-      numero: "",
-      bairro: "",
-      cidade: "",
-      uf: "",
-    });
+    limparCampos();
 
     setItemContatoDisplay([]);
 
-    if (dadosCadastro.tipoObra == "Geral") {
-      if (props.orcamentoGeral.ORCAMENTO_ID) {
-        setDadosCadastro({
-          orcamentoId: props.orcamentoGeral.ORCAMENTO_ID,
-          nomeObra: props.orcamentoGeral.NOME_OBRA,
-          a_c: props.orcamentoGeral.A_C,
-          prazoEntrega: props.orcamentoGeral.PRAZO_ENTREGA,
-          dataCriacaoOrcamento: formatatData(
-            props.orcamentoGeral.DATA_CRIACAO_ORCAMENTO
-          ),
-          tipoObra: props.orcamentoGeral.TIPO_OBRA,
-        });
+    let orcamentoSelecionado =
+      dadosCadastro.tipoObra.valor == "Geral"
+        ? props.orcamentoGeral
+        : props.orcamentoIntumescente;
 
-        setDadosCadastroCliente({
-          pessoaId: props.orcamentoGeral.CLIENTE_ORCAMENTO.PESSOA_ID,
-          nomePessoa: props.orcamentoGeral.CLIENTE_ORCAMENTO.NOME_PESSOA,
-          rg: props.orcamentoGeral.CLIENTE_ORCAMENTO.RG,
-          cpf: props.orcamentoGeral.CLIENTE_ORCAMENTO.CPF,
-          cnpj: props.orcamentoGeral.CLIENTE_ORCAMENTO.CNPJ,
-          listContato: props.orcamentoGeral.CLIENTE_ORCAMENTO.LIST_CONTATO.filter(
+    if (orcamentoSelecionado.ORCAMENTO_ID) {
+      setDadosCadastro({
+        orcamentoId: {
+          ...dadosCadastro.orcamentoId,
+          valor: orcamentoSelecionado.ORCAMENTO_ID,
+        },
+        nomeObra: {
+          ...dadosCadastro.nomeObra,
+          valor: orcamentoSelecionado.NOME_OBRA,
+        },
+        a_c: { ...dadosCadastro.a_c, valor: orcamentoSelecionado.A_C },
+        prazoEntrega: {
+          ...dadosCadastro.prazoEntrega,
+          valor: orcamentoSelecionado.PRAZO_ENTREGA,
+        },
+        dataCriacaoOrcamento: {
+          ...dadosCadastro.dataCriacaoOrcamento,
+          valor: formatatData(orcamentoSelecionado.DATA_CRIACAO_ORCAMENTO),
+        },
+        tipoObra: {
+          ...dadosCadastro.tipoObra,
+          valor: orcamentoSelecionado.TIPO_OBRA,
+        },
+      });
+
+      setDadosCadastroCliente({
+        pessoaId: {
+          ...dadosCadastroCliente.pessoaId,
+          valor: orcamentoSelecionado.CLIENTE_ORCAMENTO.PESSOA_ID,
+        },
+        nomePessoa: {
+          ...dadosCadastroCliente.nomePessoa,
+          valor: orcamentoSelecionado.CLIENTE_ORCAMENTO.NOME_PESSOA,
+        },
+        rg: {
+          ...dadosCadastroCliente.rg,
+          valor: orcamentoSelecionado.CLIENTE_ORCAMENTO.RG,
+        },
+        cpf: {
+          ...dadosCadastroCliente.cpf,
+          valor: orcamentoSelecionado.CLIENTE_ORCAMENTO.CPF,
+        },
+        cnpj: {
+          ...dadosCadastroCliente.cnpj,
+          valor: orcamentoSelecionado.CLIENTE_ORCAMENTO.CNPJ,
+        },
+        listContato: {
+          ...dadosCadastroCliente.listContato,
+          valor: orcamentoSelecionado.CLIENTE_ORCAMENTO.LIST_CONTATO.filter(
             (contato) => contato.CONTATO_PADRAO == true
           ),
+        },
+      });
+
+      const enderecoPadrao = orcamentoSelecionado.CLIENTE_ORCAMENTO.LIST_ENDERECO.filter(
+        (endereco) => endereco.ENDERECO_PADRAO == true
+      );
+
+      if (enderecoPadrao[0]) {
+        setDadosCadastroClienteEndereco({
+          enderecoId: {
+            ...dadosCadastroClienteEndereco.enderecoId,
+            valor: enderecoPadrao[0].ENDERECO_ID,
+          },
+          logradouro: {
+            ...dadosCadastroClienteEndereco.logradouro,
+            valor: enderecoPadrao[0].LOGRADOURO,
+          },
+          numero: {
+            ...dadosCadastroClienteEndereco.numero,
+            valor: enderecoPadrao[0].NUMERO_ENDERECO,
+          },
+          bairro: {
+            ...dadosCadastroClienteEndereco.bairro,
+            valor: enderecoPadrao[0].BAIRRO,
+          },
+          cidade: {
+            ...dadosCadastroClienteEndereco.cidade,
+            valor: enderecoPadrao[0].CIDADE,
+          },
+          uf: {
+            ...dadosCadastroClienteEndereco.uf,
+            valor: enderecoPadrao[0].UF,
+          },
         });
-
-        const enderecoPadrao = props.orcamentoGeral.CLIENTE_ORCAMENTO.LIST_ENDERECO.filter(
-          (endereco) => endereco.ENDERECO_PADRAO == true
-        );
-
-        if (enderecoPadrao[0]) {
-          setDadosCadastroClienteEndereco({
-            enderecoId: enderecoPadrao[0].ENDERECO_ID,
-            logradouro: enderecoPadrao[0].LOGRADOURO,
-            numero: enderecoPadrao[0].NUMERO_ENDERECO,
-            bairro: enderecoPadrao[0].BAIRRO,
-            cidade: enderecoPadrao[0].CIDADE,
-            uf: enderecoPadrao[0].UF,
-          });
-        } else {
-          setDadosCadastroClienteEndereco({
-            enderecoId: "",
-            logradouro: "",
-            numero: "",
-            bairro: "",
-            cidade: "",
-            uf: "",
-          });
-        }
-      }
-    } else {
-      if (props.orcamentoIntumescente.ORCAMENTO_ID) {
-        setDadosCadastro({
-          orcamentoId: props.orcamentoIntumescente.ORCAMENTO_ID,
-          nomeObra: props.orcamentoIntumescente.NOME_OBRA,
-          a_c: props.orcamentoIntumescente.A_C,
-          prazoEntrega: props.orcamentoIntumescente.PRAZO_ENTREGA,
-          dataCriacaoOrcamento: formatatData(
-            props.orcamentoIntumescente.DATA_CRIACAO_ORCAMENTO
-          ),
-          tipoObra: props.orcamentoIntumescente.TIPO_OBRA,
-        });
-
-        setDadosCadastroCliente({
-          pessoaId: props.orcamentoIntumescente.CLIENTE_ORCAMENTO.PESSOA_ID,
-          nomePessoa: props.orcamentoIntumescente.CLIENTE_ORCAMENTO.NOME_PESSOA,
-          rg: props.orcamentoIntumescente.CLIENTE_ORCAMENTO.RG,
-          cpf: props.orcamentoIntumescente.CLIENTE_ORCAMENTO.CPF,
-          cnpj: props.orcamentoIntumescente.CLIENTE_ORCAMENTO.CNPJ,
-          listContato: props.orcamentoIntumescente.CLIENTE_ORCAMENTO.LIST_CONTATO.filter(
-            (contato) => contato.CONTATO_PADRAO == true
-          ),
-        });
-
-        const enderecoPadrao = props.orcamentoIntumescente.CLIENTE_ORCAMENTO.LIST_ENDERECO.filter(
-          (endereco) => endereco.ENDERECO_PADRAO == true
-        );
-
-        if (enderecoPadrao[0]) {
-          setDadosCadastroClienteEndereco({
-            enderecoId: enderecoPadrao[0].ENDERECO_ID,
-            logradouro: enderecoPadrao[0].LOGRADOURO,
-            numero: enderecoPadrao[0].NUMERO_ENDERECO,
-            bairro: enderecoPadrao[0].BAIRRO,
-            cidade: enderecoPadrao[0].CIDADE,
-            uf: enderecoPadrao[0].UF,
-          });
-        } else {
-          setDadosCadastroClienteEndereco({
-            enderecoId: "",
-            logradouro: "",
-            numero: "",
-            bairro: "",
-            cidade: "",
-            uf: "",
-          });
-        }
+      } else {
+        limparCamposEndereco();
       }
     }
   }, [
     props.orcamentoGeral.ORCAMENTO_ID,
     props.orcamentoIntumescente.ORCAMENTO_ID,
-    dadosCadastro.orcamentoId,
+    dadosCadastro.orcamentoId.valor,
   ]);
 
   useEffect(() => {
     if (props.clienteOrcamento.PESSOA_ID) {
       setDadosCadastroCliente({
-        pessoaId: props.clienteOrcamento.PESSOA_ID,
-        nomePessoa: props.clienteOrcamento.NOME_PESSOA,
-        rg: props.clienteOrcamento.RG,
-        cpf: props.clienteOrcamento.CPF,
-        cnpj: props.clienteOrcamento.CNPJ,
-        listContato: props.clienteOrcamento.LIST_CONTATO.filter(
-          (contato) => contato.CONTATO_PADRAO == true
-        ),
+        pessoaId: {
+          ...dadosCadastroCliente.pessoaId,
+          valor: props.clienteOrcamento.PESSOA_ID,
+        },
+        nomePessoa: {
+          ...dadosCadastroCliente.nomePessoa,
+          valor: props.clienteOrcamento.NOME_PESSOA,
+        },
+        rg: {
+          ...dadosCadastroCliente.rg,
+          valor: props.clienteOrcamento.RG,
+        },
+        cpf: {
+          ...dadosCadastroCliente.cpf,
+          valor: props.clienteOrcamento.CPF,
+        },
+        cnpj: {
+          ...dadosCadastroCliente.cnpj,
+          valor: props.clienteOrcamento.CNPJ,
+        },
+        listContato: {
+          ...dadosCadastroCliente.listContato,
+          valor: props.clienteOrcamento.LIST_CONTATO.filter(
+            (contato) => contato.CONTATO_PADRAO == true
+          ),
+        },
       });
 
       const enderecoPadrao = props.clienteOrcamento.LIST_ENDERECO.filter(
@@ -216,30 +213,41 @@ function BasicRegOrcamento(props) {
 
       if (enderecoPadrao[0]) {
         setDadosCadastroClienteEndereco({
-          enderecoId: enderecoPadrao[0].ENDERECO_ID,
-          logradouro: enderecoPadrao[0].LOGRADOURO,
-          numero: enderecoPadrao[0].NUMERO_ENDERECO,
-          bairro: enderecoPadrao[0].BAIRRO,
-          cidade: enderecoPadrao[0].CIDADE,
-          uf: enderecoPadrao[0].UF,
+          enderecoId: {
+            ...dadosCadastroClienteEndereco.enderecoId,
+            valor: enderecoPadrao[0].ENDERECO_ID,
+          },
+          logradouro: {
+            ...dadosCadastroClienteEndereco.logradouro,
+            valor: enderecoPadrao[0].LOGRADOURO,
+          },
+          numero: {
+            ...dadosCadastroClienteEndereco.numero,
+            valor: enderecoPadrao[0].NUMERO_ENDERECO,
+          },
+          bairro: {
+            ...dadosCadastroClienteEndereco.bairro,
+            valor: enderecoPadrao[0].BAIRRO,
+          },
+          cidade: {
+            ...dadosCadastroClienteEndereco.cidade,
+            valor: enderecoPadrao[0].CIDADE,
+          },
+          uf: {
+            ...dadosCadastroClienteEndereco.uf,
+            valor: enderecoPadrao[0].UF,
+          },
         });
       } else {
-        setDadosCadastroClienteEndereco({
-          enderecoId: "",
-          logradouro: "",
-          numero: "",
-          bairro: "",
-          cidade: "",
-          uf: "",
-        });
+        limparCamposEndereco();
       }
     }
   }, [props.clienteOrcamento.PESSOA_ID]);
 
   useEffect(() => {
-    if (dadosCadastroCliente.pessoaId) {
+    if (dadosCadastroCliente.pessoaId.valor) {
       setItemContatoDisplay(
-        dadosCadastroCliente.listContato.map((contato) => {
+        dadosCadastroCliente.listContato.valor.map((contato) => {
           let contatoFormatado = "";
           if (contato.TIPO_CONTATO != "Email") {
             contatoFormatado = "(" + contato.DDD + ") " + contato.CONTATO;
@@ -259,7 +267,116 @@ function BasicRegOrcamento(props) {
         })
       );
     }
-  }, [dadosCadastroCliente.pessoaId]);
+  }, [dadosCadastroCliente.pessoaId.valor]);
+
+  const limparCamposEndereco = () => {
+    setDadosCadastroClienteEndereco({
+      enderecoId: {
+        ...dadosCadastroClienteEndereco.enderecoId,
+        valor: dadosCadastroClienteEndereco.enderecoId.valorPadrao,
+      },
+      logradouro: {
+        ...dadosCadastroClienteEndereco.logradouro,
+        valor: dadosCadastroClienteEndereco.logradouro.valorPadrao,
+      },
+      numero: {
+        ...dadosCadastroClienteEndereco.numero,
+        valor: dadosCadastroClienteEndereco.numero.valorPadrao,
+      },
+      bairro: {
+        ...dadosCadastroClienteEndereco.bairro,
+        valor: dadosCadastroClienteEndereco.bairro.valorPadrao,
+      },
+      cidade: {
+        ...dadosCadastroClienteEndereco.cidade,
+        valor: dadosCadastroClienteEndereco.cidade.valorPadrao,
+      },
+      uf: {
+        ...dadosCadastroClienteEndereco.uf,
+        valor: dadosCadastroClienteEndereco.uf.valorPadrao,
+      },
+    });
+  };
+
+  const limparCampos = () => {
+    setDadosCadastro({
+      orcamentoId: {
+        ...dadosCadastro.orcamentoId,
+        valor: dadosCadastro.orcamentoId.valorPadrao,
+      },
+      nomeObra: {
+        ...dadosCadastro.nomeObra,
+        valor: dadosCadastro.nomeObra.valorPadrao,
+      },
+      a_c: { ...dadosCadastro.a_c, valor: dadosCadastro.a_c.valorPadrao },
+      prazoEntrega: {
+        ...dadosCadastro.prazoEntrega,
+        valor: dadosCadastro.prazoEntrega.valorPadrao,
+      },
+      dataCriacaoOrcamento: {
+        ...dadosCadastro.dataCriacaoOrcamento,
+        valor: dadosCadastro.dataCriacaoOrcamento.valorPadrao,
+      },
+      tipoObra: {
+        ...dadosCadastro.tipoObra,
+        valor: dadosCadastro.tipoObra.valorPadrao,
+      },
+    });
+
+    setDadosCadastroCliente({
+      pessoaId: {
+        ...dadosCadastroCliente.pessoaId,
+        valor: dadosCadastroCliente.pessoaId.valorPadrao,
+      },
+      nomePessoa: {
+        ...dadosCadastroCliente.nomePessoa,
+        valor: dadosCadastroCliente.nomePessoa.valorPadrao,
+      },
+      rg: {
+        ...dadosCadastroCliente.rg,
+        valor: dadosCadastroCliente.rg.valorPadrao,
+      },
+      cpf: {
+        ...dadosCadastroCliente.cpf,
+        valor: dadosCadastroCliente.cpf.valorPadrao,
+      },
+      cnpj: {
+        ...dadosCadastroCliente.cnpj,
+        valor: dadosCadastroCliente.cnpj.valorPadrao,
+      },
+      listContato: {
+        ...dadosCadastroCliente.listContato,
+        valor: dadosCadastroCliente.listContato.valorPadrao,
+      },
+    });
+
+    setDadosCadastroClienteEndereco({
+      enderecoId: {
+        ...dadosCadastroClienteEndereco.enderecoId,
+        valor: dadosCadastroClienteEndereco.enderecoId.valorPadrao,
+      },
+      logradouro: {
+        ...dadosCadastroClienteEndereco.logradouro,
+        valor: dadosCadastroClienteEndereco.logradouro.valorPadrao,
+      },
+      numero: {
+        ...dadosCadastroClienteEndereco.numero,
+        valor: dadosCadastroClienteEndereco.numero.valorPadrao,
+      },
+      bairro: {
+        ...dadosCadastroClienteEndereco.bairro,
+        valor: dadosCadastroClienteEndereco.bairro.valorPadrao,
+      },
+      cidade: {
+        ...dadosCadastroClienteEndereco.cidade,
+        valor: dadosCadastroClienteEndereco.cidade.valorPadrao,
+      },
+      uf: {
+        ...dadosCadastroClienteEndereco.uf,
+        valor: dadosCadastroClienteEndereco.uf.valorPadrao,
+      },
+    });
+  };
 
   const exibirTost = (tipo, mensagem) => {
     switch (tipo) {
@@ -307,21 +424,19 @@ function BasicRegOrcamento(props) {
     return dateFormat;
   };
 
-  const montarObj = () => {
+  const montarObj = (obj) => {
     return {
-      ORCAMENTO_ID:
-        dadosCadastro.orcamentoId == "" ? 0 : dadosCadastro.orcamentoId,
-      NOME_OBRA: dadosCadastro.nomeObra,
-      REFERENCIA: props.referencia,
-      PRAZO_ENTREGA: dadosCadastro.prazoEntrega,
-      DATA_CRIACAO_ORCAMENTO:
-        dadosCadastro.dataCriacaoOrcamento || new Date().toJSON(),
-      A_C: dadosCadastro.a_c,
-      TIPO_OBRA: dadosCadastro.tipoObra,
+      ORCAMENTO_ID: obj.orcamentoId.valor,
+      NOME_OBRA: obj.nomeObra.valor,
+      REFERENCIA: props.referencia.valor,
+      PRAZO_ENTREGA: obj.prazoEntrega.valor,
+      DATA_CRIACAO_ORCAMENTO: obj.dataCriacaoOrcamento.valor,
+      A_C: obj.a_c.valor,
+      TIPO_OBRA: obj.tipoObra.valor,
       TOTAIS_ORCAMENTO: {},
       CLIENTE_ORCAMENTO: {
-        PESSOA_ID: dadosCadastroCliente.pessoaId,
-        NOME_CLIENTE: dadosCadastroCliente.nomePessoa,
+        PESSOA_ID: obj.pessoa.pessoaId.valor,
+        NOME_CLIENTE: obj.pessoa.nomePessoa.valor,
         RG: "",
         CPF: "",
         CNPJ: "",
@@ -329,17 +444,17 @@ function BasicRegOrcamento(props) {
         TIPO_PESSOA: "",
         LIST_ENDERECO: [
           {
-            PESSOA_ID: dadosCadastroCliente.pessoaId,
-            ENDERECO_ID: dadosCadastroClienteEndereco.enderecoId,
+            PESSOA_ID: obj.pessoaId.valor,
+            ENDERECO_ID: obj.pessoa.endereco.enderecoId.valor,
             CEP: "",
             LOGRADOURO: "",
             NUMERO_ENDERECO: "",
             COMPLEMENTO: "",
-            BAIRRO: dadosCadastroClienteEndereco.bairro,
-            CIDADE: dadosCadastroClienteEndereco.cidade,
+            BAIRRO: obj.pessoa.endereco.bairro.valor,
+            CIDADE: obj.pessoa.endereco.cidade.valor,
             ESTADO: "",
-            UF: dadosCadastroClienteEndereco.uf,
-            ENDERECO_PADRAO: true,
+            UF: obj.pessoa.endereco.uf.valor,
+            ENDERECO_PADRAO: false,
           },
         ],
         LIST_CONTATO: [],
@@ -351,11 +466,51 @@ function BasicRegOrcamento(props) {
     };
   };
 
+  const exibirCamposErro = (dados, houveErro) => {
+    Object.keys(dados).map((nomeCampo) => {
+      if (!dados[nomeCampo].valido) {
+        houveErro = true;
+
+        if (document.getElementById("campo-" + nomeCampo)) {
+          document.getElementById("erro-" + nomeCampo).innerHTML =
+            dados[nomeCampo].msgErro;
+          document
+            .getElementById("campo-" + nomeCampo)
+            .classList.add("is-invalid");
+        }
+      }
+    });
+    return houveErro;
+  };
+
+  const removerErro = (id) => {
+    document.getElementById(id).classList.remove("is-invalid");
+  };
+
   const salvarOrcamento = () => {
+    const dadosOrcamento = validacaoDadosUtils.validarDados(dadosCadastro);
+    const dadosCliente = validacaoDadosUtils.validarDados(dadosCadastroCliente);
+    const dadosEnderecoCliente = validacaoDadosUtils.validarDados(
+      dadosCadastroClienteEndereco
+    );
+
+    let houveErro = false;
+
+    houveErro = exibirCamposErro(dadosOrcamento, houveErro);
+    houveErro = exibirCamposErro(dadosCliente, houveErro);
+    houveErro = exibirCamposErro(dadosEnderecoCliente, houveErro);
+
+    if (houveErro) {
+      return;
+    }
+
+    dadosCliente.endereco = dadosEnderecoCliente;
+    dadosOrcamento.pessoa = dadosCliente;
+
     fetch(props.linkBackEnd + "/orcamento/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(montarObj()),
+      body: JSON.stringify(montarObj(dadosOrcamento)),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -383,7 +538,7 @@ function BasicRegOrcamento(props) {
       tipoRota = "/orcamentoIntumescente/";
     }
 
-    fetch(props.linkBackEnd + tipoRota + dadosCadastro.orcamentoId, {
+    fetch(props.linkBackEnd + tipoRota + dadosCadastro.orcamentoId.valor, {
       method: "DELETE",
     }).then((data) => {
       if (data.ok) {
@@ -391,7 +546,7 @@ function BasicRegOrcamento(props) {
 
         exibirTost("sucesso", msg);
 
-        if ((dadosCadastro.tipoObra = "Geral")) {
+        if ((dadosCadastro.tipoObra.valor = "Geral")) {
           props.selecionarOrcamentoGeral({});
         } else {
         }
@@ -404,10 +559,29 @@ function BasicRegOrcamento(props) {
   };
 
   const editarOrcamento = () => {
-    fetch(props.linkBackEnd + "/orcamento/" + dadosCadastro.orcamentoId, {
+    const dadosOrcamento = validacaoDadosUtils.validarDados(dadosCadastro);
+    const dadosCliente = validacaoDadosUtils.validarDados(dadosCadastroCliente);
+    const dadosEnderecoCliente = validacaoDadosUtils.validarDados(
+      dadosCadastroClienteEndereco
+    );
+
+    let houveErro = false;
+
+    houveErro = exibirCamposErro(dadosOrcamento, houveErro);
+    houveErro = exibirCamposErro(dadosCliente, houveErro);
+    houveErro = exibirCamposErro(dadosEnderecoCliente, houveErro);
+
+    if (houveErro) {
+      return;
+    }
+
+    dadosCliente.endereco = dadosEnderecoCliente;
+    dadosOrcamento.pessoa = dadosCliente;
+
+    fetch(props.linkBackEnd + "/orcamento/" + dadosCadastro.orcamentoId.valor, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(montarObj()),
+      body: JSON.stringify(montarObj(dadosOrcamento)),
     }).then((data) => {
       if (data.ok) {
         const msg = "Cadastro atualizado com sucesso";
@@ -479,7 +653,10 @@ function BasicRegOrcamento(props) {
   const handleInputChange = (event) => {
     setDadosCadastro({
       ...dadosCadastro,
-      [event.target.name]: event.target.value,
+      [event.target.name]: {
+        ...dadosCadastro[event.target.name],
+        valor: event.target.value,
+      },
     });
   };
 
@@ -496,11 +673,15 @@ function BasicRegOrcamento(props) {
                     type="text"
                     className="form-control-plaintext"
                     name="orcamentoId"
-                    id="input-orcamento-id"
-                    value={dadosCadastro.orcamentoId}
+                    id="campo-orcamentoId"
+                    value={dadosCadastro.orcamentoId.valor || ""}
                     readOnly
                   />
-                  {dadosCadastro.orcamentoId && (
+                  <span
+                    class="invalid-feedback msg-erro-orcamento"
+                    id="erro-orcamentoId"
+                  ></span>
+                  {dadosCadastro.orcamentoId.valor > 0 && (
                     <>
                       <div className="close-select-custo">
                         <a
@@ -527,9 +708,15 @@ function BasicRegOrcamento(props) {
                       type="text"
                       className="form-control"
                       name="nomeObra"
-                      value={dadosCadastro.nomeObra}
+                      id="campo-nomeObra"
+                      value={dadosCadastro.nomeObra.valor}
                       onChange={(event) => handleInputChange(event)}
+                      onFocus={(event) => removerErro(event.target.id)}
                     />
+                    <span
+                      class="invalid-feedback msg-erro-orcamento"
+                      id="erro-nomeObra"
+                    ></span>
                   </div>
                   <div className="col-xl col-12">
                     <label>Contato da obra</label>
@@ -537,9 +724,15 @@ function BasicRegOrcamento(props) {
                       type="text"
                       className="form-control"
                       name="a_c"
-                      value={dadosCadastro.a_c}
+                      id="campo-a_c"
+                      value={dadosCadastro.a_c.valor}
                       onChange={(event) => handleInputChange(event)}
+                      onFocus={(event) => removerErro(event.target.id)}
                     />
+                    <span
+                      class="invalid-feedback msg-erro-orcamento"
+                      id="erro-a_c"
+                    ></span>
                   </div>
                 </div>
               </div>
@@ -551,18 +744,29 @@ function BasicRegOrcamento(props) {
                       type="text"
                       className="form-control"
                       name="prazoEntrega"
-                      value={dadosCadastro.prazoEntrega}
+                      id="campo-prazoEntrega"
+                      value={dadosCadastro.prazoEntrega.valor}
                       onChange={(event) => handleInputChange(event)}
+                      onFocus={(event) => removerErro(event.target.id)}
                     />
+                    <span
+                      class="invalid-feedback msg-erro-orcamento"
+                      id="erro-prazoEntrega"
+                    ></span>
                   </div>
                   <div className="col-xl col-12">
                     <label>Data de criação</label>
                     <input
                       type="date"
                       className="form-control"
-                      value={dadosCadastro.dataCriacaoOrcamento}
+                      id="campo-dataCriacaoOrcamento"
+                      value={dadosCadastro.dataCriacaoOrcamento.valor}
                       readOnly
                     />
+                    <span
+                      class="invalid-feedback msg-erro-orcamento"
+                      id="erro-dataCriacaoOrcamento"
+                    ></span>
                   </div>
                   <div className="col-xl col-12">
                     <label>Tipo da obra</label>
@@ -570,9 +774,14 @@ function BasicRegOrcamento(props) {
                       type="text"
                       className="form-control"
                       name="tipoObra"
-                      value={dadosCadastro.tipoObra}
+                      id="campo-tipoObra"
+                      value={dadosCadastro.tipoObra.valor}
                       readOnly
                     />
+                    <span
+                      class="invalid-feedback msg-erro-orcamento"
+                      id="erro-tipoObra"
+                    ></span>
                   </div>
                 </div>
               </div>
@@ -581,7 +790,7 @@ function BasicRegOrcamento(props) {
         </div>
 
         <div id="informacoes-cliente-orcamento">
-          <fieldset>
+          <fieldset id="campo-pessoaId">
             <legend>Dados do cliente</legend>
             <div id="container-cliente">
               <div id="busca-cliente">
@@ -595,6 +804,7 @@ function BasicRegOrcamento(props) {
                         onChange={(event) =>
                           setStringBuscaCliente(event.target.value)
                         }
+                        onFocus={() => removerErro("campo-pessoaId")}
                         onKeyDown={(event) => pressEnter(event)}
                       />
                     </div>
@@ -604,6 +814,7 @@ function BasicRegOrcamento(props) {
                         className="btn"
                         id="btn-buscar-cliente"
                         onClick={() => buscarClientes()}
+                        onFocus={() => removerErro("campo-pessoaId")}
                       >
                         Buscar cliente
                       </button>
@@ -632,7 +843,7 @@ function BasicRegOrcamento(props) {
                       <input
                         className="form-control"
                         name="pessoaId"
-                        value={dadosCadastroCliente.pessoaId}
+                        value={dadosCadastroCliente.pessoaId.valor}
                         readOnly
                       />
                     </div>
@@ -641,7 +852,7 @@ function BasicRegOrcamento(props) {
                       <input
                         className="form-control"
                         name="nomePessoa"
-                        value={dadosCadastroCliente.nomePessoa}
+                        value={dadosCadastroCliente.nomePessoa.valor}
                         readOnly
                       />
                     </div>
@@ -655,7 +866,7 @@ function BasicRegOrcamento(props) {
                         type="text"
                         className="form-control"
                         name="rg"
-                        value={dadosCadastroCliente.rg}
+                        value={dadosCadastroCliente.rg.valor}
                         readOnly
                       />
                     </div>
@@ -665,7 +876,7 @@ function BasicRegOrcamento(props) {
                         type="text"
                         className="form-control"
                         name="cpf"
-                        value={dadosCadastroCliente.cpf}
+                        value={dadosCadastroCliente.cpf.valor}
                         readOnly
                       />
                     </div>
@@ -675,7 +886,7 @@ function BasicRegOrcamento(props) {
                         type="text"
                         className="form-control"
                         name="cnpj"
-                        value={dadosCadastroCliente.cnpj}
+                        value={dadosCadastroCliente.cnpj.valor}
                         readOnly
                       />
                     </div>
@@ -702,7 +913,9 @@ function BasicRegOrcamento(props) {
                                 type="text"
                                 className="form-control"
                                 name="logradouro"
-                                value={dadosCadastroClienteEndereco.logradouro}
+                                value={
+                                  dadosCadastroClienteEndereco.logradouro.valor
+                                }
                                 readOnly
                               />
                             </div>
@@ -716,7 +929,9 @@ function BasicRegOrcamento(props) {
                                 type="text"
                                 className="form-control"
                                 name="numeroEndereco"
-                                value={dadosCadastroClienteEndereco.numero}
+                                value={
+                                  dadosCadastroClienteEndereco.numero.valor
+                                }
                                 readOnly
                               />
                             </div>
@@ -726,7 +941,9 @@ function BasicRegOrcamento(props) {
                                 type="text"
                                 className="form-control"
                                 name="bairro"
-                                value={dadosCadastroClienteEndereco.bairro}
+                                value={
+                                  dadosCadastroClienteEndereco.bairro.valor
+                                }
                                 readOnly
                               />
                             </div>
@@ -740,7 +957,9 @@ function BasicRegOrcamento(props) {
                                 type="text"
                                 className="form-control"
                                 name="cidade"
-                                value={dadosCadastroClienteEndereco.cidade}
+                                value={
+                                  dadosCadastroClienteEndereco.cidade.valor
+                                }
                                 readOnly
                               />
                             </div>
@@ -750,7 +969,7 @@ function BasicRegOrcamento(props) {
                                 type="text"
                                 className="form-control"
                                 name="uf"
-                                value={dadosCadastroClienteEndereco.uf}
+                                value={dadosCadastroClienteEndereco.uf.valor}
                                 readOnly
                               />
                             </div>
@@ -763,9 +982,13 @@ function BasicRegOrcamento(props) {
               </div>
             </div>
           </fieldset>
+          <span
+            class="invalid-feedback msg-erro-orcamento"
+            id="erro-pessoaId"
+          ></span>
         </div>
         <div id="acoes-cadastro-orcamento">
-          {!dadosCadastro.orcamentoId && (
+          {!dadosCadastro.orcamentoId.valor && (
             <button
               type="button"
               className="btn btn-primary btn-100-px btn-float-right"
@@ -774,7 +997,7 @@ function BasicRegOrcamento(props) {
               Salvar
             </button>
           )}
-          {dadosCadastro.orcamentoId && (
+          {dadosCadastro.orcamentoId.valor > 0 && (
             <>
               <button
                 type="button"

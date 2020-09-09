@@ -4,9 +4,12 @@ import ResultSearchProvider from "./ResultSearchProvider/ResultSearchProvider";
 import ModalConfirm from "../../ModalConfirm/ModalConfirm";
 import ToastControl from "../../ToastControl/ToastControl";
 import * as MaterialActions from "../../../store/actions/material";
+import * as validacaoDadosUtils from "../../../utils/validacaoDados";
 import { connect } from "react-redux";
 
 function BasicRegMaterial(props) {
+  let dadosCampo = { ...validacaoDadosUtils.dadosCampo };
+
   let [stringBuscaFabricante, setStringBuscaFabricante] = useState("");
   let [showResultadoFabricante, setShowResultadoFabricante] = useState(false);
   let [dataFabricantes, setDataFabricantes] = useState([]);
@@ -26,37 +29,83 @@ function BasicRegMaterial(props) {
   });
 
   let [dadosCadastro, setDadosCadastro] = useState({
-    materialId: "",
-    nomeMaterial: "",
-    descricaoMaterial: "",
-    tipoMaterial: "",
+    materialId: { ...dadosCampo, valorPadrao: 0 },
+    nomeMaterial: { ...dadosCampo, requerido: true },
+    descricaoMaterial: { ...dadosCampo },
+    tipoMaterial: { ...dadosCampo, requerido: true },
   });
 
   let [dadosFabricante, setDadosFabricante] = useState({
-    pessoaId: "",
-    nomePessoa: "",
+    pessoaId: { ...dadosCampo, requerido: true },
+    nomePessoa: { ...dadosCampo },
   });
 
   useEffect(() => {
-    setDadosCadastro({
-      materialId: props.materialSelecionado.MATERIAL_ID || "",
-      nomeMaterial: props.materialSelecionado.NOME_MATERIAL || "",
-      descricaoMaterial: props.materialSelecionado.DESCRICAO_MATERIAL || "",
-      tipoMaterial: props.materialSelecionado.TIPO_MATERIAL || "",
-    });
-
     if (props.materialSelecionado.MATERIAL_ID) {
+      setDadosCadastro({
+        materialId: {
+          ...dadosCadastro.materialId,
+          valor: props.materialSelecionado.MATERIAL_ID,
+        },
+        nomeMaterial: {
+          ...dadosCadastro.nomeMaterial,
+          valor: props.materialSelecionado.NOME_MATERIAL,
+        },
+        descricaoMaterial: {
+          ...dadosCadastro.descricaoMaterial,
+          valor: props.materialSelecionado.DESCRICAO_MATERIAL,
+        },
+        tipoMaterial: {
+          ...dadosCadastro.tipoMaterial,
+          valor: props.materialSelecionado.TIPO_MATERIAL,
+        },
+      });
+
       setDadosFabricante({
-        pessoaId: props.materialSelecionado.FABRICANTE.PESSOA_ID,
-        nomePessoa: props.materialSelecionado.FABRICANTE.NOME_PESSOA,
+        pessoaId: {
+          ...dadosFabricante.pessoaId,
+          valor: props.materialSelecionado.FABRICANTE.PESSOA_ID,
+        },
+        nomePessoa: {
+          ...dadosFabricante.nomePessoa,
+          valor: props.materialSelecionado.FABRICANTE.NOME_PESSOA,
+        },
       });
     } else {
-      setDadosFabricante({
-        pessoaId: "",
-        nomePessoa: "",
-      });
+      limparCadastro();
     }
   }, [props.materialSelecionado.MATERIAL_ID]);
+
+  const limparCadastro = () => {
+    setDadosCadastro({
+      materialId: {
+        ...dadosCadastro.materialId,
+        valor: dadosCadastro.materialId.valorPadrao,
+      },
+      nomeMaterial: {
+        ...dadosCadastro.nomeMaterial,
+        valor: dadosCadastro.nomeMaterial.valorPadrao,
+      },
+      descricaoMaterial: {
+        ...dadosCadastro.descricaoMaterial,
+        valor: dadosCadastro.descricaoMaterial.valorPadrao,
+      },
+      tipoMaterial: {
+        ...dadosCadastro.tipoMaterial,
+        valor: dadosCadastro.tipoMaterial.valorPadrao,
+      },
+    });
+    setDadosFabricante({
+      pessoaId: {
+        ...dadosFabricante.pessoaId,
+        valor: dadosFabricante.pessoaId.valorPadrao,
+      },
+      nomePessoa: {
+        ...dadosFabricante.nomePessoa,
+        valor: dadosFabricante.nomePessoa.valorPadrao,
+      },
+    });
+  };
 
   const exibirTost = (tipo, mensagem) => {
     switch (tipo) {
@@ -93,16 +142,15 @@ function BasicRegMaterial(props) {
     }
   };
 
-  const montarObj = () => {
+  const montarObj = (obj) => {
     return {
-      MATERIAL_ID:
-        dadosCadastro.materialId == "" ? 0 : dadosCadastro.materialId,
-      NOME_MATERIAL: dadosCadastro.nomeMaterial,
-      DESCRICAO_MATERIAL: dadosCadastro.descricaoMaterial,
-      TIPO_MATERIAL: dadosCadastro.tipoMaterial,
+      MATERIAL_ID: obj.materialId.valor,
+      NOME_MATERIAL: obj.nomeMaterial.valor,
+      DESCRICAO_MATERIAL: obj.descricaoMaterial.valor,
+      TIPO_MATERIAL: obj.tipoMaterial.valor,
       FABRICANTE: {
-        PESSOA_ID: dadosFabricante.pessoaId,
-        NOME_PESSOA: dadosFabricante.nomePessoa,
+        PESSOA_ID: obj.pessoa.pessoaId.valor,
+        NOME_PESSOA: obj.pessoa.nomePessoa.valor,
         RG: "",
         CPF: "",
         CNPJ: "",
@@ -114,11 +162,58 @@ function BasicRegMaterial(props) {
     };
   };
 
+  const exibirCamposErro = (dados, houveErro) => {
+    Object.keys(dados).map((nomeCampo) => {
+      if (!dados[nomeCampo].valido) {
+        houveErro = true;
+
+        if (document.getElementById("campo-" + nomeCampo)) {
+          document.getElementById("erro-" + nomeCampo).innerHTML =
+            dados[nomeCampo].msgErro;
+          document
+            .getElementById("campo-" + nomeCampo)
+            .classList.add("is-invalid");
+        }
+      }
+    });
+    return houveErro;
+  };
+
+  const removerErro = (id) => {
+    document.getElementById(id).classList.remove("is-invalid");
+  };
+
+  const selecionarFabricanteEquipamento = (fabricante) => {
+    setDadosFabricante({
+      pessoaId: {
+        ...dadosFabricante.pessoaId,
+        valor: fabricante.PESSOA_ID,
+      },
+      nomePessoa: {
+        ...dadosFabricante.pessoaId,
+        valor: fabricante.NOME_PESSOA,
+      },
+    });
+  };
+
   const salvarCadastro = () => {
+    const dadosMaterial = validacaoDadosUtils.validarDados(dadosCadastro);
+    const dadosPessoa = validacaoDadosUtils.validarDados(dadosFabricante);
+
+    let houveErro = false;
+    houveErro = exibirCamposErro(dadosMaterial, houveErro);
+    houveErro = exibirCamposErro(dadosPessoa, houveErro);
+
+    if (houveErro) {
+      return;
+    }
+
+    dadosMaterial.pessoa = dadosPessoa;
+
     fetch(props.linkBackEnd + "/material/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(montarObj()),
+      body: JSON.stringify(montarObj(dadosMaterial)),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -136,12 +231,9 @@ function BasicRegMaterial(props) {
   };
 
   const deletarCadastro = () => {
-    fetch(
-      props.linkBackEnd + "/material/" + props.materialSelecionado.MATERIAL_ID,
-      {
-        method: "DELETE",
-      }
-    ).then((data) => {
+    fetch(props.linkBackEnd + "/material/" + dadosCadastro.materialId.valor, {
+      method: "DELETE",
+    }).then((data) => {
       if (data.ok) {
         props.selecionarMaterial({});
 
@@ -157,16 +249,28 @@ function BasicRegMaterial(props) {
   };
 
   const atualizarCadastro = () => {
-    fetch(
-      props.linkBackEnd + "/material/" + props.materialSelecionado.MATERIAL_ID,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(montarObj()),
-      }
-    ).then((data) => {
+    const dadosMaterial = validacaoDadosUtils.validarDados(dadosCadastro);
+    const dadosPessoa = validacaoDadosUtils.validarDados(dadosFabricante);
+
+    let houveErro = false;
+    houveErro = exibirCamposErro(dadosMaterial, houveErro);
+    houveErro = exibirCamposErro(dadosPessoa, houveErro);
+
+    if (houveErro) {
+      return;
+    }
+
+    dadosMaterial.pessoa = dadosPessoa;
+    fetch(props.linkBackEnd + "/material/" + dadosCadastro.materialId.valor, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(montarObj()),
+    }).then((data) => {
       if (data.ok) {
-        props.recarregarMaterial(dadosCadastro.materialId, props.linkBackEnd);
+        props.recarregarMaterial(
+          dadosCadastro.materialId.valor,
+          props.linkBackEnd
+        );
 
         const msg = "Atualização efetuada com sucesso";
 
@@ -237,7 +341,10 @@ function BasicRegMaterial(props) {
   const handleInputChange = (event) => {
     setDadosCadastro({
       ...dadosCadastro,
-      [event.target.name]: event.target.value,
+      [event.target.name]: {
+        ...dadosCadastro[event.target.name],
+        valor: event.target.value,
+      },
     });
   };
 
@@ -251,11 +358,12 @@ function BasicRegMaterial(props) {
               type="text"
               className="form-control-plaintext"
               name="materialId"
-              value={dadosCadastro.materialId}
-              id="input-material-id"
+              id="campo-materialId"
+              value={dadosCadastro.materialId.valor || ""}
               readOnly
             />
-            {props.materialSelecionado.MATERIAL_ID && (
+            <span class="invalid-feedback" id="erro-materialId"></span>
+            {dadosCadastro.materialId.valor > 0 && (
               <>
                 <div className="close-select-material">
                   <a href="#" onClick={() => props.selecionarMaterial({})}>
@@ -275,10 +383,12 @@ function BasicRegMaterial(props) {
                 placeholder="Ex: Tinta Acrílica"
                 className="form-control"
                 name="nomeMaterial"
-                value={dadosCadastro.nomeMaterial}
-                id="input-material-nome"
+                id="campo-nomeMaterial"
+                value={dadosCadastro.nomeMaterial.valor}
                 onChange={(event) => handleInputChange(event)}
+                onFocus={(event) => removerErro(event.target.id)}
               />
+              <span class="invalid-feedback" id="erro-nomeMaterial"></span>
             </div>
             <div className="col-xl-4">
               <label className="col-form-label">Tipo do material</label>
@@ -287,10 +397,12 @@ function BasicRegMaterial(props) {
                 placeholder="Ex: Tinta"
                 className="form-control"
                 name="tipoMaterial"
-                value={dadosCadastro.tipoMaterial}
-                id="input-tipo-material"
+                id="campo-tipoMaterial"
+                value={dadosCadastro.tipoMaterial.valor}
                 onChange={(event) => handleInputChange(event)}
+                onFocus={(event) => removerErro(event.target.id)}
               />
+              <span class="invalid-feedback" id="erro-tipoMaterial"></span>
             </div>
           </div>
         </div>
@@ -301,16 +413,19 @@ function BasicRegMaterial(props) {
               className="form-control"
               rows="5"
               name="descricaoMaterial"
-              value={dadosCadastro.descricaoMaterial}
+              id="campo-descricaoMaterial"
+              value={dadosCadastro.descricaoMaterial.valor}
               onChange={(event) => handleInputChange(event)}
+              onFocus={(event) => removerErro(event.target.id)}
             />
+            <span class="invalid-feedback" id="erro-descricao"></span>
           </div>
         </div>
-        <fieldset>
+        <fieldset id="campo-pessoaId">
           <legend>Dados do fabricante</legend>
           <div id="container-fabricante">
             <div id="buscaFabricante">
-              <div className="form-group">
+              <div className="form-group margin-bottom-0">
                 <div className="row">
                   <div className="col-xl">
                     <input
@@ -320,6 +435,7 @@ function BasicRegMaterial(props) {
                       onChange={(event) =>
                         setStringBuscaFabricante(event.target.value)
                       }
+                      onFocus={() => removerErro("campo-pessoaId")}
                       onKeyDown={(event) => pressEnter(event)}
                     />
                   </div>
@@ -329,6 +445,7 @@ function BasicRegMaterial(props) {
                       className="btn"
                       id="btn-buscar-fabricante"
                       onClick={() => buscarFabricantes()}
+                      onFocus={() => removerErro("campo-pessoaId")}
                     >
                       Buscar fabricante
                     </button>
@@ -342,10 +459,7 @@ function BasicRegMaterial(props) {
                       show={showResultadoFabricante}
                       resultados={dataFabricantes}
                       selecionarFabricante={(fabricante) =>
-                        setDadosFabricante({
-                          pessoaId: fabricante.PESSOA_ID,
-                          nomePessoa: fabricante.NOME_PESSOA,
-                        })
+                        selecionarFabricanteEquipamento(fabricante)
                       }
                     />
                   </div>
@@ -363,8 +477,7 @@ function BasicRegMaterial(props) {
                     <input
                       className="form-control"
                       name="pessoaId"
-                      value={dadosFabricante.pessoaId}
-                      onChange={(event) => handleInputChange(event)}
+                      value={dadosFabricante.pessoaId.valor}
                       readOnly
                     />
                   </div>
@@ -373,8 +486,7 @@ function BasicRegMaterial(props) {
                     <input
                       className="form-control"
                       name="nomePessoa"
-                      value={dadosFabricante.nomePessoa}
-                      onChange={(event) => handleInputChange(event)}
+                      value={dadosFabricante.nomePessoa.valor}
                       readOnly
                     />
                   </div>
@@ -383,6 +495,7 @@ function BasicRegMaterial(props) {
             </div>
           </div>
         </fieldset>
+        <span class="invalid-feedback" id="erro-pessoaId"></span>
         <div className="form-group width-99-5">
           <div className="form-row options">
             {!props.materialSelecionado.MATERIAL_ID && (
@@ -395,7 +508,7 @@ function BasicRegMaterial(props) {
               </button>
             )}
 
-            {props.materialSelecionado.MATERIAL_ID && (
+            {props.materialSelecionado.MATERIAL_ID > 0 && (
               <>
                 <button
                   type="button"

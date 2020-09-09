@@ -1,93 +1,151 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from "react";
 import "./ModalAddress.css";
 import ModalControl from "../../../ModalControl/ModalControl";
 import * as PeopleActions from "../../../../store/actions/people";
+import * as validacaoDadosUtils from "../../../../utils/validacaoDados";
 import { connect } from "react-redux";
 
 function ModalAddress(props) {
+  let dadosCampo = { ...validacaoDadosUtils.dadosCampo };
+
   let [dadosCadastro, setDadosCadastro] = useState({
-    pessoaId: "",
-    enderecoId: "",
-    cep: "",
-    logradouro: "",
-    numero: "",
-    complemento: "",
-    bairro: "",
-    cidade: "",
-    estado: "",
-    uf: "",
-    enderecoPadrao: false,
+    pessoaId: { ...dadosCampo },
+    enderecoId: { ...dadosCampo, valorPadrao: 0 },
+    cep: { ...dadosCampo, formato: /^\d{3}\d{2}?\d{3}$/ },
+    logradouro: { ...dadosCampo, requerido: true },
+    numero: { ...dadosCampo, requerido: true },
+    complemento: { ...dadosCampo },
+    bairro: { ...dadosCampo },
+    cidade: { ...dadosCampo, requerido: true },
+    estado: { ...dadosCampo, requerido: true },
+    uf: { ...dadosCampo },
+    enderecoPadrao: { ...dadosCampo, valorPadrao: false },
   });
 
   useEffect(() => {
     setDadosCadastro({
-      pessoaId: props.PESSOA_ID,
-      enderecoId: props.ENDERECO_ID,
-      cep: props.CEP,
-      logradouro: props.LOGRADOURO,
-      numero: props.NUMERO_ENDERECO,
-      complemento: props.COMPLEMENTO,
-      bairro: props.BAIRRO,
-      cidade: props.CIDADE,
-      estado: props.ESTADO,
-      uf: props.UF,
-      enderecoPadrao: props.ENDERECO_PADRAO,
+      pessoaId: { ...dadosCadastro.pessoaId, valor: props.PESSOA_ID },
+      enderecoId: { ...dadosCadastro.enderecoId, valor: props.ENDERECO_ID },
+      cep: { ...dadosCadastro.cep, valor: props.CEP },
+      logradouro: { ...dadosCadastro.logradouro, valor: props.LOGRADOURO },
+      numero: { ...dadosCadastro.numero, valor: props.NUMERO_ENDERECO },
+      complemento: { ...dadosCadastro.complemento, valor: props.COMPLEMENTO },
+      bairro: { ...dadosCadastro.bairro, valor: props.BAIRRO },
+      cidade: { ...dadosCadastro.cidade, valor: props.CIDADE },
+      estado: { ...dadosCadastro.estado, valor: props.ESTADO },
+      uf: { ...dadosCadastro.uf, valor: props.UF },
+      enderecoPadrao: {
+        ...dadosCadastro.enderecoPadrao,
+        valor: props.ENDERECO_PADRAO,
+      },
     });
-  }, [
-    props.PESSOA_ID,
-    props.ENDERECO_ID,
-    props.CEP,
-    props.LOGRADOURO,
-    props.NUMERO_ENDERECO,
-    props.COMPLEMENTO,
-    props.BAIRRO,
-    props.CIDADE,
-    props.ESTADO,
-    props.UF,
-    props.ENDERECO_PADRAO,
-    props.show,
-  ]);
+  }, [props.show]);
 
   useEffect(() => {
     setDadosCadastro({
-      pessoaId: dadosCadastro.pessoaId,
-      enderecoId: props.novoEnderecoId,
-      cep: dadosCadastro.cep,
-      logradouro: dadosCadastro.logradouro,
-      numero: dadosCadastro.numero,
-      complemento: dadosCadastro.complemento,
-      bairro: dadosCadastro.bairro,
-      cidade: dadosCadastro.cidade,
-      estado: dadosCadastro.estado,
-      uf: dadosCadastro.uf,
-      enderecoPadrao: dadosCadastro.enderecoPadrao,
+      pessoaId: {
+        ...dadosCadastro.pessoaId,
+        valor: dadosCadastro.pessoaId.valor,
+      },
+      enderecoId: { ...dadosCadastro.enderecoId, valor: props.novoEnderecoId },
+      cep: { ...dadosCadastro.cep, valor: dadosCadastro.cep.valor },
+      logradouro: {
+        ...dadosCadastro.logradouro,
+        valor: dadosCadastro.logradouro.valor,
+      },
+      numero: { ...dadosCadastro.numero, valor: dadosCadastro.numero.valor },
+      complemento: {
+        ...dadosCadastro.complemento,
+        valor: dadosCadastro.complemento.valor,
+      },
+      bairro: { ...dadosCadastro.bairro, valor: dadosCadastro.bairro.valor },
+      cidade: { ...dadosCadastro.cidade, valor: dadosCadastro.cidade.valor },
+      estado: { ...dadosCadastro.estado, valor: dadosCadastro.estado.valor },
+      uf: { ...dadosCadastro.uf, valor: dadosCadastro.uf.valor },
+      enderecoPadrao: {
+        ...dadosCadastro.enderecoPadrao,
+        valor: dadosCadastro.enderecoPadrao.valor,
+      },
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.novoEnderecoId]);
 
-  const montarObj = () => {
+  const montarObj = (obj) => {
     return {
       PESSOA_ID: props.pessoaSelecionada.PESSOA_ID,
-      ENDERECO_ID: dadosCadastro.enderecoId,
-      CEP: dadosCadastro.cep,
-      LOGRADOURO: dadosCadastro.logradouro,
-      NUMERO_ENDERECO: dadosCadastro.numero,
-      COMPLEMENTO: dadosCadastro.complemento,
-      BAIRRO: dadosCadastro.bairro,
-      CIDADE: dadosCadastro.cidade,
-      ESTADO: dadosCadastro.estado,
-      UF: document.querySelector("#form-uf option:checked").innerHTML,
-      ENDERECO_PADRAO: document.querySelector("#form-endereco-padrao").checked,
+      ENDERECO_ID: obj.enderecoId.valor,
+      CEP: obj.cep.valor,
+      LOGRADOURO: obj.logradouro.valor,
+      NUMERO_ENDERECO: obj.numero.valor,
+      COMPLEMENTO: obj.complemento.valor,
+      BAIRRO: obj.bairro.valor,
+      CIDADE: obj.cidade.valor,
+      ESTADO: obj.estado.valor,
+      UF: document.querySelector("#campo-uf option:checked").innerHTML,
+      ENDERECO_PADRAO: document.querySelector("#campo-enderecoPadrao").checked,
     };
+  };
+
+  const exibirCamposErro = (dados, houveErro) => {
+    Object.keys(dados).map((nomeCampo) => {
+      if (!dados[nomeCampo].valido) {
+        houveErro = true;
+
+        if (document.getElementById("campo-" + nomeCampo)) {
+          document.getElementById("erro-" + nomeCampo).innerHTML =
+            dados[nomeCampo].msgErro;
+          document
+            .getElementById("campo-" + nomeCampo)
+            .classList.add("is-invalid");
+        }
+      }
+    });
+    return houveErro;
+  };
+
+  const removerErro = (id) => {
+    document.getElementById(id).classList.remove("is-invalid");
+  };
+
+  const salvarCadastro = () => {
+    const dadosEndereco = validacaoDadosUtils.validarDados(dadosCadastro);
+
+    let houveErro = false;
+
+    houveErro = exibirCamposErro(dadosEndereco, houveErro);
+
+    if (houveErro) {
+      return;
+    }
+
+    props.salvarEndereco(montarObj(dadosEndereco));
+  };
+
+  const editarCadastro = () => {
+    const dadosEndereco = validacaoDadosUtils.validarDados(dadosCadastro);
+
+    let houveErro = false;
+
+    houveErro = exibirCamposErro(dadosEndereco, houveErro);
+
+    if (houveErro) {
+      return;
+    }
+
+    props.editarEndereco(montarObj(dadosEndereco));
   };
 
   const handleInputChange = (event) => {
     setDadosCadastro({
       ...dadosCadastro,
-      [event.target.name]: event.target.value,
+      [event.target.name]: {
+        ...dadosCadastro[event.target.name],
+        valor: event.target.value,
+      },
     });
   };
+
   return (
     <>
       <ModalControl
@@ -97,7 +155,9 @@ function ModalAddress(props) {
         estiloModalBody="backgroundModal"
         estiloModalFooter="backgroundModal"
         tituloModal={
-          dadosCadastro.enderecoId ? "Editar Endereço" : "Novo Endereço"
+          dadosCadastro.enderecoId.valor > 0
+            ? "Editar Endereço"
+            : "Novo Endereço"
         }
         conteudoBody={
           <>
@@ -108,12 +168,16 @@ function ModalAddress(props) {
                     <div className="form-row">
                       <label className="col-form-label">Código:</label>
                       <input
-                        value={dadosCadastro.enderecoId}
                         type="text"
+                        id="campo-enderecoId"
                         className="form-control-plaintext input-codigo"
-                        id="input-address-id"
+                        value={dadosCadastro.enderecoId.valor || ""}
                         readOnly
                       />
+                      <span
+                        class="invalid-feedback"
+                        id="erro-enderecoId"
+                      ></span>
                     </div>
                   </div>
                   <div className="form-group">
@@ -123,24 +187,31 @@ function ModalAddress(props) {
                         <input
                           type="text"
                           name="cep"
-                          id="form-cep"
+                          id="campo-cep"
                           className="form-control"
                           placeholder="000.00-000"
-                          value={dadosCadastro.cep}
+                          value={dadosCadastro.cep.valor}
                           onChange={(event) => handleInputChange(event)}
+                          onFocus={(event) => removerErro(event.target.id)}
                         />
+                        <span class="invalid-feedback" id="erro-cep"></span>
                       </div>
                       <div className="col-xl-9">
                         <label>Logradouro</label>
                         <input
                           type="text"
-                          name="logradouro"
-                          placeholder="Rua Aristides Alves"
-                          id="form-logradouro"
                           className="form-control"
-                          value={dadosCadastro.logradouro}
+                          name="logradouro"
+                          id="campo-logradouro"
+                          placeholder="Rua Aristides Alves"
+                          value={dadosCadastro.logradouro.valor}
                           onChange={(event) => handleInputChange(event)}
+                          onFocus={(event) => removerErro(event.target.id)}
                         />
+                        <span
+                          class="invalid-feedback"
+                          id="erro-logradouro"
+                        ></span>
                       </div>
                     </div>
                   </div>
@@ -150,36 +221,44 @@ function ModalAddress(props) {
                         <label>Número</label>
                         <input
                           type="text"
-                          name="numero"
-                          placeholder="56"
-                          id="form-numero"
                           className="form-control"
-                          value={dadosCadastro.numero}
+                          name="numero"
+                          id="campo-numero"
+                          placeholder="Ex: 56"
+                          value={dadosCadastro.numero.valor}
                           onChange={(event) => handleInputChange(event)}
+                          onFocus={(event) => removerErro(event.target.id)}
                         />
+                        <span class="invalid-feedback" id="erro-numero"></span>
                       </div>
                       <div className="col-8 col-xl">
                         <label>Complemento</label>
                         <input
                           type="text"
-                          name="complemento"
-                          placeholder="Perto do açougue"
-                          id="form-complemento"
                           className="form-control"
-                          value={dadosCadastro.complemento}
+                          name="complemento"
+                          id="campo-complemento"
+                          placeholder="Perto do açougue"
+                          value={dadosCadastro.complemento.valor}
                           onChange={(event) => handleInputChange(event)}
+                          onFocus={(event) => removerErro(event.target.id)}
                         />
+                        <span
+                          class="invalid-feedback"
+                          id="erro-complemento"
+                        ></span>
                       </div>
                       <div className="col">
                         <label>Bairro</label>
                         <input
                           type="text"
-                          name="bairro"
-                          placeholder="Praça da Árvore"
-                          id="form-bairro"
                           className="form-control"
-                          value={dadosCadastro.bairro}
+                          name="bairro"
+                          id="campo-bairro"
+                          placeholder="Praça da Árvore"
+                          value={dadosCadastro.bairro.valor}
                           onChange={(event) => handleInputChange(event)}
+                          onFocus={(event) => removerErro(event.target.id)}
                         />
                       </div>
                     </div>
@@ -190,24 +269,27 @@ function ModalAddress(props) {
                         <label>Cidade</label>
                         <input
                           type="text"
-                          name="cidade"
-                          placeholder="São Paulo"
-                          id="form-cidade"
                           className="form-control"
-                          value={dadosCadastro.cidade}
+                          name="cidade"
+                          id="campo-cidade"
+                          placeholder="São Paulo"
+                          value={dadosCadastro.cidade.valor}
                           onChange={(event) => handleInputChange(event)}
+                          onFocus={(event) => removerErro(event.target.id)}
                         />
+                        <span class="invalid-feedback" id="erro-cidade"></span>
                       </div>
                       <div className="col div-margin-bottom">
                         <label>Estado</label>
                         <select
                           name="estado"
-                          id="select-estado"
-                          value={dadosCadastro.estado}
                           className="form-control"
+                          id="campo-estado"
+                          value={dadosCadastro.estado.valor}
                           onChange={(event) => handleInputChange(event)}
+                          onFocus={(event) => removerErro(event.target.id)}
                         >
-                          <option selected="" value="naoSelecionado">
+                          <option selected="" value="">
                             Selecione o Estado
                           </option>
                           <option value="Acre">Acre</option>
@@ -246,14 +328,15 @@ function ModalAddress(props) {
                           <option value="Sergipe">Sergipe</option>
                           <option value="Tocantins">Tocantins</option>
                         </select>
+                        <span class="invalid-feedback" id="erro-estado"></span>
                       </div>
                       <div className="col-4 col-xl-2">
                         <label>UF</label>
                         <select
-                          id="form-uf"
-                          name="uf"
-                          value={dadosCadastro.estado}
                           className="form-control"
+                          name="uf"
+                          id="campo-uf"
+                          value={dadosCadastro.estado.valor}
                           readOnly
                         >
                           <option value="Acre">AC</option>
@@ -284,18 +367,24 @@ function ModalAddress(props) {
                           <option value="Sergipe">SE</option>
                           <option value="Tocantins">TO</option>
                         </select>
+                        <span class="invalid-feedback" id="erro-uf"></span>
                       </div>
                       <div className="col-12 col-xl-1">
                         <label>Padrão</label>
                         <input
                           type="checkbox"
-                          name="enderecoPadrao"
-                          id="form-endereco-padrao"
-                          value={false}
-                          checked={dadosCadastro.enderecoPadrao}
                           className="form-control"
+                          name="enderecoPadrao"
+                          id="campo-enderecoPadrao"
+                          value={false}
+                          checked={dadosCadastro.enderecoPadrao.valor}
                           onChange={(event) => handleInputChange(event)}
+                          onFocus={(event) => removerErro(event.target.id)}
                         />
+                        <span
+                          class="invalid-feedback"
+                          id="erro-enderecoPadrao"
+                        ></span>
                       </div>
                     </div>
                   </div>
@@ -306,21 +395,21 @@ function ModalAddress(props) {
         }
         conteudoFooter={
           <>
-            {!dadosCadastro.enderecoId && (
+            {!dadosCadastro.enderecoId.valor && (
               <div>
                 <button
-                  className="btn btn-primary"
-                  onClick={() => props.salvarEndereco(montarObj())}
+                  className="btn btn-primary btn-100-px"
+                  onClick={() => salvarCadastro()}
                 >
                   Salvar
                 </button>
               </div>
             )}
-            {dadosCadastro.enderecoId && (
+            {dadosCadastro.enderecoId.valor > 0 && (
               <div>
                 <button
-                  onClick={() => props.editarEndereco(montarObj())}
-                  className="btn btn-success"
+                  onClick={() => editarCadastro()}
+                  className="btn btn-success btn-100-px"
                 >
                   Atualizar
                 </button>
