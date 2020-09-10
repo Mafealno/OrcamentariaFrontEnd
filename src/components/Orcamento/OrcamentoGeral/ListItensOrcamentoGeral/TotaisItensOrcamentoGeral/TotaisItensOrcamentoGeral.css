@@ -1,0 +1,39 @@
+#containerTotaisItensOrcamentoGeral {
+  display: grid;
+  grid-template-areas:
+    "quantidade-linhas"
+    "total-area"
+    "total-valor";
+  background-color: #d40808;
+  height: 100%;
+  color: white;
+  border-radius: 10px;
+  padding: 3%;
+}
+
+#quantidade-linhas {
+  grid-area: quantidade-linhas;
+  height: 100%;
+  text-align: center;
+}
+#total-area {
+  grid-area: total-area;
+  height: 100%;
+  text-align: center;
+}
+#total-valor {
+  grid-area: total-valor;
+  height: 100%;
+  text-align: center;
+}
+
+.titulo-totais-itens-orcamento-geral {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+@media (min-width: 1200px) {
+  #containerTotaisItensOrcamentoGeral {
+    grid-template-areas: "quantidade-linhas total-area total-valor";
+  }
+}
