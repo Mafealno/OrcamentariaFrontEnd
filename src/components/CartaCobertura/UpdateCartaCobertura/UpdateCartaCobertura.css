@@ -3,9 +3,8 @@
   grid-template-areas:
     "filtro-carta-cobertura"
     "list-carta-cobertura"
-    "carta-cobertura-selecionada"
-    "confirmar-acao";
-  grid-template-rows: 80px 425px 425px 100px;
+    "carta-cobertura-selecionada";
+  grid-template-rows: 80px 425px 425px;
   overflow-x: hidden;
 }
 
@@ -37,7 +36,7 @@
     grid-template-areas:
       "filtro-carta-cobertura filtro-carta-cobertura"
       "list-carta-cobertura carta-cobertura-selecionada"
-      "list-carta-cobertura confirmar-acao";
+      "list-carta-cobertura empty";
     grid-template-rows: 120px calc(100% - 220px) 100px;
     grid-template-columns: 30% 70%;
     overflow-x: hidden;

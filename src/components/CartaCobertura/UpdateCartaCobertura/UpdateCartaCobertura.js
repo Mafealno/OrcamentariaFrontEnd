@@ -8,7 +8,6 @@ import { Provider } from "react-redux";
 import store from "../../../store/store";
 
 export default function UpdateCartaCobertura(props) {
-  const { match, location, history } = props;
   return (
     <div id="containerUpdateCartaCobertura">
       <Provider store={store}>
@@ -21,7 +20,6 @@ export default function UpdateCartaCobertura(props) {
         <div id="carta-cobertura-selecionada">
           <RegCartaCoberturaSelecionada />
         </div>
-        <div id="confirmar-acao"></div>
       </Provider>
     </div>
   );
