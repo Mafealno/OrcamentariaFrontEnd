@@ -1,6 +1,5 @@
 import React from "react";
 import "./RegCartaCoberturaSelecionada.css";
-import SearchRegMaterial from "../../SearchRegMaterial/SearchRegMaterial";
 import DadosMaterialCartaCobertura from "./DadosMaterialCartaCobertura/DadosMaterialCartaCobertura";
 import TabelaItensCartaCobertura from "./TabelaItensCartaCobertura/TabelaItensCartaCobertura";
 
