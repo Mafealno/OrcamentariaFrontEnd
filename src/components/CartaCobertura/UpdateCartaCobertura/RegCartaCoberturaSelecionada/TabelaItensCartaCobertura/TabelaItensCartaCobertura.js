@@ -30,10 +30,7 @@ function TabelaItensCartaCobertura(props) {
     if (props.listCartaCoberturaEditar) {
       montarItemCartaCobertura();
     }
-  }, [
-    props.listCartaCoberturaEditar.length || [],
-    props.listCartaCoberturaEditar,
-  ]);
+  }, [props.listCartaCoberturaEditar.length, props.listCartaCoberturaEditar]);
 
   const exibirTost = (tipo, mensagem) => {
     switch (tipo) {
