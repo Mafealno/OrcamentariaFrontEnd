@@ -35,16 +35,16 @@ function ListOrcamento(props) {
                 aria-controls={"opcoes-" + elemento.ORCAMENTO_ID}
               >
                 <div className="row">
-                  <div className="col-2 center center-item">
+                  <div className="col-xl-2 col-3 center center-item">
                     {elemento.ORCAMENTO_ID}
                   </div>
-                  <div className="col-4 center center-item">
+                  <div className="col-xl-4 col-9 center center-item">
                     {elemento.NOME_OBRA}
                   </div>
-                  <div className="col-2 center center-item">
+                  <div className="col-xl-2 col-mobile-esconder center center-item">
                     {elemento.TIPO_OBRA}
                   </div>
-                  <div className="col-4 center center-item">
+                  <div className="col-xl-4 col-mobile-esconder center center-item">
                     {elemento.CLIENTE_ORCAMENTO.NOME_PESSOA}
                   </div>
                 </div>
@@ -93,10 +93,12 @@ function ListOrcamento(props) {
     <div id="containerListOrcamento">
       <div id="cabecalho-list-item-orcamento">
         <div className="row">
-          <div className="col-2 center">Código</div>
-          <div className="col-4 center">Nome da obra</div>
-          <div className="col-2 center">Tipo da obra</div>
-          <div className="col-4 center">Cliente</div>
+          <div className="col-xl-2 col-3 center">Código</div>
+          <div className="col-xl-4 col-9 center">Nome da obra</div>
+          <div className="col-xl-2 col-mobile-esconder center">
+            Tipo da obra
+          </div>
+          <div className="col-xl-4 col-mobile-esconder center">Cliente</div>
         </div>
       </div>
       <div className="list-item-orcamento">{itemOrcamentoDisplay}</div>

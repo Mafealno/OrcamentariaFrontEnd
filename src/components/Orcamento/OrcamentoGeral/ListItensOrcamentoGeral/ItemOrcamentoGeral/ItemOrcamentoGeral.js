@@ -16,34 +16,44 @@ export default function ItemOrcamentoGeral(props) {
         aria-controls={"opcoes-" + props.ItemOrcamentoGeral.ITENS_ORCAMENTO_ID}
       >
         <div className="row">
-          <div className="col-1 center titulo-item-orcamento-geral">Linha</div>
-          <div className="col-4 center titulo-item-orcamento-geral">
+          <div className="col-xl-1 col-3 center titulo-item-orcamento-geral">
+            Linha
+          </div>
+          <div className="col-xl-4 col-9 center titulo-item-orcamento-geral">
             Produto
           </div>
-          <div className="col-3 center titulo-item-orcamento-geral">
+          <div className="col-xl-3 col-mobile-esconder center titulo-item-orcamento-geral">
             Ambiente
           </div>
-          <div className="col-2 center titulo-item-orcamento-geral">Local</div>
-          <div className="col-1 center titulo-item-orcamento-geral">Valor</div>
-          <div className="col-1 center titulo-item-orcamento-geral">Area</div>
+          <div className="col-xl-2 col-mobile-esconder center titulo-item-orcamento-geral">
+            Local
+          </div>
+          <div className="col-xl-1 col-mobile-esconder center titulo-item-orcamento-geral">
+            Valor
+          </div>
+          <div className="col-xl-1 col-mobile-esconder center titulo-item-orcamento-geral">
+            Area
+          </div>
         </div>
         <div className="row">
-          <div className="col-1 center">
+          <div className="col-xl-1 col-3 center">
             {props.ItemOrcamentoGeral.NUMERO_LINHA}
           </div>
-          <div className="col-4 center">
+          <div className="col-xl-4 col-9 center">
             {props.ItemOrcamentoGeral.PRODUTO.NOME_MATERIAL}
           </div>
-          <div className="col-3 center">
+          <div className="col-xl-3 col-mobile-esconder center">
             {props.ItemOrcamentoGeral.AMBIENTE_APLICACAO}
           </div>
-          <div className="col-2 center">
+          <div className="col-xl-2 col-mobile-esconder center">
             {props.ItemOrcamentoGeral.LOCAL_APLICACAO}
           </div>
-          <div className="col-1 center">
+          <div className="col-xl-1 col-mobile-esconder center">
             {props.ItemOrcamentoGeral.VALOR_M_2}
           </div>
-          <div className="col-1 center">{props.ItemOrcamentoGeral.AREA}</div>
+          <div className="col-xl-1 col-mobile-esconder center">
+            {props.ItemOrcamentoGeral.AREA}
+          </div>
         </div>
       </div>
       <div
