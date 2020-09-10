@@ -21,6 +21,10 @@
   background-color: #e3e3e3;
 }
 
+.col-mobile-esconder {
+  display: none;
+}
+
 .invalid-feedback {
   width: auto !important;
   margin-top: 0 !important;
@@ -52,7 +56,7 @@
 }
 
 .modal-body {
-  max-height: 730px;
+  max-height: 100vh;
   overflow-y: auto;
 }
 
@@ -77,10 +81,18 @@
     position: fixed;
     width: 80%;
     margin-left: 20%;
-    overflow: hidden !important;
+    overflow: hidden;
   }
 
   #body::-webkit-scrollbar {
     display: none;
+  }
+
+  .col-mobile-esconder {
+    display: block;
+  }
+
+  .modal-body {
+    max-height: 730px;
   }
 }
