@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./ListItensOrcamentoGeral.css";
 import ModalItemOrcamentoGeral from "./ModalItemOrcamentoGeral/ModalItemOrcamentoGeral";
 import ItemOrcamentoGeral from "./ItemOrcamentoGeral/ItemOrcamentoGeral";
+import TotaisItensOrcamentoGeral from "./TotaisItensOrcamentoGeral/TotaisItensOrcamentoGeral";
 import ToastControl from "../../../ToastControl/ToastControl";
 
 import * as orcamentoActions from "../../../../store/actions/orcamento";
@@ -199,7 +200,9 @@ function ListItensOrcamentoGeral(props) {
           {listItensOrcamentoGeralDisplay}
         </div>
 
-        <div id="totais-itens-orcamento-geral"></div>
+        <div id="totais-itens-orcamento-geral">
+          <TotaisItensOrcamentoGeral />
+        </div>
       </div>
       <div>
         <ModalItemOrcamentoGeral
