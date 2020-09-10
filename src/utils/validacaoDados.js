@@ -5,7 +5,7 @@ export function validarDados(dadosValidacao) {
     objAux[campo].valido = false;
     if (objAux[campo].valor) {
       if (objAux[campo].formato) {
-        if (objAux[campo].valor.match(objAux[campo].formato)) {
+        if (objAux[campo].valor.toString().match(objAux[campo].formato)) {
           objAux[campo].valido = true;
         } else {
           objAux[campo].msgErro = "Formato inválido";
