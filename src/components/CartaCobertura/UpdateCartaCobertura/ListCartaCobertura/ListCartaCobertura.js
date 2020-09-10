@@ -20,7 +20,10 @@ function ListCartaCobertura(props) {
   }, []);
 
   useEffect(() => {
-    ordernarCartaCoberturaPorMaterial();
+    if (props.listCartaCoberturaEditar.length > 0) {
+      ordernarCartaCoberturaPorMaterial();
+      montarElementosDisplay();
+    }
   }, [props.listCartaCoberturaEditar]);
 
   useEffect(() => {
