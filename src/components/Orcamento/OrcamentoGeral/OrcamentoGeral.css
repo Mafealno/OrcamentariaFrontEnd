@@ -3,6 +3,12 @@
   overflow-y: auto;
 }
 
+.form-orcamento {
+  height: auto;
+  max-height: auto;
+  overflow-y: hidden;
+}
+
 .nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active {
   color: white;
