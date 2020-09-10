@@ -20,15 +20,25 @@ function ModalItemOrcamentoGeral(props) {
     orcamentoId: { ...dadosCampo, valorPadrao: 0 },
     itensOrcamentoId: { ...dadosCampo, valorPadrao: 0 },
     numeroLinha: { ...dadosCampo, valorPadrao: 0 },
-    valorComprimento: { ...dadosCampo, valorPadrao: 0 },
-    valorLargura: { ...dadosCampo, valorPadrao: 0 },
+    valorComprimento: {
+      ...dadosCampo,
+      valorPadrao: 0,
+      formato: /^\d{1,7}([,.])?\d{0,2}$/,
+    },
+    valorLargura: {
+      ...dadosCampo,
+      valorPadrao: 0,
+      formato: /^\d{1,7}([,.])?\d{0,2}$/,
+    },
     valorM2: {
       ...dadosCampo,
       requerido: true,
+      formato: /^\d{1,7}([,.])?\d{0,2}$/,
     },
     area: {
       ...dadosCampo,
       requerido: true,
+      formato: /^\d{1,7}([,.])?\d{0,2}$/,
     },
     ambienteAplicacao: {
       ...dadosCampo,
@@ -209,10 +219,14 @@ function ModalItemOrcamentoGeral(props) {
       ORCAMENTO_ID: obj.orcamentoId.valor,
       ITENS_ORCAMENTO_ID: obj.itensOrcamentoId.valor,
       NUMERO_LINHA: obj.numeroLinha.valor,
-      VALOR_COMPRIMENTO: parseFloat(obj.valorComprimento.valor),
-      VALOR_LARGURA: parseFloat(obj.valorLargura.valor),
-      VALOR_M_2: parseFloat(obj.valorM2.valor),
-      AREA: parseFloat(obj.area.valor),
+      VALOR_COMPRIMENTO: parseFloat(
+        obj.valorComprimento.valor.toString().replace(",", ".")
+      ),
+      VALOR_LARGURA: parseFloat(
+        obj.valorLargura.valor.toString().replace(",", ".")
+      ),
+      VALOR_M_2: parseFloat(obj.valorM2.valor.toString().replace(",", ".")),
+      AREA: parseFloat(obj.area.valor.toString().replace(",", ".")),
       AMBIENTE_APLICACAO: obj.ambienteAplicacao.valor,
       LOCAL_APLICACAO: obj.localAplicacao.valor,
       ACAO_APLICAR: obj.acaoAplicar.valor,
@@ -395,7 +409,7 @@ function ModalItemOrcamentoGeral(props) {
       <ModalControl
         {...props}
         estiloModalHeader="backgroundModal tituloModal"
-        estiloModalBody="backgroundModal"
+        estiloModalBody="backgroundModal modal-body-item-orcamento-geral"
         estiloModalFooter="backgroundModal"
         tituloModal="Informações do item"
         conteudoBody={
@@ -414,7 +428,7 @@ function ModalItemOrcamentoGeral(props) {
                         readOnly
                       />
                       <span
-                        class="invalid-feedback"
+                        className="invalid-feedback"
                         id="erro-numeroLinha"
                       ></span>
                     </div>
@@ -435,7 +449,7 @@ function ModalItemOrcamentoGeral(props) {
                         />
                         <datalist id="ambiente">{optAmbienteDisplay}</datalist>
                         <span
-                          class="invalid-feedback"
+                          className="invalid-feedback"
                           id="erro-ambienteAplicacao"
                         ></span>
                       </div>
@@ -467,7 +481,7 @@ function ModalItemOrcamentoGeral(props) {
                           onFocus={(event) => removerErro(event.target.id)}
                         />
                         <span
-                          class="invalid-feedback"
+                          className="invalid-feedback"
                           id="erro-acaoAplicar"
                         ></span>
                       </div>
@@ -488,7 +502,7 @@ function ModalItemOrcamentoGeral(props) {
                                 }
                               />
                               <span
-                                class="invalid-feedback"
+                                className="invalid-feedback"
                                 id="erro-valorComprimento"
                               ></span>
                             </div>
@@ -506,7 +520,7 @@ function ModalItemOrcamentoGeral(props) {
                                 }
                               />
                               <span
-                                class="invalid-feedback"
+                                className="invalid-feedback"
                                 id="erro-valorLargura"
                               ></span>
                             </div>
@@ -528,7 +542,7 @@ function ModalItemOrcamentoGeral(props) {
                                 }
                               />
                               <span
-                                class="invalid-feedback"
+                                className="invalid-feedback"
                                 id="erro-valorM2"
                               ></span>
                             </div>
@@ -546,7 +560,7 @@ function ModalItemOrcamentoGeral(props) {
                                 }
                               />
                               <span
-                                class="invalid-feedback"
+                                className="invalid-feedback"
                                 id="erro-area"
                               ></span>
                             </div>
@@ -671,7 +685,7 @@ function ModalItemOrcamentoGeral(props) {
                           </div>
                         </fieldset>
                         <span
-                          class="invalid-feedback"
+                          className="invalid-feedback"
                           id="erro-materialIdItemOrcamentogeral"
                         ></span>
                       </div>
