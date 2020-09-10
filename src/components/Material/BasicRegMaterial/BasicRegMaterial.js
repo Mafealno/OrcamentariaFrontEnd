@@ -362,7 +362,7 @@ function BasicRegMaterial(props) {
               value={dadosCadastro.materialId.valor || ""}
               readOnly
             />
-            <span class="invalid-feedback" id="erro-materialId"></span>
+            <span className="invalid-feedback" id="erro-materialId"></span>
             {dadosCadastro.materialId.valor > 0 && (
               <>
                 <div className="close-select-material">
@@ -388,7 +388,7 @@ function BasicRegMaterial(props) {
                 onChange={(event) => handleInputChange(event)}
                 onFocus={(event) => removerErro(event.target.id)}
               />
-              <span class="invalid-feedback" id="erro-nomeMaterial"></span>
+              <span className="invalid-feedback" id="erro-nomeMaterial"></span>
             </div>
             <div className="col-xl-4">
               <label className="col-form-label">Tipo do material</label>
@@ -402,7 +402,7 @@ function BasicRegMaterial(props) {
                 onChange={(event) => handleInputChange(event)}
                 onFocus={(event) => removerErro(event.target.id)}
               />
-              <span class="invalid-feedback" id="erro-tipoMaterial"></span>
+              <span className="invalid-feedback" id="erro-tipoMaterial"></span>
             </div>
           </div>
         </div>
@@ -418,7 +418,7 @@ function BasicRegMaterial(props) {
               onChange={(event) => handleInputChange(event)}
               onFocus={(event) => removerErro(event.target.id)}
             />
-            <span class="invalid-feedback" id="erro-descricao"></span>
+            <span className="invalid-feedback" id="erro-descricao"></span>
           </div>
         </div>
         <fieldset id="campo-pessoaId">
@@ -495,7 +495,7 @@ function BasicRegMaterial(props) {
             </div>
           </div>
         </fieldset>
-        <span class="invalid-feedback" id="erro-pessoaId"></span>
+        <span className="invalid-feedback" id="erro-pessoaId"></span>
         <div className="form-group width-99-5">
           <div className="form-row options">
             {!props.materialSelecionado.MATERIAL_ID && (

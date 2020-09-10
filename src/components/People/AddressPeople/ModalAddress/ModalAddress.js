@@ -152,7 +152,7 @@ function ModalAddress(props) {
         {...props}
         tamanhoModal="xl"
         estiloModalHeader="backgroundModal tituloModal"
-        estiloModalBody="backgroundModal"
+        estiloModalBody="backgroundModal modal-body-address"
         estiloModalFooter="backgroundModal"
         tituloModal={
           dadosCadastro.enderecoId.valor > 0
@@ -175,7 +175,7 @@ function ModalAddress(props) {
                         readOnly
                       />
                       <span
-                        class="invalid-feedback"
+                        className="invalid-feedback"
                         id="erro-enderecoId"
                       ></span>
                     </div>
@@ -194,7 +194,7 @@ function ModalAddress(props) {
                           onChange={(event) => handleInputChange(event)}
                           onFocus={(event) => removerErro(event.target.id)}
                         />
-                        <span class="invalid-feedback" id="erro-cep"></span>
+                        <span className="invalid-feedback" id="erro-cep"></span>
                       </div>
                       <div className="col-xl-9">
                         <label>Logradouro</label>
@@ -209,7 +209,7 @@ function ModalAddress(props) {
                           onFocus={(event) => removerErro(event.target.id)}
                         />
                         <span
-                          class="invalid-feedback"
+                          className="invalid-feedback"
                           id="erro-logradouro"
                         ></span>
                       </div>
@@ -229,7 +229,10 @@ function ModalAddress(props) {
                           onChange={(event) => handleInputChange(event)}
                           onFocus={(event) => removerErro(event.target.id)}
                         />
-                        <span class="invalid-feedback" id="erro-numero"></span>
+                        <span
+                          className="invalid-feedback"
+                          id="erro-numero"
+                        ></span>
                       </div>
                       <div className="col-8 col-xl">
                         <label>Complemento</label>
@@ -244,7 +247,7 @@ function ModalAddress(props) {
                           onFocus={(event) => removerErro(event.target.id)}
                         />
                         <span
-                          class="invalid-feedback"
+                          className="invalid-feedback"
                           id="erro-complemento"
                         ></span>
                       </div>
@@ -277,7 +280,10 @@ function ModalAddress(props) {
                           onChange={(event) => handleInputChange(event)}
                           onFocus={(event) => removerErro(event.target.id)}
                         />
-                        <span class="invalid-feedback" id="erro-cidade"></span>
+                        <span
+                          className="invalid-feedback"
+                          id="erro-cidade"
+                        ></span>
                       </div>
                       <div className="col div-margin-bottom">
                         <label>Estado</label>
@@ -328,7 +334,10 @@ function ModalAddress(props) {
                           <option value="Sergipe">Sergipe</option>
                           <option value="Tocantins">Tocantins</option>
                         </select>
-                        <span class="invalid-feedback" id="erro-estado"></span>
+                        <span
+                          className="invalid-feedback"
+                          id="erro-estado"
+                        ></span>
                       </div>
                       <div className="col-4 col-xl-2">
                         <label>UF</label>
@@ -367,7 +376,7 @@ function ModalAddress(props) {
                           <option value="Sergipe">SE</option>
                           <option value="Tocantins">TO</option>
                         </select>
-                        <span class="invalid-feedback" id="erro-uf"></span>
+                        <span className="invalid-feedback" id="erro-uf"></span>
                       </div>
                       <div className="col-12 col-xl-1">
                         <label>Padrão</label>
@@ -382,7 +391,7 @@ function ModalAddress(props) {
                           onFocus={(event) => removerErro(event.target.id)}
                         />
                         <span
-                          class="invalid-feedback"
+                          className="invalid-feedback"
                           id="erro-enderecoPadrao"
                         ></span>
                       </div>

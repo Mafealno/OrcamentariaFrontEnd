@@ -171,7 +171,7 @@ function FormRegEmployee(props) {
           onChange={(event) => handleInputChange(event)}
           onFocus={(event) => removerErro(event.target.id)}
         />
-        <span class="invalid-feedback" id="erro-nome"></span>
+        <span className="invalid-feedback" id="erro-nome"></span>
       </div>
       <div className="form-group">
         <div className="form-row">
@@ -187,7 +187,7 @@ function FormRegEmployee(props) {
               onChange={(event) => handleInputChange(event)}
               onFocus={(event) => removerErro(event.target.id)}
             />
-            <span class="invalid-feedback" id="erro-rg"></span>
+            <span className="invalid-feedback" id="erro-rg"></span>
           </div>
           <div className="col-xl-6">
             <label>CPF</label>
@@ -201,7 +201,7 @@ function FormRegEmployee(props) {
               onChange={(event) => handleInputChange(event)}
               onFocus={(event) => removerErro(event.target.id)}
             />
-            <span class="invalid-feedback" id="erro-cpf"></span>
+            <span className="invalid-feedback" id="erro-cpf"></span>
           </div>
         </div>
       </div>
@@ -221,7 +221,7 @@ function FormRegEmployee(props) {
               <option value="Ajudante">Ajudante</option>
               <option value="Outro">Outro</option>
             </select>
-            <span class="invalid-cargo" id="erro-nome"></span>
+            <span className="invalid-cargo" id="erro-nome"></span>
           </div>
           <div className="col">
             <label>Valor Diário</label>
@@ -235,7 +235,7 @@ function FormRegEmployee(props) {
               onChange={(event) => handleInputChange(event)}
               onFocus={(event) => removerErro(event.target.id)}
             />
-            <span class="invalid-feedback" id="erro-valorDiario"></span>
+            <span className="invalid-feedback" id="erro-valorDiario"></span>
           </div>
         </div>
       </div>
@@ -253,7 +253,7 @@ function FormRegEmployee(props) {
               onChange={(event) => handleInputChange(event)}
               onFocus={(event) => removerErro(event.target.id)}
             />
-            <span class="invalid-feedback" id="erro-dataAdmissao"></span>
+            <span className="invalid-feedback" id="erro-dataAdmissao"></span>
           </div>
           <div className="col">
             <label>Status</label>
@@ -268,7 +268,7 @@ function FormRegEmployee(props) {
               <option value="Ativo">Ativo</option>
               <option value="Nao_Ativo">Não Ativo</option>
             </select>
-            <span class="invalid-feedback" id="erro-status"></span>
+            <span className="invalid-feedback" id="erro-status"></span>
           </div>
         </div>
         <div className="form-group">

@@ -358,7 +358,7 @@ function BasicRegEquipamento(props) {
               value={dadosCadastro.equipamentoId.valor || ""}
               readOnly
             />
-            <span class="invalid-feedback" id="erro-equipamentoId"></span>
+            <span className="invalid-feedback" id="erro-equipamentoId"></span>
             {dadosCadastro.equipamentoId.valor > 0 && (
               <div className="close-select-equipamento">
                 <a href="#" onClick={() => props.selecionarEquipamento({})}>
@@ -382,7 +382,10 @@ function BasicRegEquipamento(props) {
                 onChange={(event) => handleInputChange(event)}
                 onFocus={(event) => removerErro(event.target.id)}
               />
-              <span class="invalid-feedback" id="erro-nomeEquipamento"></span>
+              <span
+                className="invalid-feedback"
+                id="erro-nomeEquipamento"
+              ></span>
             </div>
           </div>
         </div>
@@ -399,7 +402,7 @@ function BasicRegEquipamento(props) {
               onFocus={(event) => removerErro(event.target.id)}
             />
             <span
-              class="invalid-feedback"
+              className="invalid-feedback"
               id="erro-descricaoEquipamento"
             ></span>
           </div>
@@ -478,7 +481,7 @@ function BasicRegEquipamento(props) {
             </div>
           </div>
         </fieldset>
-        <span class="invalid-feedback" id="erro-pessoaId"></span>
+        <span className="invalid-feedback" id="erro-pessoaId"></span>
         <div className="form-group width-99-5">
           <div className="form-row options">
             {!props.equipamentoSelecionado.EQUIPAMENTO_ID && (

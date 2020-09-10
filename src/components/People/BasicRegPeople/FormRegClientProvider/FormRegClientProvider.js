@@ -166,7 +166,7 @@ function FormClientReg(props) {
               <label className="form-check-label">Jurídica</label>
             </div>
           </div>
-          <span class="invalid-feedback" id="erro-tipoPessoa"></span>
+          <span className="invalid-feedback" id="erro-tipoPessoa"></span>
         </div>
         <div className="form-group">
           <div className="form-row">
@@ -181,7 +181,7 @@ function FormClientReg(props) {
               onChange={(event) => handleInputChange(event)}
               onFocus={(event) => removerErro(event.target.id)}
             />
-            <span class="invalid-feedback" id="erro-nome"></span>
+            <span className="invalid-feedback" id="erro-nome"></span>
           </div>
         </div>
         {dadosCadastro.tipoPessoa.valor == "F" && (
@@ -199,7 +199,7 @@ function FormClientReg(props) {
                   onChange={(event) => handleInputChange(event)}
                   onFocus={(event) => removerErro(event.target.id)}
                 />
-                <span class="invalid-feedback" id="erro-rg"></span>
+                <span className="invalid-feedback" id="erro-rg"></span>
               </div>
               <div className="col-xl-6">
                 <label>CPF</label>
@@ -213,7 +213,7 @@ function FormClientReg(props) {
                   onChange={(event) => handleInputChange(event)}
                   onFocus={(event) => removerErro(event.target.id)}
                 />
-                <span class="invalid-feedback" id="erro-cpf"></span>
+                <span className="invalid-feedback" id="erro-cpf"></span>
               </div>
             </div>
           </div>
@@ -232,7 +232,7 @@ function FormClientReg(props) {
                 onChange={(event) => handleInputChange(event)}
                 onFocus={(event) => removerErro(event.target.id)}
               />
-              <span class="invalid-feedback" id="erro-cnpj"></span>
+              <span className="invalid-feedback" id="erro-cnpj"></span>
             </div>
           </div>
         )}

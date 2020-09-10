@@ -678,7 +678,7 @@ function BasicRegOrcamento(props) {
                     readOnly
                   />
                   <span
-                    class="invalid-feedback msg-erro-orcamento"
+                    className="invalid-feedback msg-erro-orcamento"
                     id="erro-orcamentoId"
                   ></span>
                   {dadosCadastro.orcamentoId.valor > 0 && (
@@ -714,7 +714,7 @@ function BasicRegOrcamento(props) {
                       onFocus={(event) => removerErro(event.target.id)}
                     />
                     <span
-                      class="invalid-feedback msg-erro-orcamento"
+                      className="invalid-feedback msg-erro-orcamento"
                       id="erro-nomeObra"
                     ></span>
                   </div>
@@ -730,7 +730,7 @@ function BasicRegOrcamento(props) {
                       onFocus={(event) => removerErro(event.target.id)}
                     />
                     <span
-                      class="invalid-feedback msg-erro-orcamento"
+                      className="invalid-feedback msg-erro-orcamento"
                       id="erro-a_c"
                     ></span>
                   </div>
@@ -750,7 +750,7 @@ function BasicRegOrcamento(props) {
                       onFocus={(event) => removerErro(event.target.id)}
                     />
                     <span
-                      class="invalid-feedback msg-erro-orcamento"
+                      className="invalid-feedback msg-erro-orcamento"
                       id="erro-prazoEntrega"
                     ></span>
                   </div>
@@ -764,7 +764,7 @@ function BasicRegOrcamento(props) {
                       readOnly
                     />
                     <span
-                      class="invalid-feedback msg-erro-orcamento"
+                      className="invalid-feedback msg-erro-orcamento"
                       id="erro-dataCriacaoOrcamento"
                     ></span>
                   </div>
@@ -779,7 +779,7 @@ function BasicRegOrcamento(props) {
                       readOnly
                     />
                     <span
-                      class="invalid-feedback msg-erro-orcamento"
+                      className="invalid-feedback msg-erro-orcamento"
                       id="erro-tipoObra"
                     ></span>
                   </div>
@@ -983,7 +983,7 @@ function BasicRegOrcamento(props) {
             </div>
           </fieldset>
           <span
-            class="invalid-feedback msg-erro-orcamento"
+            className="invalid-feedback msg-erro-orcamento"
             id="erro-pessoaId"
           ></span>
         </div>

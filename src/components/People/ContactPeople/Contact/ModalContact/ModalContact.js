@@ -18,7 +18,7 @@ function ModalContact(props) {
     tipoContato: { ...dadosCampo, requerido: true },
     contato: { ...dadosCampo, requerido: true },
     ddd: { ...dadosCampo, formato: /^[1-9]{1}[0-9]{1}$/ },
-    ramal: { ...dadosCampo, formato: /\d{10}/ },
+    ramal: { ...dadosCampo, formato: /^\d{1,10}$/ },
     contatoPadrao: { ...dadosCampo, valorPadrao: false },
   });
 
@@ -123,9 +123,11 @@ function ModalContact(props) {
     switch (dadosCadastro.tipoContato.valor) {
       case "Telefone":
         dadosCadastro.contato.formato = /^(\d{4})(-)?(\d{4})$/;
+        dadosCadastro.ddd.requerido = true;
         break;
       case "Celular":
-        dadosCadastro.contato.formato = /^(9\d{4})(-)?(\d{4})$/;
+        dadosCadastro.contato.formato = /^((9)?\d{4})(-)?(\d{4})$/;
+        dadosCadastro.ddd.requerido = true;
         break;
       case "Email":
         dadosCadastro.contato.formato = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
@@ -184,43 +186,16 @@ function ModalContact(props) {
         setCelular(false);
         setTelefone(true);
         setEmail(false);
-        setDadosCadastro({
-          ...dadosCadastro,
-          ramal: {
-            ...dadosCadastro.ramal,
-            valor: dadosCadastro.ramal.valorPadrao,
-          },
-        });
         break;
       case "Email":
         setEmail(false);
         setCelular(true);
         setTelefone(true);
-        setDadosCadastro({
-          ...dadosCadastro,
-          ddd: { ...dadosCadastro.ddd, valor: dadosCadastro.ddd.valorPadrao },
-          ramal: {
-            ...dadosCadastro.ramal,
-            valor: dadosCadastro.ramal.valorPadrao,
-          },
-        });
         break;
       default:
         setTelefone(true);
         setCelular(true);
         setEmail(true);
-        setDadosCadastro({
-          ...dadosCadastro,
-          contato: {
-            ...dadosCadastro.contato,
-            valor: dadosCadastro.contato.valorPadrao,
-          },
-          ddd: { ...dadosCadastro.ddd, valor: dadosCadastro.ddd.valorPadrao },
-          ramal: {
-            ...dadosCadastro.ramal,
-            valor: dadosCadastro.ramal.valorPadrao,
-          },
-        });
         break;
     }
   }
@@ -259,7 +234,10 @@ function ModalContact(props) {
                       value={dadosCadastro.contatoId.valor || ""}
                       readOnly
                     />
-                    <span class="invalid-feedback" id="erro-constoId"></span>
+                    <span
+                      className="invalid-feedback"
+                      id="erro-constoId"
+                    ></span>
                   </div>
                 </div>
                 <div className="form-group">
@@ -288,7 +266,7 @@ function ModalContact(props) {
                         <option value="Email">Email</option>
                       </select>
                       <span
-                        class="invalid-feedback"
+                        className="invalid-feedback"
                         id="erro-tipoContato"
                       ></span>
                     </div>
@@ -306,7 +284,10 @@ function ModalContact(props) {
                         onChange={(event) => handleInputChange(event)}
                         onFocus={(event) => removerErro(event.target.id)}
                       />
-                      <span class="invalid-feedback" id="erro-contato"></span>
+                      <span
+                        className="invalid-feedback"
+                        id="erro-contato"
+                      ></span>
                     </div>
                   </div>
                 </div>
@@ -330,7 +311,7 @@ function ModalContact(props) {
                         onChange={(event) => handleInputChange(event)}
                         onFocus={(event) => removerErro(event.target.id)}
                       />
-                      <span class="invalid-feedback" id="erro-ddd"></span>
+                      <span className="invalid-feedback" id="erro-ddd"></span>
                     </div>
                     <div className="col-6">
                       <label>Ramal</label>
@@ -349,7 +330,7 @@ function ModalContact(props) {
                         onChange={(event) => handleInputChange(event)}
                         onFocus={(event) => removerErro(event.target.id)}
                       />
-                      <span class="invalid-feedback" id="erro-ramal"></span>
+                      <span className="invalid-feedback" id="erro-ramal"></span>
                     </div>
                     <div className="col-3">
                       <label>Padrão</label>
@@ -367,7 +348,7 @@ function ModalContact(props) {
                         onFocus={(event) => removerErro(event.target.id)}
                       />
                       <span
-                        class="invalid-feedback"
+                        className="invalid-feedback"
                         id="erro-contatoPadrao"
                       ></span>
                     </div>

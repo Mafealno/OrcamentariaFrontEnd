@@ -259,7 +259,7 @@ function BasicRegCusto(props) {
                 value={dadosCadastro.custoId.valor || ""}
                 readOnly
               />
-              <span class="invalid-feedback" id="erro-custoId"></span>
+              <span className="invalid-feedback" id="erro-custoId"></span>
               {dadosCadastro.custoId.valor > 0 && (
                 <div className="close-select-custo">
                   <a href="#" onClick={() => props.selecionarCusto({})}>
@@ -283,7 +283,7 @@ function BasicRegCusto(props) {
                   onChange={(event) => handleInputChange(event)}
                   onFocus={(event) => removerErro(event.target.id)}
                 />
-                <span class="invalid-feedback" id="erro-nomeCusto"></span>
+                <span className="invalid-feedback" id="erro-nomeCusto"></span>
               </div>
             </div>
           </div>
@@ -300,7 +300,10 @@ function BasicRegCusto(props) {
                   onChange={(event) => handleInputChange(event)}
                   onFocus={(event) => removerErro(event.target.id)}
                 />
-                <span class="invalid-feedback" id="erro-descricaoCusto"></span>
+                <span
+                  className="invalid-feedback"
+                  id="erro-descricaoCusto"
+                ></span>
               </div>
             </div>
           </div>
@@ -318,7 +321,7 @@ function BasicRegCusto(props) {
                   onChange={(event) => handleInputChange(event)}
                   onFocus={(event) => removerErro(event.target.id)}
                 />
-                <span class="invalid-feedback" id="erro-valorCusto"></span>
+                <span className="invalid-feedback" id="erro-valorCusto"></span>
               </div>
               <div className="col-xl-6 col-12">
                 <label>Tipo do Custo</label>
@@ -337,7 +340,7 @@ function BasicRegCusto(props) {
                   <option value="ANUAL">Anual</option>
                   <option value="UNICO">Único</option>
                 </select>
-                <span class="invalid-feedback" id="erro-tipoCusto"></span>
+                <span className="invalid-feedback" id="erro-tipoCusto"></span>
               </div>
             </div>
           </div>
