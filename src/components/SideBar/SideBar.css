@@ -39,6 +39,10 @@ ul {
   color: rgb(68, 68, 68);
 }
 
+.close-sidebar {
+  margin-top: 14px;
+}
+
 .main-menu {
   position: absolute;
   display: flex;

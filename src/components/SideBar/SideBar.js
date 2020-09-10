@@ -11,7 +11,7 @@ export default function SideBar(props) {
 
       <nav id="main-menu" className="main-menu">
         <a href="#main-menu-toggle" id="main-menu-close" className="menu-close">
-          <span className="fa fa-close" aria-hidden="true"></span>
+          <span className="fa fa-close close-sidebar" aria-hidden="true"></span>
         </a>
         <ul>
           <li>
