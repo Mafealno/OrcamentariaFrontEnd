@@ -1,5 +1,5 @@
 #containerListItensOrcamentoGeral {
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 #btn-add-item-orcamento-geral {
@@ -19,12 +19,12 @@
   border-radius: 10px;
   overflow-y: auto;
   border: 2px solid #fff;
+  margin-bottom: 15px;
 }
 
 #totais-itens-orcamento-geral {
   grid-area: totais-itens-orcamento-geral;
-  border: 2px red solid;
-  height: 150px;
+  height: auto;
 }
 
 #btn-add-item-orcamento-geral > button {
@@ -39,4 +39,14 @@
   font-size: 1.5rem;
   color: white;
   float: right;
+}
+
+@media (min-width: 1200px) {
+  #containerListItensOrcamentoGeral {
+    overflow-y: auto;
+  }
+
+  #totais-itens-orcamento-geral {
+    height: 150px;
+  }
 }

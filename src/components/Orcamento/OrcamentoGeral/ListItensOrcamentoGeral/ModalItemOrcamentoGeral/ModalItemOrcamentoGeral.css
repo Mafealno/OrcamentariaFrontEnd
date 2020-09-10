@@ -46,8 +46,16 @@
   display: none;
 }
 
+.modal-body-item-orcamento-geral {
+  max-height: 75vh !important;
+}
+
 @media (min-width: 1200px) {
   .div-btn-buscar-material {
     display: block;
+  }
+
+  .modal-body-item-orcamento-geral {
+    max-height: 730px !important;
   }
 }

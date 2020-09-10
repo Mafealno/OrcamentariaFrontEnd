@@ -10,8 +10,16 @@
   margin-bottom: 30px;
 }
 
+.modal-body-address {
+  max-height: 75vh !important;
+}
+
 @media (min-width: 1200px) {
   .div-margin-bottom {
     margin-bottom: 0px;
+  }
+
+  .modal-body-address {
+    max-height: 730px !important;
   }
 }
