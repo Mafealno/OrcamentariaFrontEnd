@@ -35,6 +35,11 @@ function BasicRegOrcamento(props) {
     nomeObra: { ...dadosCampo, requerido: true },
     a_c: { ...dadosCampo, requerido: true },
     prazoEntrega: { ...dadosCampo, requerido: true },
+    diasTrabalhado: {
+      ...dadosCampo,
+      requerido: true,
+      formato: /^[0-9]+$/,
+    },
     dataCriacaoOrcamento: { ...dadosCampo, valorPadrao: new Date().toJSON() },
     tipoObra: {
       ...dadosCampo,
@@ -76,66 +81,67 @@ function BasicRegOrcamento(props) {
 
     setItemContatoDisplay([]);
 
-    let orcamentoSelecionado =
-      dadosCadastro.tipoObra.valor == "Geral"
-        ? props.orcamentoGeral
-        : props.orcamentoIntumescente;
-
-    if (orcamentoSelecionado.ORCAMENTO_ID) {
+    if (props.orcamentoSelecionado.ORCAMENTO_ID) {
       setDadosCadastro({
         orcamentoId: {
           ...dadosCadastro.orcamentoId,
-          valor: orcamentoSelecionado.ORCAMENTO_ID,
+          valor: props.orcamentoSelecionado.ORCAMENTO_ID,
         },
         nomeObra: {
           ...dadosCadastro.nomeObra,
-          valor: orcamentoSelecionado.NOME_OBRA,
+          valor: props.orcamentoSelecionado.NOME_OBRA,
         },
-        a_c: { ...dadosCadastro.a_c, valor: orcamentoSelecionado.A_C },
+        a_c: { ...dadosCadastro.a_c, valor: props.orcamentoSelecionado.A_C },
         prazoEntrega: {
           ...dadosCadastro.prazoEntrega,
-          valor: orcamentoSelecionado.PRAZO_ENTREGA,
+          valor: props.orcamentoSelecionado.PRAZO_ENTREGA,
+        },
+        diasTrabalhado: {
+          ...dadosCadastro.diasTrabalhado,
+          valor: props.orcamentoSelecionado.DIAS_TRABALHADO,
         },
         dataCriacaoOrcamento: {
           ...dadosCadastro.dataCriacaoOrcamento,
-          valor: formatatData(orcamentoSelecionado.DATA_CRIACAO_ORCAMENTO),
+          valor: formatatData(
+            props.orcamentoSelecionado.DATA_CRIACAO_ORCAMENTO
+          ),
         },
         tipoObra: {
           ...dadosCadastro.tipoObra,
-          valor: orcamentoSelecionado.TIPO_OBRA,
+          valor: props.orcamentoSelecionado.TIPO_OBRA,
         },
       });
 
       setDadosCadastroCliente({
         pessoaId: {
           ...dadosCadastroCliente.pessoaId,
-          valor: orcamentoSelecionado.CLIENTE_ORCAMENTO.PESSOA_ID,
+          valor: props.orcamentoSelecionado.CLIENTE_ORCAMENTO.PESSOA_ID,
         },
         nomePessoa: {
           ...dadosCadastroCliente.nomePessoa,
-          valor: orcamentoSelecionado.CLIENTE_ORCAMENTO.NOME_PESSOA,
+          valor: props.orcamentoSelecionado.CLIENTE_ORCAMENTO.NOME_PESSOA,
         },
         rg: {
           ...dadosCadastroCliente.rg,
-          valor: orcamentoSelecionado.CLIENTE_ORCAMENTO.RG,
+          valor: props.orcamentoSelecionado.CLIENTE_ORCAMENTO.RG,
         },
         cpf: {
           ...dadosCadastroCliente.cpf,
-          valor: orcamentoSelecionado.CLIENTE_ORCAMENTO.CPF,
+          valor: props.orcamentoSelecionado.CLIENTE_ORCAMENTO.CPF,
         },
         cnpj: {
           ...dadosCadastroCliente.cnpj,
-          valor: orcamentoSelecionado.CLIENTE_ORCAMENTO.CNPJ,
+          valor: props.orcamentoSelecionado.CLIENTE_ORCAMENTO.CNPJ,
         },
         listContato: {
           ...dadosCadastroCliente.listContato,
-          valor: orcamentoSelecionado.CLIENTE_ORCAMENTO.LIST_CONTATO.filter(
+          valor: props.orcamentoSelecionado.CLIENTE_ORCAMENTO.LIST_CONTATO.filter(
             (contato) => contato.CONTATO_PADRAO == true
           ),
         },
       });
 
-      const enderecoPadrao = orcamentoSelecionado.CLIENTE_ORCAMENTO.LIST_ENDERECO.filter(
+      const enderecoPadrao = props.orcamentoSelecionado.CLIENTE_ORCAMENTO.LIST_ENDERECO.filter(
         (endereco) => endereco.ENDERECO_PADRAO == true
       );
 
@@ -171,8 +177,7 @@ function BasicRegOrcamento(props) {
       }
     }
   }, [
-    props.orcamentoGeral.ORCAMENTO_ID,
-    props.orcamentoIntumescente.ORCAMENTO_ID,
+    props.orcamentoSelecionado.ORCAMENTO_ID,
     dadosCadastro.orcamentoId.valor,
   ]);
 
@@ -313,6 +318,10 @@ function BasicRegOrcamento(props) {
         ...dadosCadastro.prazoEntrega,
         valor: dadosCadastro.prazoEntrega.valorPadrao,
       },
+      diasTrabalhado: {
+        ...dadosCadastro.diasTrabalhado,
+        valor: dadosCadastro.diasTrabalhado.valorPadrao,
+      },
       dataCriacaoOrcamento: {
         ...dadosCadastro.dataCriacaoOrcamento,
         valor: dadosCadastro.dataCriacaoOrcamento.valorPadrao,
@@ -430,6 +439,7 @@ function BasicRegOrcamento(props) {
       NOME_OBRA: obj.nomeObra.valor,
       REFERENCIA: props.referencia.valor,
       PRAZO_ENTREGA: obj.prazoEntrega.valor,
+      DIAS_TRABALHADO: parseInt(obj.diasTrabalhado.valor),
       DATA_CRIACAO_ORCAMENTO: obj.dataCriacaoOrcamento.valor,
       A_C: obj.a_c.valor,
       TIPO_OBRA: obj.tipoObra.valor,
@@ -444,7 +454,7 @@ function BasicRegOrcamento(props) {
         TIPO_PESSOA: "",
         LIST_ENDERECO: [
           {
-            PESSOA_ID: obj.pessoaId.valor,
+            PESSOA_ID: obj.pessoa.pessoaId.valor,
             ENDERECO_ID: obj.pessoa.endereco.enderecoId.valor,
             CEP: "",
             LOGRADOURO: "",
@@ -501,6 +511,15 @@ function BasicRegOrcamento(props) {
     houveErro = exibirCamposErro(dadosEnderecoCliente, houveErro);
 
     if (houveErro) {
+      return;
+    }
+
+    if (
+      dadosOrcamento.diasTrabalhado.valor > dadosOrcamento.prazoEntrega.valor
+    ) {
+      const msg =
+        "O dias de trabalho não podem ser maiores que o prazo da obra";
+      exibirTost("erro", msg);
       return;
     }
 
@@ -572,6 +591,15 @@ function BasicRegOrcamento(props) {
     houveErro = exibirCamposErro(dadosEnderecoCliente, houveErro);
 
     if (houveErro) {
+      return;
+    }
+
+    if (
+      dadosOrcamento.diasTrabalhado.valor > dadosOrcamento.prazoEntrega.valor
+    ) {
+      const msg =
+        "O dias de trabalho não podem ser maiores que o prazo da obra";
+      exibirTost("erro", msg);
       return;
     }
 
@@ -686,12 +714,7 @@ function BasicRegOrcamento(props) {
                       <div className="close-select-custo">
                         <a
                           href="#"
-                          onClick={() =>
-                            props.selecionarOrcamentoGeral(
-                              {},
-                              props.selecionarOrcamentoIntumescente({})
-                            )
-                          }
+                          onClick={() => props.selecionarOrcamento({})}
                         >
                           <span className="fa fa-close close-orcamento"></span>
                         </a>
@@ -738,7 +761,7 @@ function BasicRegOrcamento(props) {
               </div>
               <div className="form-group">
                 <div className="form-row">
-                  <div className="col-xl col-12">
+                  <div className="col-xl col-6">
                     <label>Prazo da Obra</label>
                     <input
                       type="text"
@@ -752,6 +775,22 @@ function BasicRegOrcamento(props) {
                     <span
                       className="invalid-feedback msg-erro-orcamento"
                       id="erro-prazoEntrega"
+                    ></span>
+                  </div>
+                  <div className="col-xl col-6">
+                    <label>Dias de trabalho</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="diasTrabalhado"
+                      id="campo-diasTrabalhado"
+                      value={dadosCadastro.diasTrabalhado.valor}
+                      onChange={(event) => handleInputChange(event)}
+                      onFocus={(event) => removerErro(event.target.id)}
+                    />
+                    <span
+                      className="invalid-feedback msg-erro-orcamento"
+                      id="erro-diasTrabalhado"
                     ></span>
                   </div>
                   <div className="col-xl col-12">
@@ -816,7 +855,7 @@ function BasicRegOrcamento(props) {
                         onClick={() => buscarClientes()}
                         onFocus={() => removerErro("campo-pessoaId")}
                       >
-                        Buscar cliente
+                        Buscar
                       </button>
                     </div>
                   </div>
@@ -1047,17 +1086,12 @@ function BasicRegOrcamento(props) {
 const mapStateToProps = (state) => ({
   linkBackEnd: state.backEnd.link,
   clienteOrcamento: state.orcamento.clienteOrcamento,
-  orcamentoGeral: state.orcamento.orcamentoGeral,
-  orcamentoIntumescente: state.orcamento.orcamentoIntumescente,
+  orcamentoSelecionado: state.orcamento.orcamentoSelecionado,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  selecionarOrcamentoGeral: (orcamentoGeral) =>
-    dispatch(orcamentoActions.selecionarOrcamentoGeral(orcamentoGeral)),
-  selecionarOrcamentoIntumescente: (orcamentoIntumescente) =>
-    dispatch(
-      orcamentoActions.selecionarOrcamentoIntumescente(orcamentoIntumescente)
-    ),
+  selecionarOrcamento: (orcamento) =>
+    dispatch(orcamentoActions.selecionarOrcamento(orcamento)),
   selecionarClienteOrcamento: (clienteOrcamento) =>
     dispatch(orcamentoActions.selecionarClienteOrcamento(clienteOrcamento)),
 });
