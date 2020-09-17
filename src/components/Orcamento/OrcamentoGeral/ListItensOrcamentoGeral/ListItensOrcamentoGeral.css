@@ -1,4 +1,9 @@
 #containerListItensOrcamentoGeral {
+  display: grid;
+  grid-template-areas:
+    "btn-add-item-orcamento-geral"
+    "list-itens-orcamento-geral"
+    "totais-itens-orcamento-geral";
   overflow-y: hidden;
 }
 
@@ -32,7 +37,6 @@
   background-color: #d40808;
   width: 100%;
   border-color: #d40808;
-  width: 100%;
 }
 
 .close-modal {
@@ -47,6 +51,6 @@
   }
 
   #totais-itens-orcamento-geral {
-    height: 150px;
+    height: 135px;
   }
 }
