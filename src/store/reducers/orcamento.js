@@ -1,28 +1,38 @@
 const ESTADO_INICIAL = {
   clienteOrcamento: {},
-  orcamentoGeral: {},
+  orcamentoSelecionado: {},
   listItensOrcamentoGeral: [],
-  orcamentoIntumescente: {},
   itensOrcamentoIntumescente: [],
   listMaoObraOrcamento: [],
   listCustosOrcamento: [],
   listEquipamentoOrcamento: [],
   listOrcamento: [],
+  listCustosMaoObraDisplay: [],
 };
 
 export default function orcamento(state = ESTADO_INICIAL, action) {
   switch (action.type) {
+    case "SELECIONAR_ORCAMENTO":
+      return {
+        ...state,
+        orcamentoSelecionado: action.orcamentoSelecionado,
+      };
     case "SELECIONAR_CLIENTE_ORCAMENTO":
       return {
         ...state,
         clienteOrcamento: action.clienteOrcamento,
       };
-    case "ADICIONAR_ITEM_ORCAMENTO_GERAL":
+    case "SELECIONAR_ITENS_ORCAMENTO_GERAL":
       return {
         ...state,
         listItensOrcamentoGeral: action.listItensOrcamentoGeral,
       };
-    case "REMOVER_ITEM_ORCAMENTO_GERAL":
+    case "SELECIONAR_MAO_OBRA_ORCAMENTO":
+      return {
+        ...state,
+        listMaoObraOrcamento: action.listMaoObraOrcamento,
+      };
+    case "ADICIONAR_ITEM_ORCAMENTO_GERAL":
       return {
         ...state,
         listItensOrcamentoGeral: action.listItensOrcamentoGeral,
@@ -32,20 +42,40 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
         ...state,
         itensOrcamentoIntumescente: action.itensOrcamentoIntumescente,
       };
-    case "SELECIONAR_ORCAMENTO_GERAL":
+    case "ADICIONAR_MAO_OBRA_ORCAMENTO":
       return {
         ...state,
-        orcamentoGeral: action.orcamentoGeral,
+        listMaoObraOrcamento: action.listMaoObraOrcamento,
       };
-    case "SELECIONAR_ITENS_ORCAMENTO_GERAL":
+    case "ADICIONAR_ITEM_CUSTO_MAO_OBRA_ORCAMENTO":
+      return {
+        ...state,
+        listMaoObraOrcamento: action.listMaoObraOrcamento,
+      };
+    case "ADICIONAR_ITEM_CUSTO_MAO_OBRA_DISPLAY":
+      return {
+        ...state,
+        listCustosMaoObraDisplay: action.listCustosMaoObraDisplay,
+      };
+    case "REMOVER_ITEM_ORCAMENTO_GERAL":
       return {
         ...state,
         listItensOrcamentoGeral: action.listItensOrcamentoGeral,
       };
-    case "SELECIONAR_ORCAMENTO_INTUMESCENTE":
+    case "REMOVER_ITEM_CUSTO_MAO_OBRA_DISPLAY":
       return {
         ...state,
-        orcamentoIntumescente: action.orcamentoIntumescente,
+        listCustosMaoObraDisplay: action.listCustosMaoObraDisplay,
+      };
+    case "REMOVER_MAO_OBRA_ORCAMENTO":
+      return {
+        ...state,
+        listMaoObraOrcamento: action.listMaoObraOrcamento,
+      };
+    case "REMOVER_ITEM_CUSTO_MAO_OBRA_ORCAMENTO":
+      return {
+        ...state,
+        listMaoObraOrcamento: action.listMaoObraOrcamento,
       };
     case "LISTAR_ORCAMENTO_INICIADA":
       return {
@@ -70,6 +100,11 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
         ...(state = Object.assign({}, state, {
           listItensOrcamentoGeral: state.listItensOrcamentoGeral,
         })),
+      };
+    case "MONTAR_LIST_CUSTO_MAO_OBRA_DISPLAY":
+      return {
+        ...state,
+        listCustosMaoObraDisplay: action.listCustosMaoObraDisplay,
       };
     default:
       return state;
