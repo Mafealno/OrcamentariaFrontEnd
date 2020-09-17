@@ -5,6 +5,27 @@ export function selecionarClienteOrcamento(clienteOrcamento) {
   };
 }
 
+export function selecionarOrcamento(orcamento) {
+  return (dispatch) => {
+    dispatch({
+      type: "SELECIONAR_ORCAMENTO",
+      orcamentoSelecionado: orcamento,
+    });
+    dispatch({
+      type: "SELECIONAR_MAO_OBRA_ORCAMENTO",
+      listMaoObraOrcamento: orcamento.LIST_MAO_OBRA_ORCAMENTO || [],
+    });
+
+    if (orcamento.TIPO_OBRA == "Geral") {
+      dispatch({
+        type: "SELECIONAR_ITENS_ORCAMENTO_GERAL",
+        listItensOrcamentoGeral: orcamento.LIST_ITENS_ORCAMENTO_GERAL || [],
+      });
+    } else {
+    }
+  };
+}
+
 export function adicionarItemOrcamentoGeral(
   listItensOrcamentoGeral,
   itemOrcamentoGeral
@@ -16,6 +37,55 @@ export function adicionarItemOrcamentoGeral(
   return {
     type: "ADICIONAR_ITEM_ORCAMENTO_GERAL",
     listItensOrcamentoGeral,
+  };
+}
+
+export function adicionarMaoObraOrcamento(
+  listMaoObraOrcamento,
+  maoObraOrcamento
+) {
+  listMaoObraOrcamento.push(maoObraOrcamento);
+
+  listMaoObraOrcamento = [...listMaoObraOrcamento];
+
+  return {
+    type: "ADICIONAR_MAO_OBRA_ORCAMENTO",
+    listMaoObraOrcamento,
+  };
+}
+
+export function adicionarItemOrcamentoIntumescente(
+  itensOrcamentoIntumescente,
+  itemOrcamentoIntumescente
+) {
+  itensOrcamentoIntumescente.push(itemOrcamentoIntumescente);
+
+  itensOrcamentoIntumescente = [...itensOrcamentoIntumescente];
+
+  return {
+    type: "ADICIONAR_ITEM_ORCAMENTO_INTUMESCENTE",
+    itensOrcamentoIntumescente,
+  };
+}
+
+export function adicionarItemCustoMaoObraOrcamento(
+  listMaoObraOrcamento,
+  maoObraOrcamentoId,
+  itemCustoMaoObraOrcamento
+) {
+  let index = listMaoObraOrcamento.findIndex(
+    (elemento) => elemento.MAO_OBRA_ORCAMENTO_ID == maoObraOrcamentoId
+  );
+
+  listMaoObraOrcamento[index].LIST_CUSTO.push(itemCustoMaoObraOrcamento);
+
+  listMaoObraOrcamento[index].LIST_CUSTO = [
+    ...listMaoObraOrcamento[index].LIST_CUSTO,
+  ];
+
+  return {
+    type: "ADICIONAR_ITEM_CUSTO_MAO_OBRA_ORCAMENTO",
+    listMaoObraOrcamento,
   };
 }
 
@@ -37,37 +107,46 @@ export function removerItemOrcamentoGeral(
   };
 }
 
-export function adicionarItemOrcamentoIntumescente(
-  itensOrcamentoIntumescente,
-  itemOrcamentoIntumescente
+export function removerMaoObraOrcamento(
+  listMaoObraOrcamento,
+  maoObraOrcamentoId
 ) {
-  itensOrcamentoIntumescente.push(itemOrcamentoIntumescente);
+  const index = listMaoObraOrcamento.findIndex(
+    (elemento) => elemento.MAO_OBRA_ORCAMENTO_ID == maoObraOrcamentoId
+  );
 
-  itensOrcamentoIntumescente = [...itensOrcamentoIntumescente];
+  listMaoObraOrcamento.splice(index, 1);
+
+  listMaoObraOrcamento = [...listMaoObraOrcamento];
 
   return {
-    type: "ADICIONAR_ITEM_ORCAMENTO_INTUMESCENTE",
-    itensOrcamentoIntumescente,
+    type: "REMOVER_MAO_OBRA_ORCAMENTO",
+    listMaoObraOrcamento,
   };
 }
 
-export function selecionarOrcamentoGeral(orcamentoGeral) {
-  return (dispatch) => {
-    dispatch({
-      type: "SELECIONAR_ORCAMENTO_GERAL",
-      orcamentoGeral,
-    });
-    dispatch({
-      type: "SELECIONAR_ITENS_ORCAMENTO_GERAL",
-      listItensOrcamentoGeral: orcamentoGeral.LIST_ITENS_ORCAMENTO_GERAL || [],
-    });
-  };
-}
+export function removerItemCustoMaoObraOrcamento(
+  listMaoObraOrcamento,
+  maoObraOrcamentoId,
+  custoId
+) {
+  const indexPai = listMaoObraOrcamento.findIndex(
+    (elemento) => elemento.MAO_OBRA_ORCAMENTO_ID == maoObraOrcamentoId
+  );
 
-export function selecionarOrcamentoIntumescente(orcamentoIntumescente) {
+  let indexFilho = listMaoObraOrcamento[indexPai].LIST_CUSTO.findIndex(
+    (elemento) => elemento.CUSTO_ID == custoId
+  );
+
+  listMaoObraOrcamento[indexPai].LIST_CUSTO.splice(indexFilho, 1);
+
+  listMaoObraOrcamento[indexPai].LIST_CUSTO = [
+    ...listMaoObraOrcamento[indexPai].LIST_CUSTO,
+  ];
+
   return {
-    type: "SELECIONAR_ORCAMENTO_INTUMESCENTE",
-    orcamentoIntumescente,
+    type: "REMOVER_ITEM_CUSTO_MAO_OBRA_ORCAMENTO",
+    listMaoObraOrcamento,
   };
 }
 
@@ -101,5 +180,49 @@ export function recarregarItensOrcamentoGeral(linkBackEnd, orcamentoId) {
           listItensOrcamentoGeral: data,
         });
       });
+  };
+}
+
+export function montarListCustosMaoObraDisplay(
+  listCustosMaoObraDisplay,
+  listCustosMaoObraDisplayAux
+) {
+  listCustosMaoObraDisplay = [];
+  listCustosMaoObraDisplay = [...listCustosMaoObraDisplayAux];
+
+  return {
+    type: "MONTAR_LIST_CUSTO_MAO_OBRA_DISPLAY",
+    listCustosMaoObraDisplay,
+  };
+}
+
+export function adicionarItemCustosMaoObraDisplay(
+  listCustosMaoObraDisplay,
+  itemCustoMaoObraDisplay
+) {
+  listCustosMaoObraDisplay.push(itemCustoMaoObraDisplay);
+  listCustosMaoObraDisplay = [...listCustosMaoObraDisplay];
+
+  return {
+    type: "ADICIONAR_ITEM_CUSTO_MAO_OBRA_DISPLAY",
+    listCustosMaoObraDisplay,
+  };
+}
+
+export function removerItemCustosMaoObraDisplay(
+  listCustosMaoObraDisplay,
+  keyComponente
+) {
+  let index = listCustosMaoObraDisplay.findIndex(
+    (elemento) => elemento.props.keyComponente == keyComponente
+  );
+
+  listCustosMaoObraDisplay.splice(index, 1);
+
+  listCustosMaoObraDisplay = [...listCustosMaoObraDisplay];
+
+  return {
+    type: "REMOVER_ITEM_CUSTO_MAO_OBRA_DISPLAY",
+    listCustosMaoObraDisplay,
   };
 }
