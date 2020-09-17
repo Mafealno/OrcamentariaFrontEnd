@@ -433,7 +433,7 @@ function BasicRegEquipamento(props) {
                       onClick={() => buscarFabricantes()}
                       onFocus={() => removerErro("campo-pessoaId")}
                     >
-                      Buscar fabricante
+                      Buscar
                     </button>
                   </div>
                 </div>
