@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./OrcamentoGeral.css";
 import BasicRegOrcamento from "../BasicRegOrcamento/BasicRegOrcamento";
 import ListItensOrcamentoGeral from "./ListItensOrcamentoGeral/ListItensOrcamentoGeral";
+import ListMaoObraOrcamento from "../ListMaoObraOrcamento/ListMaoObraOrcamento";
 import { Provider } from "react-redux";
 
 import store from "../../../store/store";
@@ -73,7 +74,7 @@ export default function OrcamentoGeral() {
               role="tabpanel"
               aria-labelledby="nav-contact-tab"
             >
-              ...
+              <ListMaoObraOrcamento />
             </div>
           </>
         </div>
