@@ -60,7 +60,7 @@ function ModalItemOrcamentoGeral(props) {
       ...dadosCadastro,
       orcamentoId: {
         ...dadosCadastro.orcamentoId,
-        valor: props.orcamentoGeral.ORCAMENTO_ID,
+        valor: props.orcamentoSelecionado.ORCAMENTO_ID,
       },
     });
     if (props.dados) {
@@ -416,282 +416,270 @@ function ModalItemOrcamentoGeral(props) {
           <>
             <div className="form form-modal-item-orcamento-geral">
               <div className="container-form">
-                <form>
-                  <div className="form-group">
-                    <div className="form-row">
-                      <label className="col-form-label">Linha:</label>
+                <div className="form-group">
+                  <div className="form-row">
+                    <label className="col-form-label">Linha:</label>
+                    <input
+                      type="text"
+                      value={dadosCadastro.numeroLinha.valor || ""}
+                      id="campo-orcamentoId"
+                      className="form-control-plaintext input-numero-linha"
+                      readOnly
+                    />
+                    <span
+                      className="invalid-feedback"
+                      id="erro-numeroLinha"
+                    ></span>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <div className="form-row">
+                    <div className="col">
+                      <label>Ambiente</label>
                       <input
                         type="text"
-                        value={dadosCadastro.numeroLinha.valor || ""}
-                        id="campo-orcamentoId"
-                        className="form-control-plaintext input-numero-linha"
-                        readOnly
+                        className="form-control"
+                        name="ambienteAplicacao"
+                        id="campo-ambienteAplicacao"
+                        value={dadosCadastro.ambienteAplicacao.valor}
+                        onChange={(event) => handleInputChange(event)}
+                        onFocus={(event) => removerErro(event.target.id)}
+                        list={"ambiente"}
+                      />
+                      <datalist id="ambiente">{optAmbienteDisplay}</datalist>
+                      <span
+                        className="invalid-feedback"
+                        id="erro-ambienteAplicacao"
+                      ></span>
+                    </div>
+                    <div className="col">
+                      <label>Local</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="localAplicacao"
+                        id="campo-localAplicacao"
+                        value={dadosCadastro.localAplicacao.valor}
+                        onChange={(event) => handleInputChange(event)}
+                        onFocus={(event) => removerErro(event.target.id)}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <div className="form-row">
+                    <div className="col-xl col-12">
+                      <label>Oque será feito</label>
+                      <textarea
+                        className="form-control"
+                        name="acaoAplicar"
+                        id="campo-acaoAplicar"
+                        rows="3"
+                        value={dadosCadastro.acaoAplicar.valor}
+                        onChange={(event) => handleInputChange(event)}
+                        onFocus={(event) => removerErro(event.target.id)}
                       />
                       <span
                         className="invalid-feedback"
-                        id="erro-numeroLinha"
+                        id="erro-acaoAplicar"
+                      ></span>
+                    </div>
+                    <div className="col-xl-6 col-12">
+                      <div className="form-group">
+                        <div className="form-row">
+                          <div className="col">
+                            <label>Altura</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              name="valorComprimento"
+                              id="campo-valorComprimento"
+                              value={dadosCadastro.valorComprimento.valor}
+                              onChange={(event) => handleInputChange(event)}
+                              onFocus={(event) => removerErro(event.target.id)}
+                            />
+                            <span
+                              className="invalid-feedback"
+                              id="erro-valorComprimento"
+                            ></span>
+                          </div>
+                          <div className="col">
+                            <label>Largura</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              name="valorLargura"
+                              id="campo-valorLargura"
+                              value={dadosCadastro.valorLargura.valor}
+                              onChange={(event) => handleInputChange(event)}
+                              onFocus={(event) => removerErro(event.target.id)}
+                            />
+                            <span
+                              className="invalid-feedback"
+                              id="erro-valorLargura"
+                            ></span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="form-group">
+                        <div className="form-row">
+                          <div className="col">
+                            <label>Valor do M²</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              name="valorM2"
+                              id="campo-valorM2"
+                              value={dadosCadastro.valorM2.valor}
+                              onChange={(event) => handleInputChange(event)}
+                              onFocus={(event) => removerErro(event.target.id)}
+                            />
+                            <span
+                              className="invalid-feedback"
+                              id="erro-valorM2"
+                            ></span>
+                          </div>
+                          <div className="col">
+                            <label>Área (M²)</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              name="area"
+                              id="campo-area"
+                              value={dadosCadastro.area.valor}
+                              onChange={(event) => handleInputChange(event)}
+                              onFocus={(event) => removerErro(event.target.id)}
+                            />
+                            <span
+                              className="invalid-feedback"
+                              id="erro-area"
+                            ></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <div className="form-row">
+                    <div className="col">
+                      <fieldset
+                        className="fieldset-height-100"
+                        id="campo-materialIdItemOrcamentogeral"
+                      >
+                        <legend>Dados do material</legend>
+                        <div id="informacoes-material-orcamento-geral">
+                          <div id="busca-material-orcamento-geral">
+                            <div className="form-group margin-bottom-0">
+                              <div className="row">
+                                <div className="col-xl">
+                                  <input
+                                    className="form-control"
+                                    placeholder="Buscar Material"
+                                    name="buscarMaterial"
+                                    onChange={(event) =>
+                                      setStringBuscaMaterial(event.target.value)
+                                    }
+                                    onKeyDown={(event) => pressEnter(event)}
+                                    onFocus={() =>
+                                      removerErro(
+                                        "campo-materialIdItemOrcamentogeral"
+                                      )
+                                    }
+                                  />
+                                </div>
+                                <div className="col-xl-3 div-btn-buscar-material">
+                                  <button
+                                    type="button"
+                                    className="btn"
+                                    id="btn-buscar-material"
+                                    onClick={() => buscarMaterial()}
+                                    onFocus={() =>
+                                      removerErro(
+                                        "campo-materialIdItemOrcamentogeral"
+                                      )
+                                    }
+                                  >
+                                    Buscar
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="form-group">
+                              <div className="row">
+                                <div className="col-xl">
+                                  <ResultSearchMaterial
+                                    show={showResultadoMaterial}
+                                    resultados={dataMaterial}
+                                    selecionarMaterialItemOrcamentoGeral={(
+                                      material
+                                    ) =>
+                                      selecionarMaterialItemOrcamentoGeral(
+                                        material
+                                      )
+                                    }
+                                  />
+                                </div>
+                                <div className="col-xl-3 div-btn-buscar-material"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div id="principal-material-orcamento-geral">
+                            <div className="form-group">
+                              <div className="form-row">
+                                <div className="col-xl-2 col-12">
+                                  <label>Código</label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    name="materialIdItemOrcamentogeral"
+                                    value={
+                                      dadosCadastroMaterial
+                                        .materialIdItemOrcamentogeral.valor
+                                    }
+                                    readOnly
+                                  />
+                                </div>
+                                <div className="col-xl col-12">
+                                  <label>Nome do Material</label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    value={
+                                      dadosCadastroMaterial.nomeMaterial.valor
+                                    }
+                                    name="nomeMaterial"
+                                    readOnly
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <div className="form-group">
+                              <div className="form-row">
+                                <div className="col">
+                                  <label>Nome do Fabricante</label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    name="nomePessoa"
+                                    value={
+                                      dadosCadastroMaterial.nomePessoa.valor
+                                    }
+                                    readOnly
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </fieldset>
+                      <span
+                        className="invalid-feedback"
+                        id="erro-materialIdItemOrcamentogeral"
                       ></span>
                     </div>
                   </div>
-                  <div className="form-group">
-                    <div className="form-row">
-                      <div className="col">
-                        <label>Ambiente</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="ambienteAplicacao"
-                          id="campo-ambienteAplicacao"
-                          value={dadosCadastro.ambienteAplicacao.valor}
-                          onChange={(event) => handleInputChange(event)}
-                          onFocus={(event) => removerErro(event.target.id)}
-                          list={"ambiente"}
-                        />
-                        <datalist id="ambiente">{optAmbienteDisplay}</datalist>
-                        <span
-                          className="invalid-feedback"
-                          id="erro-ambienteAplicacao"
-                        ></span>
-                      </div>
-                      <div className="col">
-                        <label>Local</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="localAplicacao"
-                          id="campo-localAplicacao"
-                          value={dadosCadastro.localAplicacao.valor}
-                          onChange={(event) => handleInputChange(event)}
-                          onFocus={(event) => removerErro(event.target.id)}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <div className="form-row">
-                      <div className="col-xl col-12">
-                        <label>Oque será feito</label>
-                        <textarea
-                          className="form-control"
-                          name="acaoAplicar"
-                          id="campo-acaoAplicar"
-                          rows="3"
-                          value={dadosCadastro.acaoAplicar.valor}
-                          onChange={(event) => handleInputChange(event)}
-                          onFocus={(event) => removerErro(event.target.id)}
-                        />
-                        <span
-                          className="invalid-feedback"
-                          id="erro-acaoAplicar"
-                        ></span>
-                      </div>
-                      <div className="col-xl-6 col-12">
-                        <div className="form-group">
-                          <div className="form-row">
-                            <div className="col">
-                              <label>Altura</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                name="valorComprimento"
-                                id="campo-valorComprimento"
-                                value={dadosCadastro.valorComprimento.valor}
-                                onChange={(event) => handleInputChange(event)}
-                                onFocus={(event) =>
-                                  removerErro(event.target.id)
-                                }
-                              />
-                              <span
-                                className="invalid-feedback"
-                                id="erro-valorComprimento"
-                              ></span>
-                            </div>
-                            <div className="col">
-                              <label>Largura</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                name="valorLargura"
-                                id="campo-valorLargura"
-                                value={dadosCadastro.valorLargura.valor}
-                                onChange={(event) => handleInputChange(event)}
-                                onFocus={(event) =>
-                                  removerErro(event.target.id)
-                                }
-                              />
-                              <span
-                                className="invalid-feedback"
-                                id="erro-valorLargura"
-                              ></span>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="form-group">
-                          <div className="form-row">
-                            <div className="col">
-                              <label>Valor do M²</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                name="valorM2"
-                                id="campo-valorM2"
-                                value={dadosCadastro.valorM2.valor}
-                                onChange={(event) => handleInputChange(event)}
-                                onFocus={(event) =>
-                                  removerErro(event.target.id)
-                                }
-                              />
-                              <span
-                                className="invalid-feedback"
-                                id="erro-valorM2"
-                              ></span>
-                            </div>
-                            <div className="col">
-                              <label>Área (M²)</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                name="area"
-                                id="campo-area"
-                                value={dadosCadastro.area.valor}
-                                onChange={(event) => handleInputChange(event)}
-                                onFocus={(event) =>
-                                  removerErro(event.target.id)
-                                }
-                              />
-                              <span
-                                className="invalid-feedback"
-                                id="erro-area"
-                              ></span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <div className="form-row">
-                      <div className="col">
-                        <fieldset
-                          className="fieldset-height-100"
-                          id="campo-materialIdItemOrcamentogeral"
-                        >
-                          <legend>Dados do material</legend>
-                          <div id="informacoes-material-orcamento-geral">
-                            <div id="busca-material-orcamento-geral">
-                              <div className="form-group margin-bottom-0">
-                                <div className="row">
-                                  <div className="col-xl">
-                                    <input
-                                      className="form-control"
-                                      placeholder="Buscar Material"
-                                      name="buscarMaterial"
-                                      onChange={(event) =>
-                                        setStringBuscaMaterial(
-                                          event.target.value
-                                        )
-                                      }
-                                      onKeyDown={(event) => pressEnter(event)}
-                                      onFocus={() =>
-                                        removerErro(
-                                          "campo-materialIdItemOrcamentogeral"
-                                        )
-                                      }
-                                    />
-                                  </div>
-                                  <div className="col-xl-3 div-btn-buscar-material">
-                                    <button
-                                      type="button"
-                                      className="btn"
-                                      id="btn-buscar-material"
-                                      onClick={() => buscarMaterial()}
-                                      onFocus={() =>
-                                        removerErro(
-                                          "campo-materialIdItemOrcamentogeral"
-                                        )
-                                      }
-                                    >
-                                      Buscar material
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="form-group">
-                                <div className="row">
-                                  <div className="col-xl">
-                                    <ResultSearchMaterial
-                                      show={showResultadoMaterial}
-                                      resultados={dataMaterial}
-                                      selecionarMaterialItemOrcamentoGeral={(
-                                        material
-                                      ) =>
-                                        selecionarMaterialItemOrcamentoGeral(
-                                          material
-                                        )
-                                      }
-                                    />
-                                  </div>
-                                  <div className="col-xl-3 div-btn-buscar-material"></div>
-                                </div>
-                              </div>
-                            </div>
-                            <div id="principal-material-orcamento-geral">
-                              <div className="form-group">
-                                <div className="form-row">
-                                  <div className="col-xl-2 col-12">
-                                    <label>Código</label>
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      name="materialIdItemOrcamentogeral"
-                                      value={
-                                        dadosCadastroMaterial
-                                          .materialIdItemOrcamentogeral.valor
-                                      }
-                                      readOnly
-                                    />
-                                  </div>
-                                  <div className="col-xl col-12">
-                                    <label>Nome do Material</label>
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      value={
-                                        dadosCadastroMaterial.nomeMaterial.valor
-                                      }
-                                      name="nomeMaterial"
-                                      readOnly
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="form-group">
-                                <div className="form-row">
-                                  <div className="col">
-                                    <label>Nome do Fabricante</label>
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      name="nomePessoa"
-                                      value={
-                                        dadosCadastroMaterial.nomePessoa.valor
-                                      }
-                                      readOnly
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </fieldset>
-                        <span
-                          className="invalid-feedback"
-                          id="erro-materialIdItemOrcamentogeral"
-                        ></span>
-                      </div>
-                    </div>
-                  </div>
-                </form>
+                </div>
               </div>
             </div>
           </>
@@ -751,7 +739,7 @@ function ModalItemOrcamentoGeral(props) {
 const mapStateToProps = (state) => ({
   linkBackEnd: state.backEnd.link,
   listItensOrcamentoGeral: state.orcamento.listItensOrcamentoGeral,
-  orcamentoGeral: state.orcamento.orcamentoGeral,
+  orcamentoSelecionado: state.orcamento.orcamentoSelecionado,
 });
 
 const mapDispatchToProps = (dispatch) => ({});
