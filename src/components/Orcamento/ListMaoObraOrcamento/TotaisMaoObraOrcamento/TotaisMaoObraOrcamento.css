@@ -1,0 +1,39 @@
+#containerTotaisMaoObraOrcamento {
+  display: grid;
+  grid-template-areas:
+    "quantidade-mao-obra"
+    "total-salario"
+    "total-custos";
+  background-color: #d40808;
+  height: 100%;
+  color: white;
+  border-radius: 10px;
+  padding: 3%;
+}
+
+#quantidade-mao-obra {
+  grid-area: quantidade-mao-obra;
+  height: 100%;
+  text-align: center;
+}
+#total-salario {
+  grid-area: total-salario;
+  height: 100%;
+  text-align: center;
+}
+#total-custos {
+  grid-area: total-custos;
+  height: 100%;
+  text-align: center;
+}
+
+.titulo-totais-mao-obra-orcamento {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+@media (min-width: 1200px) {
+  #containerTotaisMaoObraOrcamento {
+    grid-template-areas: "quantidade-mao-obra total-salario total-custos";
+  }
+}

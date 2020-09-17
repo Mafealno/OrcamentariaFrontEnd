@@ -1,0 +1,52 @@
+#containertItemMaoObraOrcamento {
+  display: grid;
+  grid-template-areas:
+    "cadastro-funcionario"
+    "list-custos-funcionario";
+  grid-template-rows: 50% 50%;
+  height: 300px;
+  padding: 10px;
+  background-color: rgb(68, 68, 68);
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+
+#cadastro-funcionario {
+  grid-area: cadastro-funcionario;
+}
+
+#list-custos-funcionario {
+  grid-area: list-custos-funcionario;
+  display: flex;
+  flex-direction: row;
+  max-height: 100%;
+  height: 100%;
+  background-color: #fff;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 2px solid #fff;
+  margin-bottom: 15px;
+}
+
+.titulo-item-mao-obra-orcamento {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.btn-modal-item-orcamento-geral {
+  width: 100% !important;
+  margin-bottom: 5px;
+}
+
+.btn-modal-item-mao-obra-orcamento {
+  margin-bottom: 5px;
+}
+
+@media (min-width: 1200px) {
+  #containertItemMaoObraOrcamento {
+    grid-template-areas: "cadastro-funcionario list-custos-funcionario";
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100%;
+    height: 150px;
+  }
+}

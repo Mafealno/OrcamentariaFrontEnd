@@ -1,0 +1,94 @@
+#containerModalMaoObraOrcamento {
+  display: grid;
+  grid-template-areas:
+    "dados-funcionario"
+    "dados-custo-funcionario";
+  width: 98%;
+}
+
+#dados-funcionario {
+  grid-area: dados-funcionario;
+  display: grid;
+  grid-template-areas:
+    "search-funcionario"
+    "informacoes-funcionario";
+  grid-template-rows: 50px auto;
+}
+
+#search-funcionario {
+  grid-area: search-funcionario;
+}
+
+#informacoes-funcionario {
+  grid-area: informacoes-funcionario;
+}
+
+#dados-custo-funcionario {
+  grid-area: dados-custo-funcionario;
+}
+
+#campo-maoObraOrcamentoId {
+  width: 30% !important;
+  font-weight: bold;
+  color: white;
+  margin-left: 15px;
+}
+
+#list-custos-mao-obra {
+  display: flex;
+  flex-direction: row;
+  height: 300px;
+  min-width: 100%;
+  max-width: 1rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background-color: #e3e3e3;
+  padding: 10px;
+}
+
+.overflow-x-y {
+  overflow-x: hidden;
+  overflow-y: auto !important;
+}
+
+.add-custo-mao-obra {
+  height: 100%;
+  margin-right: 10px;
+}
+
+.add-custo-mao-obra > button {
+  height: 100%;
+  width: 100%;
+}
+.form-modal-mao-obra-orcamento {
+  padding: 2% 5%;
+  height: 50% !important;
+  min-height: 300px;
+}
+
+.modal-body-mao-obra-orcamento {
+  max-height: 75vh !important;
+}
+
+@media (min-width: 1200px) {
+  #list-custos-mao-obra {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    height: 300px;
+    background-color: #e3e3e3;
+    padding: 10px;
+  }
+
+  .overflow-x-y {
+    overflow-y: hidden !important;
+  }
+
+  .form-modal-mao-obra-orcamento {
+    height: 50% !important;
+  }
+
+  .modal-body-mao-obra-orcamento {
+    max-height: 730px !important;
+  }
+}

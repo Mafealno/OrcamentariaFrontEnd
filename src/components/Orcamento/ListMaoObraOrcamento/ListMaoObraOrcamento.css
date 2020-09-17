@@ -1,0 +1,44 @@
+#containerMaoObraOrcamento {
+  display: grid;
+  grid-template-areas:
+    "btn-add-mao-obra-orcamento"
+    "list-mao-obra-orcamento"
+    "totais-mao-obra-orcamento";
+}
+
+#btn-add-mao-obra-orcamento {
+  grid-area: btn-add-mao-obra-orcamento;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#list-mao-obra-orcamento {
+  grid-area: list-mao-obra-orcamento;
+  max-height: 500px;
+  height: 500px;
+  padding: 1%;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 2px solid #fff;
+  margin-bottom: 15px;
+}
+#totais-mao-obra-orcamento {
+  grid-area: totais-mao-obra-orcamento;
+}
+
+#btn-add-mao-obra-orcamento > button {
+  color: white;
+  background-color: #d40808;
+  width: 100%;
+  border-color: #d40808;
+}
+
+@media (min-width: 1200px) {
+  #totais-mao-obra-orcamento {
+    height: 135px;
+  }
+}
