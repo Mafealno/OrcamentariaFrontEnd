@@ -74,13 +74,14 @@ function ListOrcamento(props) {
     let componente = {};
 
     if (orcamento.TIPO_OBRA == "Geral") {
-      props.selecionarOrcamentoGeral(orcamento);
       caminho = "/orcamentoGeral";
       componente = <OrcamentoGeral />;
     } else {
       caminho = "/orcamentoIntumescente";
       componente = <OrcamentoIntumescente />;
     }
+
+    props.selecionarOrcamento(orcamento);
 
     return (
       <Router>
@@ -114,8 +115,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   listarOrcamento: (linkBackEnd) =>
     dispatch(orcamentoActions.listarOrcamento(linkBackEnd)),
-  selecionarOrcamentoGeral: (orcamentoGeral) =>
-    dispatch(orcamentoActions.selecionarOrcamentoGeral(orcamentoGeral)),
+  selecionarOrcamento: (orcamento) =>
+    dispatch(orcamentoActions.selecionarOrcamento(orcamento)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListOrcamento);
