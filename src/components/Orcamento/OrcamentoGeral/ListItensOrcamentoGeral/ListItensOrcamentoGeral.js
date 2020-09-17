@@ -76,7 +76,7 @@ function ListItensOrcamentoGeral(props) {
       setListItensOrcamentoGeralDisplay(
         props.listItensOrcamentoGeral.map((elemento) => (
           <ItemOrcamentoGeral
-            key={elemento.ITENS_ORCAMENTO_ID}
+            key={"ITENS_ORCAMENTO_ID-" + elemento.ITENS_ORCAMENTO_ID}
             ItemOrcamentoGeral={elemento}
             salvarItemOrcamentoGeral={(
               itemOrcamentoGeral,

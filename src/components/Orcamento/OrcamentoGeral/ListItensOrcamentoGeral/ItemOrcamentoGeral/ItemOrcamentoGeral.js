@@ -11,9 +11,21 @@ export default function ItemOrcamentoGeral(props) {
       <div
         id="containerItemOrcamentoGeral"
         data-toggle="collapse"
-        data-target={"#opcoes-" + props.ItemOrcamentoGeral.ITENS_ORCAMENTO_ID}
-        aria-expanded={"opcoes-" + props.ItemOrcamentoGeral.ITENS_ORCAMENTO_ID}
-        aria-controls={"opcoes-" + props.ItemOrcamentoGeral.ITENS_ORCAMENTO_ID}
+        data-target={
+          "#opcoes-" +
+          "ITENS_ORCAMENTO_ID-" +
+          props.ItemOrcamentoGeral.ITENS_ORCAMENTO_ID
+        }
+        aria-expanded={
+          "opcoes-" +
+          "ITENS_ORCAMENTO_ID-" +
+          props.ItemOrcamentoGeral.ITENS_ORCAMENTO_ID
+        }
+        aria-controls={
+          "opcoes-" +
+          "ITENS_ORCAMENTO_ID-" +
+          props.ItemOrcamentoGeral.ITENS_ORCAMENTO_ID
+        }
       >
         <div className="row">
           <div className="col-xl-1 col-3 center titulo-item-orcamento-geral">
@@ -57,7 +69,11 @@ export default function ItemOrcamentoGeral(props) {
         </div>
       </div>
       <div
-        id={"opcoes-" + props.ItemOrcamentoGeral.ITENS_ORCAMENTO_ID}
+        id={
+          "opcoes-" +
+          "ITENS_ORCAMENTO_ID-" +
+          props.ItemOrcamentoGeral.ITENS_ORCAMENTO_ID
+        }
         className="collapse opcoes-item-orcamento-geral"
       >
         <button
