@@ -106,6 +106,11 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
         ...state,
         listCustosMaoObraDisplay: action.listCustosMaoObraDisplay,
       };
+    case "ATUALIZAR_FUNCIONARIO_MAO_OBRA_ORCAMENTO":
+      return {
+        ...state,
+        listMaoObraOrcamento: action.listMaoObraOrcamento,
+      };
     default:
       return state;
   }

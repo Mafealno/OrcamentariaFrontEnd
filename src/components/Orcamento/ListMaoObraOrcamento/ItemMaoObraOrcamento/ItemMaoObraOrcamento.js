@@ -61,7 +61,10 @@ export const ItemMaoObraOrcamento = (props) => {
     } else {
       setItemCustoMaoObraOrcamentoDisplay([]);
     }
-  }, [props.dadosMaoObra.LIST_CUSTO.length]);
+  }, [
+    props.dadosMaoObra.LIST_CUSTO.length,
+    props.dadosMaoObra.FUNCIONARIO.NOME_PESSOA,
+  ]);
 
   const adicionarItemCustoMaoObraOrcamento = (itemCustoMaoObraOrcamento) => {
     props.dadosMaoObra.LIST_CUSTO.push(itemCustoMaoObraOrcamento);
@@ -112,7 +115,7 @@ export const ItemMaoObraOrcamento = (props) => {
         className="collapse opcoes-item-orcamento-geral"
       >
         <button
-          className="btn btn-success btn-modal-item-mao-obra-orcamento"
+          className="btn btn-success btn-modal-item-mao-obra-orcamento btn-width-100"
           onClick={() => setShowModalMaoObraOrcamento(true)}
         >
           Selecionar
@@ -129,8 +132,16 @@ export const ItemMaoObraOrcamento = (props) => {
           salvarCadastro={(objMaoObraOrcamento) =>
             props.salvarCadastro(objMaoObraOrcamento)
           }
-          editarCadastro={(objMaoObraOrcamento) =>
-            props.editarCadastro(objMaoObraOrcamento)
+          editarCadastro={(
+            objMaoObraOrcamento,
+            pessoaIdAnterior,
+            fazerAposAtualizar
+          ) =>
+            props.editarCadastro(
+              objMaoObraOrcamento,
+              pessoaIdAnterior,
+              fazerAposAtualizar
+            )
           }
           adicionarItemCustoMaoObraOrcamento={(itemCustoMaoObraOrcamento) =>
             adicionarItemCustoMaoObraOrcamento(itemCustoMaoObraOrcamento)

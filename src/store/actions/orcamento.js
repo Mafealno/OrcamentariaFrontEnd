@@ -79,9 +79,7 @@ export function adicionarItemCustoMaoObraOrcamento(
 
   listMaoObraOrcamento[index].LIST_CUSTO.push(itemCustoMaoObraOrcamento);
 
-  listMaoObraOrcamento[index].LIST_CUSTO = [
-    ...listMaoObraOrcamento[index].LIST_CUSTO,
-  ];
+  listMaoObraOrcamento = [...listMaoObraOrcamento];
 
   return {
     type: "ADICIONAR_ITEM_CUSTO_MAO_OBRA_ORCAMENTO",
@@ -140,9 +138,7 @@ export function removerItemCustoMaoObraOrcamento(
 
   listMaoObraOrcamento[indexPai].LIST_CUSTO.splice(indexFilho, 1);
 
-  listMaoObraOrcamento[indexPai].LIST_CUSTO = [
-    ...listMaoObraOrcamento[indexPai].LIST_CUSTO,
-  ];
+  //listMaoObraOrcamento = [...listMaoObraOrcamento];
 
   return {
     type: "REMOVER_ITEM_CUSTO_MAO_OBRA_ORCAMENTO",
@@ -219,10 +215,27 @@ export function removerItemCustosMaoObraDisplay(
 
   listCustosMaoObraDisplay.splice(index, 1);
 
-  listCustosMaoObraDisplay = [...listCustosMaoObraDisplay];
-
   return {
     type: "REMOVER_ITEM_CUSTO_MAO_OBRA_DISPLAY",
     listCustosMaoObraDisplay,
+  };
+}
+
+export function atualizarFuncionarioMaoObraOrcamento(
+  listMaoObraOrcamento,
+  objAtualizar,
+  pessoaIdAnterior
+) {
+  const index = listMaoObraOrcamento.findIndex(
+    (elemento) => elemento.FUNCIONARIO.PESSOA_ID == pessoaIdAnterior
+  );
+
+  listMaoObraOrcamento[index].FUNCIONARIO = objAtualizar.FUNCIONARIO;
+
+  listMaoObraOrcamento = [...listMaoObraOrcamento];
+
+  return {
+    type: "ATUALIZAR_FUNCIONARIO_MAO_OBRA_ORCAMENTO",
+    listMaoObraOrcamento,
   };
 }

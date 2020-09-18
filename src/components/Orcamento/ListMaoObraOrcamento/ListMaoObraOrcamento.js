@@ -4,9 +4,7 @@ import ItemMaoObraOrcamento from "./ItemMaoObraOrcamento/ItemMaoObraOrcamento";
 import TotaisMaoObraOrcamento from "./TotaisMaoObraOrcamento/TotaisMaoObraOrcamento";
 import ModalMaoObraOrcamento from "./ModalMaoObraOrcamento/ModalMaoObraOrcamento";
 import ToastControl from "../../ToastControl/ToastControl";
-
 import * as orcamentoActions from "../../../store/actions/orcamento";
-
 import { connect } from "react-redux";
 
 function ListMaoObraOrcamento(props) {
@@ -52,8 +50,8 @@ function ListMaoObraOrcamento(props) {
             salvarCadastro={(objMaoObraOrcamento) =>
               salvarCadastro(objMaoObraOrcamento)
             }
-            editarCadastro={(objMaoObraOrcamento) =>
-              editarCadastro(objMaoObraOrcamento)
+            editarCadastro={(objMaoObraOrcamento, pessoaIdAnterior) =>
+              editarCadastro(objMaoObraOrcamento, pessoaIdAnterior)
             }
             montarItemDisplay={() => montarItemDisplay()}
           />
@@ -146,7 +144,7 @@ function ListMaoObraOrcamento(props) {
     });
   };
 
-  const editarCadastro = (objMaoObraOrcamento) => {
+  const editarCadastro = (objMaoObraOrcamento, pessoaIdAnterior) => {
     fetch(
       props.linkBackEnd +
         "/maoObraOrcamento/" +
@@ -158,6 +156,12 @@ function ListMaoObraOrcamento(props) {
       }
     ).then((data) => {
       if (data.ok) {
+        props.atualizarFuncionarioMaoObraOrcamento(
+          props.listMaoObraOrcamento,
+          objMaoObraOrcamento,
+          pessoaIdAnterior
+        );
+        montarItemDisplay();
         const msg = "Cadastro atualizado com sucesso";
         exibirTost("sucesso", msg);
       } else {
@@ -196,8 +200,8 @@ function ListMaoObraOrcamento(props) {
           salvarCadastro={(objMaoObraOrcamento, fazerAposCadastrar) =>
             salvarCadastro(objMaoObraOrcamento, fazerAposCadastrar)
           }
-          editarCadastro={(objMaoObraOrcamento) =>
-            editarCadastro(objMaoObraOrcamento)
+          editarCadastro={(objMaoObraOrcamento, pessoaIdAnterior) =>
+            editarCadastro(objMaoObraOrcamento, pessoaIdAnterior)
           }
           montarItemDisplay={() => montarItemDisplay()}
         />
@@ -238,6 +242,18 @@ const mapDispatchToProps = (dispatch) => ({
       orcamentoActions.removerMaoObraOrcamento(
         listMaoObraOrcamento,
         maoObraOrcamentoId
+      )
+    ),
+  atualizarFuncionarioMaoObraOrcamento: (
+    listMaoObraOrcamento,
+    objAtualizar,
+    pessoaIdAnterior
+  ) =>
+    dispatch(
+      orcamentoActions.atualizarFuncionarioMaoObraOrcamento(
+        listMaoObraOrcamento,
+        objAtualizar,
+        pessoaIdAnterior
       )
     ),
 });

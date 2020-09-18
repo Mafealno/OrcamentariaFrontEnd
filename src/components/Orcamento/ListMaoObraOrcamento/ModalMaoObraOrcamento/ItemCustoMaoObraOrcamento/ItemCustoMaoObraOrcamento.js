@@ -17,18 +17,6 @@ function ItemCustoMaoObraOrcamento(props) {
   let [showModalConfirm, setShowModalConfirm] = useState(false);
   let [cadastrado, setCadastrado] = useState(false);
 
-  let [dadosCadastro, setDadosCadastro] = useState({
-    custoId: { ...dadosCampo, requerido: true },
-    nomeCusto: { ...dadosCampo },
-    valorCusto: { ...dadosCampo },
-    tipoCusto: { ...dadosCampo },
-  });
-
-  let [dadosCadastroMaoObra, setDadosCadastroMaoObra] = useState({
-    maoObraOrcamentoId: { ...dadosCampo },
-    pessoaId: { ...dadosCampo },
-  });
-
   let [configToast, setConfigToast] = useState({
     estiloToast: "",
     estiloToastHeader: "",
@@ -39,6 +27,18 @@ function ItemCustoMaoObraOrcamento(props) {
     conteudoHeader: "",
     conteudoBody: "",
     closeToast: {},
+  });
+
+  let [dadosCadastro, setDadosCadastro] = useState({
+    custoId: { ...dadosCampo, requerido: true },
+    nomeCusto: { ...dadosCampo },
+    valorCusto: { ...dadosCampo },
+    tipoCusto: { ...dadosCampo },
+  });
+
+  let [dadosCadastroMaoObra, setDadosCadastroMaoObra] = useState({
+    maoObraOrcamentoId: { ...dadosCampo },
+    pessoaId: { ...dadosCampo },
   });
 
   useEffect(() => {
@@ -64,7 +64,9 @@ function ItemCustoMaoObraOrcamento(props) {
 
       setCadastrado(true);
     }
+  }, [props.dadosCustoMaoObraOrcamento]);
 
+  useEffect(() => {
     setDadosCadastroMaoObra({
       maoObraOrcamentoId: {
         ...dadosCadastro.maoObraOrcamentoId,
@@ -75,7 +77,7 @@ function ItemCustoMaoObraOrcamento(props) {
         valor: props.pessoaId,
       },
     });
-  }, [props.dadosCustoMaoObraOrcamento]);
+  }, [props.maoObraOrcamentoId]);
 
   const exibirTost = (tipo, mensagem) => {
     switch (tipo) {
@@ -110,6 +112,22 @@ function ItemCustoMaoObraOrcamento(props) {
       default:
         break;
     }
+  };
+
+  const exibirCamposErro = (dados, houveErro) => {
+    Object.keys(dados).map((nomeCampo) => {
+      if (!dados[nomeCampo].valido) {
+        houveErro = true;
+        const msg = "Selecione um custo";
+        exibirTost("erro", msg);
+        return houveErro;
+      }
+    });
+    return houveErro;
+  };
+
+  const removerErro = (id) => {
+    document.getElementById(id).classList.remove("is-invalid");
   };
 
   const buscarCusto = () => {
@@ -186,7 +204,9 @@ function ItemCustoMaoObraOrcamento(props) {
   const salvarCadastro = async () => {
     const dadosCusto = validacaoDadosUtils.validarDados(dadosCadastro);
     const dadosMaoObra = validacaoDadosUtils.validarDados(dadosCadastroMaoObra);
+
     let houveErro = false;
+
     houveErro = exibirCamposErro(dadosCusto, houveErro);
 
     if (houveErro) {
@@ -199,53 +219,19 @@ function ItemCustoMaoObraOrcamento(props) {
       exibirTost("erro", msg);
       return;
     }
-    fetch(props.linkBackEnd + "/custosMaoObra/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(montarObjMaoObraOrcamento(dadosMaoObra, dadosCusto)),
-    }).then((data) => {
-      if (data.ok) {
-        setCadastrado(true);
-        props.adicionarItemCustoMaoObraOrcamento(
-          props.listMaoObraOrcamento,
-          dadosCadastroMaoObra.maoObraOrcamentoId.valor,
-          montarObjCusto(dadosCusto)
-        );
-        props.montarItemDisplay();
-        const msg = "Cadastro efetuado com sucesso";
-        exibirTost("sucesso", msg);
-      } else {
-        const msg = "Erro ao efetuada cadastro";
-        exibirTost("erro", msg);
-      }
-    });
+
+    props.salvarCadastroCustoMaoObra(
+      montarObjMaoObraOrcamento(dadosMaoObra, dadosCusto),
+      fazerAposCadastrar(dadosCusto)
+    );
   };
 
   const excluirCadastro = () => {
-    fetch(
-      props.linkBackEnd +
-        "/custosMaoObra/deletar/" +
-        dadosCadastroMaoObra.maoObraOrcamentoId.valor +
-        "/" +
-        dadosCadastro.custoId.valor,
-      {
-        method: "DELETE",
-      }
-    ).then((data) => {
-      if (data.ok) {
-        props.removerItemCustoMaoObraOrcamento(
-          props.listMaoObraOrcamento,
-          dadosCadastroMaoObra.maoObraOrcamentoId.valor,
-          dadosCadastro.custoId.valor
-        );
-        props.montarItemDisplay();
-        props.removerItemCustosMaoObraDisplay(
-          props.listCustosMaoObraDisplay,
-          props.keyComponente
-        );
-      } else {
-      }
-    });
+    props.excluirCadastroCustoMaoObra(
+      dadosCadastro.custoId.valor,
+      props.keyComponente,
+      dadosCadastroMaoObra.maoObraOrcamentoId.valor
+    );
   };
   const selecionarCustoMaoObraOrcamento = (custo) => {
     setDadosCadastro({
@@ -268,20 +254,13 @@ function ItemCustoMaoObraOrcamento(props) {
     });
   };
 
-  const exibirCamposErro = (dados, houveErro) => {
-    Object.keys(dados).map((nomeCampo) => {
-      if (!dados[nomeCampo].valido) {
-        houveErro = true;
-        const msg = "Selecione um custo";
-        exibirTost("erro", msg);
-        return houveErro;
-      }
-    });
-    return houveErro;
-  };
-
-  const removerErro = (id) => {
-    document.getElementById(id).classList.remove("is-invalid");
+  const fazerAposCadastrar = (dadosCusto) => {
+    setCadastrado(true);
+    props.adicionarItemCustoMaoObraOrcamento(
+      props.listMaoObraOrcamento,
+      dadosCadastroMaoObra.maoObraOrcamentoId.valor,
+      montarObjCusto(dadosCusto)
+    );
   };
 
   const listenerClick = () => {
@@ -467,25 +446,6 @@ const mapDispatchToProps = (dispatch) => ({
         listMaoObraOrcamento,
         maoObraOrcamentoId,
         itemCustoMaoObraOrcamento
-      )
-    ),
-  removerItemCustoMaoObraOrcamento: (
-    listMaoObraOrcamento,
-    maoObraOrcamentoId,
-    custoId
-  ) =>
-    dispatch(
-      orcamentoActions.removerItemCustoMaoObraOrcamento(
-        listMaoObraOrcamento,
-        maoObraOrcamentoId,
-        custoId
-      )
-    ),
-  removerItemCustosMaoObraDisplay: (listCustosMaoObraDisplay, keyComponente) =>
-    dispatch(
-      orcamentoActions.removerItemCustosMaoObraDisplay(
-        listCustosMaoObraDisplay,
-        keyComponente
       )
     ),
 });
