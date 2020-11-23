@@ -3,6 +3,7 @@ import "./OrcamentoGeral.css";
 import BasicRegOrcamento from "../BasicRegOrcamento/BasicRegOrcamento";
 import ListItensOrcamentoGeral from "./ListItensOrcamentoGeral/ListItensOrcamentoGeral";
 import ListMaoObraOrcamento from "../ListMaoObraOrcamento/ListMaoObraOrcamento";
+import ListEquipamentosOrcamento from "../ListEquipamentosOrcamento/ListEquipamentosOrcamento";
 import { Provider } from "react-redux";
 
 import store from "../../../store/store";
@@ -35,11 +36,19 @@ export default function OrcamentoGeral() {
                 </a>
                 <a
                   className="nav-item nav-link"
-                  id="nav-contact-tab"
+                  id="aba-mao-obra"
                   data-toggle="tab"
-                  href="#nav-contact"
+                  href="#conteudo-mao-obra"
                 >
                   Mão de obra
+                </a>
+                <a
+                  className="nav-item nav-link"
+                  id="aba-equipamentos"
+                  data-toggle="tab"
+                  href="#conteudo-equipamentos"
+                >
+                  Equipamentos
                 </a>
               </>
             )}
@@ -70,11 +79,19 @@ export default function OrcamentoGeral() {
             </div>
             <div
               className="tab-pane fade"
-              id="nav-contact"
+              id="conteudo-mao-obra"
               role="tabpanel"
-              aria-labelledby="nav-contact-tab"
+              aria-labelledby="aba-mao-obra"
             >
               <ListMaoObraOrcamento />
+            </div>
+            <div
+              className="tab-pane fade"
+              id="conteudo-equipamentos"
+              role="tabpanel"
+              aria-labelledby="aba-equipamentos"
+            >
+              <ListEquipamentosOrcamento />
             </div>
           </>
         </div>
