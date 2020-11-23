@@ -5,6 +5,8 @@
   height: 100%;
   background-color: rgb(68, 68, 68);
   padding: 3%;
+  display: flex;
+  flex-direction: column;
 }
 
 .titulo-referencia {
@@ -22,12 +24,11 @@
 }
 
 .container-tempo-fogo {
-  max-height: 50%;
-  min-height: 50%;
   max-width: 100%;
   overflow-x: auto;
   background-color: #e3e3e3;
   border-radius: 5px;
+  flex-grow: 1;
 }
 
 .container-item-carta-cobertura .referencia {
