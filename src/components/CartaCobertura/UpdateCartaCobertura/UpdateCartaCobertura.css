@@ -36,7 +36,7 @@
     grid-template-areas:
       "filtro-carta-cobertura filtro-carta-cobertura"
       "list-carta-cobertura carta-cobertura-selecionada"
-      "list-carta-cobertura empty";
+      "list-carta-cobertura carta-cobertura-selecionada";
     grid-template-rows: 120px calc(100% - 220px) 100px;
     grid-template-columns: 30% 70%;
     overflow-x: hidden;
