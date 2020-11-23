@@ -4,6 +4,7 @@ import ModalControl from "../../../ModalControl/ModalControl";
 import ResultSearchFuncionario from "./ResultSearchFuncionario/ResultSearchFuncionario";
 import ItemCustoMaoObraOrcamento from "./ItemCustoMaoObraOrcamento/ItemCustoMaoObraOrcamento";
 import ModalConfirm from "../../../ModalConfirm/ModalConfirm";
+import ToastControl from "../../../ToastControl/ToastControl";
 import * as validacaoDadosUtils from "../../../../utils/validacaoDados";
 import * as orcamentoActions from "../../../../store/actions/orcamento";
 import { connect } from "react-redux";
@@ -14,8 +15,21 @@ function ModalMaoObraOrcamento(props) {
   let [stringBuscaFuncionario, setStringBuscaFuncionario] = useState("");
   let [showResultadoFuncionario, setShowResultadoFuncionario] = useState(false);
   let [dataFuncionario, setDataFuncionario] = useState([]);
+  let [showToast, setShowToast] = useState(false);
   let [showModalConfirm, setShowModalConfirm] = useState(false);
   let [keyComponente, setKeyComponente] = useState(0);
+
+  let [configToast, setConfigToast] = useState({
+    estiloToast: "",
+    estiloToastHeader: "",
+    estiloToastBody: "",
+    delayToast: 0,
+    autoHideToast: false,
+    hideToastHeader: true,
+    conteudoHeader: "",
+    conteudoBody: "",
+    closeToast: {},
+  });
 
   let [dadosCadastro, setDadosCadastro] = useState({
     maoObraOrcamentoId: { ...dadosCampo, valorPadrao: 0 },
@@ -72,6 +86,41 @@ function ModalMaoObraOrcamento(props) {
     }
   }, [props.listCustosMaoObraDisplay.length]);
 
+  const exibirTost = (tipo, mensagem) => {
+    switch (tipo) {
+      case "sucesso":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastSucesso",
+          estiloToastBody: "estiloToastSucesso",
+          delayToast: 3000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: mensagem,
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      case "erro":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastErro",
+          estiloToastBody: "estiloToastErro",
+          delayToast: 6000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: mensagem,
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      default:
+        break;
+    }
+  };
+
   const limparCampos = () => {
     setDadosCadastro({
       maoObraOrcamentoId: {
@@ -96,6 +145,8 @@ function ModalMaoObraOrcamento(props) {
         valor: dadosCadastro.status.valorPadrao,
       },
     });
+
+    props.montarListCustosMaoObraDisplay(props.listCustosMaoObraDisplay, []);
   };
 
   const buscarFuncionario = () => {
@@ -119,6 +170,8 @@ function ModalMaoObraOrcamento(props) {
   };
 
   const montarComponenteCusto = (listCusto) => {
+    props.montarListCustosMaoObraDisplay(props.listCustosMaoObraDisplay, []);
+
     if (listCusto.length > 0) {
       let keyContador = 0;
 
@@ -135,6 +188,23 @@ function ModalMaoObraOrcamento(props) {
               props.dadosMaoObraOrcamento.MAO_OBRA_ORCAMENTO_ID
             }
             pessoaId={props.dadosMaoObraOrcamento.FUNCIONARIO.PESSOA_ID}
+            salvarCadastroCustoMaoObra={(objCustoMaoObra, fazerAposCadastrar) =>
+              salvarCadastroCustoMaoObra(objCustoMaoObra, fazerAposCadastrar)
+            }
+            excluirCadastroCustoMaoObra={(
+              custoId,
+              keyComponente,
+              maoObraOrcamentoId
+            ) =>
+              excluirCadastroCustoMaoObra(
+                custoId,
+                keyComponente,
+                maoObraOrcamentoId
+              )
+            }
+            editarCadastroCustoMaoObra={(objCustoMaoObra, custoIdAnteior) =>
+              editarCadastroCustoMaoObra(objCustoMaoObra, custoIdAnteior)
+            }
             montarItemDisplay={() => props.montarItemDisplay()}
           />
         );
@@ -157,6 +227,23 @@ function ModalMaoObraOrcamento(props) {
         keyComponente={novakey}
         maoObraOrcamentoId={dadosCadastro.maoObraOrcamentoId.valor}
         pessoaId={dadosCadastro.pessoaId.valor}
+        salvarCadastroCustoMaoObra={(objCustoMaoObra, fazerAposCadastrar) =>
+          salvarCadastroCustoMaoObra(objCustoMaoObra, fazerAposCadastrar)
+        }
+        excluirCadastroCustoMaoObra={(
+          custoId,
+          keyComponente,
+          maoObraOrcamentoId
+        ) =>
+          excluirCadastroCustoMaoObra(
+            custoId,
+            keyComponente,
+            maoObraOrcamentoId
+          )
+        }
+        editarCadastroCustoMaoObra={(objCustoMaoObra, custoIdAnteior) =>
+          editarCadastroCustoMaoObra(objCustoMaoObra, custoIdAnteior)
+        }
         montarItemDisplay={() => props.montarItemDisplay()}
       />
     );
@@ -234,6 +321,92 @@ function ModalMaoObraOrcamento(props) {
     document.getElementById(id).classList.remove("is-invalid");
   };
 
+  const salvarCadastroCustoMaoObra = (objCustoMaoobra, fazerAposCadastrar) => {
+    fetch(props.linkBackEnd + "/custosMaoObra/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(objCustoMaoobra),
+    }).then((data) => {
+      if (data.ok) {
+        if (fazerAposCadastrar) {
+          fazerAposCadastrar();
+        }
+
+        props.montarItemDisplay();
+        const msg = "Cadastro efetuado com sucesso";
+        exibirTost("sucesso", msg);
+      } else {
+        const msg = "Erro ao efetuada cadastro";
+        exibirTost("erro", msg);
+      }
+    });
+  };
+
+  const excluirCadastroCustoMaoObra = (
+    custoId,
+    keyComponente,
+    maoObraOrcamentoId
+  ) => {
+    fetch(
+      props.linkBackEnd +
+        "/custosMaoObra/deletar/" +
+        maoObraOrcamentoId +
+        "/" +
+        custoId,
+      {
+        method: "DELETE",
+      }
+    ).then((data) => {
+      if (data.ok) {
+        props.removerItemCustoMaoObraOrcamento(
+          props.listMaoObraOrcamento,
+          maoObraOrcamentoId,
+          custoId
+        );
+        props.montarItemDisplay();
+        props.removerItemCustosMaoObraDisplay(
+          props.listCustosMaoObraDisplay,
+          keyComponente
+        );
+
+        const msg = "Exclusão efetuar com sucesso";
+        exibirTost("sucesso", msg);
+      } else {
+        const msg = "Erro ao efetuar exclusão";
+        exibirTost("erro", msg);
+      }
+    });
+  };
+
+  const editarCadastroCustoMaoObra = (objCustoMaoobra, custoIdAnteior) => {
+    fetch(
+      props.linkBackEnd +
+        "/custosMaoObra/atualizar/" +
+        objCustoMaoobra.MAO_OBRA_ORCAMENTO_ID +
+        "/" +
+        custoIdAnteior,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(objCustoMaoobra),
+      }
+    ).then((data) => {
+      if (data.ok) {
+        props.atualizarCustoMaoObraOrcamento(
+          props.listMaoObraOrcamento,
+          objCustoMaoobra,
+          custoIdAnteior
+        );
+        props.montarItemDisplay();
+        const msg = "Atualização efetuada com sucesso";
+        exibirTost("sucesso", msg);
+      } else {
+        const msg = "Erro ao efetuar atualização";
+        exibirTost("erro", msg);
+      }
+    });
+  };
+
   const salvarCadastro = () => {
     let dadosMaoObra = validacaoDadosUtils.validarDados(dadosCadastro);
 
@@ -255,10 +428,14 @@ function ModalMaoObraOrcamento(props) {
       return;
     }
 
-    props.editarCadastro(montarObj(dadosMaoObra));
+    props.editarCadastro(
+      montarObj(dadosMaoObra),
+      props.dadosMaoObraOrcamento.FUNCIONARIO.PESSOA_ID
+    );
   };
 
   const fazerAposCadastrar = (objCadastrado) => {
+    props.montarItemDisplay();
     setDadosCadastro({
       ...dadosCadastro,
       maoObraOrcamentoId: {
@@ -505,6 +682,19 @@ function ModalMaoObraOrcamento(props) {
               </div>
             )}
             <div>
+              <ToastControl
+                showToast={showToast}
+                closeToast={configToast.closeToast}
+                delayToast={configToast.delayToast}
+                autoHideToast={configToast.autoHideToast}
+                estiloToastHeader={configToast.estiloToastHeader}
+                estiloToastBody={configToast.estiloToastBody}
+                hideToastHeader={configToast.hideToastHeader}
+                conteudoHeader={configToast.conteudoHeader}
+                conteudoBody={configToast.conteudoBody}
+              ></ToastControl>
+            </div>
+            <div>
               <ModalConfirm
                 show={showModalConfirm}
                 onHide={() => setShowModalConfirm(false)}
@@ -528,6 +718,7 @@ function ModalMaoObraOrcamento(props) {
 const mapStateToProps = (state) => ({
   linkBackEnd: state.backEnd.link,
   orcamentoSelecionado: state.orcamento.orcamentoSelecionado,
+  listMaoObraOrcamento: state.orcamento.listMaoObraOrcamento,
   listCustosMaoObraDisplay: state.orcamento.listCustosMaoObraDisplay,
 });
 
@@ -550,6 +741,32 @@ const mapDispatchToProps = (dispatch) => ({
       orcamentoActions.adicionarItemCustosMaoObraDisplay(
         listCustosMaoObraDisplay,
         itemCustoMaoObraDisplay
+      )
+    ),
+  removerItemCustoMaoObraOrcamento: (
+    listMaoObraOrcamento,
+    maoObraOrcamentoId,
+    custoId
+  ) =>
+    dispatch(
+      orcamentoActions.removerItemCustoMaoObraOrcamento(
+        listMaoObraOrcamento,
+        maoObraOrcamentoId,
+        custoId
+      )
+    ),
+  removerItemCustosMaoObraDisplay: (listCustosMaoObraDisplay, keyComponente) =>
+    dispatch(
+      orcamentoActions.removerItemCustosMaoObraDisplay(
+        listCustosMaoObraDisplay,
+        keyComponente
+      )
+    ),
+  atualizarCustoMaoObraOrcamento: (listMaoObraOrcamento, custoIdAnteior) =>
+    dispatch(
+      orcamentoActions.atualizarCustoMaoObraOrcamento(
+        listMaoObraOrcamento,
+        custoIdAnteior
       )
     ),
 });
