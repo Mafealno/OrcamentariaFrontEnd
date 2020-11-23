@@ -6,7 +6,7 @@
     "contato"
     "endereco";
   grid-template-rows: 60px auto auto auto;
-  overflow-x: hidden;
+  overflow: hidden;
   width: 98%;
 }
 

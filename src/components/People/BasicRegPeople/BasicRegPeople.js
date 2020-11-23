@@ -139,7 +139,7 @@ function BasicRegPeople(props) {
 
   return (
     <>
-      <div className="form">
+      <div className="form-people form">
         <div className="container-form">
           <div className="form-group">
             <div className="form-row">
