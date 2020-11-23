@@ -1,5 +1,3 @@
-#containerBasicRegCusto {
-}
 
 #campo-custoId {
   width: 30% !important;
@@ -12,6 +10,17 @@
   color: white;
   float: right;
   flex-grow: 1;
+}
+
+.form-custos {
+  background-color: rgb(68, 68, 68);
+  width: 100%;
+  height: 100%;
+  padding: 5%;
+  color: white;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
 }
 
 .container-form {
@@ -33,4 +42,10 @@
 
 #containerBasicRegCusto .form {
   padding-bottom: 0px !important;
+}
+
+@media (min-width: 1200px) {
+  .form-custos {
+    overflow-y: auto;
+  }
 }

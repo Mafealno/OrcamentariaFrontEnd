@@ -246,9 +246,9 @@ function BasicRegCusto(props) {
   };
 
   return (
-    <div id="containerBasicRegCusto">
-      <div className="container-form">
-        <div className="form">
+    <>
+      <div className="form-custos">
+        <div className="container-form">
           <div className="form-group">
             <div className="form-row">
               <label className="col-form-label">Código: </label>
@@ -401,7 +401,7 @@ function BasicRegCusto(props) {
           }
         />
       </div>
-    </div>
+    </>
   );
 }
 
