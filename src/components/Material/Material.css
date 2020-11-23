@@ -28,4 +28,10 @@
     grid-template-rows: 120px calc(100% - 120px);
     width: 98%;
   }
+
+  @media (min-width: 1600px) {
+    #principal-material {
+      height: 90%;
+    }
+  }
 }

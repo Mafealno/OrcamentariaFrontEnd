@@ -342,7 +342,7 @@ function BasicRegEquipamento(props) {
   };
 
   return (
-    <div className="form">
+    <div className="form-equipamento">
       <div className="container-form">
         <div className="form-group">
           <div className="form-row">

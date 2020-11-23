@@ -14,7 +14,7 @@
   grid-area: principalFabricante;
 }
 
-.form {
+.form-equipamento {
   background-color: rgb(68, 68, 68);
   width: 100%;
   height: 100%;
@@ -114,9 +114,8 @@ button.btn.btn-primary {
 }
 
 @media (min-width: 1200px) {
-  .form {
-    min-height: 100%;
-    height: auto;
+  .form-equipamento {
+    overflow-y: auto;
   }
 
   .div-nome-equipamento,
