@@ -254,6 +254,31 @@ function ItemCustoMaoObraOrcamento(props) {
     });
   };
 
+  const editarCadastro = async () => {
+    const dadosCusto = validacaoDadosUtils.validarDados(dadosCadastro);
+    const dadosMaoObra = validacaoDadosUtils.validarDados(dadosCadastroMaoObra);
+
+    let houveErro = false;
+
+    houveErro = exibirCamposErro(dadosCusto, houveErro);
+
+    if (houveErro) {
+      return;
+    }
+
+    if (await verificarCustoRepetido()) {
+      const msg =
+        "Esse custo já foi selecionado. Por favor, selecione um diferente";
+      exibirTost("erro", msg);
+      return;
+    }
+
+    props.editarCadastroCustoMaoObra(
+      montarObjMaoObraOrcamento(dadosMaoObra, dadosCusto),
+      props.dadosCustoMaoObraOrcamento.CUSTO_ID
+    );
+  };
+
   const fazerAposCadastrar = (dadosCusto) => {
     setCadastrado(true);
     props.adicionarItemCustoMaoObraOrcamento(
@@ -381,6 +406,7 @@ function ItemCustoMaoObraOrcamento(props) {
                     <button
                       type="button"
                       className="btn-success btn btn-width-100"
+                      onClick={() => editarCadastro()}
                     >
                       Atualizar
                     </button>
