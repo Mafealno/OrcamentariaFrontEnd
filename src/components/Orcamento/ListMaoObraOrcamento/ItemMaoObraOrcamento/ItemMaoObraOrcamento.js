@@ -3,9 +3,8 @@ import "./ItemMaoObraOrcamento.css";
 import ItemCustoMaoObraOrcamento from "./ItemCustoMaoObraOrcamento/ItemCustoMaoObraOrcamento";
 import ModalMaoObraOrcamento from "../ModalMaoObraOrcamento/ModalMaoObraOrcamento";
 import * as validacaoDadosUtils from "../../../../utils/validacaoDados";
-import { connect } from "react-redux";
 
-export const ItemMaoObraOrcamento = (props) => {
+export default function ItemMaoObraOrcamento(props) {
   let dadosCampo = { ...validacaoDadosUtils.dadosCampo };
 
   let [showModalMaoObraOrcamento, setShowModalMaoObraOrcamento] = useState(
@@ -63,6 +62,7 @@ export const ItemMaoObraOrcamento = (props) => {
     }
   }, [
     props.dadosMaoObra.LIST_CUSTO.length,
+    props.dadosMaoObra.LIST_CUSTO,
     props.dadosMaoObra.FUNCIONARIO.NOME_PESSOA,
   ]);
 
@@ -151,13 +151,4 @@ export const ItemMaoObraOrcamento = (props) => {
       </div>
     </>
   );
-};
-
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ItemMaoObraOrcamento);
+}
