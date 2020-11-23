@@ -51,7 +51,7 @@ function BasicRegEquipamento(props) {
         },
         descricaoEquipamento: {
           ...dadosCadastro.descricaoEquipamento,
-          valor: props.equipamentoSelecionado.descricaoEquipamento,
+          valor: props.equipamentoSelecionado.DESCRICAO,
         },
       });
       setDadosFabricante({
@@ -267,13 +267,10 @@ function BasicRegEquipamento(props) {
           dadosCadastro.equipamentoId.valor,
           props.linkBackEnd
         );
-
         const msg = "Atualização efetuada com sucesso";
-
         exibirTost("sucesso", msg);
       } else {
         const msg = "Erro ao efetuar atualização";
-
         exibirTost("sucesso", msg);
       }
     });
