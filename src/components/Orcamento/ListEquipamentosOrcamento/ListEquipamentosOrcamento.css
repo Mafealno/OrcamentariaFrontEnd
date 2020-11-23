@@ -1,0 +1,44 @@
+#containerListEquipamentoOrcamento {
+  display: grid;
+  grid-template-areas:
+    "btn-add-equipamento-orcamento"
+    "list-equipamento-orcamento"
+    "totais-equipamento-orcamento";
+}
+
+#btn-add-equipamento-orcamento {
+  grid-area: btn-add-equipamento-orcamento;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#list-equipamento-orcamento {
+  grid-area: list-equipamento-orcamento;
+  max-height: 500px;
+  height: 500px;
+  padding: 1%;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 2px solid #fff;
+  margin-bottom: 15px;
+}
+#totais-equipamento-orcamento {
+  grid-area: totais-equipamento-orcamento;
+}
+
+#btn-add-equipamento-orcamento > button {
+  color: white;
+  background-color: #d40808;
+  width: 100%;
+  border-color: #d40808;
+}
+
+@media (min-width: 1200px) {
+  #totais-equipamento-orcamento {
+    height: 135px;
+  }
+}

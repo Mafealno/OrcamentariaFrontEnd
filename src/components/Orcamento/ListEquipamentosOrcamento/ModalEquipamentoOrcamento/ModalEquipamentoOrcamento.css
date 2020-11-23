@@ -1,0 +1,28 @@
+#containerModalEquipamentoOrcamento {
+  display: grid;
+  grid-template-areas:
+    "codigo-equipamento-orcamento-id"
+    "search-equipamento"
+    "informacoes-equipamento";
+  grid-template-rows: 60px 60px calc(100% - 120px);
+}
+
+#codigo-equipamento-orcamento-id {
+  grid-area: codigo-equipamento-orcamento-id;
+}
+
+#search-equipamento {
+  grid-area: search-equipamento;
+}
+
+#informacoes-equipamento {
+  grid-area: informacoes-equipamento;
+}
+
+.input-equipamento-orcamento-id {
+  display: inline;
+  width: 100px;
+  margin-left: 20px;
+  color: white;
+  font-weight: bold;
+}
