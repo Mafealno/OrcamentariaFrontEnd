@@ -19,7 +19,6 @@
   padding: 3%;
   padding-top: 0%;
   min-height: 20%;
-  height: 70%;
 }
 
 @media (min-width: 1200px) {
@@ -27,10 +26,14 @@
     grid-template-rows: 120px calc(100% - 120px);
     width: 98%;
   }
+  
+  #principal-equipamento {
+    height: 70%;
+  }
+}
 
-  @media (min-width: 1600px) {
-    #principal-equipamento {
-      height: 90%;
-    }
+@media (min-width: 1600px) {
+  #principal-equipamento {
+    height: 90%;
   }
 }
