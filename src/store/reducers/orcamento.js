@@ -32,6 +32,11 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
         ...state,
         listMaoObraOrcamento: action.listMaoObraOrcamento,
       };
+    case "SELECIONAR_EQUIPAMENTO_ORCAMENTO":
+      return {
+        ...state,
+        listEquipamentoOrcamento: action.listEquipamentoOrcamento,
+      };
     case "ADICIONAR_ITEM_ORCAMENTO_GERAL":
       return {
         ...state,
@@ -52,6 +57,11 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
         ...state,
         listMaoObraOrcamento: action.listMaoObraOrcamento,
       };
+    case "ADICIONAR_ITEM_EQUIPAMENTO_ORCAMENTO":
+      return {
+        ...state,
+        listEquipamentoOrcamento: action.listEquipamentoOrcamento,
+      };
     case "ADICIONAR_ITEM_CUSTO_MAO_OBRA_DISPLAY":
       return {
         ...state,
@@ -71,6 +81,11 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
       return {
         ...state,
         listMaoObraOrcamento: action.listMaoObraOrcamento,
+      };
+    case "REMOVER_ITEM_EQUIPAMENTO_ORCAMENTO":
+      return {
+        ...state,
+        listEquipamentoOrcamento: action.listEquipamentoOrcamento,
       };
     case "REMOVER_ITEM_CUSTO_MAO_OBRA_ORCAMENTO":
       return {
@@ -101,12 +116,29 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
           listItensOrcamentoGeral: state.listItensOrcamentoGeral,
         })),
       };
+    case "RECARREGAR_ITENS_EQUIPAMENTO_ORCAMENTO_INICIADA":
+      return {
+        ...(state = Object.assign({}, state, {
+          listEquipamentoOrcamento: state.listEquipamentoOrcamento,
+        })),
+      };
+    case "RECARREGAR_ITENS_EQUIPAMENTO_ORCAMENTO_CONCLUIDA":
+      return {
+        ...(state = Object.assign({}, state, {
+          listEquipamentoOrcamento: state.listEquipamentoOrcamento,
+        })),
+      };
     case "MONTAR_LIST_CUSTO_MAO_OBRA_DISPLAY":
       return {
         ...state,
         listCustosMaoObraDisplay: action.listCustosMaoObraDisplay,
       };
     case "ATUALIZAR_FUNCIONARIO_MAO_OBRA_ORCAMENTO":
+      return {
+        ...state,
+        listMaoObraOrcamento: action.listMaoObraOrcamento,
+      };
+    case "ATUALIZAR_CUSTO_MAO_OBRA_ORCAMENTO":
       return {
         ...state,
         listMaoObraOrcamento: action.listMaoObraOrcamento,

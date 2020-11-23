@@ -16,6 +16,11 @@ export function selecionarOrcamento(orcamento) {
       listMaoObraOrcamento: orcamento.LIST_MAO_OBRA_ORCAMENTO || [],
     });
 
+    dispatch({
+      type: "SELECIONAR_EQUIPAMENTO_ORCAMENTO",
+      listEquipamentoOrcamento: orcamento.LIST_EQUIPAMENTO_ORCAMENTO || [],
+    });
+
     if (orcamento.TIPO_OBRA == "Geral") {
       dispatch({
         type: "SELECIONAR_ITENS_ORCAMENTO_GERAL",
@@ -37,6 +42,19 @@ export function adicionarItemOrcamentoGeral(
   return {
     type: "ADICIONAR_ITEM_ORCAMENTO_GERAL",
     listItensOrcamentoGeral,
+  };
+}
+export function adicionarItemEquipamentoOrcamento(
+  listEquipamentoOrcamento,
+  itemEquipamentoOrcamento
+) {
+  listEquipamentoOrcamento.push(itemEquipamentoOrcamento);
+
+  listEquipamentoOrcamento = [...listEquipamentoOrcamento];
+
+  return {
+    type: "ADICIONAR_ITEM_EQUIPAMENTO_ORCAMENTO",
+    listEquipamentoOrcamento,
   };
 }
 
@@ -104,6 +122,23 @@ export function removerItemOrcamentoGeral(
     listItensOrcamentoGeral,
   };
 }
+export function removerItemEquipamentoOrcamento(
+  listEquipamentoOrcamento,
+  equipamentoOrcamentoId
+) {
+  const index = listEquipamentoOrcamento.findIndex(
+    (elemento) => elemento.EQUIPAMENTO_ORCAMENTO_ID == equipamentoOrcamentoId
+  );
+
+  listEquipamentoOrcamento.splice(index, 1);
+
+  listEquipamentoOrcamento = [...listEquipamentoOrcamento];
+
+  return {
+    type: "REMOVER_ITEM_EQUIPAMENTO_ORCAMENTO",
+    listEquipamentoOrcamento,
+  };
+}
 
 export function removerMaoObraOrcamento(
   listMaoObraOrcamento,
@@ -138,8 +173,6 @@ export function removerItemCustoMaoObraOrcamento(
 
   listMaoObraOrcamento[indexPai].LIST_CUSTO.splice(indexFilho, 1);
 
-  //listMaoObraOrcamento = [...listMaoObraOrcamento];
-
   return {
     type: "REMOVER_ITEM_CUSTO_MAO_OBRA_ORCAMENTO",
     listMaoObraOrcamento,
@@ -173,6 +206,23 @@ export function recarregarItensOrcamentoGeral(linkBackEnd, orcamentoId) {
       .then((data) => {
         dispatch({
           type: "RECARREGAR_ITENS_ORCAMENTO_GERAL_CONCLUIDA",
+          listItensOrcamentoGeral: data,
+        });
+      });
+  };
+}
+export function recarregarItensEquipamentoOrcamento(linkBackEnd, orcamentoId) {
+  return (dispatch) => {
+    fetch(
+      linkBackEnd + "/equipamentoOrcamento/buscar?orcamentoId=" + orcamentoId,
+      {
+        method: "GET",
+      }
+    )
+      .then((responde) => responde.json())
+      .then((data) => {
+        dispatch({
+          type: "RECARREGAR_ITENS_EQUIPAMENTO_ORCAMENTO_CONCLUIDA",
           listItensOrcamentoGeral: data,
         });
       });
@@ -236,6 +286,30 @@ export function atualizarFuncionarioMaoObraOrcamento(
 
   return {
     type: "ATUALIZAR_FUNCIONARIO_MAO_OBRA_ORCAMENTO",
+    listMaoObraOrcamento,
+  };
+}
+
+export function atualizarCustoMaoObraOrcamento(
+  listMaoObraOrcamento,
+  objAtualizar,
+  custoIdAnterior
+) {
+  const index = listMaoObraOrcamento.findIndex(
+    (elemento) =>
+      elemento.MAO_OBRA_ORCAMENTO_ID == objAtualizar.MAO_OBRA_ORCAMENTO_ID
+  );
+
+  const indexFilho = listMaoObraOrcamento[index].LIST_CUSTO.findIndex(
+    (elemento) => elemento.CUSTO_ID == custoIdAnterior
+  );
+
+  listMaoObraOrcamento[index].LIST_CUSTO[indexFilho] = objAtualizar;
+
+  listMaoObraOrcamento = [...listMaoObraOrcamento];
+
+  return {
+    type: "ATUALIZAR_CUSTO_MAO_OBRA_ORCAMENTO",
     listMaoObraOrcamento,
   };
 }
