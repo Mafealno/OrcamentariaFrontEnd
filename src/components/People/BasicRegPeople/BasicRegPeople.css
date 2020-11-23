@@ -46,6 +46,5 @@ button.btn.btn-primary {
     min-height: 100%;
     max-height: 10px;
     overflow-y: auto;
-    height: auto;
   }
 }
