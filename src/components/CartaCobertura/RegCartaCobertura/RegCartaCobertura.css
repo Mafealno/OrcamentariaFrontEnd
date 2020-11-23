@@ -48,7 +48,7 @@ textarea {
 
 @media (min-width: 1200px) {
   #containerRegCartaCobertura {
-    grid-template-rows: 85px 30% auto 80px;
+    grid-template-rows: 85px 35% auto 60px;
     height: 100%;
   }
 

@@ -82,7 +82,7 @@ function DadosMaterialCartaCobertura(props) {
   };
 
   return (
-    <div id="cadastro-basico-carta-cobertura-aux" className="form">
+    <div id="cadastro-basico-carta-cobertura-aux" className="form-carta-cobertura">
       <div id="id-material">
         <label className="col-form-label">Código</label>
         <input

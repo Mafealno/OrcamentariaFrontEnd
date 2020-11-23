@@ -64,7 +64,7 @@ function BasicRegCartaCobertura(props) {
   }, [props.materialCartaCoberturaSalvar.MATERIAL_ID]);
 
   return (
-    <div id="cadastro-basico-carta-cobertura-aux" className="form">
+    <div id="cadastro-basico-carta-cobertura-aux" className="form-carta-cobertura">
       <div id="id-material">
         <label className="col-form-label">Código</label>
         <input
