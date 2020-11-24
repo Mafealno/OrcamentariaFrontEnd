@@ -690,7 +690,7 @@ function BasicRegOrcamento(props) {
 
   return (
     <div id="containerBasicRegOrcamento">
-      <div className="form">
+      <div className="form-orcamento">
         <div id="cadastro-orcamento">
           <div id="containerBasicRegCusto">
             <div className="container-form">
