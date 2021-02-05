@@ -3,9 +3,9 @@
   grid-template-areas:
     "filtro-orcamento"
     "list-orcamento";
-  grid-template-rows: 120px auto;
-  width: 98%;
-  height: 100%;
+  grid-template-rows: 120px calc(100vh - 160px);
+  height: 70%;
+  overflow: hidden;
 }
 
 #filtro-orcamento {
@@ -16,5 +16,12 @@
 #list-orcamento {
   grid-area: list-orcamento;
   padding: 3%;
-  height: 750px;
+  height: 100%;
+}
+
+@media (min-width: 1200px) {
+  #containerSearchOrcamento {
+    grid-template-rows: 120px auto;
+    height: 100%;
+  }
 }

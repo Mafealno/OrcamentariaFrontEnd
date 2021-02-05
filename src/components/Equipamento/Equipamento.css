@@ -4,6 +4,7 @@
     "busca-equipamento"
     "principal-equipamento";
   grid-template-rows: 80px auto auto auto;
+  overflow-y: hidden;
   overflow-x: hidden;
 }
 
@@ -23,12 +24,12 @@
 
 @media (min-width: 1200px) {
   #containerEquipamento {
-    grid-template-rows: 120px calc(100% - 120px);
+    grid-template-rows: 120px 100%;
     width: 98%;
   }
-  
+
   #principal-equipamento {
-    height: 70%;
+    height: 90%;
   }
 }
 

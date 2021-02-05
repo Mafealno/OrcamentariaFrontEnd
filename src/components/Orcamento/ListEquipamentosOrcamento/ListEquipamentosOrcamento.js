@@ -4,13 +4,12 @@ import ItemEquipamentoOrcamento from "./ItemEquipamentoOrcamento/ItemEquipamento
 import ModalEquipamentoOrcamento from "./ModalEquipamentoOrcamento/ModalEquipamentoOrcamento";
 import ToastControl from "../../ToastControl/ToastControl";
 import * as orcamentoActions from "../../../store/actions/orcamento";
+import TotaisEquipamentoOrcamento from "./TotaisEquipamentoOrcamento/TotaisEquipamentoOrcamento";
 import { connect } from "react-redux";
 
 function ListEquipamentosOrcamento(props) {
-  let [
-    listItemEquipamentoOrcamentoDisplay,
-    setListItemEquipamentoOrcamentoDisplay,
-  ] = useState([]);
+  let [listItemEquipamentoOrcamentoDisplay,setListItemEquipamentoOrcamentoDisplay] = useState([]);
+  let [totaisEquipamentoOrcamentoDisplay, setTotaisEquipamentoOrcamentoDisplay] = useState(<></>);
 
   let [
     showModalEquipamentoOrcamento,
@@ -30,7 +29,7 @@ function ListEquipamentosOrcamento(props) {
   });
 
   useEffect(() => {
-    montarComponente();
+    montarItemDisplay();
   }, [props.listEquipamentoOrcamento.length]);
 
   const exibirTost = (tipo, mensagem) => {
@@ -68,7 +67,7 @@ function ListEquipamentosOrcamento(props) {
     }
   };
 
-  const montarComponente = () => {
+  const montarItemDisplay = () => {
     if (props.listEquipamentoOrcamento.length > 0) {
       setListItemEquipamentoOrcamentoDisplay(
         props.listEquipamentoOrcamento.map((elemento) => (
@@ -92,6 +91,7 @@ function ListEquipamentosOrcamento(props) {
           />
         ))
       );
+      setTotaisEquipamentoOrcamentoDisplay(<TotaisEquipamentoOrcamento />);
     } else {
       setListItemEquipamentoOrcamentoDisplay([]);
     }
@@ -175,7 +175,7 @@ function ListEquipamentosOrcamento(props) {
 
         props.listEquipamentoOrcamento[index] = equipamentoOrcamento;
 
-        montarComponente();
+        montarItemDisplay();
 
         const msg = "Atualização efetuada com sucesso";
         exibirTost("sucesso", msg);
@@ -202,7 +202,9 @@ function ListEquipamentosOrcamento(props) {
           <div id="list-mao-obra-orcamento">
             {listItemEquipamentoOrcamentoDisplay}
           </div>
-          <div id="totais-mao-obra-orcamento"></div>
+          <div id="totais-mao-obra-orcamento">
+            {totaisEquipamentoOrcamentoDisplay}
+          </div>
         </div>
       </div>
       <div>

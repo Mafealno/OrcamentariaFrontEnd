@@ -4,7 +4,7 @@
     "busca-material"
     "principal-material";
   grid-template-rows: 80px auto auto auto;
-  overflow-y: auto;
+  overflow-y: hidden;
   overflow-x: hidden;
 }
 
@@ -24,12 +24,12 @@
 
 @media (min-width: 1200px) {
   #containerMaterial {
-    grid-template-rows: 120px calc(100% - 120px);
+    grid-template-rows: 120px 100%;
     width: 98%;
   }
 
   #principal-material {
-    height: 70%;
+    height: 90%;
   }
 }
 

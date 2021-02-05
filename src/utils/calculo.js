@@ -67,3 +67,22 @@ const verificaTipoCusto = (tipo, diasTrabalhado) => {
 
   return Math.round(fator + 0, 5);
 };
+
+
+export function calcularTotaisEquipamentosMaoObraOrcamento(listEquipamentoOrcamento){
+  let valoresCalculados = {
+    totalValorEquipamentos: 0
+  };
+
+  //calcula valor total dos equipamentos
+  valoresCalculados.totalValorEquipamentos = listEquipamentoOrcamento.reduce(
+    (acumulador, itemAtual) => {
+      return (
+        acumulador + itemAtual.VALOR_UNITARIO_EQUIPAMENTO * itemAtual.QTDE_EQUIPAMENTO
+      );
+    },
+    0
+  );
+
+  return valoresCalculados
+}

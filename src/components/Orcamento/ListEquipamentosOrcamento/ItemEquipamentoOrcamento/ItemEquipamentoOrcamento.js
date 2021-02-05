@@ -26,24 +26,24 @@ export default function ItemEquipamentoOrcamento(props) {
         }
       >
         <div className="row">
-          <div className="col-6 center titulo-item-equipamento-orcamento">
+          <div className="col-md-6 col-sm position-initial center titulo-item-equipamento-orcamento">
             Equipamento
           </div>
-          <div className="col center titulo-item-equipamento-orcamento">
+          <div className="col d-none d-md-block center titulo-item-equipamento-orcamento">
             Valor unitário
           </div>
-          <div className="col center titulo-item-equipamento-orcamento">
+          <div className="col d-none d-md-block center titulo-item-equipamento-orcamento">
             Quantidade
           </div>
         </div>
         <div className="row">
-          <div className="col-6 center">
+          <div className="col-md-6 col-sm center position-initial">
             {props.equipamentoOrcamento.EQUIPAMENTO.NOME_EQUIPAMENTO}
           </div>
-          <div className="col center">
+          <div className="col d-none d-md-block center">
             {props.equipamentoOrcamento.VALOR_UNITARIO_EQUIPAMENTO}
           </div>
-          <div className="col center">
+          <div className="col d-none d-md-block center">
             {props.equipamentoOrcamento.QTDE_EQUIPAMENTO}
           </div>
         </div>
@@ -57,7 +57,7 @@ export default function ItemEquipamentoOrcamento(props) {
         className="collapse opcoes-item-orcamento-geral"
       >
         <button
-          className="btn btn-success opcoes-item-equipamento-orcamento"
+          className="btn btn-success btn-item-equipamento-orcamento"
           onClick={() => setShowModalEquipamentoOrcamento(true)}
         >
           Selecionar

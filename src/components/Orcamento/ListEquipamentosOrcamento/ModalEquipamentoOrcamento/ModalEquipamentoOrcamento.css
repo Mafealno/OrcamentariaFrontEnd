@@ -4,7 +4,9 @@
     "codigo-equipamento-orcamento-id"
     "search-equipamento"
     "informacoes-equipamento";
+  padding: 2% 5%;
   grid-template-rows: 60px 60px calc(100% - 120px);
+  color: white;
 }
 
 #codigo-equipamento-orcamento-id {

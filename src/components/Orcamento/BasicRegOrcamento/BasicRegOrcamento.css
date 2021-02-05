@@ -4,6 +4,9 @@
     "cadastro-orcamento"
     "informacoes-cliente-orcamento"
     "acoes-cadastro-orcamento";
+  padding: 5%;
+  background: rgb(68, 68, 68);
+  color: white;
 }
 
 #cadastro-orcamento {
@@ -104,7 +107,7 @@
   }
 
   #containerBasicRegOrcamento {
-    max-height: 750px;
+    max-height: 800px;
     overflow-y: auto;
     border-bottom: 2px solid rgb(68, 68, 68);
   }

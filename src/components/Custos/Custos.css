@@ -3,8 +3,9 @@
   grid-template-areas:
     "busca-custos"
     "principal-custos";
-  grid-template-rows: 120px calc(100% - 120px);
-  overflow: hidden;
+  grid-template-rows: 80px auto auto auto;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 #busca-custos {
@@ -23,11 +24,12 @@
 
 @media (min-width: 1200px) {
   #containerCustos {
+    grid-template-rows: 120px 100%;
     width: 98%;
   }
 
-  #principal-custos{
-    height: 70%;
+  #principal-custos {
+    height: 90%;
   }
 }
 

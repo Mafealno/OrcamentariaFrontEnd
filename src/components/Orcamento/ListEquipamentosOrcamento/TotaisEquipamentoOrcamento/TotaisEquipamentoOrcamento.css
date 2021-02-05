@@ -1,0 +1,32 @@
+#containerTotaisEquipamentoOrcamento {
+  display: grid;
+  grid-template-areas:
+    "quantidade-equipamentos"
+    "total-valor-equipamentos";
+  background-color: #d40808;
+  height: 100%;
+  color: white;
+  border-radius: 10px;
+  padding: 3%;
+}
+
+#quantidade-equipamentos {
+  grid-area: quantidade-equipamentos;
+  height: 100%;
+  text-align: center;
+}
+#total-valor-equipamentos {
+  grid-area: total-valor-equipamentos;
+  height: 100%;
+  text-align: center;
+}
+.titulo-totais-equipamento-orcamento {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+@media (min-width: 1200px) {
+  #containerTotaisEquipamentoOrcamento {
+    grid-template-areas: "quantidade-equipamentos total-valor-equipamentos";
+  }
+}
