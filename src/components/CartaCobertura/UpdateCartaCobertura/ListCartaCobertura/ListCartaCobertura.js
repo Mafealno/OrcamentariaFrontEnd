@@ -23,12 +23,16 @@ function ListCartaCobertura(props) {
     if (props.listCartaCoberturaEditar.length > 0) {
       ordernarCartaCoberturaPorMaterial();
       montarElementosDisplay();
+    }else{
+      setListMaterialListCartaCoberturaDisplay(<></>)
     }
   }, [props.listCartaCoberturaEditar]);
 
   useEffect(() => {
     if (props.listCartaCoberturaEditar.length > 0) {
       montarElementosDisplay();
+    }else{
+      setListMaterialListCartaCoberturaDisplay(<></>)
     }
   }, [listMaterialCartaCobertura.length]);
 

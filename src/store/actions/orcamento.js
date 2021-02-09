@@ -313,3 +313,46 @@ export function atualizarCustoMaoObraOrcamento(
     listMaoObraOrcamento,
   };
 }
+
+export function filtrarListOrcamentoEditar(
+  listOrcamentoEditar,
+  filtrarPor,
+  stringFiltro
+) {
+  let listOrcamentoEditarAux = [...listOrcamentoEditar];
+
+  switch (filtrarPor) {
+    case "Orcamento":
+      listOrcamentoEditarAux = listOrcamentoEditarAux.filter(
+        (elemento) =>
+          elemento.ORCAMENTO_ID.toString().indexOf(
+            stringFiltro.toString()
+          ) > -1
+      );
+      break;
+    case "Cliente":
+      listOrcamentoEditarAux = listOrcamentoEditarAux.filter(
+        (elemento) =>
+          elemento.CLIENTE_ORCAMENTO.NOME_PESSOA.toLowerCase().indexOf(
+            stringFiltro.toLowerCase()
+          ) > -1
+      );
+      break;
+    default:
+      listOrcamentoEditarAux = listOrcamentoEditarAux.filter(
+        (elemento) =>
+          elemento.ORCAMENTO_ID.toLowerCase().indexOf(
+            stringFiltro.toLowerCase()
+          ) > -1
+      );
+      break;
+  }
+
+    listOrcamentoEditar = [...listOrcamentoEditarAux];
+
+  return {
+    type: "FILTRAR_LIST_ORCAMENTO_EDITAR",
+    listOrcamento: listOrcamentoEditar,
+  };
+}
+

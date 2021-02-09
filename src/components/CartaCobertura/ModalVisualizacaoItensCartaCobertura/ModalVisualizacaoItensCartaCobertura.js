@@ -14,7 +14,7 @@ export default function ModalVisualizacaoItensCartaCobertura(props) {
     if (props.show) {
       setTempoFogoDisplay(
         props.listTempoFogo.map((tempo) => (
-          <div>
+          <div className="container-tabela-modal-visualizacao-itens-carta-cobertura">
             <div className="titulo-modal-visualizacao-itens-carta-cobertura">
               Tempo:{" "}
               <span className="titulo-linhas-modal-visualizacao-itens-carta-cobertura">

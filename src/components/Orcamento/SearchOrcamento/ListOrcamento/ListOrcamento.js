@@ -66,6 +66,8 @@ function ListOrcamento(props) {
           );
         })
       );
+    }else{
+      setItemOrcamentoDisplay(<></>)
     }
   }, [props.listOrcamento.length]);
 

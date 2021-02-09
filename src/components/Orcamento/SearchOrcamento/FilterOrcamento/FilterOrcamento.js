@@ -2,16 +2,31 @@ import React, { useState } from "react";
 import "./FilterOrcamento.css";
 import * as orcamentoActions from "../../../../store/actions/orcamento";
 import { connect } from "react-redux";
+import SelecaoFiltroSimples from "../../../SelecaoFiltroSimples/SelecaoFiltroSimples"
 
 function FilterOrcamento(props) {
   let [stringPesquisa, setStringPesquisa] = useState("");
   let [filtrarPor, setFiltrarPor] = useState("Orcamento");
   let [filtrado, setFiltrado] = useState(false);
 
+  const itensFiltro = 
+  [
+    {
+      nome: "Orcamento", 
+      valor: "Orcamento", 
+      selecionado: true
+    }, 
+    { 
+      nome: "Cliente", 
+      valor: "Cliente", 
+      selecionado: false 
+    }
+  ]
+
   const filtrarOrcamento = () => {
     if (stringPesquisa && !filtrado) {
-      props.filtrarListCartaCoberturaEditar(
-        props.listCartaCoberturaEditar,
+      props.filtrarListOrcamentoEditar(
+        props.listOrcamento,
         filtrarPor,
         stringPesquisa,
         setFiltrado(true)
@@ -20,7 +35,7 @@ function FilterOrcamento(props) {
   };
 
   const resetarFiltro = () => {
-    props.listarCartaCoberturaEditar(props.linkBackEnd, setFiltrado(false));
+    props.listarOrcamento(props.linkBackEnd, setFiltrado(false));
   };
 
   const pressEnter = (event) => {
@@ -63,42 +78,39 @@ function FilterOrcamento(props) {
           </button>
         </div>
       </div>
-      <div className="row padding">
-        <label className="form-check-inline-filter">Filtrar por:</label>
-        <div className="form-check-inline-filter">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="tipoFiltro"
-            id="radio-orcamento"
-            value="Orcamento"
-            onChange={(event) => setFiltrarPor(event.target.value)}
-            defaultChecked
-          />
-          <label className="form-check-label"> Orcamento</label>
-        </div>
-
-        <div className="form-check-inline-filter">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="tipoFiltro"
-            id="radio-cliente"
-            value="Cliente"
-            onChange={(event) => setFiltrarPor(event.target.value)}
-          />
-          <label className="form-check-label"> Cliente</label>
-        </div>
-      </div>
+      <SelecaoFiltroSimples 
+        camposMontar={itensFiltro}
+        retornarFiltro={(valor)=> setFiltrarPor(valor)} 
+      />
     </>
   );
 }
 
 const mapStateToProps = (state) => ({
   linkBackEnd: state.backEnd.link,
-  listCartaCoberturaEditar: state.cartaCobertura.listCartaCoberturaEditar,
+  listOrcamento: state.orcamento.listOrcamento,
 });
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+  filtrarListOrcamentoEditar : (
+    listOrcamentoEditar,
+    filtrarPor,
+    stringFiltro
+  ) =>
+    dispatch(
+      orcamentoActions.filtrarListOrcamentoEditar(
+        listOrcamentoEditar,
+        filtrarPor,
+        stringFiltro
+      )
+    ),
+    listarOrcamento: (
+      linkBackEnd
+    ) => dispatch(
+      orcamentoActions.listarOrcamento(
+        linkBackEnd
+        )
+    )
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterOrcamento);
