@@ -22,19 +22,25 @@
   min-height: 20%;
 }
 
-@media (min-width: 1200px) {
+@media (height: 768px) {
+  #containerCustos {
+    grid-template-rows: 120px 80% !important;
+  }
+}
+
+@media (min-width: 1300px) and (max-height: 660px) {
+  #containerCustos {
+    grid-template-rows: 120px 65% !important;
+  }
+}
+
+@media (min-width: 1200px){
   #containerCustos {
     grid-template-rows: 120px 100%;
-    width: 98%;
   }
 
-<<<<<<< HEAD
-  #principal-custos{
-    height: 75%;
-=======
   #principal-custos {
     height: 90%;
->>>>>>> 4e4d04c3126d1e6424e3201f7e55fab292d105df
   }
 }
 
