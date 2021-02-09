@@ -3,7 +3,6 @@ import "./FilterCartaCobertura.css";
 import SelecaoFiltroSimples from "../../../SelecaoFiltroSimples/SelecaoFiltroSimples";
 import * as cartaCoberturaActions from "../../../../store/actions/cartaCobertura";
 import { connect } from "react-redux";
-import SelecaoFiltroSimples from "../../../SelecaoFiltroSimples/SelecaoFiltroSimples";
 
 function FilterCartaCobertura(props) {
   let [stringPesquisa, setStringPesquisa] = useState("");

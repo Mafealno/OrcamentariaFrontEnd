@@ -52,7 +52,7 @@
 @media (min-width: 1200px) {
   #containerListItensOrcamentoGeral {
     overflow-y: auto;
-    padding: 5% 5% 0% 5%;
+    padding: 0;
   }
 
   #totais-itens-orcamento-geral {

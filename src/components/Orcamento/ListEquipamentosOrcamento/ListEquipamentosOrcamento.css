@@ -43,7 +43,7 @@
 @media (min-width: 1200px) {
   #containerListEquipamentoOrcamento {
     overflow-y: auto;
-    padding: 5% 5% 0% 5%;
+    padding: 0;
   }
 
   #totais-equipamento-orcamento {

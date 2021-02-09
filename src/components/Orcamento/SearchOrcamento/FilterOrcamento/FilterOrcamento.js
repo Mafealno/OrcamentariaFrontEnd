@@ -3,7 +3,6 @@ import "./FilterOrcamento.css";
 import SelecaoFiltroSimples from "../../../SelecaoFiltroSimples/SelecaoFiltroSimples";
 import * as orcamentoActions from "../../../../store/actions/orcamento";
 import { connect } from "react-redux";
-import SelecaoFiltroSimples from "../../../SelecaoFiltroSimples/SelecaoFiltroSimples"
 
 function FilterOrcamento(props) {
   let [stringPesquisa, setStringPesquisa] = useState("");
