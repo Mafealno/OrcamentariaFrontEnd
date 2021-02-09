@@ -18,6 +18,10 @@
   flex-direction: row;
 }
 
+.container-tabela-modal-visualizacao-itens-carta-cobertura {
+  margin-bottom: 5px;
+}
+
 .select-modal-visualizacao-itens-carta-cobertura {
   display: inline !important;
 }

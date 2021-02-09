@@ -96,3 +96,7 @@
     max-height: 730px;
   }
 }
+
+label {
+  color: white;
+}
