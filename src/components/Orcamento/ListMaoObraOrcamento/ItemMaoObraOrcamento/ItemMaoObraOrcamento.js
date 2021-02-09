@@ -60,11 +60,7 @@ export default function ItemMaoObraOrcamento(props) {
     } else {
       setItemCustoMaoObraOrcamentoDisplay([]);
     }
-  }, [
-    props.dadosMaoObra.LIST_CUSTO.length,
-    props.dadosMaoObra.LIST_CUSTO,
-    props.dadosMaoObra.FUNCIONARIO.NOME_PESSOA,
-  ]);
+  }, [props.dadosMaoObra.LIST_CUSTO]);
 
   const adicionarItemCustoMaoObraOrcamento = (itemCustoMaoObraOrcamento) => {
     props.dadosMaoObra.LIST_CUSTO.push(itemCustoMaoObraOrcamento);

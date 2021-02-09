@@ -111,13 +111,10 @@
   flex-direction: column;
 }
 
+
 @media (min-width: 1200px) {
   .div-btn-buscar-cliente {
     display: block;
-  }
-
-  .form-orcamento {
-    height: 75%;
   }
 
   #containerBasicRegOrcamento {

@@ -51,12 +51,18 @@
   max-height: 75vh !important;
 }
 
+@media(max-height: 770px){
+  .modal-body-item-orcamento-geral {
+    max-height: 400px !important;
+  }
+}
+
 @media (min-width: 1200px) {
   .div-btn-buscar-material {
     display: block;
   }
 
   .modal-body-item-orcamento-geral {
-    max-height: 730px !important;
+    max-height: 730px;
   }
 }

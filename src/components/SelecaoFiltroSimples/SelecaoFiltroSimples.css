@@ -13,6 +13,10 @@ input[type="radio"] {
   height: 17px;
 }
 
+input[type="radio"]:active {
+  background-color: green;
+}
+
 .item-selecao-filtro-simples {
   height: 100%;
   display: flex;

@@ -80,15 +80,7 @@
     padding: 10px;
   }
 
-  .overflow-x-y {
-    overflow-y: hidden !important;
-  }
-
   .form-modal-mao-obra-orcamento {
     height: 50% !important;
-  }
-
-  .modal-body-mao-obra-orcamento {
-    max-height: 730px !important;
   }
 }

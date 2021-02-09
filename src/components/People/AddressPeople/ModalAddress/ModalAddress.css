@@ -1,3 +1,7 @@
+#constainerModalAddress{
+  padding: 5%;
+}
+
 .backgroundModal {
   background-color: rgb(68, 68, 68);
 }
@@ -17,9 +21,5 @@
 @media (min-width: 1200px) {
   .div-margin-bottom {
     margin-bottom: 0px;
-  }
-
-  .modal-body-address {
-    max-height: 730px !important;
   }
 }

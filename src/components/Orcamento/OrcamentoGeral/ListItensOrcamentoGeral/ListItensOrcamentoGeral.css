@@ -49,6 +49,12 @@
   float: right;
 }
 
+@media(max-height: 770px){
+  #list-itens-orcamento-geral {
+    height: 260px;
+  }
+}
+
 @media (min-width: 1200px) {
   #containerListItensOrcamentoGeral {
     overflow-y: auto;

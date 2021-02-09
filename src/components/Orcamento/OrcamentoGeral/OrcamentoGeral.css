@@ -1,6 +1,6 @@
 #containerOrcamentoGeral {
   padding: 3%;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 .form-orcamento {
@@ -26,10 +26,22 @@ a {
   color: #d40808;
 }
 
+@media (max-height: 770px) and (min-width: 1200px){
+  #containerOrcamentoGeral {
+    height: 630px;
+  }
+
+  .form-orcamento{
+    max-height: 600px !important
+  }
+}
+
 @media (min-width: 1200px) {
   .form-orcamento {
     height: 750px;
     max-height: 750px;
     overflow-y: auto;
   }
+
+  
 }

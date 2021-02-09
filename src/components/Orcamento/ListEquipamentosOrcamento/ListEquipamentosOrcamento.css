@@ -40,6 +40,12 @@
   border-color: #d40808;
 }
 
+@media (max-height: 770px) and (min-width: 1200px){
+  #list-equipamento-orcamento {
+      height: 260px;
+  }
+}
+
 @media (min-width: 1200px) {
   #containerListEquipamentoOrcamento {
     overflow-y: auto;

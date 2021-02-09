@@ -793,7 +793,7 @@ function BasicRegOrcamento(props) {
                       id="erro-diasTrabalhado"
                     ></span>
                   </div>
-                  <div className="col-6 position-initial">
+                  <div className="col-xl col-6 position-initial">
                     <label>Data de criação</label>
                     <input
                       type="date"
@@ -807,7 +807,7 @@ function BasicRegOrcamento(props) {
                       id="erro-dataCriacaoOrcamento"
                     ></span>
                   </div>
-                  <div className="col-6 position-initial">
+                  <div className="col-xl col-6 position-initial">
                     <label>Tipo da obra</label>
                     <input
                       type="text"

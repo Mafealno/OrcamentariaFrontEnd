@@ -222,7 +222,7 @@ function ModalContact(props) {
         }
         conteudoBody={
           <div className="form">
-            <div className="container-form">
+            <div id="containerModalContact" className="container-form">
               <form>
                 <div className="form-group">
                   <div className="form-row">
