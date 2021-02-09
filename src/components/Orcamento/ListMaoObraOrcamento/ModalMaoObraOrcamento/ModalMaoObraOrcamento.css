@@ -48,7 +48,7 @@
 
 .overflow-x-y {
   overflow-x: hidden;
-  overflow-y: auto !important;
+  overflow-y: scroll !important;
 }
 
 .add-custo-mao-obra {

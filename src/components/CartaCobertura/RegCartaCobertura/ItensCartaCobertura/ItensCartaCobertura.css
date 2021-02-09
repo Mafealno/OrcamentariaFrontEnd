@@ -10,10 +10,6 @@
   flex-direction: row;
 }
 
-::-webkit-scrollbar {
-  height: 5px;
-}
-
 .props.listComponenteItems {
   width: 50px;
 }

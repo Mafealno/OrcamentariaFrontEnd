@@ -46,6 +46,6 @@
 
 @media (min-width: 1200px) {
   .form-custos {
-    overflow-y: auto;
+    overflow-y: scroll;
   }
 }

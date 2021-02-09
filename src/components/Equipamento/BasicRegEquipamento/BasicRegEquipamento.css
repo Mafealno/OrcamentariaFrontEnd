@@ -115,7 +115,7 @@ button.btn.btn-primary {
 
 @media (min-width: 1200px) {
   .form-equipamento {
-    overflow-y: auto;
+    overflow-y: scroll;
   }
 
   .div-nome-equipamento,

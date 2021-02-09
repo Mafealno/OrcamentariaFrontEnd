@@ -1,6 +1,6 @@
 #containerOrcamentoIntumescente {
   padding: 3%;
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 
 .nav-tabs .nav-item.show .nav-link,

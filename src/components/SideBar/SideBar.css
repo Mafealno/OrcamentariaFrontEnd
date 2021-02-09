@@ -49,7 +49,7 @@ ul {
   left: -270px;
   top: 0;
   height: 100%;
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: visible;
   transition: left 0.3s ease, box-shadow 0.3s ease;
   z-index: 999;
@@ -140,20 +140,20 @@ a.dropdown-item {
 }
 
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #d40808;
+  background: white;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: white;
-  border-right: 1px #d40808 solid;
+  background: #d40808;
+  /* border-right: 1px #d40808 solid; */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #dddddd;
+  background: #991802;
 }
 
 @media (min-width: 1200px) {
@@ -169,7 +169,7 @@ a.dropdown-item {
   .main-menu {
     position: relative;
     left: 0px;
-    overflow-y: auto;
+    overflow-y: scroll;
   }
 
   .main-menu ul {
