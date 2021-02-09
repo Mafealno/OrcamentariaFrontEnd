@@ -8,10 +8,7 @@ import * as orcamentoActions from "../../../store/actions/orcamento";
 import { connect } from "react-redux";
 
 function ListMaoObraOrcamento(props) {
-  let [
-    totaisMaoObraOrcamentoDisplay,
-    setTotaisMaoObraOrcamentoDisplay,
-  ] = useState(<></>);
+  let [totaisMaoObraOrcamentoDisplay,setTotaisMaoObraOrcamentoDisplay ] = useState(<></>);
   let [showToast, setShowToast] = useState(false);
   let [configToast, setConfigToast] = useState({
     estiloToast: "",

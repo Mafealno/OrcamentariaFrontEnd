@@ -108,11 +108,7 @@ export function ModalEquipamentoOrcamento(props) {
   const buscarEquipamento = () => {
     let rota = "/equipamento/";
     if (stringBuscaEquipamento) {
-      if (stringBuscaEquipamento.match(/\d/)) {
-        rota = rota + "buscar?equipamentoId=" + stringBuscaEquipamento;
-      } else {
         rota = rota + "buscar?nomeEquipamento=" + stringBuscaEquipamento;
-      }
     }
 
     fetch(props.linkBackEnd + rota, {
@@ -342,7 +338,7 @@ export function ModalEquipamentoOrcamento(props) {
                   <div id="informacoes-equipamento">
                     <div className="form-group">
                       <div className="form-row">
-                        <div className="col-xl-3 col">
+                        <div className="col-3">
                           <label>Código</label>
                           <input
                             type="text"

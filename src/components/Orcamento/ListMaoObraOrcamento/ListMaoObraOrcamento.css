@@ -4,6 +4,9 @@
     "btn-add-mao-obra-orcamento"
     "list-mao-obra-orcamento"
     "totais-mao-obra-orcamento";
+  padding: 5% 5% 5% 5%;
+  color: white;
+  background: rgb(68, 68, 68);
 }
 
 #btn-add-mao-obra-orcamento {
@@ -38,6 +41,11 @@
 }
 
 @media (min-width: 1200px) {
+  #containerMaoObraOrcamento {
+    overflow-y: auto;
+    padding: 5% 5% 0% 5%;
+  }
+
   #totais-mao-obra-orcamento {
     height: 135px;
   }

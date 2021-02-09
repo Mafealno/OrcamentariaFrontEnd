@@ -3,7 +3,7 @@
   grid-template-areas:
     "dados-funcionario"
     "dados-custo-funcionario";
-  width: 98%;
+  color: white;
 }
 
 #dados-funcionario {
