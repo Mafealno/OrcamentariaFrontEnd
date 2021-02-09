@@ -32,7 +32,7 @@
   font-weight: bold;
 }
 
-.form{
+.form {
   color: white;
   padding: 5%;
 }
@@ -103,5 +103,9 @@
 }
 
 .col {
+  color: white;
+}
+
+label {
   color: white;
 }

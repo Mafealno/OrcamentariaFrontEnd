@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./FilterCartaCobertura.css";
+import SelecaoFiltroSimples from "../../../SelecaoFiltroSimples/SelecaoFiltroSimples";
 import * as cartaCoberturaActions from "../../../../store/actions/cartaCobertura";
 import { connect } from "react-redux";
 
@@ -7,6 +8,20 @@ function FilterCartaCobertura(props) {
   let [stringPesquisa, setStringPesquisa] = useState("");
   let [filtrarPor, setFiltrarPor] = useState("Material");
   let [filtrado, setFiltrado] = useState(false);
+
+  const itensFiltro = 
+  [
+    {
+      nome: "Material", 
+      valor: "Material", 
+      selecionado: true
+    }, 
+    { 
+      nome: "Fabricante", 
+      valor: "Fabricante", 
+      selecionado: false 
+    }
+  ]
 
   const filtrarCartaCobertura = () => {
     if (stringPesquisa && !filtrado) {
@@ -63,33 +78,10 @@ function FilterCartaCobertura(props) {
           </button>
         </div>
       </div>
-      <div className="row padding">
-        <label className="form-check-inline-filter">Filtrar por:</label>
-        <div className="form-check-inline-filter">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="tipoFiltro"
-            id="radio-material"
-            value="Material"
-            onChange={(event) => setFiltrarPor(event.target.value)}
-            defaultChecked
-          />
-          <label className="form-check-label">Material</label>
-        </div>
-
-        <div className="form-check-inline-filter">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="tipoFiltro"
-            id="radio-fabricante"
-            value="Fabricante"
-            onChange={(event) => setFiltrarPor(event.target.value)}
-          />
-          <label className="form-check-label">Fabricante</label>
-        </div>
-      </div>
+      <SelecaoFiltroSimples 
+        camposMontar={itensFiltro}
+        retornarFiltro={(valor)=> setFiltrarPor(valor)} 
+      />
     </>
   );
 }

@@ -173,9 +173,7 @@ export function filtrarListCartaCoberturaEditar(
       break;
   }
 
-  if (listCartaCoberturaEditarAux) {
-    listCartaCoberturaEditar = [...listCartaCoberturaEditarAux];
-  }
+  listCartaCoberturaEditar = [...listCartaCoberturaEditarAux];
 
   return {
     type: "FILTRAR_LIST_CARTA_COBERTURA_EDITAR",
