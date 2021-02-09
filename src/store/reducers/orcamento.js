@@ -128,7 +128,8 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
           listEquipamentoOrcamento: state.listEquipamentoOrcamento,
         })),
       };
-    case "FILTRAR_LIST_ORCAMENTO_EDITAR":
+
+      case "FILTRAR_LIST_ORCAMENTO_EDITAR":
       return {
         ...state,
         listOrcamento: action.listOrcamento,

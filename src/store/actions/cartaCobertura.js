@@ -174,7 +174,6 @@ export function filtrarListCartaCoberturaEditar(
   }
 
   listCartaCoberturaEditar = [...listCartaCoberturaEditarAux];
-
   return {
     type: "FILTRAR_LIST_CARTA_COBERTURA_EDITAR",
     listCartaCoberturaEditar,

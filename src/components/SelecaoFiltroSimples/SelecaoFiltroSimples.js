@@ -19,7 +19,6 @@ function SelecaoFiltroSimples(props) {
                     onChange={(event) => props.retornarFiltro(event.target.value)}
                     defaultChecked={item.selecionado ?? false}
                 />
-
                 <label className="form-check-label">{item.nome}</label>
             </div>
         )))

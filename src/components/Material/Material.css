@@ -22,10 +22,21 @@
   min-height: 20%;
 }
 
-@media (min-width: 1200px) {
+@media (height: 768px) {
+  #containerMaterial {
+    grid-template-rows: 120px 80% !important;
+  }
+}
+
+@media (min-width: 1300px) and (max-height: 660px) {
+  #containerMaterial {
+    grid-template-rows: 120px 65% !important;
+  }
+}
+
+@media (min-width: 1200px){
   #containerMaterial {
     grid-template-rows: 120px 100%;
-    width: 98%;
   }
 
   #principal-material {

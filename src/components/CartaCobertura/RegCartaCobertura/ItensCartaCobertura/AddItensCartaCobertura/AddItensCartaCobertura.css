@@ -4,6 +4,7 @@
   margin: 0px 10px;
   background-color: rgb(68, 68, 68);
   border-radius: 5px;
+  background-color: rgb(68, 68, 68);
 }
 
 .containerAddItensCartaCobertura .form {
@@ -32,6 +33,7 @@
 
 .status-componente {
   font-weight: bold;
+  color: white;
 }
 
 .center {
