@@ -305,11 +305,11 @@ export function ModalEquipamentoOrcamento(props) {
                             }
                           />
                         </div>
-                        <div className="col-xl-3 div-btn-buscar-material">
+                        <div className="col-xl-3 div-btn-buscar-equipamento-orcamento">
                           <button
                             type="button"
                             className="btn"
-                            id="btn-buscar-material"
+                            id="btn-buscar-equipamento-orcamento"
                             onClick={() => buscarEquipamento()}
                             onFocus={() =>
                               removerErro("campo-modalEquipamentoId")
@@ -326,12 +326,12 @@ export function ModalEquipamentoOrcamento(props) {
                           <ResultSearchEquipamento
                             show={showResultadoEquipamento}
                             resultados={dataEquipamento}
-                            selecionarEquipamentoOrcamento={(funcionario) =>
-                              selecionarEquipamentoOrcamento(funcionario)
+                            selecionarEquipamentoOrcamento={(equipamento) =>
+                              selecionarEquipamentoOrcamento(equipamento)
                             }
                           />
                         </div>
-                        <div className="col-xl-3 div-btn-buscar-funcionario"></div>
+                        <div className="col-xl-3"></div>
                       </div>
                     </div>
                   </div>

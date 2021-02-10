@@ -4,6 +4,7 @@ import BasicRegOrcamento from "../BasicRegOrcamento/BasicRegOrcamento";
 import ListItensOrcamentoGeral from "./ListItensOrcamentoGeral/ListItensOrcamentoGeral";
 import ListMaoObraOrcamento from "../ListMaoObraOrcamento/ListMaoObraOrcamento";
 import ListEquipamentosOrcamento from "../ListEquipamentosOrcamento/ListEquipamentosOrcamento";
+import ListCustoOrcamento from "../ListCustoOrcamento/ListCustoOrcamento";
 import { Provider } from "react-redux";
 
 import store from "../../../store/store";
@@ -50,6 +51,14 @@ export default function OrcamentoGeral() {
                 >
                   Equipamentos
                 </a>
+                <a
+                  className="nav-item nav-link"
+                  id="aba-custos"
+                  data-toggle="tab"
+                  href="#conteudo-custos"
+                >
+                  Custos
+                </a>
               </>
             )}
           </div>
@@ -92,6 +101,14 @@ export default function OrcamentoGeral() {
               aria-labelledby="aba-equipamentos"
             >
               <ListEquipamentosOrcamento />
+            </div>
+            <div
+              className="tab-pane fade"
+              id="conteudo-custos"
+              role="tabpanel"
+              aria-labelledby="aba-custos"
+            >
+              <ListCustoOrcamento />
             </div>
           </>
         </div>
