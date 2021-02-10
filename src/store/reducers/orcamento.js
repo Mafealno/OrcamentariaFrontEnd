@@ -4,7 +4,7 @@ const ESTADO_INICIAL = {
   listItensOrcamentoGeral: [],
   itensOrcamentoIntumescente: [],
   listMaoObraOrcamento: [],
-  listCustosOrcamento: [],
+  listCustoOrcamento: [],
   listEquipamentoOrcamento: [],
   listOrcamento: [],
   listCustosMaoObraDisplay: [],
@@ -37,6 +37,11 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
         ...state,
         listEquipamentoOrcamento: action.listEquipamentoOrcamento,
       };
+    case "SELECIONAR_CUSTO_ORCAMENTO":
+      return {
+        ...state,
+        listCustoOrcamento: action.listCustoOrcamento,
+      };
     case "ADICIONAR_ITEM_ORCAMENTO_GERAL":
       return {
         ...state,
@@ -61,6 +66,11 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
       return {
         ...state,
         listEquipamentoOrcamento: action.listEquipamentoOrcamento,
+      };
+    case "ADICIONAR_ITEM_CUSTO_ORCAMENTO":
+      return {
+        ...state,
+        listCustoOrcamento: action.listCustoOrcamento,
       };
     case "ADICIONAR_ITEM_CUSTO_MAO_OBRA_DISPLAY":
       return {
@@ -87,6 +97,11 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
         ...state,
         listEquipamentoOrcamento: action.listEquipamentoOrcamento,
       };
+    case "REMOVER_ITEM_CUSTO_ORCAMENTO":
+      return {
+        ...state,
+        listCustoOrcamento: action.listCustoOrcamento,
+      };
     case "REMOVER_ITEM_CUSTO_MAO_OBRA_ORCAMENTO":
       return {
         ...state,
@@ -104,22 +119,10 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
           listOrcamento: action.listOrcamento,
         })),
       };
-    case "RECARREGAR_ITENS_ORCAMENTO_GERAL_INICIADA":
-      return {
-        ...(state = Object.assign({}, state, {
-          listItensOrcamentoGeral: state.listItensOrcamentoGeral,
-        })),
-      };
     case "RECARREGAR_ITENS_ORCAMENTO_GERAL_CONCLUIDA":
       return {
         ...(state = Object.assign({}, state, {
           listItensOrcamentoGeral: state.listItensOrcamentoGeral,
-        })),
-      };
-    case "RECARREGAR_ITENS_EQUIPAMENTO_ORCAMENTO_INICIADA":
-      return {
-        ...(state = Object.assign({}, state, {
-          listEquipamentoOrcamento: state.listEquipamentoOrcamento,
         })),
       };
     case "RECARREGAR_ITENS_EQUIPAMENTO_ORCAMENTO_CONCLUIDA":
@@ -128,7 +131,12 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
           listEquipamentoOrcamento: state.listEquipamentoOrcamento,
         })),
       };
-
+      case "RECARREGAR_ITENS_CUSTO_ORCAMENTO_CONCLUIDA":
+      return {
+        ...(state = Object.assign({}, state, {
+          listCustoOrcamento: state.listCustoOrcamento,
+        })),
+      };
       case "FILTRAR_LIST_ORCAMENTO_EDITAR":
       return {
         ...state,

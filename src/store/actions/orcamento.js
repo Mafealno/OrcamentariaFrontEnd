@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 export function selecionarClienteOrcamento(clienteOrcamento) {
   return {
     type: "SELECIONAR_CLIENTE_ORCAMENTO",
@@ -11,6 +12,7 @@ export function selecionarOrcamento(orcamento) {
       type: "SELECIONAR_ORCAMENTO",
       orcamentoSelecionado: orcamento,
     });
+
     dispatch({
       type: "SELECIONAR_MAO_OBRA_ORCAMENTO",
       listMaoObraOrcamento: orcamento.LIST_MAO_OBRA_ORCAMENTO || [],
@@ -19,6 +21,11 @@ export function selecionarOrcamento(orcamento) {
     dispatch({
       type: "SELECIONAR_EQUIPAMENTO_ORCAMENTO",
       listEquipamentoOrcamento: orcamento.LIST_EQUIPAMENTO_ORCAMENTO || [],
+    });
+
+    dispatch({
+      type: "SELECIONAR_CUSTO_ORCAMENTO",
+      listCustoOrcamento: orcamento.LIST_CUSTO_ORCAMENTO || [],
     });
 
     if (orcamento.TIPO_OBRA == "Geral") {
@@ -69,6 +76,20 @@ export function adicionarMaoObraOrcamento(
   return {
     type: "ADICIONAR_MAO_OBRA_ORCAMENTO",
     listMaoObraOrcamento,
+  };
+}
+
+export function adicionarItemCustoOrcamento(
+  listCustoOrcamento,
+  itemCustoOrcamento
+) {
+  listCustoOrcamento.push(itemCustoOrcamento);
+
+  listCustoOrcamento = [...listCustoOrcamento];
+
+  return {
+    type: "ADICIONAR_ITEM_CUSTO_ORCAMENTO",
+    listCustoOrcamento,
   };
 }
 
@@ -137,6 +158,24 @@ export function removerItemEquipamentoOrcamento(
   return {
     type: "REMOVER_ITEM_EQUIPAMENTO_ORCAMENTO",
     listEquipamentoOrcamento,
+  };
+}
+
+export function removerItemCustoOrcamento(
+  listCustoOrcamento,
+  custoOrcamentoId
+) {
+  const index = listCustoOrcamento.findIndex(
+    (elemento) => elemento.CUSTO_ORCAMENTO_ID == custoOrcamentoId
+  );
+
+  listCustoOrcamento.splice(index, 1);
+
+  listCustoOrcamento = [...listCustoOrcamento];
+
+  return {
+    type: "REMOVER_ITEM_CUSTO_ORCAMENTO",
+    listCustoOrcamento,
   };
 }
 
@@ -223,7 +262,25 @@ export function recarregarItensEquipamentoOrcamento(linkBackEnd, orcamentoId) {
       .then((data) => {
         dispatch({
           type: "RECARREGAR_ITENS_EQUIPAMENTO_ORCAMENTO_CONCLUIDA",
-          listItensOrcamentoGeral: data,
+          listEquipamentoOrcamento: data,
+        });
+      });
+  };
+}
+
+export function recarregarItensCustoOrcamento(linkBackEnd, orcamentoId) {
+  return (dispatch) => {
+    fetch(
+      linkBackEnd + "/custoOrcamento/buscar?orcamentoId=" + orcamentoId,
+      {
+        method: "GET",
+      }
+    )
+      .then((responde) => responde.json())
+      .then((data) => {
+        dispatch({
+          type: "RECARREGAR_ITENS_CUSTO_ORCAMENTO_CONCLUIDA",
+          listCustosOrcamento: data,
         });
       });
   };
