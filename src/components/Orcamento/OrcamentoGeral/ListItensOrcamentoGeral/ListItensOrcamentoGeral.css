@@ -49,7 +49,7 @@
   float: right;
 }
 
-@media(max-height: 770px){
+@media (max-height: 770px) and (min-width: 1200px) {
   #list-itens-orcamento-geral {
     height: 260px;
   }

@@ -40,9 +40,9 @@
   border-color: #d40808;
 }
 
-@media (max-height: 770px) and (min-width: 1200px){
+@media (max-height: 770px) and (min-width: 1200px) {
   #list-mao-obra-orcamento {
-      height: 260px;
+    height: 260px;
   }
 }
 

@@ -26,13 +26,13 @@ a {
   color: #d40808;
 }
 
-@media (max-height: 770px) and (min-width: 1200px){
+@media (max-height: 770px) and (min-width: 1200px) {
   #containerOrcamentoGeral {
     height: 630px;
   }
 
-  .form-orcamento{
-    max-height: 600px !important
+  .form-orcamento {
+    max-height: 600px !important;
   }
 }
 
@@ -42,6 +42,4 @@ a {
     max-height: 750px;
     overflow-y: auto;
   }
-
-  
 }
