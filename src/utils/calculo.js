@@ -69,7 +69,7 @@ const verificaTipoCusto = (tipo, diasTrabalhado) => {
 };
 
 
-export function calcularTotaisEquipamentosMaoObraOrcamento(listEquipamentoOrcamento){
+export function calcularTotaisEquipamentosOrcamento(listEquipamentoOrcamento){
   let valoresCalculados = {
     totalValorEquipamentos: 0
   };
@@ -85,4 +85,23 @@ export function calcularTotaisEquipamentosMaoObraOrcamento(listEquipamentoOrcame
   );
 
   return valoresCalculados
+}
+
+export function calcularTotaisCustosOrcamento(listCustoOrcamento, diasTrabalhado){
+  let valoresCalculados = {
+    totalValorCustos: 0
+  };
+
+  valoresCalculados.totalValorCustos = listCustoOrcamento.reduce((acumulador, elemento) => {
+        let fator = verificaTipoCusto(
+          elemento.CUSTO_OBRA.TIPO_CUSTO,
+          diasTrabalhado
+        );
+
+        return acumulador += elemento.VALOR_CUSTO * fator;
+      },
+      0
+    );
+
+    return valoresCalculados;
 }
