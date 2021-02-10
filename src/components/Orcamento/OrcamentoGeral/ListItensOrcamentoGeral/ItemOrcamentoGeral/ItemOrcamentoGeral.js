@@ -51,7 +51,7 @@ export default function ItemOrcamentoGeral(props) {
           <div className="col-xl-1 col-3 center">
             {props.ItemOrcamentoGeral.NUMERO_LINHA}
           </div>
-          <div className="col-xl-4 col-9 center">
+          <div className="col-xl-4 col-9 limitar-texto-1 center">
             {props.ItemOrcamentoGeral.PRODUTO.NOME_MATERIAL}
           </div>
           <div className="col-xl-3 col-mobile-esconder center">

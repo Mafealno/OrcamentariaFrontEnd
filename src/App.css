@@ -65,7 +65,7 @@
   overflow-y: scroll;
 }
 
-@media (max-height:770px){
+@media (max-height: 770px) {
   .modal-body {
     max-height: 400px !important;
     overflow-y: scroll;
@@ -111,4 +111,12 @@
 
 label {
   color: white;
+}
+
+.limitar-texto-1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
