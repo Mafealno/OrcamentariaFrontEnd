@@ -62,7 +62,7 @@
 
 .modal-body {
   max-height: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 @media (max-height: 770px) {
