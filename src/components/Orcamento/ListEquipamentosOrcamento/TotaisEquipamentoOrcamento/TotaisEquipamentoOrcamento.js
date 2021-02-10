@@ -15,7 +15,7 @@ function TotaisEquipamentoOrcamento(props) {
 
       equipamentos = props.listEquipamentoOrcamento.length;
 
-      let valoresCalculados = calculoUtils.calcularTotaisEquipamentosMaoObraOrcamento(props.listEquipamentoOrcamento);
+      let valoresCalculados = calculoUtils.calcularTotaisEquipamentosOrcamento(props.listEquipamentoOrcamento);
 
       setTotaisEquipamentoOrcamento({
         totalEquipamentos: equipamentos,
