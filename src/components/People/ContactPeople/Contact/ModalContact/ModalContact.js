@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React, { useState, useEffect } from "react";
 import "./ModalContact.css";
 import ModalControl from "../../../../ModalControl/ModalControl";

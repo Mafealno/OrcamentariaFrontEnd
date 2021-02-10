@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import "./BasicRegCusto.css";
 import * as CustoActions from "../../../store/actions/custo";

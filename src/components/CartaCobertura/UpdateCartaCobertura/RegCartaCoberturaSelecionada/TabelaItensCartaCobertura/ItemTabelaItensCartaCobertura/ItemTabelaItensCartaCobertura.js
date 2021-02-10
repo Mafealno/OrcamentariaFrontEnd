@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React, { useState, useEffect } from "react";
 import "./ItemTabelaItensCartaCobertura.css";
 import * as cartaCoberturaActions from "../../../../../../store/actions/cartaCobertura";

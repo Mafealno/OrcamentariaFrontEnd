@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import "./ModalMaoObraOrcamento.css";
 import ModalControl from "../../../ModalControl/ModalControl";
@@ -497,11 +498,11 @@ function ModalMaoObraOrcamento(props) {
                           onFocus={() => removerErro("campo-pessoaId")}
                         />
                       </div>
-                      <div className="col-xl-3 div-btn-buscar-material">
+                      <div className="col-xl-3 div-btn-buscar-mao-obra-orcamento">
                         <button
                           type="button"
                           className="btn"
-                          id="btn-buscar-material"
+                          id="btn-buscar-mao-obra-orcamento"
                           onClick={() => buscarFuncionario()}
                           onFocus={() => removerErro("campo-pessoaId")}
                         >

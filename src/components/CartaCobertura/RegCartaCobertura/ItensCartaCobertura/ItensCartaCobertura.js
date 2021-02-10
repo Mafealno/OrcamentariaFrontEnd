@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React, { useState, useEffect } from "react";
 import "./ItensCartaCobertura.css";
 import AddItensCartaCobertura from "./AddItensCartaCobertura/AddItensCartaCobertura";

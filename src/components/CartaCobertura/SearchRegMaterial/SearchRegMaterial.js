@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React, { useState } from "react";
 import "./SearchRegMaterial.css";
 import ResultSearchMaterial from "./ResultSearchMaterial/ResultSearchMaterial";
