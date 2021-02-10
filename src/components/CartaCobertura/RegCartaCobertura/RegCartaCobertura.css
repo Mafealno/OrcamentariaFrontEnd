@@ -42,20 +42,13 @@ textarea {
 @media (height: 768px) {
   #containerRegCartaCobertura {
     grid-template-rows: 85px 40% 200px 80px;
-    height: 100%
-  }
-}
-
-@media (max-width: 1200px) and (min-width: 700px) {
-  #containerRegCartaCobertura {
-    grid-template-rows: 85px 40% 500px 80px;
     height: 100%;
   }
 }
 
 @media (min-width: 1200px) {
   #containerRegCartaCobertura {
-    grid-template-rows: 85px 35% 435px 60px;
+    grid-template-rows: 85px 35% auto 60px;
     height: 100%;
   }
 
