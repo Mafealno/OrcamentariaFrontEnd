@@ -34,7 +34,6 @@
 
 .form {
   color: white;
-  /* padding: 5%; */
 }
 
 .btn-100-px {
@@ -61,14 +60,14 @@
 }
 
 .modal-body {
+  min-height: 450px;
   max-height: 100vh;
   overflow-y: auto;
 }
 
-@media (max-height: 770px) {
+@media (max-height: 770px) and (min-width: 1200px) {
   .modal-body {
-    max-height: 400px !important;
-    overflow-y: scroll;
+    max-height: 450px !important;
   }
 }
 

@@ -9,3 +9,7 @@
 .tituloModal {
   color: white;
 }
+
+.modal-confirm-body{
+  min-height: auto !important;
+}

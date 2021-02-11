@@ -11,7 +11,7 @@ export default function ModalConfirm(props) {
           {...props}
           tamanhoModal="sm"
           estiloModalHeader="backgroundModal tituloModal"
-          estiloModalBody="backgroundModal"
+          estiloModalBody="backgroundModal modal-confirm-body"
           estiloModalFooter="backgroundModal"
           tituloModal={props.tituloModalConfirm}
           conteudoBody={
