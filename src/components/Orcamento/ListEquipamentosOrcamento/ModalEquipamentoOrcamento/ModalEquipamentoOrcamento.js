@@ -268,26 +268,6 @@ export function ModalEquipamentoOrcamento(props) {
             <div className="form">
               <div className="container-form">
                 <div id="containerModalEquipamentoOrcamento">
-                  <div id="codigo-equipamento-orcamento-id">
-                    <div className="form-group">
-                      <div className="form-row">
-                        <label className="col-form-label">Código</label>
-                        <input
-                          type="text"
-                          value={
-                            dadosCadastro.equipamentoOrcamentoId.valor || ""
-                          }
-                          id="campo-equipamentoOrcamentoId"
-                          className="form-control-plaintext input-equipamento-orcamento-id"
-                          readOnly
-                        />
-                        <span
-                          className="invalid-feedback"
-                          id="erro-equipamentoOrcamentoId"
-                        ></span>
-                      </div>
-                    </div>
-                  </div>
                   <div id="search-equipamento">
                     <div className="form-group margin-bottom-0">
                       <div className="row">

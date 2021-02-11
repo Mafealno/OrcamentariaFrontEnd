@@ -1,7 +1,6 @@
 #containerModalCustoOrcamento {
   display: grid;
   grid-template-areas:
-    "codigo-custo-orcamento-id"
     "search-custo"
     "informacoes-custo";
   padding: 2% 5%;

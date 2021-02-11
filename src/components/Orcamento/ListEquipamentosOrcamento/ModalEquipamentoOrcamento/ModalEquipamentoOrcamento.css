@@ -1,7 +1,6 @@
 #containerModalEquipamentoOrcamento {
   display: grid;
   grid-template-areas:
-    "codigo-equipamento-orcamento-id"
     "search-equipamento"
     "informacoes-equipamento";
   padding: 2% 5%;

@@ -234,26 +234,6 @@ function ModalCustoOrcamento(props) {
                   <div className="form">
                     <div className="container-form">
                       <div id="containerModalEquipamentoOrcamento">
-                        <div id="codigo-custo-orcamento-id">
-                          <div className="form-group">
-                            <div className="form-row">
-                              <label className="col-form-label">Código</label>
-                              <input
-                                type="text"
-                                value={
-                                  dadosCadastro.custoOrcamentoId.valor || ""
-                                }
-                                id="campo-custoOrcamentoId"
-                                className="form-control-plaintext input-custo-orcamento-id"
-                                readOnly
-                              />
-                              <span
-                                className="invalid-feedback"
-                                id="erro-custoOrcamentoId"
-                              ></span>
-                            </div>
-                          </div>
-                        </div>
                         <div id="search-custo">
                           <div className="form-group margin-bottom-0">
                             <div className="row">
