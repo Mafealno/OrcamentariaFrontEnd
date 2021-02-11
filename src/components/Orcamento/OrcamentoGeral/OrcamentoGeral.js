@@ -5,6 +5,7 @@ import ListItensOrcamentoGeral from "./ListItensOrcamentoGeral/ListItensOrcament
 import ListMaoObraOrcamento from "../ListMaoObraOrcamento/ListMaoObraOrcamento";
 import ListEquipamentosOrcamento from "../ListEquipamentosOrcamento/ListEquipamentosOrcamento";
 import ListCustoOrcamento from "../ListCustoOrcamento/ListCustoOrcamento";
+import TotaisOrcamento from "../TotaisOrcamento/TotaisOrcamento"
 import { Provider } from "react-redux";
 
 import store from "../../../store/store";
@@ -25,6 +26,14 @@ export default function OrcamentoGeral() {
             >
               Cadastro básico
             </a>
+            <a
+                  className="nav-item nav-link"
+                  id="aba-totais"
+                  data-toggle="tab"
+                  href="#conteudo-totais"
+                >
+                  Totais
+                </a>
             {mostrarAbas && (
               <>
                 <a
@@ -59,6 +68,14 @@ export default function OrcamentoGeral() {
                 >
                   Custos
                 </a>
+                {/* <a
+                  className="nav-item nav-link"
+                  id="aba-totais"
+                  data-toggle="tab"
+                  href="#conteudo-totais"
+                >
+                  Totais
+                </a> */}
               </>
             )}
           </div>
@@ -109,6 +126,14 @@ export default function OrcamentoGeral() {
               aria-labelledby="aba-custos"
             >
               <ListCustoOrcamento />
+            </div>
+            <div
+              className="tab-pane fade"
+              id="conteudo-totais"
+              role="tabpanel"
+              aria-labelledby="aba-totais"
+            >
+              <TotaisOrcamento />
             </div>
           </>
         </div>
