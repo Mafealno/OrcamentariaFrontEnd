@@ -26,6 +26,12 @@ function TotaisMaoObraOrcamento(props) {
         totalSalario: valoresCalculados.valorTotalSalario,
         totalCustos: valoresCalculados.valorTotalCustos,
       });
+    }else{
+      setTotaisMaoObraOrcamento({
+        totalFuncionario: 0,
+        totalSalario: 0,
+        totalCustos: 0,
+      });
     }
   }, [props.listMaoObraOrcamento]);
 
@@ -47,7 +53,7 @@ function TotaisMaoObraOrcamento(props) {
             Valor total do salário (R$)
           </label>
         </div>
-        <div className="form-group">{totaisMaoObraOrcamento.totalSalario}</div>
+        <div className="form-group">{totaisMaoObraOrcamento.totalSalario ?? ""}</div>
       </div>
       <div id="total-custos">
         <div className="form-group">
@@ -55,7 +61,7 @@ function TotaisMaoObraOrcamento(props) {
             Valor total de custos (R$)
           </label>
         </div>
-        <div className="form-group">{totaisMaoObraOrcamento.totalCustos}</div>
+        <div className="form-group">{totaisMaoObraOrcamento.totalCustos ?? ""}</div>
       </div>
     </div>
   );

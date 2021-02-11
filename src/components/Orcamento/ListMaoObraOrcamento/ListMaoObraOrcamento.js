@@ -8,7 +8,6 @@ import * as orcamentoActions from "../../../store/actions/orcamento";
 import { connect } from "react-redux";
 
 function ListMaoObraOrcamento(props) {
-  let [totaisMaoObraOrcamentoDisplay,setTotaisMaoObraOrcamentoDisplay ] = useState(<></>);
   let [showToast, setShowToast] = useState(false);
   let [configToast, setConfigToast] = useState({
     estiloToast: "",
@@ -54,8 +53,8 @@ function ListMaoObraOrcamento(props) {
           />
         ))
       );
-      setTotaisMaoObraOrcamentoDisplay(<></>);
-      setTotaisMaoObraOrcamentoDisplay(<TotaisMaoObraOrcamento />);
+    }else{
+      setItemMaoObraOrcamentoDisplay([]);
     }
   };
 
@@ -183,7 +182,7 @@ function ListMaoObraOrcamento(props) {
           </div>
           <div id="list-mao-obra-orcamento">{itemMaoObraOrcamentoDisplay}</div>
           <div id="totais-mao-obra-orcamento">
-            {totaisMaoObraOrcamentoDisplay}
+            <TotaisMaoObraOrcamento />
           </div>
         </div>
       </div>

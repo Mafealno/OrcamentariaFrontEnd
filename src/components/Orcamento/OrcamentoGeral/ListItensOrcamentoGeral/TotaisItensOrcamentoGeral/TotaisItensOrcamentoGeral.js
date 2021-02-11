@@ -32,6 +32,12 @@ function TotaisItensOrcamentoGeral(props) {
         totalArea: area,
         totalValor: valor,
       });
+    }else{
+      setTotaisItensOrcamentoGeral({
+        totalLinhas: 0,
+        totalArea: 0,
+        totalValor: 0,
+      });
     }
   }, [props.listItensOrcamentoGeral]);
 
@@ -53,7 +59,7 @@ function TotaisItensOrcamentoGeral(props) {
             Área total (M²)
           </label>
         </div>
-        <div className="form-group">{totaisItensOrcamentoGeral.totalArea}</div>
+        <div className="form-group">{totaisItensOrcamentoGeral.totalArea ?? ""}</div>
       </div>
       <div id="total-valor">
         <div className="form-group">
@@ -61,7 +67,7 @@ function TotaisItensOrcamentoGeral(props) {
             Valor total dos itens (R$)
           </label>
         </div>
-        <div className="form-group">{totaisItensOrcamentoGeral.totalValor}</div>
+        <div className="form-group">{totaisItensOrcamentoGeral.totalValor ?? ""}</div>
       </div>
     </div>
   );

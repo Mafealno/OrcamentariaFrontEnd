@@ -21,6 +21,11 @@ function TotaisEquipamentoOrcamento(props) {
         totalEquipamentos: equipamentos,
         totalValorEquipamentos: valoresCalculados.totalValorEquipamentos,
       });
+    }else{
+      setTotaisEquipamentoOrcamento({
+        totalEquipamentos: 0,
+        totalValorEquipamentos: 0,
+      });
     }
   }, [props.listEquipamentoOrcamento]);
 
@@ -43,7 +48,7 @@ function TotaisEquipamentoOrcamento(props) {
           </label>
         </div>
         <div className="form-group">
-        {totaisEquipamentoOrcamento.totalValorEquipamentos}
+        {totaisEquipamentoOrcamento.totalValorEquipamentos ?? ""}
         </div>
       </div>
     </div>

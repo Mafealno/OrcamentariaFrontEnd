@@ -10,7 +10,6 @@ import { connect } from "react-redux";
 function ListCustoOrcamento(props) {
     const [showModalCustoOrcamento, setShowModalCustoOrcamento] = useState(false)
     const [listItemCustoOrcamentoDisplay, setListItemCustoOrcamentoDisplay] = useState([])
-    const [totaisCustoOrcamentoDisplay, setTotaisCustoOrcamentoDisplay] = useState(<></>)
     const [showToast, setShowToast] = useState(false);
     const [configToast, setConfigToast] = useState({
         estiloToast: "",
@@ -84,7 +83,6 @@ function ListCustoOrcamento(props) {
               />
             ))
           );
-          setTotaisCustoOrcamentoDisplay(<TotaisCustoOrcamento />);
         } else {
           setListItemCustoOrcamentoDisplay([]);
         }
@@ -163,7 +161,7 @@ function ListCustoOrcamento(props) {
                     {listItemCustoOrcamentoDisplay}
                 </div>
                 <div id="totais-mao-obra-orcamento">
-                    {totaisCustoOrcamentoDisplay}
+                    <TotaisCustoOrcamento />
                 </div>
             </div>
         </div>

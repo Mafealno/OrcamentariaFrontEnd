@@ -9,12 +9,7 @@ import { connect } from "react-redux";
 
 function ListEquipamentosOrcamento(props) {
   let [listItemEquipamentoOrcamentoDisplay,setListItemEquipamentoOrcamentoDisplay] = useState([]);
-  let [totaisEquipamentoOrcamentoDisplay, setTotaisEquipamentoOrcamentoDisplay] = useState(<></>);
-
-  let [
-    showModalEquipamentoOrcamento,
-    setShowModalEquipamentoOrcamento,
-  ] = useState(false);
+  let [showModalEquipamentoOrcamento, setShowModalEquipamentoOrcamento] = useState(false);
   let [showToast, setShowToast] = useState(false);
   let [configToast, setConfigToast] = useState({
     estiloToast: "",
@@ -91,7 +86,6 @@ function ListEquipamentosOrcamento(props) {
           />
         ))
       );
-      setTotaisEquipamentoOrcamentoDisplay(<TotaisEquipamentoOrcamento />);
     } else {
       setListItemEquipamentoOrcamentoDisplay([]);
     }
@@ -203,7 +197,7 @@ function ListEquipamentosOrcamento(props) {
             {listItemEquipamentoOrcamentoDisplay}
           </div>
           <div id="totais-mao-obra-orcamento">
-            {totaisEquipamentoOrcamentoDisplay}
+            <TotaisEquipamentoOrcamento />
           </div>
         </div>
       </div>

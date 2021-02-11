@@ -20,6 +20,11 @@ function TotaisCustoOrcamento(props) {
             totalCustos: custos,
             totalValorCustos: valoresCalculados.totalValorCustos,
           });
+        }else{
+          setTotaisCustoOrcamento({
+            totalCustos: 0,
+            totalValorCustos: 0,
+          });
         }
       }, [props.listCustoOrcamento]);
 
@@ -42,7 +47,7 @@ function TotaisCustoOrcamento(props) {
           </label>
         </div>
         <div className="form-group">
-        {totaisCustoOrcamento.totalValorCustos}
+        {totaisCustoOrcamento.totalValorCustos ?? ""}
         </div>
       </div>
     </div>
