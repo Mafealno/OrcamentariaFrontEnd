@@ -1,6 +1,11 @@
 #containerOrcamentoGeral {
+  height: 90%;
   padding: 3%;
   overflow-y: hidden;
+}
+
+.conteudo-aba-orcamento {
+  height: 100%;
 }
 
 .form-orcamento {

@@ -80,9 +80,9 @@ export default function OrcamentoGeral() {
             )}
           </div>
         </nav>
-        <div className="tab-content" id="nav-tabContent">
+        <div className="tab-content conteudo-aba-orcamento" id="nav-tabContent">
           <div
-            className="tab-pane fade show active"
+            className="tab-pane fade show active conteudo-aba-orcamento"
             id="conteudo-cadastro-basico"
             role="tabpanel"
             aria-labelledby="aba-cadastro-basico"
@@ -96,7 +96,7 @@ export default function OrcamentoGeral() {
 
           <>
             <div
-              className="tab-pane fade "
+              className="tab-pane fade conteudo-aba-orcamento"
               id="conteudo-itens-orcamento-geral"
               role="tabpanel"
               aria-labelledby="aba-itens-orcamento-geral"
@@ -112,7 +112,7 @@ export default function OrcamentoGeral() {
               <ListMaoObraOrcamento />
             </div>
             <div
-              className="tab-pane fade"
+              className="tab-pane fade conteudo-aba-orcamento"
               id="conteudo-equipamentos"
               role="tabpanel"
               aria-labelledby="aba-equipamentos"
@@ -120,7 +120,7 @@ export default function OrcamentoGeral() {
               <ListEquipamentosOrcamento />
             </div>
             <div
-              className="tab-pane fade"
+              className="tab-pane fade conteudo-aba-orcamento"
               id="conteudo-custos"
               role="tabpanel"
               aria-labelledby="aba-custos"
@@ -128,7 +128,7 @@ export default function OrcamentoGeral() {
               <ListCustoOrcamento />
             </div>
             <div
-              className="tab-pane fade"
+              className="tab-pane fade conteudo-aba-orcamento"
               id="conteudo-totais"
               role="tabpanel"
               aria-labelledby="aba-totais"
