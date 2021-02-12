@@ -378,6 +378,15 @@ function ModalItemOrcamentoGeral(props) {
     });
   };
 
+  const calcularArea = (comprimento, largura) => {
+      const valorArea = comprimento + largura;
+
+      setDadosCadastro({
+        ...dadosCadastro,
+        area:{...dadosCadastro.area, valor: valorArea}
+      })
+  }
+
   const listenerClick = () => {
     setShowResultadoMaterial(false);
   };
@@ -547,6 +556,7 @@ function ModalItemOrcamentoGeral(props) {
                               name="area"
                               id="campo-area"
                               value={dadosCadastro.area.valor}
+                              onDoubleClick={()=>calcularArea(dadosCadastro.valorComprimento.valor, dadosCadastro.valorLargura.valor)}
                               onChange={(event) => handleInputChange(event)}
                               onFocus={(event) => removerErro(event.target.id)}
                             />
