@@ -99,6 +99,8 @@ function ListCustoOrcamento(props) {
         })
           .then((response) => response.json())
           .then((data) => {
+            
+            props.recarregarTotaisOrcamento(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID);
 
             custoOrcamento.CUSTO_ORCAMENTO_ID = data.CUSTO_ORCAMENTO_ID
 
@@ -134,6 +136,8 @@ function ListCustoOrcamento(props) {
               props.listCustoOrcamento,
               custoOrcamentoId
             );
+
+            props.recarregarTotaisOrcamento(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID);
     
             const msg = "Exclusão efetuada com sucesso";
             exibirTost("sucesso", msg);
@@ -200,6 +204,7 @@ function ListCustoOrcamento(props) {
 const mapStateToProps = (state) => ({
     linkBackEnd: state.backEnd.link,
     listCustoOrcamento: state.orcamento.listCustoOrcamento,
+    orcamentoSelecionado: state.orcamento.orcamentoSelecionado
   });
   
   const mapDispatchToProps = (dispatch) => ({
@@ -230,6 +235,9 @@ const mapStateToProps = (state) => ({
           orcamentoId
         )
       ),
+      recarregarTotaisOrcamento : (linkBackEnd, orcamentoId) =>
+        dispatch(orcamentoActions.recarregarTotaisOrcamento(linkBackEnd, orcamentoId)),
+
   });
   
   export default connect(

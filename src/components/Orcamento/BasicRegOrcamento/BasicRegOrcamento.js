@@ -533,8 +533,10 @@ function BasicRegOrcamento(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        const msg = "Cadastro efetuado com sucesso";
 
+        props.recarregarTotaisOrcamento(props.linkBackEnd, data.ORCAMENTO_ID);
+
+        const msg = "Cadastro efetuado com sucesso";
         exibirTost("sucesso", msg);
 
         if (data.TIPO_OBRA == "Geral") {
@@ -612,6 +614,9 @@ function BasicRegOrcamento(props) {
       body: JSON.stringify(montarObj(dadosOrcamento)),
     }).then((data) => {
       if (data.ok) {
+
+        props.recarregarTotaisOrcamento(props.linkBackEnd, dadosCadastro.orcamentoId.valor);
+
         const msg = "Cadastro atualizado com sucesso";
 
         exibirTost("sucesso", msg);
@@ -1094,6 +1099,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(orcamentoActions.selecionarOrcamento(orcamento)),
   selecionarClienteOrcamento: (clienteOrcamento) =>
     dispatch(orcamentoActions.selecionarClienteOrcamento(clienteOrcamento)),
+    recarregarTotaisOrcamento : (linkBackEnd, orcamentoId) =>
+    dispatch(orcamentoActions.recarregarTotaisOrcamento(linkBackEnd, orcamentoId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BasicRegOrcamento);

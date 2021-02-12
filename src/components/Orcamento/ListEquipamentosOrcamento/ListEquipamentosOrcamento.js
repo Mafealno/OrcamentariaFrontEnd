@@ -102,6 +102,9 @@ function ListEquipamentosOrcamento(props) {
     })
       .then((response) => response.json())
       .then((data) => {
+
+        props.recarregarTotaisOrcamento(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID);
+
         props.adicionarItemEquipamentoOrcamento(
           props.listEquipamentoOrcamento,
           data
@@ -130,6 +133,9 @@ function ListEquipamentosOrcamento(props) {
       }
     ).then((data) => {
       if (data.ok) {
+
+        props.recarregarTotaisOrcamento(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID);
+
         props.removerItemEquipamentoOrcamento(
           props.listEquipamentoOrcamento,
           equipamentoOrcamentoId
@@ -156,6 +162,9 @@ function ListEquipamentosOrcamento(props) {
       }
     ).then((data) => {
       if (data.ok) {
+
+        props.recarregarTotaisOrcamento(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID);
+
         props.recarregarItensEquipamentoOrcamento(
           props.linkBackEnd,
           equipamentoOrcamento.ORCAMENTO_ID
@@ -239,6 +248,7 @@ function ListEquipamentosOrcamento(props) {
 const mapStateToProps = (state) => ({
   linkBackEnd: state.backEnd.link,
   listEquipamentoOrcamento: state.orcamento.listEquipamentoOrcamento,
+  orcamentoSelecionado: state.orcamento.orcamentoSelecionado
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -269,6 +279,9 @@ const mapDispatchToProps = (dispatch) => ({
         orcamentoId
       )
     ),
+    recarregarTotaisOrcamento : (linkBackEnd, orcamentoId) =>
+    dispatch(orcamentoActions.recarregarTotaisOrcamento(linkBackEnd, orcamentoId)),
+
 });
 
 export default connect(

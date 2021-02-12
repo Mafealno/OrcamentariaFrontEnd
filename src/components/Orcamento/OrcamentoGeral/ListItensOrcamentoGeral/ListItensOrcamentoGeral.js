@@ -106,8 +106,9 @@ function ListItensOrcamentoGeral(props) {
       .then((data) => {
         props.adicionarItemOrcamentoGeral(props.listItensOrcamentoGeral, data);
 
-        const msg = "Cadastro efetuado com sucesso";
+        props.recarregarTotaisOrcamento(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID);
 
+        const msg = "Cadastro efetuado com sucesso";
         exibirTost("sucesso", msg);
 
         if (fazerAposCadastrar) {
@@ -131,6 +132,9 @@ function ListItensOrcamentoGeral(props) {
       }
     ).then((data) => {
       if (data.ok) {
+
+        props.recarregarTotaisOrcamento(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID);
+
         props.removerItemOrcamentoGeral(
           props.listItensOrcamentoGeral,
           itensOrcamentoId
@@ -159,6 +163,9 @@ function ListItensOrcamentoGeral(props) {
       }
     ).then((data) => {
       if (data.ok) {
+
+        props.recarregarTotaisOrcamento(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID);
+
         props.recarregarItensOrcamentoGeral(
           props.linkBackEnd,
           itemOrcamentoGeral.ORCAMENTO_ID
@@ -239,6 +246,7 @@ function ListItensOrcamentoGeral(props) {
 const mapStateToProps = (state) => ({
   linkBackEnd: state.backEnd.link,
   listItensOrcamentoGeral: state.orcamento.listItensOrcamentoGeral,
+  orcamentoSelecionado: state.orcamento.orcamentoSelecionado
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -260,6 +268,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(
       orcamentoActions.recarregarItensOrcamentoGeral(linkBackEnd, orcamentoId)
     ),
+    recarregarTotaisOrcamento : (linkBackEnd, orcamentoId) =>
+    dispatch(orcamentoActions.recarregarTotaisOrcamento(linkBackEnd, orcamentoId)),
 });
 
 export default connect(

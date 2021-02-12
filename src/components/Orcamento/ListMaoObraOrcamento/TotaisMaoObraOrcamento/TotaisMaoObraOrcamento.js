@@ -33,7 +33,7 @@ function TotaisMaoObraOrcamento(props) {
         totalCustos: 0,
       });
     }
-  }, [props.listMaoObraOrcamento]);
+  }, [props.listMaoObraOrcamento, props.orcamentoSelecionado.DIAS_TRABALHADO]);
 
   return (
     <div id="containerTotaisMaoObraOrcamento">

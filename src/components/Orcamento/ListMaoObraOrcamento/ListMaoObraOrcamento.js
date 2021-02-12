@@ -101,6 +101,9 @@ function ListMaoObraOrcamento(props) {
     })
       .then((response) => response.json())
       .then((data) => {
+
+        props.recarregarTotaisOrcamento(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID);
+
         props.adicionarMaoObraOrcamento(props.listMaoObraOrcamento, data);
 
         const msg = "Cadastro efetuado com sucesso";
@@ -126,6 +129,9 @@ function ListMaoObraOrcamento(props) {
       { method: "DELETE" }
     ).then((data) => {
       if (data.ok) {
+
+        props.recarregarTotaisOrcamento(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID);
+
         props.removerMaoObraOrcamento(
           props.listMaoObraOrcamento,
           maoObraOrcamentoId
@@ -152,6 +158,9 @@ function ListMaoObraOrcamento(props) {
       }
     ).then((data) => {
       if (data.ok) {
+
+        props.recarregarTotaisOrcamento(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID);
+
         props.atualizarFuncionarioMaoObraOrcamento(
           props.listMaoObraOrcamento,
           objMaoObraOrcamento,
@@ -221,8 +230,8 @@ function ListMaoObraOrcamento(props) {
 
 const mapStateToProps = (state) => ({
   linkBackEnd: state.backEnd.link,
-  orcamentoSelecionado: state.orcamento.orcamentoSelecionado,
   listMaoObraOrcamento: state.orcamento.listMaoObraOrcamento,
+  orcamentoSelecionado: state.orcamento.orcamentoSelecionado,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -252,6 +261,8 @@ const mapDispatchToProps = (dispatch) => ({
         pessoaIdAnterior
       )
     ),
+    recarregarTotaisOrcamento : (linkBackEnd, orcamentoId) =>
+    dispatch(orcamentoActions.recarregarTotaisOrcamento(linkBackEnd, orcamentoId)),
 });
 
 export default connect(
