@@ -65,7 +65,7 @@ const verificaTipoCusto = (tipo, diasTrabalhado) => {
       break;
   }
 
-  return Math.round(fator + 0, 5);
+  return Math.round(fator + 0.4);
 };
 
 
