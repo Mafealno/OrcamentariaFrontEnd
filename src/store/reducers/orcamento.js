@@ -6,6 +6,7 @@ const ESTADO_INICIAL = {
   listMaoObraOrcamento: [],
   listCustoOrcamento: [],
   listEquipamentoOrcamento: [],
+  totaisOrcamento: {},
   listOrcamento: [],
   listCustosMaoObraDisplay: [],
 };
@@ -42,6 +43,11 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
         ...state,
         listCustoOrcamento: action.listCustoOrcamento,
       };
+    case "SELECIONAR_TOTAIS_ORCAMENTO":
+      return {
+        ...state,
+        totaisOrcamento: action.totaisOrcamento
+      }
     case "ADICIONAR_ITEM_ORCAMENTO_GERAL":
       return {
         ...state,
@@ -135,6 +141,12 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
       return {
         ...(state = Object.assign({}, state, {
           listCustoOrcamento: state.listCustoOrcamento,
+        })),
+      };
+      case "RECARREGAR_TOTAIS_ORCAMENTO_CONCLUIDA":
+      return {
+        ...(state = Object.assign({}, state, {
+          totaisOrcamento: state.totaisOrcamento,
         })),
       };
       case "FILTRAR_LIST_ORCAMENTO_EDITAR":

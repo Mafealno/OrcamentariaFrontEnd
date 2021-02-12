@@ -28,6 +28,11 @@ export function selecionarOrcamento(orcamento) {
       listCustoOrcamento: orcamento.LIST_CUSTO_ORCAMENTO || [],
     });
 
+    dispatch({
+      type: "SELECIONAR_TOTAIS_ORCAMENTO",
+      totaisOrcamento: orcamento.TOTAIS_ORCAMENTO || {},
+    });
+
     if (orcamento.TIPO_OBRA == "Geral") {
       dispatch({
         type: "SELECIONAR_ITENS_ORCAMENTO_GERAL",
@@ -411,4 +416,19 @@ export function filtrarListOrcamentoEditar(
     type: "FILTRAR_LIST_ORCAMENTO_EDITAR",
     listOrcamento: listOrcamentoEditar,
   };
+}
+
+export function recarregarTotaisOrcamento(linkBackEnd, orcamentoId){
+  return (dispatch) => {
+    fetch(linkBackEnd + "/totaisOrcamento/buscar?orcamentoId=" + orcamentoId, {
+      method: "GET",
+    })
+      .then((responde) => responde.json())
+      .then((data) => {
+        dispatch({
+          type: "RECARREGAR_TOTAIS_ORCAMENTO_CONCLUIDA",
+          totaisOrcamento: data,
+        });
+      });
+  }
 }
