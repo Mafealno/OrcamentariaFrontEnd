@@ -65,6 +65,26 @@
   overflow-y: auto;
 }
 
+label {
+  color: white;
+}
+
+.limitar-texto-1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.limitar-texto-2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
 @media (max-height: 770px) and (min-width: 1200px) {
   .modal-body {
     max-height: 450px !important;
@@ -106,16 +126,4 @@
   .modal-body {
     max-height: 730px;
   }
-}
-
-label {
-  color: white;
-}
-
-.limitar-texto-1 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
 }
