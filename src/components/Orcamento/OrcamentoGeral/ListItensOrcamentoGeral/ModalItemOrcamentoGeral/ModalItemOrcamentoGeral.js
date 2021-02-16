@@ -379,7 +379,7 @@ function ModalItemOrcamentoGeral(props) {
   };
 
   const calcularArea = (comprimento, largura) => {
-      const valorArea = comprimento + largura;
+      const valorArea = comprimento.replace(',', '.') * largura.replace(',', '.');
 
       setDadosCadastro({
         ...dadosCadastro,
@@ -497,7 +497,7 @@ function ModalItemOrcamentoGeral(props) {
                       <div className="form-group">
                         <div className="form-row">
                           <div className="col">
-                            <label>Altura</label>
+                            <label>Comprimento</label>
                             <input
                               type="text"
                               className="form-control"
