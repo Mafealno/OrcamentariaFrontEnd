@@ -6,6 +6,13 @@ export function selecionarClienteOrcamento(clienteOrcamento) {
   };
 }
 
+export function selecionarOrcamentoSimples(orcamento) {
+  return {
+  type: "SELECIONAR_ORCAMENTO",
+      orcamentoSelecionado: orcamento,
+    };
+}
+
 export function selecionarOrcamento(orcamento) {
   return (dispatch) => {
     dispatch({
@@ -202,27 +209,6 @@ export function removerMaoObraOrcamento(
   };
 }
 
-export function removerItemCustoMaoObraOrcamento(
-  listMaoObraOrcamento,
-  maoObraOrcamentoId,
-  custoId
-) {
-  const indexPai = listMaoObraOrcamento.findIndex(
-    (elemento) => elemento.MAO_OBRA_ORCAMENTO_ID == maoObraOrcamentoId
-  );
-
-  let indexFilho = listMaoObraOrcamento[indexPai].LIST_CUSTO.findIndex(
-    (elemento) => elemento.CUSTO_ID == custoId
-  );
-
-  listMaoObraOrcamento[indexPai].LIST_CUSTO.splice(indexFilho, 1);
-
-  return {
-    type: "REMOVER_ITEM_CUSTO_MAO_OBRA_ORCAMENTO",
-    listMaoObraOrcamento,
-  };
-}
-
 export function listarOrcamento(linkBackEnd) {
   return (dispatch) => {
     fetch(linkBackEnd + "/orcamento/", {
@@ -321,11 +307,14 @@ export function removerItemCustosMaoObraDisplay(
   listCustosMaoObraDisplay,
   keyComponente
 ) {
-  let index = listCustosMaoObraDisplay.findIndex(
-    (elemento) => elemento.props.keyComponente == keyComponente
-  );
 
-  listCustosMaoObraDisplay.splice(index, 1);
+  if(listCustosMaoObraDisplay){
+    let index = listCustosMaoObraDisplay.findIndex((elemento) => elemento.props.keyComponente == keyComponente);
+  
+    listCustosMaoObraDisplay.splice(index, 1);
+  }
+
+  listCustosMaoObraDisplay = [...listCustosMaoObraDisplay]
 
   return {
     type: "REMOVER_ITEM_CUSTO_MAO_OBRA_DISPLAY",
@@ -419,12 +408,14 @@ export function filtrarListOrcamentoEditar(
 }
 
 export function recarregarTotaisOrcamento(linkBackEnd, orcamentoId){
+  
   return (dispatch) => {
     fetch(linkBackEnd + "/totaisOrcamento/buscar?orcamentoId=" + orcamentoId, {
       method: "GET",
     })
       .then((responde) => responde.json())
       .then((data) => {
+
         dispatch({
           type: "RECARREGAR_TOTAIS_ORCAMENTO_CONCLUIDA",
           totaisOrcamento: data,
