@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "./TotaisOrcamento.css";
 import GraficoPizza from "../../GraficoPizza/GraficoPizza";
 import TotalizadorItem from "./TotalizadorItem/TotalizadorItem";
+import TotaisGerais from "./TotaisGerais/TotaisGerais";
 import * as calculoUtils from "../../../utils/calculo";
 import { connect } from "react-redux";
 
@@ -67,10 +68,10 @@ function TotaisOrcamento(props) {
                 setItensTotaisCustosDisplay(<TotalizadorItem dados={custos}/>)
             }
 
-            setValoresGrafico(objGrafico);
+            preencherGrafico(objGrafico);
             
         }else{
-            setValoresGrafico([])
+            preencherGrafico([]);
         }
     }, [props.listCustoOrcamento, 
         props.listEquipamentoOrcamento, 
@@ -80,6 +81,10 @@ function TotaisOrcamento(props) {
         props.orcamentoSelecionado.TIPO_OBRA, 
         props.totaisOrcamento, 
         props.totaisOrcamento.TOTAIS_CUSTOS]);
+
+        const preencherGrafico = (valores) => {
+            setValoresGrafico(valores)
+        }
 
     const transformarLista = (tipo, diasTrabalhado, lista,) => {
         switch (tipo) {
@@ -133,7 +138,9 @@ function TotaisOrcamento(props) {
                     {itensTotaisEquipamentosDisplay}
                     {itensTotaisCustosDisplay}
                 </div>
-                <div id="espaco-totalizador"></div>
+                <div id="espaco-totalizador">
+                    <TotaisGerais/>
+                </div>
                 
             </div>
         </>

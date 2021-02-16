@@ -261,10 +261,11 @@ function BasicRegMaterial(props) {
     }
 
     dadosMaterial.pessoa = dadosPessoa;
+    
     fetch(props.linkBackEnd + "/material/" + dadosCadastro.materialId.valor, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(montarObj()),
+      body: JSON.stringify(montarObj(dadosMaterial)),
     }).then((data) => {
       if (data.ok) {
         props.recarregarMaterial(

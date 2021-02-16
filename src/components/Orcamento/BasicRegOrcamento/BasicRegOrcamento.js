@@ -553,7 +553,7 @@ function BasicRegOrcamento(props) {
 
   const deletarOrcamento = () => {
     let tipoRota = "";
-    if (dadosCadastro.tipoObra == "Geral") {
+    if (dadosCadastro.tipoObra.valor == "Geral") {
       tipoRota = "/orcamento/";
     } else {
       tipoRota = "/orcamentoIntumescente/";
@@ -723,7 +723,7 @@ function BasicRegOrcamento(props) {
                       <div className="close-select-custo">
                         <a
                           href="#"
-                          onClick={() => props.selecionarOrcamento({})}
+                          onClick={() => props.selecionarOrcamentoGeral({})}
                         >
                           <span className="fa fa-close close-orcamento"></span>
                         </a>
@@ -944,7 +944,7 @@ function BasicRegOrcamento(props) {
                   <div className="form-row">
                     <div className="col-xl-6 col-12">
                       <fieldset className="sub-fieldset">
-                        <legend>Informções do contato</legend>
+                        <legend>Informações do contato</legend>
                         <div id="contato-cliente-orcamento">
                           {itemContatoDisplay}
                         </div>
@@ -952,7 +952,7 @@ function BasicRegOrcamento(props) {
                     </div>
                     <div className="col-xl-6 col-12">
                       <fieldset className="sub-fieldset">
-                        <legend>Informções do endereço</legend>
+                        <legend>Informações do endereço</legend>
                         <div className="form-group">
                           <div className="form-row">
                             <div className="col">
@@ -1099,7 +1099,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  selecionarOrcamento: (orcamento) =>
+  selecionarOrcamentoGeral: (orcamento) =>
     dispatch(orcamentoActions.selecionarOrcamento(orcamento)),
   selecionarClienteOrcamento: (clienteOrcamento) =>
     dispatch(orcamentoActions.selecionarClienteOrcamento(clienteOrcamento)),

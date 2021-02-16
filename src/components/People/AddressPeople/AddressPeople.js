@@ -43,7 +43,7 @@ function AddressPeople(props) {
     } else {
       setEnderecoDisplay([]);
     }
-  }, [props.pessoaSelecionada.LIST_CONTATO]);
+  }, [props.pessoaSelecionada.LIST_ENDERECO, props.pessoaSelecionada.PESSOA_ID]);
 
   const exibirTost = (tipo, mensagem) => {
     switch (tipo) {

@@ -61,7 +61,7 @@ function TotaisMaoObraOrcamento(props) {
             Valor total de custos (R$)
           </label>
         </div>
-        <div className="form-group">{totaisMaoObraOrcamento.totalCustos ?? ""}</div>
+        <div className="form-group">{totaisMaoObraOrcamento.totalCustos.toFixed(2) ?? ""}</div>
       </div>
     </div>
   );

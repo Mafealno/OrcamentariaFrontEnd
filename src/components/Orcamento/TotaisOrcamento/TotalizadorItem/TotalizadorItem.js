@@ -20,14 +20,14 @@ function TotalizadorItem(props) {
         setItensDisplay(itens.map((item) => 
         <div className="item-filho">
             <div className="nome-item limitar-texto-1">{item.titulo}</div>
-            <div className="valor-item">{"R$ " + item.valor}</div>
+            <div className="valor-item">{"R$ " + item.valor.toFixed(2)}</div>
         </div>))
 
         let total = props.dados.valores.reduce((acumulador, itemAtual) => acumulador += itemAtual, 0)
 
         setItemTotal(
         <div className="item-filho">
-            <div className="valor-item">{"R$ " + total}</div>
+            <div className="valor-item">{"R$ " + total.toFixed(2)}</div>
         </div>)
         
     }, [props.dados])

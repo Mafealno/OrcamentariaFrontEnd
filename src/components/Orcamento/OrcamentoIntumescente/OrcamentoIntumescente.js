@@ -13,17 +13,17 @@ export default function OrcamentoIntumescente() {
         <nav>
           <div className="nav nav-tabs" id="nav-tab" role="tablist">
             <a
-              className="nav-item nav-link active"
+              className="nav-item nav-link active col text-center"
               id="aba-cadastro-basico"
               data-toggle="tab"
               href="#conteudo-cadastro-basico"
             >
-              Cadastro básico
+              
             </a>
             {mostrarAbas && (
               <>
                 <a
-                  className="nav-item nav-link"
+                  className="nav-item nav-link col text-center"
                   id="nav-profile-tab"
                   data-toggle="tab"
                   href="#nav-profile"
@@ -31,7 +31,7 @@ export default function OrcamentoIntumescente() {
                   Itens
                 </a>
                 <a
-                  className="nav-item nav-link "
+                  className="nav-item nav-link col text-center "
                   id="nav-contact-tab"
                   data-toggle="tab"
                   href="#nav-contact"

@@ -26,7 +26,7 @@ function BasicRegPeople(props) {
   useEffect(() => {
     setPessoaId(props.pessoaSelecionada.PESSOA_ID || "");
     setTipoCadastro(props.pessoaSelecionada.TIPO_CADASTRO || "");
-  }, [props.pessoaSelecionada.PESSOA_ID]);
+  }, [props.pessoaSelecionada.PESSOA_ID, props.pessoaSelecionada.TIPO_CADASTRO]);
 
   const exibirTost = (tipo, mensagem) => {
     switch (tipo) {

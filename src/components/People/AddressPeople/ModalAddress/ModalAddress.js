@@ -11,7 +11,7 @@ function ModalAddress(props) {
   let dadosCampo = { ...validacaoDadosUtils.dadosCampo };
 
   let [dadosCadastro, setDadosCadastro] = useState({
-    pessoaId: { ...dadosCampo },
+    pessoaId: { ...dadosCampo, requerido: true },
     enderecoId: { ...dadosCampo, valorPadrao: 0 },
     cep: { ...dadosCampo, formato: /^\d{3}\d{2}?\d{3}$/ },
     logradouro: { ...dadosCampo, requerido: true },
@@ -25,22 +25,28 @@ function ModalAddress(props) {
   });
 
   useEffect(() => {
-    setDadosCadastro({
-      pessoaId: { ...dadosCadastro.pessoaId, valor: props.PESSOA_ID },
-      enderecoId: { ...dadosCadastro.enderecoId, valor: props.ENDERECO_ID },
-      cep: { ...dadosCadastro.cep, valor: props.CEP },
-      logradouro: { ...dadosCadastro.logradouro, valor: props.LOGRADOURO },
-      numero: { ...dadosCadastro.numero, valor: props.NUMERO_ENDERECO },
-      complemento: { ...dadosCadastro.complemento, valor: props.COMPLEMENTO },
-      bairro: { ...dadosCadastro.bairro, valor: props.BAIRRO },
-      cidade: { ...dadosCadastro.cidade, valor: props.CIDADE },
-      estado: { ...dadosCadastro.estado, valor: props.ESTADO },
-      uf: { ...dadosCadastro.uf, valor: props.UF },
-      enderecoPadrao: {
-        ...dadosCadastro.enderecoPadrao,
-        valor: props.ENDERECO_PADRAO,
-      },
-    });
+    if(props.show){
+      if(props.ENDERECO_ID){
+        setDadosCadastro({
+          pessoaId: { ...dadosCadastro.pessoaId, valor: props.pessoaSelecionada.PESSOA_ID },
+          enderecoId: { ...dadosCadastro.enderecoId, valor: props.ENDERECO_ID },
+          cep: { ...dadosCadastro.cep, valor: props.CEP },
+          logradouro: { ...dadosCadastro.logradouro, valor: props.LOGRADOURO },
+          numero: { ...dadosCadastro.numero, valor: props.NUMERO_ENDERECO },
+          complemento: { ...dadosCadastro.complemento, valor: props.COMPLEMENTO },
+          bairro: { ...dadosCadastro.bairro, valor: props.BAIRRO },
+          cidade: { ...dadosCadastro.cidade, valor: props.CIDADE },
+          estado: { ...dadosCadastro.estado, valor: props.ESTADO },
+          uf: { ...dadosCadastro.uf, valor: props.UF },
+          enderecoPadrao: {...dadosCadastro.enderecoPadrao, valor: props.ENDERECO_PADRAO},
+        });
+      }else{
+        setDadosCadastro({
+          ...dadosCadastro,
+          pessoaId : {...dadosCadastro.pessoaId, valor: props.pessoaSelecionada.PESSOA_ID }
+        });
+      }
+    }
   }, [props.show]);
 
   useEffect(() => {

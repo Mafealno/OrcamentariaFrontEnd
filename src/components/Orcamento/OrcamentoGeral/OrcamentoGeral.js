@@ -19,17 +19,17 @@ export default function OrcamentoGeral() {
         <nav>
           <div className="nav nav-tabs" id="nav-tab" role="tablist">
             <a
-              className="nav-item nav-link active"
+              className="nav-item nav-link active col position-initial text-center"
               id="aba-cadastro-basico"
               data-toggle="tab"
               href="#conteudo-cadastro-basico"
             >
-              Cadastro básico
+              Básico
             </a>
             {mostrarAbas && (
               <>
                 <a
-                  className="nav-item nav-link"
+                  className="nav-item nav-link col position-initial text-center"
                   id="aba-itens-orcamento-geral"
                   data-toggle="tab"
                   href="#conteudo-itens-orcamento-geral"
@@ -37,7 +37,7 @@ export default function OrcamentoGeral() {
                   Itens
                 </a>
                 <a
-                  className="nav-item nav-link"
+                  className="nav-item nav-link col position-initial text-center"
                   id="aba-mao-obra"
                   data-toggle="tab"
                   href="#conteudo-mao-obra"
@@ -45,7 +45,7 @@ export default function OrcamentoGeral() {
                   Mão de obra
                 </a>
                 <a
-                  className="nav-item nav-link"
+                  className="nav-item nav-link col position-initial text-center"
                   id="aba-equipamentos"
                   data-toggle="tab"
                   href="#conteudo-equipamentos"
@@ -53,7 +53,7 @@ export default function OrcamentoGeral() {
                   Equipamentos
                 </a>
                 <a
-                  className="nav-item nav-link"
+                  className="nav-item nav-link col position-initial text-center"
                   id="aba-custos"
                   data-toggle="tab"
                   href="#conteudo-custos"
@@ -61,7 +61,7 @@ export default function OrcamentoGeral() {
                   Custos
                 </a>
                 <a
-                  className="nav-item nav-link"
+                  className="nav-item nav-link col position-initial text-center"
                   id="aba-totais"
                   data-toggle="tab"
                   href="#conteudo-totais"

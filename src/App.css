@@ -85,6 +85,10 @@ label {
   -webkit-box-orient: vertical;
 }
 
+.w-100-pc{
+  width: 100% !important;
+}
+
 @media (max-height: 770px) and (min-width: 1200px) {
   .modal-body {
     max-height: 450px !important;

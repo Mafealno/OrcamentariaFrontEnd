@@ -1,21 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useLayoutEffect } from 'react'
 import { Pie } from 'react-chartjs-2';
 import "chartjs-plugin-datalabels";
 
-
 function GraficoPizza(props) {
-   
-    let percentage = 0
-    const [options, setOptions] = useState({
-        legend:{
-            position: 'right', //top, left, right, bottom
-            labels:{
+
+    const [graficoDisplay, setGraficoDisplay] = useState(<></>);
+    const [sizeWidth, setSizeWidth] = useState(0);
+    const [legend, setLegend] = useState({
+        position: 'right', //top, left, right, bottom
+        labels:{
             align: 'center', //center, start, end,   
             fontColor: 'white',
             fontSize: 15,
-            },
         },
+    })
+    const [options, setOptions] = useState({
         layout: {
             padding: {
                 top: 12,
@@ -23,7 +23,7 @@ function GraficoPizza(props) {
             }
         }
     })
-
+    
     const [informacaoGrafico, setInformacaoGrafico] = useState({
         labels: [],
         datasets: [{
@@ -44,39 +44,77 @@ function GraficoPizza(props) {
                 color: 'white',
                 borderWidth: 2,
                 backgroundColor: function(context) {
-                return context.dataset.backgroundColor;
+                    return context.dataset.backgroundColor;
                 },
                 display: function(context) {
-                var dataset = context.dataset;
-                var count = dataset.data.length;
-                var value = dataset.data[context.dataIndex];
-                return value > count * 1.5;
+                    var dataset = context.dataset;
+                    var count = dataset.data.length;
+                    var value = dataset.data[context.dataIndex];
+                    return value > count * 1.5;
                 },
                 font: {
-                weight: 'bold'
+                    weight: 'bold'
                 },
             }
         }]
     })
+    
+    let percentage = 0
+
+    useLayoutEffect(() => {
+        function updateSize() {
+            setSizeWidth(window.innerWidth);
+        }
+        window.addEventListener('resize', updateSize);
+        updateSize();
+        return () => window.removeEventListener('resize', updateSize);
+      }, []);
+    
 
     useEffect(() => {
+        setGraficoDisplay(<></>);
+        setLegend({});
+        if(sizeWidth < 1200){
+            setLegend({
+                ...legend,
+                display: false
+            })
+        }else{
+            setLegend({
+                ...legend,
+                display: true,
+            })
+        }
+    }, [sizeWidth])
 
+    useEffect(() => {
+        if(legend){
+            setGraficoDisplay(<Pie className="d-inline" id={props.idGrafico} data={informacaoGrafico} options={options} legend={legend}/>)
+        }
+    }, [legend])
+
+    useEffect(() => {
         if(props.dadosGrafico){
             const labels = props.dadosGrafico.map((item)=> item.titulo.toUpperCase())
-            const dados = props.dadosGrafico.map((item)=> item.valor)
+            const dados = props.dadosGrafico.map((item)=> parseFloat(item.valor.toFixed(2)))
             setInformacaoGrafico({
                 ...informacaoGrafico,
                 labels: labels,
                 datasets: [{...informacaoGrafico.datasets[0], data: dados}]
             })
+            calcularPorcentagemGrafico();
 
-            calcularPorcentagemGrafico()
         }
     }, [props.dadosGrafico])
+    
+    useEffect(() => {
+        setGraficoDisplay(<Pie className="d-inline" id={props.idGrafico} data={informacaoGrafico} options={options} legend={legend}/>)
+    }, [informacaoGrafico])
 
 const calcularPorcentagemGrafico = () => {
     setOptions({
         ...options,
+        responsive: true,
         plugins: {
             datalabels: {
               formatter: (value, ctx) => {
@@ -92,12 +130,11 @@ const calcularPorcentagemGrafico = () => {
             }
           }
     })
-    
 }
 
     return (
         <>
-        <Pie id={props.idGrafico} data={informacaoGrafico} options={options} />
+            {graficoDisplay}
         </>
     )
 }

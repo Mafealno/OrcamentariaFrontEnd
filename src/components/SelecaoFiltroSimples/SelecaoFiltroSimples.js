@@ -8,7 +8,7 @@ function SelecaoFiltroSimples(props) {
 
     useEffect(() => {
         setItensDisplay(props.camposMontar.map((item) =>(
-            <div className="form-check item-selecao-filtro-simples">
+            <div className="form-check item-selecao-filtro-simples position-initial">
 
                 <input
                 className="form-check-input"

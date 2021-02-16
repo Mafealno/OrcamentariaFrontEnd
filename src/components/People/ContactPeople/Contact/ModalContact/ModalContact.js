@@ -14,7 +14,7 @@ function ModalContact(props) {
   let [email, setEmail] = useState(true);
 
   let [dadosCadastro, setDadosCadastro] = useState({
-    pessoaId: { ...dadosCampo },
+    pessoaId: { ...dadosCampo, requerido: true },
     contatoId: { ...dadosCampo, valorPadrao: 0 },
     tipoContato: { ...dadosCampo, requerido: true },
     contato: { ...dadosCampo, requerido: true },
@@ -24,25 +24,33 @@ function ModalContact(props) {
   });
 
   useEffect(() => {
-    if (props.PESSOA_ID) {
-      setDadosCadastro({
-        pessoaId: { ...dadosCadastro.pessoaId, valor: props.PESSOA_ID },
-        contatoId: { ...dadosCadastro.contatoId, valor: props.CONTATO_ID },
-        tipoContato: {
-          ...dadosCadastro.tipoContato,
-          valor: props.TIPO_CONTATO,
-        },
-        contato: { ...dadosCadastro.contato, valor: props.CONTATO },
-        ddd: { ...dadosCadastro.ddd, valor: props.DDD },
-        ramal: { ...dadosCadastro.ramal, valor: props.RAMAL },
-        contatoPadrao: {
-          ...dadosCadastro.contatoPadrao,
-          valor: props.CONTATO_PADRAO,
-        },
-      });
-
-      tipoContatoSelecionado(props.TIPO_CONTATO);
-    } else {
+    if(props.show){
+      if (props.CONTATO_ID) {
+        setDadosCadastro({
+          pessoaId: { ...dadosCadastro.pessoaId, valor: props.pessoaSelecionada.PESSOA_ID },
+          contatoId: { ...dadosCadastro.contatoId, valor: props.CONTATO_ID },
+          tipoContato: {
+            ...dadosCadastro.tipoContato,
+            valor: props.TIPO_CONTATO,
+          },
+          contato: { ...dadosCadastro.contato, valor: props.CONTATO },
+          ddd: { ...dadosCadastro.ddd, valor: props.DDD },
+          ramal: { ...dadosCadastro.ramal, valor: props.RAMAL },
+          contatoPadrao: {
+            ...dadosCadastro.contatoPadrao,
+            valor: props.CONTATO_PADRAO,
+          },
+        });
+  
+        tipoContatoSelecionado(props.TIPO_CONTATO);
+      } else {
+        limparCampos();
+        setDadosCadastro({
+          ...dadosCadastro,
+          pessoaId: { ...dadosCadastro.pessoaId, valor: props.pessoaSelecionada.PESSOA_ID },
+        })
+      }
+    }else{
       limparCampos();
     }
   }, [props.show]);
@@ -132,6 +140,7 @@ function ModalContact(props) {
         break;
       case "Email":
         dadosCadastro.contato.formato = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+        dadosCadastro.ddd.requerido =  false;
         break;
       default:
         dadosCadastro.contato.formato = "";
@@ -216,7 +225,7 @@ function ModalContact(props) {
       <ModalControl
         {...props}
         estiloModalHeader="backgroundModal tituloModal"
-        estiloModalBody="backgroundModal"
+        estiloModalBody="backgroundModal modal-body-contato"
         estiloModalFooter="backgroundModal"
         tituloModal={
           dadosCadastro.contatoId.valor ? "Editar Contato" : "Novo contato"

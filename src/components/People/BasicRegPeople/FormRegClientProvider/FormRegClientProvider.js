@@ -83,8 +83,11 @@ function FormClientReg(props) {
   const definirRequerimentoTipoPessoa = (dadosCadastro) => {
     if (dadosCadastro.tipoPessoa.valor == "F") {
       dadosCadastro.cpf.requerido = true;
+      dadosCadastro.cnpj.requerido = false;
     } else {
       dadosCadastro.cnpj.requerido = true;
+      dadosCadastro.rg.requerido = false;
+      dadosCadastro.cpf.requerido = false;
     }
 
     return dadosCadastro;

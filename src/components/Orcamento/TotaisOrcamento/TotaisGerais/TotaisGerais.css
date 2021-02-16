@@ -1,0 +1,78 @@
+#containerTotaisGerais{
+    display: grid;
+    grid-template-areas: 
+    "total-area"
+    "total-valor-geral"
+    "calcular-porcentagem"
+    "total-valor-porcentagem";
+    width: 100%;
+    height: 100%;
+    padding: 5px
+}
+
+#total-area{
+    grid-area: total-area;
+}
+
+#total-valor-geral{
+    grid-area: total-valor-geral;
+}
+
+#calcular-porcentagem{
+    grid-area: calcular-porcentagem;
+}
+
+#total-valor-porcentagem{
+    grid-area: total-valor-porcentagem;
+    width: 100%;
+    height: 100%;
+}
+
+.estilo-total-com-porcentagem{
+    background-color: #9c0404;
+    width: 80%;
+    height: 70%;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.titulo-totais-gerais{
+    font-weight: bold;
+}
+
+.orientacao-coluna-totais{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-direction: column;
+}
+
+.mb-5{
+    margin-bottom: 0 !important;
+}
+
+.orientacao-coluna-calculo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+@media (min-width: 1200px){
+    #containerTotaisGerais{
+        grid-template-areas: 
+        "total-area total-valor-geral"
+        "calcular-porcentagem total-valor-porcentagem";
+        grid-template-rows: 50 50%;
+        grid-template-columns: 50% 50%;
+    }
+    .orientacao-coluna-calculo{
+        flex-direction: row;
+    }
+
+    .padding-right{
+        padding-right: 0 !important
+    }
+}

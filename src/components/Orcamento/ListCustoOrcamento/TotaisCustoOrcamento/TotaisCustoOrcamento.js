@@ -47,7 +47,7 @@ function TotaisCustoOrcamento(props) {
           </label>
         </div>
         <div className="form-group">
-        {totaisCustoOrcamento.totalValorCustos ?? ""}
+        {totaisCustoOrcamento.totalValorCustos.toFixed(2) ?? ""}
         </div>
       </div>
     </div>
