@@ -18,10 +18,7 @@ export default function ItemMaoObraOrcamento(props) {
     valorDiario: { ...dadosCampo },
   });
 
-  let [
-    itemCustoMaoObraOrcamentoDisplay,
-    setItemCustoMaoObraOrcamentoDisplay,
-  ] = useState([]);
+  let [itemCustoMaoObraOrcamentoDisplay, setItemCustoMaoObraOrcamentoDisplay] = useState([]);
 
   useEffect(() => {
     setDadosCadastro({
@@ -47,10 +44,31 @@ export default function ItemMaoObraOrcamento(props) {
       },
     });
 
-    if (props.dadosMaoObra.LIST_CUSTO.length > 0) {
+    montarItensCustoMaoObraOrcamento(props.dadosMaoObra.LIST_CUSTO)
+      
+  }, [props.dadosMaoObra.LIST_CUSTO]);
+
+  const adicionarItemCustoMaoObraOrcamento = (itemCustoMaoObraOrcamento) => {
+    
+    props.dadosMaoObra.LIST_CUSTO.push(itemCustoMaoObraOrcamento);
+    
+    montarItensCustoMaoObraOrcamento(props.dadosMaoObra.LIST_CUSTO)
+  };
+
+  const removerItemCustoMaoObraOrcamento = (custoId) => {
+
+    const index = props.dadosMaoObra.LIST_CUSTO.findIndex((elemento) => elemento.CUSTO_ID == custoId);
+
+    props.dadosMaoObra.LIST_CUSTO.splice(index, 1);
+
+    montarItensCustoMaoObraOrcamento(props.dadosMaoObra.LIST_CUSTO)
+  };
+
+  const montarItensCustoMaoObraOrcamento = (listCustos) => {
+    if (listCustos.length > 0) {
       setItemCustoMaoObraOrcamentoDisplay([]);
-      setItemCustoMaoObraOrcamentoDisplay(
-        props.dadosMaoObra.LIST_CUSTO.map((elemento) => (
+        setItemCustoMaoObraOrcamentoDisplay(
+          listCustos.map((elemento) => (
           <ItemCustoMaoObraOrcamento
             key={elemento.CUSTO_ID}
             dadosCustoMaoObra={elemento}
@@ -60,13 +78,7 @@ export default function ItemMaoObraOrcamento(props) {
     } else {
       setItemCustoMaoObraOrcamentoDisplay([]);
     }
-  }, [props.dadosMaoObra.LIST_CUSTO]);
-
-  const adicionarItemCustoMaoObraOrcamento = (itemCustoMaoObraOrcamento) => {
-    props.dadosMaoObra.LIST_CUSTO.push(itemCustoMaoObraOrcamento);
-
-    props.dadosMaoObra.LIST_CUSTO = [...props.dadosMaoObra.LIST_CUSTO];
-  };
+  }
 
   return (
     <>
@@ -142,6 +154,7 @@ export default function ItemMaoObraOrcamento(props) {
           adicionarItemCustoMaoObraOrcamento={(itemCustoMaoObraOrcamento) =>
             adicionarItemCustoMaoObraOrcamento(itemCustoMaoObraOrcamento)
           }
+          removerItemCustoMaoObraOrcamento={(custoId) => removerItemCustoMaoObraOrcamento(custoId)}
           montarItemDisplay={() => props.montarItemDisplay()}
         />
       </div>

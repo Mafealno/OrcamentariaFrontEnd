@@ -31,9 +31,9 @@ function ListMaoObraOrcamento(props) {
 
   useEffect(() => {
     montarItemDisplay();
-  }, [props.listMaoObraOrcamento.length]);
+  }, [props.listMaoObraOrcamento]);
 
-  const montarItemDisplay = () => {
+  const montarItemDisplay = (fazerAposMontar) => {
     if (props.listMaoObraOrcamento.length > 0) {
       setItemMaoObraOrcamentoDisplay(
         props.listMaoObraOrcamento.map((elemento) => (
@@ -49,12 +49,16 @@ function ListMaoObraOrcamento(props) {
             editarCadastro={(objMaoObraOrcamento, pessoaIdAnterior) =>
               editarCadastro(objMaoObraOrcamento, pessoaIdAnterior)
             }
-            montarItemDisplay={() => montarItemDisplay()}
+            montarItemDisplay={(fazerAposMontar) => montarItemDisplay(fazerAposMontar)}
           />
         ))
       );
     }else{
       setItemMaoObraOrcamentoDisplay([]);
+    }
+
+    if(fazerAposMontar){
+      return fazerAposMontar
     }
   };
 

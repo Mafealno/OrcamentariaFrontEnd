@@ -26,7 +26,7 @@ function TotaisCustoOrcamento(props) {
             totalValorCustos: 0,
           });
         }
-      }, [props.listCustoOrcamento]);
+      }, [props.listCustoOrcamento, props.totaisOrcamento]);
 
     return (
         <div id="containerTotaisEquipamentoOrcamento">
@@ -58,6 +58,7 @@ const mapStateToProps = (state) => ({
     linkBackEnd: state.backEnd.link,
     listCustoOrcamento: state.orcamento.listCustoOrcamento,
     orcamentoSelecionado: state.orcamento.orcamentoSelecionado,
+    totaisOrcamento: state.orcamento.totaisOrcamento
   });
   
   const mapDispatchToProps = (dispatch) => ({});

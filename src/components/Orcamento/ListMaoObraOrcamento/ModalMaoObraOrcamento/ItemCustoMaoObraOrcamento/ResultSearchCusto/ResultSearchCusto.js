@@ -5,7 +5,7 @@ export default function ResultSearchCusto(props) {
   const itemDisplay = props.resultados.map((custo) => (
     <div
       className="row container-result-custo"
-      key={custo.PESSOA_ID}
+      key={custo.CUSTO_ID}
       onClick={() => props.selecionarCustoMaoObraOrcamento(custo)}
     >
       <div className="col item-result item-center">{custo.NOME_CUSTO}</div>

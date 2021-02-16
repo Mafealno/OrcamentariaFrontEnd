@@ -67,6 +67,7 @@ function ListCustoOrcamento(props) {
           setListItemCustoOrcamentoDisplay(
             props.listCustoOrcamento.map((elemento) => (
               <ItemCustoOrcamento
+              key={elemento.CUSTO_ORCAMENTO_ID}
                 custoOrcamento={elemento}
                 salvarCustoOrcamento={(
                   custoOrcamento,

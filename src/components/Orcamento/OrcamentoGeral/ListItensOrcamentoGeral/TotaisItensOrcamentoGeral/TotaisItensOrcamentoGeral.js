@@ -39,7 +39,7 @@ function TotaisItensOrcamentoGeral(props) {
         totalValor: 0,
       });
     }
-  }, [props.listItensOrcamentoGeral]);
+  }, [props.listItensOrcamentoGeral, props.totaisOrcamento]);
 
   return (
     <div id="containerTotaisItensOrcamentoGeral">
@@ -76,6 +76,7 @@ function TotaisItensOrcamentoGeral(props) {
 const mapStateToProps = (state) => ({
   linkBackEnd: state.backEnd.link,
   listItensOrcamentoGeral: state.orcamento.listItensOrcamentoGeral,
+  totaisOrcamento: state.orcamento.totaisOrcamento
 });
 
 const mapDispatchToProps = (dispatch) => ({});

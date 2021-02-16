@@ -617,6 +617,10 @@ function BasicRegOrcamento(props) {
 
         props.recarregarTotaisOrcamento(props.linkBackEnd, dadosCadastro.orcamentoId.valor);
 
+        const objOrcamento = montarObj(dadosOrcamento)
+        objOrcamento.CLIENTE_ORCAMENTO = props.clienteOrcamento
+        props.selecionarOrcamentoSimples(objOrcamento);
+
         const msg = "Cadastro atualizado com sucesso";
 
         exibirTost("sucesso", msg);
@@ -1101,6 +1105,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(orcamentoActions.selecionarClienteOrcamento(clienteOrcamento)),
     recarregarTotaisOrcamento : (linkBackEnd, orcamentoId) =>
     dispatch(orcamentoActions.recarregarTotaisOrcamento(linkBackEnd, orcamentoId)),
+    selecionarOrcamentoSimples : (orcamento) => dispatch(orcamentoActions.selecionarOrcamentoSimples(orcamento))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BasicRegOrcamento);

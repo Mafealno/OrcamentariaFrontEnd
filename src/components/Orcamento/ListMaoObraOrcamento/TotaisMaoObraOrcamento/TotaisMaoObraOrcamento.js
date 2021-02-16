@@ -33,7 +33,7 @@ function TotaisMaoObraOrcamento(props) {
         totalCustos: 0,
       });
     }
-  }, [props.listMaoObraOrcamento, props.orcamentoSelecionado.DIAS_TRABALHADO]);
+  }, [props.listMaoObraOrcamento, props.totaisOrcamento]);
 
   return (
     <div id="containerTotaisMaoObraOrcamento">
@@ -71,6 +71,7 @@ const mapStateToProps = (state) => ({
   linkBackEnd: state.backEnd.link,
   listMaoObraOrcamento: state.orcamento.listMaoObraOrcamento,
   orcamentoSelecionado: state.orcamento.orcamentoSelecionado,
+  totaisOrcamento: state.orcamento.totaisOrcamento
 });
 
 const mapDispatchToProps = (dispatch) => ({});

@@ -131,7 +131,8 @@ function ItemCustoMaoObraOrcamento(props) {
   };
 
   const buscarCusto = () => {
-    let rota = "/custo/";
+    if(!cadastrado){
+      let rota = "/custo/";
     if (stringBuscaCusto) {
       if (stringBuscaCusto.match(/\d/)) {
         rota = rota + "buscar?custoId=" + stringBuscaCusto;
@@ -148,6 +149,7 @@ function ItemCustoMaoObraOrcamento(props) {
         setDataCusto(data);
         setShowResultadoCusto(true);
       });
+    }
   };
 
   const montarObjCusto = (obj) => {
@@ -163,7 +165,7 @@ function ItemCustoMaoObraOrcamento(props) {
   const montarObjMaoObraOrcamento = (obj, objCusto) => {
     return {
       MAO_OBRA_ORCAMENTO_ID: obj.maoObraOrcamentoId.valor,
-      ORCAMENTO_ID: 0,
+      ORCAMENTO_ID: props.orcamentoSelecionado.ORCAMENTO_ID,
       FUNCIONARIO: {
         PESSOA_ID: obj.pessoaId.valor,
         NOME_PESSOA: "",
@@ -220,18 +222,12 @@ function ItemCustoMaoObraOrcamento(props) {
       return;
     }
 
-    props.salvarCadastroCustoMaoObra(
-      montarObjMaoObraOrcamento(dadosMaoObra, dadosCusto),
-      fazerAposCadastrar(dadosCusto)
-    );
+    props.salvarCadastroCustoMaoObra(montarObjMaoObraOrcamento(dadosMaoObra, dadosCusto), fazerAposCadastrar());
   };
 
   const excluirCadastro = () => {
-    props.excluirCadastroCustoMaoObra(
-      dadosCadastro.custoId.valor,
-      props.keyComponente,
-      dadosCadastroMaoObra.maoObraOrcamentoId.valor
-    );
+    props.excluirCadastroCustoMaoObra(dadosCadastro.custoId.valor, props.keyComponente, dadosCadastroMaoObra.maoObraOrcamentoId.valor);
+    props.removerItemCustosMaoObraDisplay(props.listCustosMaoObraDisplay, props.keyComponente);
   };
   const selecionarCustoMaoObraOrcamento = (custo) => {
     setDadosCadastro({
@@ -279,13 +275,8 @@ function ItemCustoMaoObraOrcamento(props) {
     );
   };
 
-  const fazerAposCadastrar = (dadosCusto) => {
-    setCadastrado(true);
-    props.adicionarItemCustoMaoObraOrcamento(
-      props.listMaoObraOrcamento,
-      dadosCadastroMaoObra.maoObraOrcamentoId.valor,
-      montarObjCusto(dadosCusto)
-    );
+  const fazerAposCadastrar = () => {
+      setCadastrado(true);
   };
 
   const listenerClick = () => {
@@ -312,6 +303,7 @@ function ItemCustoMaoObraOrcamento(props) {
             <div className="row">
               <div className="col-xl">
                 <input
+                  disabled={cadastrado}
                   className="form-control"
                   placeholder="Buscar custo"
                   name="buscarFuncionario"
@@ -402,7 +394,7 @@ function ItemCustoMaoObraOrcamento(props) {
                     </button>
                   </div>
 
-                  <div className="col">
+                  {/* <div className="col">
                     <button
                       type="button"
                       className="btn-success btn btn-width-100"
@@ -410,7 +402,7 @@ function ItemCustoMaoObraOrcamento(props) {
                     >
                       Atualizar
                     </button>
-                  </div>
+                  </div> */}
                 </>
               )}
               {!cadastrado && (
@@ -458,7 +450,8 @@ function ItemCustoMaoObraOrcamento(props) {
 const mapStateToProps = (state) => ({
   linkBackEnd: state.backEnd.link,
   listMaoObraOrcamento: state.orcamento.listMaoObraOrcamento,
-  listCustosMaoObraDisplay: state.orcamento.listCustosMaoObraDisplay,
+  orcamentoSelecionado: state.orcamento.orcamentoSelecionado,
+  listCustosMaoObraDisplay: state.orcamento.listCustosMaoObraDisplay
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -472,6 +465,13 @@ const mapDispatchToProps = (dispatch) => ({
         listMaoObraOrcamento,
         maoObraOrcamentoId,
         itemCustoMaoObraOrcamento
+      )
+    ),
+    removerItemCustosMaoObraDisplay: (listCustosMaoObraDisplay, keyComponente) =>
+    dispatch(
+      orcamentoActions.removerItemCustosMaoObraDisplay(
+        listCustosMaoObraDisplay,
+        keyComponente
       )
     ),
 });

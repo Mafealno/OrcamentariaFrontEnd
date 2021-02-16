@@ -85,7 +85,7 @@ function ModalMaoObraOrcamento(props) {
         containerAutoScrool.scrollTo(containerAutoScrool.scrollWidth, 0);
       }
     }
-  }, [props.listCustosMaoObraDisplay.length]);
+  }, [props.listCustosMaoObraDisplay]);
 
   const exibirTost = (tipo, mensagem) => {
     switch (tipo) {
@@ -172,7 +172,6 @@ function ModalMaoObraOrcamento(props) {
 
   const montarComponenteCusto = (listCusto) => {
     props.montarListCustosMaoObraDisplay(props.listCustosMaoObraDisplay, []);
-
     if (listCusto.length > 0) {
       let keyContador = 0;
 
@@ -192,16 +191,8 @@ function ModalMaoObraOrcamento(props) {
             salvarCadastroCustoMaoObra={(objCustoMaoObra, fazerAposCadastrar) =>
               salvarCadastroCustoMaoObra(objCustoMaoObra, fazerAposCadastrar)
             }
-            excluirCadastroCustoMaoObra={(
-              custoId,
-              keyComponente,
-              maoObraOrcamentoId
-            ) =>
-              excluirCadastroCustoMaoObra(
-                custoId,
-                keyComponente,
-                maoObraOrcamentoId
-              )
+            excluirCadastroCustoMaoObra={(custoId, keyComponente, maoObraOrcamentoId) =>
+              excluirCadastroCustoMaoObra(custoId, keyComponente, maoObraOrcamentoId)
             }
             editarCadastroCustoMaoObra={(objCustoMaoObra, custoIdAnteior) =>
               editarCadastroCustoMaoObra(objCustoMaoObra, custoIdAnteior)
@@ -231,16 +222,8 @@ function ModalMaoObraOrcamento(props) {
         salvarCadastroCustoMaoObra={(objCustoMaoObra, fazerAposCadastrar) =>
           salvarCadastroCustoMaoObra(objCustoMaoObra, fazerAposCadastrar)
         }
-        excluirCadastroCustoMaoObra={(
-          custoId,
-          keyComponente,
-          maoObraOrcamentoId
-        ) =>
-          excluirCadastroCustoMaoObra(
-            custoId,
-            keyComponente,
-            maoObraOrcamentoId
-          )
+        excluirCadastroCustoMaoObra={(custoId, keyComponente, maoObraOrcamentoId) =>
+          excluirCadastroCustoMaoObra(custoId, keyComponente, maoObraOrcamentoId)
         }
         editarCadastroCustoMaoObra={(objCustoMaoObra, custoIdAnteior) =>
           editarCadastroCustoMaoObra(objCustoMaoObra, custoIdAnteior)
@@ -322,13 +305,18 @@ function ModalMaoObraOrcamento(props) {
     document.getElementById(id).classList.remove("is-invalid");
   };
 
-  const salvarCadastroCustoMaoObra = (objCustoMaoobra, fazerAposCadastrar) => {
+  const salvarCadastroCustoMaoObra = (objCustoMaoObra, fazerAposCadastrar) => {
     fetch(props.linkBackEnd + "/custosMaoObra/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(objCustoMaoobra),
+      body: JSON.stringify(objCustoMaoObra),
     }).then((data) => {
       if (data.ok) {
+
+        props.recarregarTotaisOrcamento(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID)
+
+        props.adicionarItemCustoMaoObraOrcamento(objCustoMaoObra.LIST_CUSTO[0]);
+
         if (fazerAposCadastrar) {
           fazerAposCadastrar();
         }
@@ -343,11 +331,7 @@ function ModalMaoObraOrcamento(props) {
     });
   };
 
-  const excluirCadastroCustoMaoObra = (
-    custoId,
-    keyComponente,
-    maoObraOrcamentoId
-  ) => {
+  const excluirCadastroCustoMaoObra = (custoId, keyComponente, maoObraOrcamentoId) => {
     fetch(
       props.linkBackEnd +
         "/custosMaoObra/deletar/" +
@@ -359,16 +343,10 @@ function ModalMaoObraOrcamento(props) {
       }
     ).then((data) => {
       if (data.ok) {
-        props.removerItemCustoMaoObraOrcamento(
-          props.listMaoObraOrcamento,
-          maoObraOrcamentoId,
-          custoId
-        );
+        
+        props.recarregarTotaisOrcamento(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID)
+        props.removerItemCustoMaoObraOrcamento(custoId);
         props.montarItemDisplay();
-        props.removerItemCustosMaoObraDisplay(
-          props.listCustosMaoObraDisplay,
-          keyComponente
-        );
 
         const msg = "Exclusão efetuar com sucesso";
         exibirTost("sucesso", msg);
@@ -744,18 +722,6 @@ const mapDispatchToProps = (dispatch) => ({
         itemCustoMaoObraDisplay
       )
     ),
-  removerItemCustoMaoObraOrcamento: (
-    listMaoObraOrcamento,
-    maoObraOrcamentoId,
-    custoId
-  ) =>
-    dispatch(
-      orcamentoActions.removerItemCustoMaoObraOrcamento(
-        listMaoObraOrcamento,
-        maoObraOrcamentoId,
-        custoId
-      )
-    ),
   removerItemCustosMaoObraDisplay: (listCustosMaoObraDisplay, keyComponente) =>
     dispatch(
       orcamentoActions.removerItemCustosMaoObraDisplay(
@@ -770,6 +736,8 @@ const mapDispatchToProps = (dispatch) => ({
         custoIdAnteior
       )
     ),
+    recarregarTotaisOrcamento : (linkBackEnd, orcamentoId) =>
+      dispatch(orcamentoActions.recarregarTotaisOrcamento(linkBackEnd, orcamentoId)),
 });
 
 export default connect(
