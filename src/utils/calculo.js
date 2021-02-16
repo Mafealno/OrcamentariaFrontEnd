@@ -42,7 +42,7 @@ export function calcularTotaisMaoObraOrcamento(
   return valoresCalculados;
 }
 
-const verificaTipoCusto = (tipo, diasTrabalhado) => {
+export function verificaTipoCusto(tipo, diasTrabalhado){
   let fator = 1;
   switch (tipo) {
     case "UNICO":
