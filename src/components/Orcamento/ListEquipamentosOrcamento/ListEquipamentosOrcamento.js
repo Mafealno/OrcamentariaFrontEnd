@@ -67,6 +67,7 @@ function ListEquipamentosOrcamento(props) {
       setListItemEquipamentoOrcamentoDisplay(
         props.listEquipamentoOrcamento.map((elemento) => (
           <ItemEquipamentoOrcamento
+            key={elemento.EQUIPAMENTO_ORCAMENTO_ID}
             equipamentoOrcamento={elemento}
             salvarEquipamentoOrcamento={(
               equipamentoOrcamento,
