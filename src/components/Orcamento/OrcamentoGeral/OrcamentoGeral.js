@@ -26,14 +26,6 @@ export default function OrcamentoGeral() {
             >
               Cadastro básico
             </a>
-            <a
-                  className="nav-item nav-link"
-                  id="aba-totais"
-                  data-toggle="tab"
-                  href="#conteudo-totais"
-                >
-                  Totais
-                </a>
             {mostrarAbas && (
               <>
                 <a
@@ -68,14 +60,14 @@ export default function OrcamentoGeral() {
                 >
                   Custos
                 </a>
-                {/* <a
+                <a
                   className="nav-item nav-link"
                   id="aba-totais"
                   data-toggle="tab"
                   href="#conteudo-totais"
                 >
                   Totais
-                </a> */}
+                </a>
               </>
             )}
           </div>
