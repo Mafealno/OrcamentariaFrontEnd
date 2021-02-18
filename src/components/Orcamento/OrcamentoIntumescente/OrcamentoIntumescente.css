@@ -1,6 +1,11 @@
 #containerOrcamentoIntumescente {
+  height: 90%;
   padding: 3%;
-  overflow-y: scroll;
+  overflow-y: hidden;
+}
+
+.conteudo-aba-orcamento {
+  height: 100%;
 }
 
 .nav-tabs .nav-item.show .nav-link,
@@ -18,4 +23,10 @@
 
 a {
   color: #d40808;
+}
+
+@media (max-height: 770px) and (min-width: 1200px) {
+  #containerOrcamentoIntumescente {
+    height: 630px;
+  }
 }
