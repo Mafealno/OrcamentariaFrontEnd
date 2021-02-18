@@ -96,7 +96,7 @@ export default function OrcamentoGeral() {
               <ListItensOrcamentoGeral />
             </div>
             <div
-              className="tab-pane fade"
+              className="tab-pane fade conteudo-aba-orcamento"
               id="conteudo-mao-obra"
               role="tabpanel"
               aria-labelledby="aba-mao-obra"
