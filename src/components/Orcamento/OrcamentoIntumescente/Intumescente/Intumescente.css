@@ -1,0 +1,23 @@
+#containerIntumescente {
+  background: rgb(68, 68, 68);
+  padding: 5%;
+}
+
+#cadastro-intumescente {
+  grid-area: cadastro-intumescente;
+}
+
+#cadastro-list-perfl {
+  grid-area: cadastro-list-perfl;
+}
+
+#totais-intumescente {
+  grid-area: totais-intumescente;
+}
+
+@media (min-width: 1200px) {
+  #containerIntumescente {
+    height: 100%;
+    overflow-y: scrol;
+  }
+}
