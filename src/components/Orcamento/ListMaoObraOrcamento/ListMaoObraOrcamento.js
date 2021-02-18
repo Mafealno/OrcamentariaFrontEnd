@@ -183,7 +183,6 @@ function ListMaoObraOrcamento(props) {
   return (
     <>
       <div id="containerMaoObraOrcamento">
-        <div className="form form-orcamento">
           <div id="btn-add-mao-obra-orcamento">
             <button
               type="button"
@@ -197,7 +196,6 @@ function ListMaoObraOrcamento(props) {
           <div id="totais-mao-obra-orcamento">
             <TotaisMaoObraOrcamento />
           </div>
-        </div>
       </div>
       <div>
         <ModalMaoObraOrcamento

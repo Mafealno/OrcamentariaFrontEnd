@@ -152,22 +152,20 @@ function ListCustoOrcamento(props) {
     return (
         <>
         <div id="containerListCustoOrcamento">
-            <div className="form form-orcamento">
-                <div id="btn-add-custo-orcamento">
-                    <button
-                        type="button"
-                        className="btn"
-                        onClick={() => setShowModalCustoOrcamento(true)}
-                    >
-                        Adicionar custo
-                    </button>
-                </div>
-                <div id="list-custo-orcamento">
-                    {listItemCustoOrcamentoDisplay}
-                </div>
-                <div id="totais-mao-obra-orcamento">
-                    <TotaisCustoOrcamento />
-                </div>
+            <div id="btn-add-custo-orcamento">
+                <button
+                    type="button"
+                    className="btn"
+                    onClick={() => setShowModalCustoOrcamento(true)}
+                >
+                    Adicionar custo
+                </button>
+            </div>
+            <div id="list-custo-orcamento">
+                {listItemCustoOrcamentoDisplay}
+            </div>
+            <div id="totais-mao-obra-orcamento">
+                <TotaisCustoOrcamento />
             </div>
         </div>
         <div>

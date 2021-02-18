@@ -699,7 +699,6 @@ function BasicRegOrcamento(props) {
 
   return (
     <div id="containerBasicRegOrcamento">
-      <div className="form-orcamento">
         <div id="cadastro-orcamento">
           <div id="containerBasicRegCusto">
             <div className="container-form">
@@ -836,7 +835,6 @@ function BasicRegOrcamento(props) {
             </div>
           </div>
         </div>
-
         <div id="informacoes-cliente-orcamento">
           <fieldset id="campo-pessoaId">
             <legend>Dados do cliente</legend>
@@ -1064,7 +1062,6 @@ function BasicRegOrcamento(props) {
             </>
           )}
         </div>
-      </div>
       <div>
         <ToastControl
           showToast={showToast}

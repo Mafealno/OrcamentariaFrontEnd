@@ -193,7 +193,6 @@ function ListEquipamentosOrcamento(props) {
   return (
     <>
       <div id="containerListEquipamentoOrcamento">
-        <div className="form form-orcamento">
           <div id="btn-add-mao-obra-orcamento">
             <button
               type="button"
@@ -209,7 +208,6 @@ function ListEquipamentosOrcamento(props) {
           <div id="totais-mao-obra-orcamento">
             <TotaisEquipamentoOrcamento />
           </div>
-        </div>
       </div>
       <div>
         <ModalEquipamentoOrcamento

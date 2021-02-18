@@ -8,12 +8,6 @@
   height: 100%;
 }
 
-.form-orcamento {
-  height: auto;
-  max-height: auto;
-  overflow-y: hidden;
-}
-
 .nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active {
   color: white;
@@ -34,17 +28,5 @@ a {
 @media (max-height: 770px) and (min-width: 1200px) {
   #containerOrcamentoGeral {
     height: 630px;
-  }
-
-  .form-orcamento {
-    max-height: 600px !important;
-  }
-}
-
-@media (min-width: 1200px) {
-  .form-orcamento {
-    height: 750px;
-    max-height: 750px;
-    overflow-y: auto;
   }
 }

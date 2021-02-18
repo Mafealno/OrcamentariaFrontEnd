@@ -1,24 +1,12 @@
 #containerBasicRegOrcamento {
-  display: grid;
-  grid-template-areas:
-    "cadastro-orcamento"
-    "informacoes-cliente-orcamento"
-    "acoes-cadastro-orcamento";
   background: rgb(68, 68, 68);
   color: white;
-}
-
-#cadastro-orcamento {
-  grid-area: cadastro-orcamento;
-}
-
-#informacoes-cliente-orcamento {
-  grid-area: informacoes-cliente-orcamento;
+  padding: 5%;
 }
 
 #acoes-cadastro-orcamento {
-  grid-area: acoes-cadastro-orcamento;
   padding-top: 3%;
+  margin-bottom: 30px;
 }
 
 #campo-orcamentoId {
@@ -100,26 +88,14 @@
   flex-grow: 1;
 }
 
-.form-orcamento {
-  background-color: rgb(68, 68, 68);
-  width: 100%;
-  height: 100%;
-  padding: 5%;
-  color: white;
-  min-height: 300px;
-  display: flex;
-  flex-direction: column;
-}
-
-
 @media (min-width: 1200px) {
   .div-btn-buscar-cliente {
     display: block;
   }
 
   #containerBasicRegOrcamento {
-    max-height: 800px;
-    border-bottom: 2px solid rgb(68, 68, 68);
+    overflow-y: scroll;
+    height: 100%;
   }
 
   #containerBasicRegOrcamento .form {
@@ -128,7 +104,4 @@
 }
 
 @media (min-width: 1600px) {
-  .form-orcamento {
-    height: 100%;
-  }
 }

@@ -1,16 +1,12 @@
 #containerMaoObraOrcamento {
-  display: grid;
-  grid-template-areas:
-    "btn-add-mao-obra-orcamento"
-    "list-mao-obra-orcamento"
-    "totais-mao-obra-orcamento";
-  padding: 5% 5% 5% 5%;
   color: white;
   background: rgb(68, 68, 68);
+  width: 100%;
+  padding: 5%;
+  min-height: 300px;
 }
 
 #btn-add-mao-obra-orcamento {
-  grid-area: btn-add-mao-obra-orcamento;
   min-height: 50px;
   display: flex;
   align-items: center;
@@ -18,7 +14,6 @@
 }
 
 #list-mao-obra-orcamento {
-  grid-area: list-mao-obra-orcamento;
   max-height: 500px;
   height: 500px;
   padding: 1%;
@@ -28,9 +23,6 @@
   overflow-x: hidden;
   border: 2px solid #fff;
   margin-bottom: 15px;
-}
-#totais-mao-obra-orcamento {
-  grid-area: totais-mao-obra-orcamento;
 }
 
 #btn-add-mao-obra-orcamento > button {
@@ -48,8 +40,7 @@
 
 @media (min-width: 1200px) {
   #containerMaoObraOrcamento {
-    overflow-y: auto;
-    padding: 0;
+    height: 100%;
   }
 
   #totais-mao-obra-orcamento {

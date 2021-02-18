@@ -192,7 +192,6 @@ function ListItensOrcamentoGeral(props) {
 
   return (
     <div id="containerListItensOrcamentoGeral">
-      <div className="form form-orcamento">
         <div id="btn-add-item-orcamento-geral">
           <button
             type="button"
@@ -210,7 +209,6 @@ function ListItensOrcamentoGeral(props) {
         <div id="totais-itens-orcamento-geral">
           <TotaisItensOrcamentoGeral />
         </div>
-      </div>
       <div>
         <ModalItemOrcamentoGeral
           show={showModalItemOrcamentoGeral}
