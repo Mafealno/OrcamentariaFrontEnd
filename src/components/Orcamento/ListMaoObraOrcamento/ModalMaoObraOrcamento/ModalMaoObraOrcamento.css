@@ -68,6 +68,7 @@
 
 .modal-body-mao-obra-orcamento {
   max-height: 75vh !important;
+  overflow-y: auto !important;
 }
 
 .div-btn-buscar-mao-obra-orcamento {
