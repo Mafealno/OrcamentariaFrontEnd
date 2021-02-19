@@ -4,13 +4,12 @@ import BasicRegOrcamento from "../BasicRegOrcamento/BasicRegOrcamento";
 import ListItensOrcamentoGeral from "./ListItensOrcamentoGeral/ListItensOrcamentoGeral";
 import ListMaoObraOrcamento from "../ListMaoObraOrcamento/ListMaoObraOrcamento";
 import ListEquipamentosOrcamento from "../ListEquipamentosOrcamento/ListEquipamentosOrcamento";
-import listMaterialOrcamento from "../ListMateriaisOrcamento/ListMateriaisOrcamento";
+import ListMateriaisOrcamento from "../ListMateriaisOrcamento/ListMateriaisOrcamento";
 import ListCustoOrcamento from "../ListCustoOrcamento/ListCustoOrcamento";
 import TotaisOrcamento from "../TotaisOrcamento/TotaisOrcamento"
 import { Provider } from "react-redux";
 
 import store from "../../../store/store";
-import ListMateriaisOrcamento from "../ListMateriaisOrcamento/ListMateriaisOrcamento";
 
 export default function OrcamentoGeral() {
   let [mostrarAbas, setMostrarAbas] = useState(false);

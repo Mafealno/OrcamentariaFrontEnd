@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable eqeqeq */
 import React, { useState, useEffect } from "react";
 import "./ListMateriaisOrcamento.css";
 import ItemMaterialOrcamento from "./ItemMaterialOrcamento/ItemMaterialOrcamento";

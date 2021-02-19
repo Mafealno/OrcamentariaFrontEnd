@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable no-useless-escape */
 /* eslint-disable eqeqeq */
 /* eslint-disable react-hooks/exhaustive-deps */

@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable eqeqeq */
 import React, { useState, useEffect } from "react";
 import "./BasicRegPeople.css";
 import FormRegClientProvider from "./FormRegClientProvider/FormRegClientProvider";

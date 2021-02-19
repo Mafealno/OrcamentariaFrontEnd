@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 export function validarDados(dadosValidacao) {
   const objAux = Object.assign({}, dadosValidacao);
 

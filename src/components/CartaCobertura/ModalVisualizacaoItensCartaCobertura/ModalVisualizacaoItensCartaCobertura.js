@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import "./ModalVisualizacaoItensCartaCobertura.css";
 import TabelaTempoFogo from "./TabelaTempoFogo/TabelaTempoFogo";
@@ -101,7 +102,7 @@ export default function ModalVisualizacaoItensCartaCobertura(props) {
                       </select>
                     </div>
 
-                    {referencia != props.referencia && (
+                    {referencia !== props.referencia && (
                       <>
                         <div className="col-3">
                           <button

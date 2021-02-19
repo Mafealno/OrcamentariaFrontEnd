@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable array-callback-return */
+/* eslint-disable eqeqeq */
 import React, { useState, useEffect } from 'react'
 import "./ModalCustoOrcamento.css"
 import ModalControl from "../../../ModalControl/ModalControl";

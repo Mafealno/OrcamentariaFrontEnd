@@ -1,3 +1,8 @@
+/* eslint-disable no-const-assign */
+/* eslint-disable no-unused-vars */
+/* eslint-disable array-callback-return */
+/* eslint-disable eqeqeq */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import "./Intumescente.css";
 import * as validacaoDadosUtils from "../../../../utils/validacaoDados";

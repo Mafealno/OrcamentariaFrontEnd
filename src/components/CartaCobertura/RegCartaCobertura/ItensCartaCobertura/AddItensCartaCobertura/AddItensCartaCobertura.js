@@ -44,7 +44,6 @@ function AddItensCartaCobertura(props) {
       props.keyComponente,
       "Criado"
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [arquivo, referencia, props.materialCartaCoberturaSalvar.MATERIAL_ID]);
 
   useEffect(() => {

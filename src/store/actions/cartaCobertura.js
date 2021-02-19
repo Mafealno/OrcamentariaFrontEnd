@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 export function selecionarMaterialCartaCobertura(materialCartaCoberturaSalvar) {
   return {
     type: "SELECIONAR_MATERIAL_CARTA_COBERTURA",

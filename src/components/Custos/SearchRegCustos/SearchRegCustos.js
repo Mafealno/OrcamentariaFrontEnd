@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React, { useState } from "react";
 import "./SearchRegCustos.css";
 import ResultSearchCustos from "./ResultSearchCustos/ResultSearchCustos";
