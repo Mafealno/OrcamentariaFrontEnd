@@ -433,11 +433,65 @@ function BasicRegOrcamento(props) {
     return dateFormat;
   };
 
-  const montarObj = (obj) => {
+  const montarObjIntumescente = (obj) => {
     return {
       ORCAMENTO_ID: obj.orcamentoId.valor,
       NOME_OBRA: obj.nomeObra.valor,
-      REFERENCIA: props.referencia.valor,
+      REFERENCIA: props.referencia,
+      PRAZO_ENTREGA: obj.prazoEntrega.valor,
+      DIAS_TRABALHADO: parseInt(obj.diasTrabalhado.valor),
+      DATA_CRIACAO_ORCAMENTO: obj.dataCriacaoOrcamento.valor,
+      A_C: obj.a_c.valor,
+      TIPO_OBRA: obj.tipoObra.valor,
+      GRUPO: "",
+      OCUPACAO_USO: "",
+      DIVISAO: "",
+      CLASSE: "",
+      TEMPO_RESISTENCIA_FOGO: "",
+      QTDE_LITROS_TOTAL: 0,
+      PERCENTUAL_PERDA: 0,
+      QTDE_BALDES: 0,
+      QTDE_BALDES_REAL: 0,
+      VALOR_UNITARIO_INTUMESCENTE: 0,
+      TOTAIS_ORCAMENTO: {},
+      CLIENTE_ORCAMENTO: {
+        PESSOA_ID: obj.pessoa.pessoaId.valor,
+        NOME_CLIENTE: obj.pessoa.nomePessoa.valor,
+        RG: "",
+        CPF: "",
+        CNPJ: "",
+        TIPO_CADASTRO: "",
+        TIPO_PESSOA: "",
+        LIST_ENDERECO: [
+          {
+            PESSOA_ID: obj.pessoa.pessoaId.valor,
+            ENDERECO_ID: obj.pessoa.endereco.enderecoId.valor || 0,
+            CEP: "",
+            LOGRADOURO: "",
+            NUMERO_ENDERECO: "",
+            COMPLEMENTO: "",
+            BAIRRO: obj.pessoa.endereco.bairro.valor,
+            CIDADE: obj.pessoa.endereco.cidade.valor,
+            ESTADO: "",
+            UF: obj.pessoa.endereco.uf.valor,
+            ENDERECO_PADRAO: false,
+          },
+        ],
+        LIST_CONTATO: [],
+      },
+      LIST_ITENS_ORCAMENTO_GERAL: [],
+      LIST_MAO_OBRA_ORCAMENTO: [],
+      LIST_CUSTO_ORCAMENTO: [],
+      LIST_EQUIPAMENTO_ORCAMENTO: [],
+      LIST_ITENS_ORCAMENTO_INTUMESCENTE: []
+    };
+  };
+
+  const montarObjGeral = (obj) => {
+    return {
+      ORCAMENTO_ID: obj.orcamentoId.valor,
+      NOME_OBRA: obj.nomeObra.valor,
+      REFERENCIA: props.referencia,
       PRAZO_ENTREGA: obj.prazoEntrega.valor,
       DIAS_TRABALHADO: parseInt(obj.diasTrabalhado.valor),
       DATA_CRIACAO_ORCAMENTO: obj.dataCriacaoOrcamento.valor,
@@ -514,9 +568,7 @@ function BasicRegOrcamento(props) {
       return;
     }
 
-    if (
-      dadosOrcamento.diasTrabalhado.valor > dadosOrcamento.prazoEntrega.valor
-    ) {
+    if (parseFloat(dadosOrcamento.diasTrabalhado.valor) > parseFloat(dadosOrcamento.prazoEntrega.valor)) {
       const msg =
         "O dias de trabalho não podem ser maiores que o prazo da obra";
       exibirTost("erro", msg);
@@ -526,10 +578,20 @@ function BasicRegOrcamento(props) {
     dadosCliente.endereco = dadosEnderecoCliente;
     dadosOrcamento.pessoa = dadosCliente;
 
-    fetch(props.linkBackEnd + "/orcamento/", {
+    let caminho = "";
+    let objCadastro = {};
+    if(props.referencia === "Geral"){
+      caminho = "/orcamento/"
+      objCadastro = montarObjGeral(dadosOrcamento);
+    }else if(props.referencia === "Intumescente"){
+      caminho = "/orcamentoIntumescente/"
+      objCadastro = montarObjIntumescente(dadosOrcamento);
+    }
+
+    fetch(props.linkBackEnd + caminho, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(montarObj(dadosOrcamento)),
+      body: JSON.stringify(objCadastro),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -539,10 +601,8 @@ function BasicRegOrcamento(props) {
         const msg = "Cadastro efetuado com sucesso";
         exibirTost("sucesso", msg);
 
-        if (data.TIPO_OBRA == "Geral") {
           props.selecionarOrcamentoGeral(data);
-        } else {
-        }
+          
       })
       .catch(() => {
         const msg = "Erro ao efetuar cadastro";
@@ -555,7 +615,7 @@ function BasicRegOrcamento(props) {
     let tipoRota = "";
     if (dadosCadastro.tipoObra.valor == "Geral") {
       tipoRota = "/orcamento/";
-    } else {
+    } else if (dadosCadastro.tipoObra.valor == "Intumescente"){
       tipoRota = "/orcamentoIntumescente/";
     }
 
@@ -611,13 +671,13 @@ function BasicRegOrcamento(props) {
     fetch(props.linkBackEnd + "/orcamento/" + dadosCadastro.orcamentoId.valor, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(montarObj(dadosOrcamento)),
+      body: JSON.stringify(montarObjGeral(dadosOrcamento)),
     }).then((data) => {
       if (data.ok) {
 
         props.recarregarTotaisOrcamento(props.linkBackEnd, dadosCadastro.orcamentoId.valor);
 
-        const objOrcamento = montarObj(dadosOrcamento)
+        const objOrcamento = montarObjGeral(dadosOrcamento)
         objOrcamento.CLIENTE_ORCAMENTO = props.clienteOrcamento
         props.selecionarOrcamentoSimples(objOrcamento);
 
@@ -772,7 +832,7 @@ function BasicRegOrcamento(props) {
                   <div className="col-xl col-6">
                     <label>Prazo da Obra</label>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
                       name="prazoEntrega"
                       id="campo-prazoEntrega"
@@ -788,7 +848,7 @@ function BasicRegOrcamento(props) {
                   <div className="col-xl col-6">
                     <label>Dias de trabalho</label>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
                       name="diasTrabalhado"
                       id="campo-diasTrabalhado"

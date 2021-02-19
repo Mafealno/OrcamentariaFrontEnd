@@ -11,7 +11,7 @@ function ResultSearchCusto(props) {
           <div className="col-2 item-result item-center">
             {custo.CUSTO_ID}
           </div>
-          <div className="col item-result item-center">
+          <div className="col item-result item-center limitar-texto-1">
             {custo.NOME_CUSTO}
           </div>
         </div>

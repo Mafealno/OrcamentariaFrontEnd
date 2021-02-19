@@ -13,7 +13,7 @@ function ResultSearchClient(props) {
       onClick={() => props.selecionarClienteOrcamento(cliente)}
     >
       <div className="col-2 item-result item-center">{cliente.PESSOA_ID}</div>
-      <div className="col-10 item-result item-center">
+      <div className="col-10 item-result item-center limitar-texto-1">
         {cliente.NOME_PESSOA}
       </div>
     </div>

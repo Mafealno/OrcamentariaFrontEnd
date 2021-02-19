@@ -6,6 +6,7 @@ const ESTADO_INICIAL = {
   listMaoObraOrcamento: [],
   listCustoOrcamento: [],
   listEquipamentoOrcamento: [],
+  listMaterialOrcamento: [],
   totaisOrcamento: {},
   listOrcamento: [],
   listCustosMaoObraDisplay: [],
@@ -28,6 +29,11 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
         ...state,
         listItensOrcamentoGeral: action.listItensOrcamentoGeral,
       };
+      case "SELECIONAR_ITENS_ORCAMENTO_INTUMESCENTE":
+        return {
+          ...state,
+          listItensOrcamentoIntumescente: action.listItensOrcamentoIntumescente,
+        };
     case "SELECIONAR_MAO_OBRA_ORCAMENTO":
       return {
         ...state,
@@ -38,6 +44,11 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
         ...state,
         listEquipamentoOrcamento: action.listEquipamentoOrcamento,
       };
+      case "SELECIONAR_MATERIAL_ORCAMENTO":
+        return {
+          ...state,
+          listMaterialOrcamento: action.listMaterialOrcamento,
+        };
     case "SELECIONAR_CUSTO_ORCAMENTO":
       return {
         ...state,
@@ -73,6 +84,11 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
         ...state,
         listEquipamentoOrcamento: action.listEquipamentoOrcamento,
       };
+      case "ADICIONAR_ITEM_MATERIAL_ORCAMENTO":
+        return {
+          ...state,
+          listMaterialOrcamento: action.listMaterialOrcamento,
+        };
     case "ADICIONAR_ITEM_CUSTO_ORCAMENTO":
       return {
         ...state,
@@ -103,6 +119,11 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
         ...state,
         listEquipamentoOrcamento: action.listEquipamentoOrcamento,
       };
+    case "REMOVER_ITEM_MATERIAL_ORCAMENTO":
+      return {
+        ...state,
+        listMaterialOrcamento: action.listMaterialOrcamento,
+      };
     case "REMOVER_ITEM_CUSTO_ORCAMENTO":
       return {
         ...state,
@@ -130,6 +151,12 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
       return {
         ...(state = Object.assign({}, state, {
           listEquipamentoOrcamento: action.listEquipamentoOrcamento,
+        })),
+      };
+      case "RECARREGAR_ITENS_MATERIAL_ORCAMENTO_CONCLUIDA":
+      return {
+        ...(state = Object.assign({}, state, {
+          listMaterialOrcamento: action.listMaterialOrcamento,
         })),
       };
       case "RECARREGAR_ITENS_CUSTO_ORCAMENTO_CONCLUIDA":

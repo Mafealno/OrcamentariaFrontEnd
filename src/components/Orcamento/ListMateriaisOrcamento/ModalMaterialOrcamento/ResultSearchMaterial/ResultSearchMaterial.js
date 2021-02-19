@@ -6,16 +6,13 @@ export default function ResultSearchMaterial(props) {
     <div
       className="row container-result-material"
       key={material.MATERIAL_ID}
-      onClick={() => props.selecionarMaterialItemOrcamentoGeral(material)}
+      onClick={() => props.selecionarMaterialOrcamento(material)}
     >
       <div className="col-2 item-result item-center">
         {material.MATERIAL_ID}
       </div>
-      <div className="col-5 item-result item-center limitar-texto-1">
+      <div className="col item-result item-center limitar-texto-1">
         {material.NOME_MATERIAL}
-      </div>
-      <div className="col-5 item-result item-center limitar-texto-1">
-        {material.FABRICANTE.NOME_PESSOA}
       </div>
     </div>
   ));
@@ -26,8 +23,7 @@ export default function ResultSearchMaterial(props) {
     >
       <div className="row result-cabecalho">
         <div className="col-2 item-center">Código</div>
-        <div className="col-5 item-center">Nome</div>
-        <div className="col-5 item-center">Fabricante</div>
+        <div className="col item-center">Nome</div>
       </div>
       {itemDisplay}
     </div>

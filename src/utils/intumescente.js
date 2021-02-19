@@ -1,4 +1,4 @@
-export const listTrf = ['30', '60', '90', '120', '150', '180']
+export const listTrrf = ['30', '60', '90', '120', '150', '180']
 export const listGrupo = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 export const listOcupacaoUso = ['RESIDENCIAL', 'SERVIÇOS DE HOSPEDAGEM', 
                                 'COMERCIAL VAREJISTA', 'SERVIÇOS PROFISSIONAIS, PESSOAIS E TECNICOS',

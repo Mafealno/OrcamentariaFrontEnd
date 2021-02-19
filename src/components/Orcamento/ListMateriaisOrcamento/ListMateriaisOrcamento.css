@@ -1,0 +1,49 @@
+#containerListMaterialOrcamento {
+  color: white;
+  background: rgb(68, 68, 68);
+  width: 100%;
+  padding: 5%;
+  min-height: 300px;
+}
+
+#btn-add-material-orcamento {
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#list-material-orcamento {
+  max-height: 500px;
+  height: 500px;
+  padding: 1%;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border: 2px solid #fff;
+  margin-bottom: 15px;
+}
+
+#btn-add-material-orcamento > button {
+  color: white;
+  background-color: #d40808;
+  width: 100%;
+  border-color: #d40808;
+}
+
+@media (max-height: 770px) and (min-width: 1200px) {
+  #list-material-orcamento {
+    height: 260px;
+  }
+}
+
+@media (min-width: 1200px) {
+  #containerListMaterialOrcamento {
+    height: 100%;
+  }
+
+  #totais-material-orcamento {
+    height: 135px;
+  }
+}

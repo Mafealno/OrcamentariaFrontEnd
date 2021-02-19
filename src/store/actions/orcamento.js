@@ -21,6 +21,11 @@ export function selecionarOrcamento(orcamento) {
     });
 
     dispatch({
+      type: "SELECIONAR_CLIENTE_ORCAMENTO",
+      clienteOrcamento: orcamento.CLIENTE_ORCAMENTO,
+    });
+
+    dispatch({
       type: "SELECIONAR_MAO_OBRA_ORCAMENTO",
       listMaoObraOrcamento: orcamento.LIST_MAO_OBRA_ORCAMENTO || [],
     });
@@ -28,6 +33,11 @@ export function selecionarOrcamento(orcamento) {
     dispatch({
       type: "SELECIONAR_EQUIPAMENTO_ORCAMENTO",
       listEquipamentoOrcamento: orcamento.LIST_EQUIPAMENTO_ORCAMENTO || [],
+    });
+
+    dispatch({
+      type: "SELECIONAR_MATERIAL_ORCAMENTO",
+      listMaterialOrcamento: orcamento.LIST_MATERIAL_ORCAMENTO || [],
     });
 
     dispatch({
@@ -40,12 +50,16 @@ export function selecionarOrcamento(orcamento) {
       totaisOrcamento: orcamento.TOTAIS_ORCAMENTO || {},
     });
 
-    if (orcamento.TIPO_OBRA == "Geral") {
+    if (orcamento.TIPO_OBRA === "Geral") {
       dispatch({
         type: "SELECIONAR_ITENS_ORCAMENTO_GERAL",
         listItensOrcamentoGeral: orcamento.LIST_ITENS_ORCAMENTO_GERAL || [],
       });
-    } else {
+    } else if (orcamento.TIPO_OBRA === "Intumescente"){
+      dispatch({
+        type: "SELECIONAR_LIST_ITENS_ORCAMENTO_INTUMESCENTE",
+        listItensOrcamentoIntumescente : orcamento.LIST_LIST_ITENS_ORCAMENTO_INTUMESCENTE || [],
+      });
     }
   };
 }
@@ -74,6 +88,20 @@ export function adicionarItemEquipamentoOrcamento(
   return {
     type: "ADICIONAR_ITEM_EQUIPAMENTO_ORCAMENTO",
     listEquipamentoOrcamento,
+  };
+}
+
+export function adicionarItemMaterialOrcamento(
+  listMaterialOrcamento,
+  itemMaterialOrcamento
+) {
+  listMaterialOrcamento.push(itemMaterialOrcamento);
+
+  listMaterialOrcamento = [...listMaterialOrcamento];
+
+  return {
+    type: "ADICIONAR_ITEM_MATERIAL_ORCAMENTO",
+    listMaterialOrcamento,
   };
 }
 
@@ -173,6 +201,24 @@ export function removerItemEquipamentoOrcamento(
   };
 }
 
+export function removerItemMaterialOrcamento(
+  listMaterialOrcamento,
+  materialOrcamentoId
+) {
+  const index = listMaterialOrcamento.findIndex(
+    (elemento) => elemento.MATERIAL_ORCAMENTO_ID == materialOrcamentoId
+  );
+
+  listMaterialOrcamento.splice(index, 1);
+
+  listMaterialOrcamento = [...listMaterialOrcamento];
+
+  return {
+    type: "REMOVER_ITEM_MATERIAL_ORCAMENTO",
+    listMaterialOrcamento,
+  };
+}
+
 export function removerItemCustoOrcamento(
   listCustoOrcamento,
   custoOrcamentoId
@@ -254,6 +300,24 @@ export function recarregarItensEquipamentoOrcamento(linkBackEnd, orcamentoId) {
         dispatch({
           type: "RECARREGAR_ITENS_EQUIPAMENTO_ORCAMENTO_CONCLUIDA",
           listEquipamentoOrcamento: data,
+        });
+      });
+  };
+}
+
+export function recarregarItensMaterialOrcamento(linkBackEnd, orcamentoId) {
+  return (dispatch) => {
+    fetch(
+      linkBackEnd + "/materialOrcamento/buscar?orcamentoId=" + orcamentoId,
+      {
+        method: "GET",
+      }
+    )
+      .then((responde) => responde.json())
+      .then((data) => {
+        dispatch({
+          type: "RECARREGAR_ITENS_MATERIAL_ORCAMENTO_CONCLUIDA",
+          listMaterialOrcamento: data,
         });
       });
   };

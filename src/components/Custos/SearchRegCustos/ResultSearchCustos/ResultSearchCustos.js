@@ -11,8 +11,8 @@ function ResultSearchCustos(props) {
       onClick={() => props.selecionarCusto(custo)}
     >
       <div className="col-2 item-result item-center">{custo.CUSTO_ID}</div>
-      <div className="col-6 item-result item-center">{custo.NOME_CUSTO}</div>
-      <div className="col-4 item-result">{custo.TIPO_CUSTO}</div>
+      <div className="col-6 item-result item-center limitar-texto-1">{custo.NOME_CUSTO}</div>
+      <div className="col-4 item-result limitar-texto-1">{custo.TIPO_CUSTO}</div>
     </div>
   ));
   return (

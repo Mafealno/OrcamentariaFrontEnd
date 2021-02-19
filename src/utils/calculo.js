@@ -87,6 +87,24 @@ export function calcularTotaisEquipamentosOrcamento(listEquipamentoOrcamento){
   return valoresCalculados
 }
 
+export function calcularTotaisMaterialOrcamento(listMaterialOrcamento){
+  let valoresCalculados = {
+    totalValorMaterial: 0
+  };
+
+  //calcula valor total dos equipamentos
+  valoresCalculados.totalValorMaterial = listMaterialOrcamento.reduce(
+    (acumulador, itemAtual) => {
+      return (
+        acumulador + itemAtual.VALOR_UNITARIO_MATERIAL * itemAtual.QTDE_MATERIAL
+      );
+    },
+    0
+  );
+
+  return valoresCalculados
+}
+
 export function calcularTotaisCustosOrcamento(listCustoOrcamento, diasTrabalhado){
   let valoresCalculados = {
     totalValorCustos: 0

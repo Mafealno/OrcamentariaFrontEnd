@@ -11,7 +11,7 @@ export default function ResultSearchFuncionario(props) {
       <div className="col-2 item-result item-center">
         {funcionario.PESSOA_ID}
       </div>
-      <div className="col-5 item-result item-center">
+      <div className="col-5 item-result item-center limitar-texto-1">
         {funcionario.NOME_PESSOA}
       </div>
       <div className="col-5 item-result item-center">

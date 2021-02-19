@@ -11,7 +11,7 @@ export default function ResultSearchProvider(props) {
       <div className="col-2 item-result item-center">
         {fabricante.PESSOA_ID}
       </div>
-      <div className="col-10 item-result item-center">
+      <div className="col-10 item-result item-center limitar-texto-1">
         {fabricante.NOME_PESSOA}
       </div>
     </div>

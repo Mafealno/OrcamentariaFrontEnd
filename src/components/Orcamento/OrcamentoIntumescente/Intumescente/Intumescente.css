@@ -1,23 +1,72 @@
 #containerIntumescente {
   background: rgb(68, 68, 68);
   padding: 5%;
+  overflow-y: scroll;
 }
 
-#cadastro-intumescente {
-  grid-area: cadastro-intumescente;
+#list-perfil {
+  max-height: 500px;
+  height: 500px;
+  padding: 1%;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border: 2px solid #fff;
+  margin-bottom: 15px;
 }
 
-#cadastro-list-perfl {
-  grid-area: cadastro-list-perfl;
+#cadastro-list-perfil > button {
+  color: white;
+  background-color: #d40808;
+  width: 100%;
+  border-color: #d40808;
+  margin-bottom: 5px;
 }
 
-#totais-intumescente {
-  grid-area: totais-intumescente;
+#material-aba-intumescente {
+  display: grid;
+  grid-template-areas:
+    "search-material"
+    "dados-material-intumescente";
+  grid-template-rows: 50px auto;
+}
+
+.fieldset-search-material-intumescente {
+  max-height: 100%;
+}
+
+.mb-15 {
+  margin-bottom: 15px !important;
+}
+
+#search-material {
+  grid-area: search-material;
+}
+
+#dados-material-intumescente {
+  grid-area: dados-material-intumescente;
 }
 
 @media (min-width: 1200px) {
   #containerIntumescente {
     height: 100%;
     overflow-y: scrol;
+  }
+
+  .espacamento-search-intumescente {
+    margin-top: 14px;
+  }
+
+  .label-material-intumescente {
+    margin-bottom: 0.4rem !important;
+  }
+
+  #material-aba-intumescente {
+    grid-template-rows: 70px auto;
+  }
+
+  .mb-15 {
+    margin-bottom: 0 !important;
   }
 }

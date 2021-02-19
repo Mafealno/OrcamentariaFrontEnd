@@ -12,6 +12,7 @@ function TotaisOrcamento(props) {
     const [itensTotaisItensDisplay, setItensTotaisItensDisplay] = useState([]);
     const [itensTotaisMaoObraDisplay, setItensTotaisMaoObraDisplay] = useState([]);
     const [itensTotaisEquipamentosDisplay, setItensTotaisEquipamentosDisplay] = useState([]);
+    const [itensTotaisMateriaisDisplay, setItensTotaisMateriaisDisplay] = useState([]);
     const [itensTotaisCustosDisplay, setItensTotaisCustosDisplay] = useState([]);
     
 
@@ -56,6 +57,19 @@ function TotaisOrcamento(props) {
                 setItensTotaisEquipamentosDisplay(<></>);
                 setItensTotaisEquipamentosDisplay(<TotalizadorItem dados={equipamentos}/>);
             }
+
+            if(props.totaisOrcamento.TOTAIS_MATERIAL){
+                objGrafico = [...objGrafico, {
+                    titulo: "Materiais",
+                    valor: props.totaisOrcamento.TOTAIS_MATERIAL
+                }]
+
+                const materiais = transformarLista("MATERIAIS", props.orcamentoSelecionado.DIAS_TRABALHADO, props.listMaterialOrcamento);
+
+                setItensTotaisMateriaisDisplay(<></>);
+                setItensTotaisMateriaisDisplay(<TotalizadorItem dados={materiais}/>);
+            }
+
             if(props.totaisOrcamento.TOTAIS_CUSTOS){
                 objGrafico = [...objGrafico, {
                     titulo: "Custos",
@@ -74,7 +88,8 @@ function TotaisOrcamento(props) {
             preencherGrafico([]);
         }
     }, [props.listCustoOrcamento, 
-        props.listEquipamentoOrcamento, 
+        props.listEquipamentoOrcamento,
+        props.listMaterialOrcamento,
         props.listItensOrcamentoGeral, 
         props.listMaoObraOrcamento, 
         props.orcamentoSelecionado.DIAS_TRABALHADO, 
@@ -92,7 +107,6 @@ function TotaisOrcamento(props) {
                 return {
                     titulo: "ITENS",
                     itens: lista.map((item) => item.LOCAL_APLICACAO ? item.AMBIENTE_APLICACAO + " - " + item.LOCAL_APLICACAO : item.AMBIENTE_APLICACAO),
-                    // itens: lista.map((item) => item.PRODUTO.NOME_MATERIAL),
                     valores: lista.map((item) => item.AREA * item.VALOR_M_2)
                 }
             case "MAO_OBRA":
@@ -115,6 +129,12 @@ function TotaisOrcamento(props) {
                     itens: lista.map((item) => item.EQUIPAMENTO.NOME_EQUIPAMENTO),
                     valores: lista.map((item) => item.QTDE_EQUIPAMENTO * item.VALOR_UNITARIO_EQUIPAMENTO)
                 }
+                case "MATERIAIS":
+                    return {
+                        titulo: "MATERIAIS",
+                        itens: lista.map((item) => item.MATERIAL.NOME_MATERIAL),
+                        valores: lista.map((item) => item.QTDE_MATERIAL * item.VALOR_UNITARIO_MATERIAL)
+                    }
             case "CUSTOS":
                 return {
                     titulo: "CUSTOS",
@@ -136,6 +156,7 @@ function TotaisOrcamento(props) {
                     {itensTotaisItensDisplay}
                     {itensTotaisMaoObraDisplay}
                     {itensTotaisEquipamentosDisplay}
+                    {itensTotaisMateriaisDisplay}
                     {itensTotaisCustosDisplay}
                 </div>
                 <div id="espaco-totalizador">
@@ -150,12 +171,13 @@ function TotaisOrcamento(props) {
 const mapStateToProps = (state) => ({
     linkBackEnd: state.backEnd.link,
     totaisOrcamento: state.orcamento.totaisOrcamento,
-    listCustoOrcamento: state.orcamento.listCustoOrcamento ,
-    listEquipamentoOrcamento: state.orcamento.listEquipamentoOrcamento ,
-    listMaoObraOrcamento: state.orcamento.listMaoObraOrcamento ,
-    listItensOrcamentoGeral: state.orcamento.listItensOrcamentoGeral ,
-    itensOrcamentoIntumescente: state.orcamento.itensOrcamentoIntumescente ,
-    orcamentoSelecionado: state.orcamento.orcamentoSelecionado ,
+    listCustoOrcamento: state.orcamento.listCustoOrcamento,
+    listEquipamentoOrcamento: state.orcamento.listEquipamentoOrcamento,
+    listMaterialOrcamento: state.orcamento.listMaterialOrcamento,
+    listMaoObraOrcamento: state.orcamento.listMaoObraOrcamento,
+    listItensOrcamentoGeral: state.orcamento.listItensOrcamentoGeral,
+    itensOrcamentoIntumescente: state.orcamento.itensOrcamentoIntumescente,
+    orcamentoSelecionado: state.orcamento.orcamentoSelecionado,
   });
   
 const mapDispatchToProps = (dispatch) => ({});

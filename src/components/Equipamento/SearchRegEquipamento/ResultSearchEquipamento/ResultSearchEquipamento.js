@@ -13,10 +13,10 @@ function ResultSearchEquipamento(props) {
       <div className="col-2 item-result item-center">
         {equipamento.EQUIPAMENTO_ID}
       </div>
-      <div className="col-5 item-result item-center">
+      <div className="col-5 item-result item-center limitar-texto-1">
         {equipamento.NOME_EQUIPAMENTO}
       </div>
-      <div className="col-5 item-result item-center">
+      <div className="col-5 item-result item-center limitar-texto-1">
         {equipamento.FABRICANTE.NOME_PESSOA}
       </div>
     </div>

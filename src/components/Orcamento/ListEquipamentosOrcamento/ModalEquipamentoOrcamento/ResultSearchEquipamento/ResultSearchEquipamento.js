@@ -11,7 +11,7 @@ export default function ResultSearchEquipamento(props) {
       <div className="col-2 item-result item-center">
         {equipamento.EQUIPAMENTO_ID}
       </div>
-      <div className="col item-result item-center">
+      <div className="col item-result item-center limitar-texto-1">
         {equipamento.NOME_EQUIPAMENTO}
       </div>
     </div>

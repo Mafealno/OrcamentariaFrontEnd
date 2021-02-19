@@ -6,15 +6,15 @@ export default function ResultSearchMaterial(props) {
     <div
       className="row container-result-material"
       key={material.MATERIAL_ID}
-      onClick={() => props.selecionarMaterialItemOrcamentoGeral(material)}
+      onClick={() => props.selecionarMaterialOrcamentoIntumescente(material)}
     >
-      <div className="col-2 item-result item-center">
+      <div className="col-2 d-none d-md-block item-result item-center">
         {material.MATERIAL_ID}
       </div>
-      <div className="col-5 item-result item-center limitar-texto-1">
+      <div className="col item-result item-center limitar-texto-1">
         {material.NOME_MATERIAL}
       </div>
-      <div className="col-5 item-result item-center limitar-texto-1">
+      <div className="col-5 d-none d-md-block item-result item-center limitar-texto-1">
         {material.FABRICANTE.NOME_PESSOA}
       </div>
     </div>
@@ -25,9 +25,9 @@ export default function ResultSearchMaterial(props) {
       className={props.show ? "show-result" : ""}
     >
       <div className="row result-cabecalho">
-        <div className="col-2 item-center">Código</div>
-        <div className="col-5 item-center">Nome</div>
-        <div className="col-5 item-center">Fabricante</div>
+        <div className="col-2 d-none d-md-block item-center">Código</div>
+        <div className="col item-center">Nome</div>
+        <div className="col-5 d-none d-md-block item-center">Fabricante</div>
       </div>
       {itemDisplay}
     </div>

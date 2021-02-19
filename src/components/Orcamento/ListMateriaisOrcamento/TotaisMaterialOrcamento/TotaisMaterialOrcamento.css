@@ -1,0 +1,33 @@
+#containerTotaisMaterialOrcamento {
+  display: grid;
+  grid-template-areas:
+    "quantidade-material"
+    "total-valor-material";
+  background-color: #d40808;
+  height: 100%;
+  color: white;
+  border-radius: 10px;
+  padding: 3%;
+}
+
+#quantidade-material {
+  grid-area: quantidade-material;
+  height: 100%;
+  text-align: center;
+}
+
+#total-valor-material {
+  grid-area: total-valor-material;
+  height: 100%;
+  text-align: center;
+}
+.titulo-totais-material-orcamento {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+@media (min-width: 1200px) {
+  #containerTotaisMaterialOrcamento {
+    grid-template-areas: "quantidade-material total-valor-material";
+  }
+}

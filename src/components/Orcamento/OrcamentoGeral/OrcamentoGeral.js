@@ -4,11 +4,13 @@ import BasicRegOrcamento from "../BasicRegOrcamento/BasicRegOrcamento";
 import ListItensOrcamentoGeral from "./ListItensOrcamentoGeral/ListItensOrcamentoGeral";
 import ListMaoObraOrcamento from "../ListMaoObraOrcamento/ListMaoObraOrcamento";
 import ListEquipamentosOrcamento from "../ListEquipamentosOrcamento/ListEquipamentosOrcamento";
+import listMaterialOrcamento from "../ListMateriaisOrcamento/ListMateriaisOrcamento";
 import ListCustoOrcamento from "../ListCustoOrcamento/ListCustoOrcamento";
 import TotaisOrcamento from "../TotaisOrcamento/TotaisOrcamento"
 import { Provider } from "react-redux";
 
 import store from "../../../store/store";
+import ListMateriaisOrcamento from "../ListMateriaisOrcamento/ListMateriaisOrcamento";
 
 export default function OrcamentoGeral() {
   let [mostrarAbas, setMostrarAbas] = useState(false);
@@ -43,6 +45,14 @@ export default function OrcamentoGeral() {
                   href="#conteudo-mao-obra"
                 >
                   Mão de obra
+                </a>
+                <a
+                  className="nav-item nav-link col position-initial text-center"
+                  id="aba-materiais"
+                  data-toggle="tab"
+                  href="#conteudo-materiais"
+                >
+                  Materiais
                 </a>
                 <a
                   className="nav-item nav-link col position-initial text-center"
@@ -102,6 +112,14 @@ export default function OrcamentoGeral() {
               aria-labelledby="aba-mao-obra"
             >
               <ListMaoObraOrcamento />
+            </div>
+            <div
+              className="tab-pane fade conteudo-aba-orcamento"
+              id="conteudo-materiais"
+              role="tabpanel"
+              aria-labelledby="aba-materiais"
+            >
+              <ListMateriaisOrcamento />
             </div>
             <div
               className="tab-pane fade conteudo-aba-orcamento"

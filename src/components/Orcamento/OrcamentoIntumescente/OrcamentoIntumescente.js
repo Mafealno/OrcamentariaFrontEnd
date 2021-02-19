@@ -4,6 +4,7 @@ import BasicRegOrcamento from "../BasicRegOrcamento/BasicRegOrcamento";
 import Intumescente from "./Intumescente/Intumescente";
 import ListMaoObraOrcamento from "../ListMaoObraOrcamento/ListMaoObraOrcamento";
 import ListEquipamentosOrcamento from "../ListEquipamentosOrcamento/ListEquipamentosOrcamento";
+import ListMateriaisOrcamento from "../ListMateriaisOrcamento/ListMateriaisOrcamento";
 import ListCustoOrcamento from "../ListCustoOrcamento/ListCustoOrcamento";
 import TotaisOrcamento from "../TotaisOrcamento/TotaisOrcamento"
 import { Provider } from "react-redux";
@@ -53,6 +54,14 @@ export default function OrcamentoIntumescente() {
                 </a>
                 <a
                   className="nav-item nav-link col position-initial text-center"
+                  id="aba-materiais"
+                  data-toggle="tab"
+                  href="#conteudo-materiais"
+                >
+                  Materiais
+                </a>
+                <a
+                  className="nav-item nav-link col position-initial text-center"
                   id="aba-equipamentos"
                   data-toggle="tab"
                   href="#conteudo-equipamentos"
@@ -88,6 +97,7 @@ export default function OrcamentoIntumescente() {
           >
             <BasicRegOrcamento
               tipoObra="Intumescente"
+              referencia="Intumescente"
               mostrarAbas={(valor) => setMostrarAbas(valor)}
             />
           </div>
@@ -106,6 +116,14 @@ export default function OrcamentoIntumescente() {
               aria-labelledby="aba-mao-obra"
             >
               <ListMaoObraOrcamento />
+            </div>
+            <div
+              className="tab-pane fade conteudo-aba-orcamento"
+              id="conteudo-materiais"
+              role="tabpanel"
+              aria-labelledby="aba-materiais"
+            >
+              <ListMateriaisOrcamento />
             </div>
             <div
               className="tab-pane fade conteudo-aba-orcamento"

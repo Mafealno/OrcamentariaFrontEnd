@@ -85,7 +85,7 @@ label {
   -webkit-box-orient: vertical;
 }
 
-.w-100-pc{
+.w-100-pc {
   width: 100% !important;
 }
 
@@ -129,5 +129,10 @@ label {
 
   .modal-body {
     max-height: 730px;
+  }
+
+  .espacamento-label {
+    display: inline-block;
+    margin-bottom: 1.5rem;
   }
 }
