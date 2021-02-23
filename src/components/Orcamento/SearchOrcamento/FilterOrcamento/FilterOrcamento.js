@@ -15,12 +15,14 @@ function FilterOrcamento(props) {
     {
       nome: "Orcamento", 
       valor: "Orcamento", 
-      selecionado: true
+      selecionado: true,
+      key: "orcamento-1"
     }, 
     { 
       nome: "Cliente", 
       valor: "Cliente", 
-      selecionado: false 
+      selecionado: false, 
+      key: "orcamento-2"
     }
   ]
 
@@ -79,7 +81,8 @@ function FilterOrcamento(props) {
           </button>
         </div>
       </div>
-      <SelecaoFiltroSimples 
+      <SelecaoFiltroSimples
+        key={Math.round(Math.random)}
         camposMontar={itensFiltro}
         retornarFiltro={(valor)=> setFiltrarPor(valor)} 
       />

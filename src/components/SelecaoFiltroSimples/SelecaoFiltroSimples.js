@@ -5,14 +5,13 @@ import "./SelecaoFiltroSimples.css"
 
 function SelecaoFiltroSimples(props) {
 
-    const [itensDisplay, setItensDisplay] = useState(<></>)
+    const [itensDisplay, setItensDisplay] = useState(<></>);
 
     useEffect(() => {
-        setItensDisplay(props.camposMontar.map((item) =>(
-            <div className="form-check item-selecao-filtro-simples position-initial">
-
+        setItensDisplay(props.camposMontar.map((item) => (
+            <div key={item.key} className="form-check item-selecao-filtro-simples position-initial">
                 <input
-                className="form-check-input"
+                    className="form-check-input"
                     type="radio"
                     name="tipoFiltro"
                     id={"radio-"+item.nome}

@@ -15,12 +15,14 @@ function FilterCartaCobertura(props) {
     {
       nome: "Material", 
       valor: "Material", 
-      selecionado: true
+      selecionado: true,
+      key: "carta-cobertura-1"
     }, 
     { 
       nome: "Fabricante", 
       valor: "Fabricante", 
-      selecionado: false 
+      selecionado: false,
+      key: "carta-cobertura-2"
     }
   ]
 
