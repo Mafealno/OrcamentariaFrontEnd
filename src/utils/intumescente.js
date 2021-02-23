@@ -54,3 +54,28 @@ export const  calcularValoresItemIntumescente = (itemItumescente, perfil, espess
 
     return valoresCalculados;
 }
+
+export const  calcularTotaisIntumescente = (listItensIntumescente, valoresIntumescente, percentualPerda) => {
+    let valoresCalculados = {
+        AreaTotal: 0.0,
+        QtdeLitros: 0.0,
+        QtdeBaldes: 0.0,
+        QtdeBaldesPerda: 0.0,
+        ValorTotal: 0.0
+    }
+
+    const AreaTotalAux = listItensIntumescente.reduce((acumulador, itemAtual) => acumulador += itemAtual.AREA, 0);
+    const QtdeLitrosAux = listItensIntumescente.reduce((acumulador, itemAtual) => acumulador += itemAtual.QTDE_LITROS, 0);
+    const QtdeBaldesAux = QtdeLitrosAux / 20;
+    const QtdeBaldesPerdaAux = (QtdeBaldesAux * (percentualPerda / 100)) + QtdeBaldesAux;
+    const ValorTotalAux = AreaTotalAux * valoresIntumescente;
+
+    valoresCalculados.AreaTotal = AreaTotalAux.toFixed(2);
+    valoresCalculados.QtdeLitros = QtdeLitrosAux.toFixed(2);
+    valoresCalculados.QtdeBaldes = QtdeBaldesAux.toFixed(2);
+    valoresCalculados.QtdeBaldesPerda = QtdeBaldesPerdaAux.toFixed(2);
+    valoresCalculados.ValorTotal = ValorTotalAux.toFixed(2);
+
+    return valoresCalculados;
+
+}

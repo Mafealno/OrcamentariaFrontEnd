@@ -22,6 +22,7 @@ function Intumescente(props) {
     const [showResultadoMaterial, setShowResultadoMaterial] = useState(false);
     const [showToast, setShowToast] = useState(false);
     const [showModalItemIntumescente, setShowModalItemIntumescente] = useState(false);
+    const [itensOrcamentoIntumescenteValoresAtualizados, setItensOrcamentoIntumescenteValoresAtualizados] = useState([]);
     const [dataMaterial, setDataMaterial] = useState([]);
     const [grupoDisplay, setGrupoDisplay] = useState([]);
     const [ocupacaoUsoDisplay, setOcupacaoUsoDisplay] = useState([]);
@@ -37,11 +38,13 @@ function Intumescente(props) {
         divisao: { ...dadosCampo, requerido: true, valorPadrao: "naoSelecionado"},
         classe: { ...dadosCampo },
         trrf: { ...dadosCampo, requerido: true, valorPadrao: 30 },
-        qtdeLitrosTotal: { ...dadosCampo, requerido: false, valorPadrao: 0 },
-        percentualPerda: { ...dadosCampo, requerido: false, valorPadrao: 0 },
-        qtdeBaldes: { ...dadosCampo, requerido: false, valorPadrao: 0 },
-        qtdeBaldesReal: { ...dadosCampo, requerido: false, valorPadrao: 0 },
-        valorUnitarioIntumescente: { ...dadosCampo, requerido: false, valorPadrao: 0 },
+        qtdeLitrosTotal: { ...dadosCampo, valorPadrao: 0 },
+        percentualPerda: { ...dadosCampo, valorPadrao: 0 },
+        qtdeBaldes: { ...dadosCampo, valorPadrao: 0 },
+        qtdeBaldesReal: { ...dadosCampo, valorPadrao: 0 },
+        areaTotal: { ...dadosCampo, valorPadrao: 0 },
+        valorUnitarioIntumescente: { ...dadosCampo, valorPadrao: 0 },
+        valorTotal: { ...dadosCampo, valorPadrao: 0 },
     });
 
     const [dadosCadastroMaterial, setDadosCadastroMaterial] = useState({
@@ -64,24 +67,7 @@ function Intumescente(props) {
       });
 
       useEffect(() => {
-        if(props.listItensOrcamentoIntumescente.length > 0){
-
-          calcularValoresIntumescente().then((listItensIntumescente)=>{
-            if(listItensIntumescente){
-              setItensOrcamentoIntumescenteDisplay(listItensIntumescente.map((item) => (
-                <ItemOrcamentoIntumescente 
-                  ItemOrcamentoIntumescente={item}
-                  salvarItemOrcamentoIntumescente={(itemOrcamentoIntumescente, fazerAposCadastrar)=> 
-                    salvarItemOrcamentoIntumescente(itemOrcamentoIntumescente, fazerAposCadastrar)}
-                  deletarItemOrcamentoIntumescente={(itensOrcamentoId)=>
-                    deletarItemOrcamentoIntumescente(itensOrcamentoId)}
-                  atualizarItemOrcamentoIntescente={(itemOrcamentoIntumescente)=>
-                    atualizarItemOrcamentoIntescente(itemOrcamentoIntumescente)}/>
-              )))
-            }
-          });
-
-        }
+        montarComponenteItensIntumescente(props.listItensOrcamentoIntumescente);
       }, [dadosCadastroMaterial.materialIdOrcamentoIntumescente.valor,
           dadosCadastro.trrf.valor,
           props.listItensOrcamentoIntumescente]);
@@ -113,16 +99,43 @@ function Intumescente(props) {
       }, [props.orcamentoSelecionado, props.materialOrcamentoIntumescente])
     
     useEffect(() => {
-        
         setGrupoDisplay(intumescenteUtils.listGrupo.map((item) => (montarOption(item))))
         setOcupacaoUsoDisplay(intumescenteUtils.listOcupacaoUso.map((item) => (montarOption(item))))
         setTrrfDisplay(intumescenteUtils.listTrrf.map((item) => (montarOption(item))))
-
     }, [])
 
     useEffect(() => {
         setDivisaoDisplay(filtrarDivisao(dadosCadastro.grupo.valor, intumescenteUtils.listDivisao).map((item) => (montarOptionDivisao(item))));
-    }, [dadosCadastro.grupo.valor])
+    }, [dadosCadastro.grupo.valor]);
+
+    const montarComponenteItensIntumescente = (listItensOrcamentoIntumescente) => {
+      if(listItensOrcamentoIntumescente.length > 0){
+        setItensOrcamentoIntumescenteValoresAtualizados([]);
+        calcularValoresIntumescente(listItensOrcamentoIntumescente).then((listItensIntumescente)=>{
+          if(listItensIntumescente){
+            setItensOrcamentoIntumescenteValoresAtualizados(listItensIntumescente);
+            setItensOrcamentoIntumescenteDisplay(listItensIntumescente.map((item) => (
+              <ItemOrcamentoIntumescente 
+                ItemOrcamentoIntumescente={item}
+                salvarItemOrcamentoIntumescente={(itemOrcamentoIntumescente, fazerAposCadastrar)=> 
+                  salvarItemOrcamentoIntumescente(itemOrcamentoIntumescente, fazerAposCadastrar)}
+                deletarItemOrcamentoIntumescente={(itensOrcamentoId)=>
+                  deletarItemOrcamentoIntumescente(itensOrcamentoId)}
+                atualizarItemOrcamentoIntumescente={(itemOrcamentoIntumescente)=>
+                  atualizarItemOrcamentoIntumescente(itemOrcamentoIntumescente)} />
+              )))
+            }
+        });
+      }
+    }
+
+    useEffect(() => {
+      calcularTotaisIntumescente();
+    }, [itensOrcamentoIntumescenteValoresAtualizados,
+        dadosCadastro.trrf.valor,
+        dadosCadastro.valorUnitarioIntumescente.valor,
+        dadosCadastro.percentualPerda.valor,
+        dadosCadastroMaterial.materialIdOrcamentoIntumescente.valor])
 
     const montarObjIntumescente = (obj) => {
         return {
@@ -195,25 +208,46 @@ function Intumescente(props) {
         };
       };
 
-      const calcularValoresIntumescente = async () => {
-
-        let orcamentoSelecionado = { ...props.orcamentoSelecionado }
-
-        orcamentoSelecionado.PRODUTO.MATERIAL_ID = parseInt(dadosCadastroMaterial.materialIdOrcamentoIntumescente.valor)
-        orcamentoSelecionado.TEMPO_RESISTENCIA_FOGO = dadosCadastro.trrf.valor
-
-        return await fetch(props.linkBackEnd + "/orcamentoIntumescente/valoresIntumescente", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(orcamentoSelecionado),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            return data.LIST_ITENS_ORCAMENTO_INTUMESCENTE
+      const calcularTotaisIntumescente = () =>{
+        if(itensOrcamentoIntumescenteValoresAtualizados.length && dadosCadastro.valorUnitarioIntumescente.valor && dadosCadastro.percentualPerda.valor){
+        
+          const valoresCalculados = intumescenteUtils.calcularTotaisIntumescente(itensOrcamentoIntumescenteValoresAtualizados, dadosCadastro.valorUnitarioIntumescente.valor, dadosCadastro.percentualPerda.valor)
+  
+          setDadosCadastro({
+            ...dadosCadastro,
+            qtdeLitrosTotal: { ...dadosCadastro.qtdeLitrosTotal, valor: valoresCalculados.QtdeLitros },
+            qtdeBaldes: { ...dadosCadastro.qtdeBaldes, valor: valoresCalculados.QtdeBaldes },
+            qtdeBaldesReal: { ...dadosCadastro.qtdeBaldesReal, valor: valoresCalculados.QtdeBaldesPerda },
+            areaTotal: { ...dadosCadastro.areaTotal, valor: valoresCalculados.AreaTotal },
+            valorTotal: { ...dadosCadastro.valorTotal, valor: valoresCalculados.ValorTotal },
           })
-          .catch((error) => {
-            return error
-          });
+        }
+      }
+
+      const calcularValoresIntumescente = async (listItensOrcamentoIntumescente) => {
+
+        if(props.orcamentoSelecionado.PRODUTO){
+          
+          let orcamentoSelecionado = { ...props.orcamentoSelecionado }
+  
+          orcamentoSelecionado.PRODUTO.MATERIAL_ID = parseInt(dadosCadastroMaterial.materialIdOrcamentoIntumescente.valor)
+          orcamentoSelecionado.TEMPO_RESISTENCIA_FOGO = dadosCadastro.trrf.valor
+          orcamentoSelecionado.LIST_ITENS_ORCAMENTO_INTUMESCENTE = listItensOrcamentoIntumescente
+  
+          return await fetch(props.linkBackEnd + "/orcamentoIntumescente/valoresIntumescente", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(orcamentoSelecionado),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              return data.LIST_ITENS_ORCAMENTO_INTUMESCENTE
+            })
+            .catch((error) => {
+              return error
+            });
+        }
+
       }
 
     const filtrarDivisao = (grupo, listDivisao) => {
@@ -331,7 +365,7 @@ function Intumescente(props) {
           .then((response) => response.json())
           .then((data) => {
             
-            //props.adicionarItemOrcamentoGeral(props.listItensOrcamentoGeral, data);
+            props.adicionarItemOrcamentoIntumescente(props.listItensOrcamentoIntumescente, data);
     
             props.recarregarTotaisOrcamento(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID);
     
@@ -359,14 +393,10 @@ function Intumescente(props) {
           }
         ).then((data) => {
           if (data.ok) {
-    
+            
+            props.removerItemOrcamentoIntumescente(props.listItensOrcamentoIntumescente, itensOrcamentoId);
             props.recarregarTotaisOrcamento(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID);
-    
-            props.removerItemOrcamentoGeral(
-              props.listItensOrcamentoGeral,
-              itensOrcamentoId
-            );
-    
+  
             const msg = "Exclusão efetuada com sucesso";
     
             exibirTost("sucesso", msg);
@@ -378,7 +408,7 @@ function Intumescente(props) {
         });
       };
     
-      const atualizarItemOrcamentoIntescente = (itemOrcamentoIntumescente) => {
+      const atualizarItemOrcamentoIntumescente = (itemOrcamentoIntumescente) => {
         fetch(
           props.linkBackEnd + "/itensOrcamentoIntumescente/" + itemOrcamentoIntumescente.ITENS_ORCAMENTO_ID,
           {
@@ -391,16 +421,15 @@ function Intumescente(props) {
     
             props.recarregarTotaisOrcamento(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID);
             
-            //props.recarregarItensOrcamentoGeral(props.linkBackEnd, itemOrcamentoIntumescente.ORCAMENTO_ID);
+            props.recarregarItensOrcamentoIntumescente(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID);
     
-            const index = props.listItensOrcamentoGeral.findIndex(
-              (elemento) =>
-                elemento.ITENS_ORCAMENTO_ID == itemOrcamentoIntumescente.ITENS_ORCAMENTO_ID
+            const index = props.listItensOrcamentoIntumescente.findIndex((elemento) => 
+              elemento.ITENS_ORCAMENTO_ID == itemOrcamentoIntumescente.ITENS_ORCAMENTO_ID
             );
     
-            props.listItensOrcamentoGeral[index] = itemOrcamentoIntumescente;
-    
-            //montarComponente();
+            props.listItensOrcamentoIntumescente[index] = itemOrcamentoIntumescente;
+
+            montarComponenteItensIntumescente(props.listItensOrcamentoIntumescente);
     
             const msg = "Atualização efetuada com sucesso";
             exibirTost("sucesso", msg);
@@ -712,19 +741,24 @@ function Intumescente(props) {
                                     </div>
                                 </div>
                                 <div className="col">
-                                    <label>Valor Intumescente</label>
-                                        <input
-                                            type="text"
-                                            name="valorUnitarioIntumescente"
-                                            id="campo-valorUnitarioIntumescente"
-                                            className="form-control position-initial"
-                                            value={dadosCadastro.valorUnitarioIntumescente.valor}
-                                            onChange={(event) => handleInputChange(event)}
-                                            onFocus={(event) => removerErro(event.target.id)}/>
+                                    <label>Valor unitário</label>
+                                        <div className="input-group mb-5 position-initial">
+                                            <div className="input-group-append">
+                                              <span className="input-group-text">R$</span>
+                                            </div>
+                                          <input
+                                              type="text"
+                                              name="valorUnitarioIntumescente"
+                                              id="campo-valorUnitarioIntumescente"
+                                              className="form-control position-initial"
+                                              value={dadosCadastro.valorUnitarioIntumescente.valor}
+                                              onChange={(event) => handleInputChange(event)}
+                                              onFocus={(event) => removerErro(event.target.id)}/>
+                                          </div>
                                         <span className="invalid-feedback msg-erro-valorUnitarioIntumescente" id="erro-valorUnitarioIntumescente"></span>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-end">
-                                    <button type="button" className="btn btn-orcamentaria w-100-pc">Recalcular</button>
+                                    <button type="button" className="btn btn-orcamentaria w-100-pc" onClick={()=> calcularTotaisIntumescente()}>Recalcular</button>
                                 </div>
                             </div>
                         </div>
@@ -744,24 +778,33 @@ function Intumescente(props) {
                                         <span className="invalid-feedback msg-erro-qtdeLitrosTotal" id="erro-qtdeLitrosTotal"></span>
                                 </div>
                                 <div className="col">
-                                    <label>Qtde de baldes + perda</label>
+                                    <label>Quantidade de baldes</label>
                                         <input
                                             type="text"
-                                            name="qtdeBaldesReal"
-                                            id="campo-qtdeBaldesReal"
+                                            name="qtdeBaldes"
+                                            id="campo-qtdeBaldes"
                                             className="form-control position-initial"
-                                            value={dadosCadastro.qtdeBaldesReal.valor}
+                                            value={dadosCadastro.qtdeBaldes.valor}
                                             onChange={(event) => handleInputChange(event)}
                                             onFocus={(event) => removerErro(event.target.id)}
                                             readOnly/>
-                                        <span className="invalid-feedback msg-erro-qtdeBaldesReal" id="erro-qtdeBaldesReal"></span>
+                                        <span className="invalid-feedback msg-erro-qtdeBaldes" id="erro-qtdeBaldes"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="col-6">
                         <div id="totais-intumescente">
-
+                            <div className="form-row h-100-pc">
+                              <div className="col-6 d-flex flex-column align-items-center justify-content-center">
+                                <div className="titulo-totais-intumescente">Total de Baldes + Perda</div>
+                                <div>{dadosCadastro.qtdeBaldesReal.valor}</div>
+                              </div>
+                              <div className="col-6 d-flex flex-column align-items-center justify-content-center">
+                                <div className="titulo-totais-intumescente">SubTotal</div>
+                                <div>{"R$ " + dadosCadastro.valorTotal.valor}</div>
+                              </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -795,8 +838,8 @@ function Intumescente(props) {
             salvarItemOrcamentoIntumescente(itemOrcamentoIntumescente, fazerAposCadastrar)}
           deletarItemOrcamentoIntumescente={(itensOrcamentoId)=>
             deletarItemOrcamentoIntumescente(itensOrcamentoId)}
-          atualizarItemOrcamentoIntescente={(itemOrcamentoIntumescente)=>
-            atualizarItemOrcamentoIntescente(itemOrcamentoIntumescente)}
+          atualizarItemOrcamentoIntumescente={(itemOrcamentoIntumescente)=>
+            atualizarItemOrcamentoIntumescente(itemOrcamentoIntumescente)}
           />
           
       </div>
@@ -812,9 +855,16 @@ const mapStateToProps = (state) => ({
   });
   
   const mapDispatchToProps = (dispatch) => ({
-    recarregarTotaisOrcamento : (linkBackEnd, orcamentoId) => dispatch(orcamentoActions.recarregarTotaisOrcamento(linkBackEnd, orcamentoId)),
-    recarregarOrcamentoIntumescente : (linkBackEnd, orcamentoId) => dispatch(orcamentoActions.recarregarOrcamentoIntumescente(linkBackEnd, orcamentoId)),
-    selecionarOrcamentoSimples : (orcamento) => dispatch(orcamentoActions.selecionarOrcamentoSimples(orcamento))
+    recarregarTotaisOrcamento : (linkBackEnd, orcamentoId) => 
+      dispatch(orcamentoActions.recarregarTotaisOrcamento(linkBackEnd, orcamentoId)),
+    recarregarOrcamentoIntumescente : (linkBackEnd, orcamentoId) => 
+      dispatch(orcamentoActions.recarregarOrcamentoIntumescente(linkBackEnd, orcamentoId)),
+    adicionarItemOrcamentoIntumescente : (listItensOrcamentoIntumescente, itemOrcamentoIntumescente) => 
+      dispatch(orcamentoActions.adicionarItemOrcamentoIntumescente(listItensOrcamentoIntumescente, itemOrcamentoIntumescente)),
+    removerItemOrcamentoIntumescente: (listItensOrcamentoIntumescente, itensOrcamentoId) => 
+      dispatch(orcamentoActions.removerItemOrcamentoIntumescente(listItensOrcamentoIntumescente, itensOrcamentoId)),
+    recarregarItensOrcamentoIntumescente : (linkBackEnd, orcamentoId) =>
+      dispatch(orcamentoActions.recarregarItensOrcamentoIntumescente(linkBackEnd, orcamentoId))
   });
   
   export default connect(

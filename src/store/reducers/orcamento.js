@@ -105,6 +105,11 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
         ...state,
         listItensOrcamentoGeral: action.listItensOrcamentoGeral,
       };
+    case "REMOVER_ITEM_ORCAMENTO_INTUMESCENTE":
+      return {
+        ...state,
+        listItensOrcamentoIntumescente: action.listItensOrcamentoIntumescente,
+      };
     case "REMOVER_ITEM_CUSTO_MAO_OBRA_DISPLAY":
       return {
         ...state,
@@ -159,6 +164,12 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
       return {
         ...(state = Object.assign({}, state, {
           listItensOrcamentoGeral: action.listItensOrcamentoGeral,
+        })),
+      };
+    case "RECARREGAR_ITENS_ORCAMENTO_INTUMESCENTE_CONCLUIDA":
+      return {
+        ...(state = Object.assign({}, state, {
+          listItensOrcamentoIntumescente: action.listItensOrcamentoIntumescente,
         })),
       };
     case "RECARREGAR_ITENS_EQUIPAMENTO_ORCAMENTO_CONCLUIDA":

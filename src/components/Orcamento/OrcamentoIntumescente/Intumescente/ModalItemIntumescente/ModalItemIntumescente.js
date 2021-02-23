@@ -121,18 +121,7 @@ function ModalItemIntumescente(props) {
           }))
       }, []);
 
-      // useEffect(() => {
-      //   if(props.show && dadosCadastro.valorEspessura.valor != "Não encontrado"){
-      //     calcularValores();
-      //   }else{
-      //     setDadosCadastro({
-      //       ...dadosCadastro,
-      //       qtdeLitros: { ...dadosCadastro.qtdeLitros, valor: "" },
-      //     })
-      //   }
-      // }, [dadosCadastro.valorEspessura.valor])
-
-        useEffect(() => {
+       useEffect(() => {
 
           if(props.orcamentoSelecionado.PRODUTO && dadosCadastro.valorHpA.valor 
             && (dadosCadastro.referencia.valor || dadosCadastro.referencia.valor != "naoSelecionado")
@@ -273,7 +262,7 @@ function ModalItemIntumescente(props) {
 
       const montarObj = (obj) => {
         return {
-          ITENS_ORCAMENTO_ID: 0,
+          ITENS_ORCAMENTO_ID: dadosCadastro.itensOrcamentoId.valor || 0,
           ORCAMENTO_ID: props.orcamentoSelecionado.ORCAMENTO_ID,
           NUMERO_LINHA: parseInt(obj.numeroLinha.valor),
           VALOR_COMPRIMENTO: parseFloat(obj.valorComprimento.valor),

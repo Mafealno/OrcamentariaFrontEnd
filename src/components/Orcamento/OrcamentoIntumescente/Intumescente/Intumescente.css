@@ -32,6 +32,12 @@
   grid-template-rows: 50px auto;
 }
 
+.titulo-totais-intumescente {
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
 .fieldset-search-material-intumescente {
   max-height: 100%;
 }
