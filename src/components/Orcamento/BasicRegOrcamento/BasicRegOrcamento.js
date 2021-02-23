@@ -620,7 +620,7 @@ function BasicRegOrcamento(props) {
         const msg = "Cadastro efetuado com sucesso";
         exibirTost("sucesso", msg);
 
-          props.selecionarOrcamentoGeral(data);
+          props.selecionarOrcamento(data);
           
       })
       .catch(() => {
@@ -647,7 +647,7 @@ function BasicRegOrcamento(props) {
         exibirTost("sucesso", msg);
 
         if ((dadosCadastro.tipoObra.valor = "Geral")) {
-          props.selecionarOrcamentoGeral({});
+          props.selecionarOrcamento({});
         } else {
         }
       } else {
@@ -801,7 +801,7 @@ function BasicRegOrcamento(props) {
                       <div className="close-select-custo">
                         <a
                           href="#"
-                          onClick={() => props.selecionarOrcamentoGeral({})}
+                          onClick={() => props.selecionarOrcamento({})}
                         >
                           <span className="fa fa-close close-orcamento"></span>
                         </a>
@@ -1175,7 +1175,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  selecionarOrcamentoGeral: (orcamento) =>
+  selecionarOrcamento: (orcamento) =>
     dispatch(orcamentoActions.selecionarOrcamento(orcamento)),
   selecionarClienteOrcamento: (clienteOrcamento) =>
     dispatch(orcamentoActions.selecionarClienteOrcamento(clienteOrcamento)),
