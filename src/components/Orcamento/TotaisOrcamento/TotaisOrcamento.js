@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import "./TotaisOrcamento.css";
 import GraficoPizza from "../../GraficoPizza/GraficoPizza";
@@ -22,18 +23,27 @@ function TotaisOrcamento(props) {
 
             if(props.totaisOrcamento.TOTAIS_ITENS){
 
+                let itens = 0.0;
+
                 if(props.orcamentoSelecionado.TIPO_OBRA === "Geral"){
                     objGrafico = [...objGrafico, {
                         titulo: "Itens",
                         valor: props.totaisOrcamento.TOTAIS_ITENS
                     }]
 
-                    const itens = transformarLista("ITENS_GERAL", props.orcamentoSelecionado.DIAS_TRABALHADO, props.listItensOrcamentoGeral);
+                    itens = transformarLista("ITENS_GERAL", props.orcamentoSelecionado.DIAS_TRABALHADO, props.listItensOrcamentoGeral);
+
+                }else{
+                    objGrafico = [ ...objGrafico, {
+                        titulo: "Itens",
+                        valor: props.totaisOrcamento.TOTAIS_ITENS
+                    }]
+
+                    itens = transformarLista("ITENS_INTUMESCENTE", props.orcamentoSelecionado.DIAS_TRABALHADO, props.listItensOrcamentoIntumescente)
+                }
 
                     setItensTotaisItensDisplay(<></>);
                     setItensTotaisItensDisplay(<TotalizadorItem dados={itens}/>);
-                }
-
             }
             if(props.totaisOrcamento.TOTAIS_MAO_OBRA){
                 objGrafico = [...objGrafico, {
@@ -91,6 +101,7 @@ function TotaisOrcamento(props) {
         props.listEquipamentoOrcamento,
         props.listMaterialOrcamento,
         props.listItensOrcamentoGeral, 
+        props.listItensOrcamentoIntumescente, 
         props.listMaoObraOrcamento, 
         props.orcamentoSelecionado.DIAS_TRABALHADO, 
         props.orcamentoSelecionado.TIPO_OBRA, 
@@ -108,6 +119,12 @@ function TotaisOrcamento(props) {
                     titulo: "ITENS",
                     itens: lista.map((item) => item.LOCAL_APLICACAO ? item.AMBIENTE_APLICACAO + " - " + item.LOCAL_APLICACAO : item.AMBIENTE_APLICACAO),
                     valores: lista.map((item) => item.AREA * item.VALOR_M_2)
+                }
+            case "ITENS_INTUMESCENTE":
+                return {
+                    titulo: "ITENS",
+                    itens: lista.map((item) => item.REFERENCIA + " - " + item.PERFIL.NOME_PERFIL),
+                    valores: lista.map((item) => item.AREA * props.orcamentoSelecionado.VALOR_UNITARIO_INTUMESCENTE || 0)
                 }
             case "MAO_OBRA":
                 return {
@@ -176,7 +193,7 @@ const mapStateToProps = (state) => ({
     listMaterialOrcamento: state.orcamento.listMaterialOrcamento,
     listMaoObraOrcamento: state.orcamento.listMaoObraOrcamento,
     listItensOrcamentoGeral: state.orcamento.listItensOrcamentoGeral,
-    itensOrcamentoIntumescente: state.orcamento.itensOrcamentoIntumescente,
+    listItensOrcamentoIntumescente: state.orcamento.listItensOrcamentoIntumescente,
     orcamentoSelecionado: state.orcamento.orcamentoSelecionado,
   });
   
