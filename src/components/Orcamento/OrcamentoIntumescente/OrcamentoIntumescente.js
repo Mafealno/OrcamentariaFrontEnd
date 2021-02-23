@@ -26,7 +26,9 @@ export default function OrcamentoIntumescente() {
             >
               Básico
             </a>
-            <a
+            {mostrarAbas && (
+              <>
+                <a
                   className="nav-item nav-link col position-initial text-center"
                   id="aba-intumescente"
                   data-toggle="tab"
@@ -34,16 +36,6 @@ export default function OrcamentoIntumescente() {
                 >
                   Intumescente
                 </a>
-            {mostrarAbas && (
-              <>
-                {/* <a
-                  className="nav-item nav-link col position-initial text-center"
-                  id="aba-intumescente"
-                  data-toggle="tab"
-                  href="#conteudo-intumescente"
-                >
-                  Intumescente
-                </a> */}
                 <a
                   className="nav-item nav-link col position-initial text-center"
                   id="aba-mao-obra"

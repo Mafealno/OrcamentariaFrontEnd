@@ -1,13 +1,14 @@
 const ESTADO_INICIAL = {
-  clienteOrcamento: {},
   orcamentoSelecionado: {},
+  clienteOrcamento: {},
+  materialOrcamentoIntumescente: {},
+  totaisOrcamento: {},
   listItensOrcamentoGeral: [],
-  itensOrcamentoIntumescente: [],
+  listItensOrcamentoIntumescente: [],
   listMaoObraOrcamento: [],
   listCustoOrcamento: [],
   listEquipamentoOrcamento: [],
   listMaterialOrcamento: [],
-  totaisOrcamento: {},
   listOrcamento: [],
   listCustosMaoObraDisplay: [],
 };
@@ -67,7 +68,7 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
     case "ADICIONAR_ITEM_ORCAMENTO_INTUMESCENTE":
       return {
         ...state,
-        itensOrcamentoIntumescente: action.itensOrcamentoIntumescente,
+        listItensOrcamentoIntumescente: action.listItensOrcamentoIntumescente,
       };
     case "ADICIONAR_MAO_OBRA_ORCAMENTO":
       return {
@@ -139,6 +140,19 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
       return {
         ...(state = Object.assign({}, state, {
           listOrcamento: action.listOrcamento,
+        })),
+      };
+    case "RECARREGAR_ORCAMENTO_INTUMESCENTE_CONCLUIDA":
+      return {
+        ...(state = Object.assign({}, state, {
+          orcamentoSelecionado: action.orcamentoSelecionado,
+          clienteOrcamento: action.orcamentoSelecionado.CLIENTE_ORCAMENTO || {},
+          materialOrcamentoIntumescente: action.orcamentoSelecionado.PRODUTO || {},
+          listMaoObraOrcamento: action.orcamentoSelecionado.LIST_MAO_OBRA_ORCAMENTO || [],
+          listMaterialOrcamento: action.orcamentoSelecionado.LIST_MATERIAL_ORCAMENTO || [],
+          listEquipamentoOrcamento: action.orcamentoSelecionado.LIST_EQUIPAMENTO_ORCAMENTO || [],
+          listCustoOrcamento: action.orcamentoSelecionado.LIST_CUSTO_ORCAMENTO || [],
+          totaisOrcamento: action.orcamentoSelecionado.TOTAIS_ORCAMENTO || {}
         })),
       };
     case "RECARREGAR_ITENS_ORCAMENTO_GERAL_CONCLUIDA":

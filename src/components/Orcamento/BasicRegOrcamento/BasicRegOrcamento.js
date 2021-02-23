@@ -250,7 +250,7 @@ function BasicRegOrcamento(props) {
         limparCamposEndereco();
       }
     }
-  }, [props.clienteOrcamento.PESSOA_ID]);
+  }, [props.clienteOrcamento]);
 
   useEffect(() => {
     if (dadosCadastroCliente.pessoaId.valor) {
@@ -482,10 +482,27 @@ function BasicRegOrcamento(props) {
         ],
         LIST_CONTATO: [],
       },
-      LIST_ITENS_ORCAMENTO_GERAL: [],
+      PRODUTO: {
+        MATERIAL_ID: 0,
+        NOME_MATERIAL: "",
+        DESCRICAO_MATERIAL: "",
+        TIPO_MATERIAL: "",
+        FABRICANTE: {
+          PESSOA_ID: 0,
+          NOME_PESSOA: "",
+          RG: "",
+          CPF: "",
+          CNPJ: "",
+          TIPO_CADASTRO: "",
+          TIPO_PESSOA: "",
+          LIST_ENDERECO: [],
+          LIST_CONTATO: [],
+        },
+      },
       LIST_MAO_OBRA_ORCAMENTO: [],
       LIST_CUSTO_ORCAMENTO: [],
       LIST_EQUIPAMENTO_ORCAMENTO: [],
+      LIST_MATERIAL_ORCAMENTO: [],
       LIST_ITENS_ORCAMENTO_INTUMESCENTE: []
     };
   };
@@ -530,6 +547,7 @@ function BasicRegOrcamento(props) {
       LIST_MAO_OBRA_ORCAMENTO: [],
       LIST_CUSTO_ORCAMENTO: [],
       LIST_EQUIPAMENTO_ORCAMENTO: [],
+      LIST_MATERIAL_ORCAMENTO: []
     };
   };
 
@@ -581,13 +599,11 @@ function BasicRegOrcamento(props) {
     dadosCliente.endereco = dadosEnderecoCliente;
     dadosOrcamento.pessoa = dadosCliente;
 
-    let caminho = "";
+    let caminho = "/orcamento/";
     let objCadastro = {};
     if(props.referencia === "Geral"){
-      caminho = "/orcamento/"
       objCadastro = montarObjGeral(dadosOrcamento);
     }else if(props.referencia === "Intumescente"){
-      caminho = "/orcamentoIntumescente/"
       objCadastro = montarObjIntumescente(dadosOrcamento);
     }
 

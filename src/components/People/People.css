@@ -7,7 +7,6 @@
     "endereco";
   grid-template-rows: 60px auto auto auto;
   overflow: hidden;
-  width: 98%;
 }
 
 #busca {

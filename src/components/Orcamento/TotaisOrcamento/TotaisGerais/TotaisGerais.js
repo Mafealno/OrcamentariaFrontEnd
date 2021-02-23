@@ -61,7 +61,7 @@ function TotaisGerais(props) {
                     <div className="input-group mb-5">
                         <input 
                             type="number" 
-                            class="form-control text-center" 
+                            className="form-control text-center" 
                             value={porcentagemAcrescimo} 
                             onChange={(event)=> setPorcentagemAcrescimo(event.target.value)}/>
                         <div className="input-group-append">

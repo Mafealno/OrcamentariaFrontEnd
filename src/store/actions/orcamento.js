@@ -270,6 +270,27 @@ export function listarOrcamento(linkBackEnd) {
   };
 }
 
+export function recarregarOrcamentoIntumescente(linkBackEnd, orcamentoId) {
+  return (dispatch) => {
+    fetch(linkBackEnd + "/orcamentoIntumescente/"+ orcamentoId, {
+      method: "GET",
+    })
+      .then((responde) => responde.json())
+      .then((data) => {
+
+        dispatch({
+          type: "RECARREGAR_ORCAMENTO_INTUMESCENTE_CONCLUIDA",
+          orcamentoSelecionado: data[0],
+        });
+        
+        dispatch({
+          type: "SELECIONAR_ITENS_ORCAMENTO_INTUMESCENTE",
+          listItensOrcamentoIntumescente: data[0].LIST_ITENS_ORCAMENTO_INTUMESCENTE,
+        });
+      });
+    }
+  };
+
 export function recarregarItensOrcamentoGeral(linkBackEnd, orcamentoId) {
   return (dispatch) => {
     fetch(

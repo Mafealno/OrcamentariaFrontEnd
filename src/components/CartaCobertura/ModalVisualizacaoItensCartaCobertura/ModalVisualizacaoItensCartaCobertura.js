@@ -107,7 +107,7 @@ export default function ModalVisualizacaoItensCartaCobertura(props) {
                         <div className="col-3">
                           <button
                             type="button"
-                            className="btn btn-success"
+                            className="btn btn-success "
                             onClick={() =>
                               props.acaoAtualizarReferecia(referencia)
                             }

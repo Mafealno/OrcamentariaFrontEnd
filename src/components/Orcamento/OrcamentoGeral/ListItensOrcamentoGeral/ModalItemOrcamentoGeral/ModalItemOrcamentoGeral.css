@@ -51,7 +51,7 @@
   max-height: 75vh !important;
 }
 
-@media(max-height: 770px){
+@media (max-height: 770px) {
   .modal-body-item-orcamento-geral {
     max-height: 400px !important;
   }

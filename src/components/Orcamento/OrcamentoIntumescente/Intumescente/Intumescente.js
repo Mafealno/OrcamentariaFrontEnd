@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-const-assign */
 /* eslint-disable no-unused-vars */
 /* eslint-disable array-callback-return */
@@ -8,6 +9,10 @@ import "./Intumescente.css";
 import * as validacaoDadosUtils from "../../../../utils/validacaoDados";
 import * as intumescenteUtils from "../../../../utils/intumescente";
 import ResultSearchMaterial from "./ResultSearchMaterial/ResultSearchMaterial"
+import ModalItemIntumescente from "./ModalItemIntumescente/ModalItemIntumescente";
+import ItemOrcamentoIntumescente from "./ItemOrcamentoIntumescente/ItemOrcamentoIntumescente";
+import ToastControl from "../../../ToastControl/ToastControl";
+import * as orcamentoActions from "../../../../store/actions/orcamento";
 import { connect } from "react-redux";
 
 function Intumescente(props) {
@@ -15,20 +20,28 @@ function Intumescente(props) {
     let dadosCampo = { ...validacaoDadosUtils.dadosCampo };
 
     const [showResultadoMaterial, setShowResultadoMaterial] = useState(false);
+    const [showToast, setShowToast] = useState(false);
+    const [showModalItemIntumescente, setShowModalItemIntumescente] = useState(false);
     const [dataMaterial, setDataMaterial] = useState([]);
     const [grupoDisplay, setGrupoDisplay] = useState([]);
     const [ocupacaoUsoDisplay, setOcupacaoUsoDisplay] = useState([]);
     const [divisaoDisplay, setDivisaoDisplay] = useState([]);
     const [trrf, setTrrfDisplay] = useState([]);
+    const [itensOrcamentoIntumescenteDisplay, setItensOrcamentoIntumescenteDisplay] = useState([]);
     const [stringBuscaMaterial, setStringBuscaMaterial] = useState("");
 
     const [dadosCadastro, setDadosCadastro] = useState({
         orcamentoId: { ...dadosCampo, valorPadrao: 0 },
         grupo : { ...dadosCampo, requerido: true, valorPadrao: "A"},
-        ocupacaoUso: { ...dadosCampo, requerido: true, valorPadrao: "RESIDENCIAL"},
-        divisao: { ...dadosCampo, requerido: true, valorPadrao: "1 - HABITAÇÕES UNIFAMILIARES"},
+        ocupacaoUso: { ...dadosCampo, requerido: true, valorPadrao: "naoSelecionado"},
+        divisao: { ...dadosCampo, requerido: true, valorPadrao: "naoSelecionado"},
         classe: { ...dadosCampo },
-        trrf: { ...dadosCampo, requerido: true, valorPadrao: 30 }
+        trrf: { ...dadosCampo, requerido: true, valorPadrao: 30 },
+        qtdeLitrosTotal: { ...dadosCampo, requerido: false, valorPadrao: 0 },
+        percentualPerda: { ...dadosCampo, requerido: false, valorPadrao: 0 },
+        qtdeBaldes: { ...dadosCampo, requerido: false, valorPadrao: 0 },
+        qtdeBaldesReal: { ...dadosCampo, requerido: false, valorPadrao: 0 },
+        valorUnitarioIntumescente: { ...dadosCampo, requerido: false, valorPadrao: 0 },
     });
 
     const [dadosCadastroMaterial, setDadosCadastroMaterial] = useState({
@@ -37,24 +50,190 @@ function Intumescente(props) {
         pessoaId: { ...dadosCampo },
         nomePessoa: { ...dadosCampo },
       });
+
+      let [configToast, setConfigToast] = useState({
+        estiloToast: "",
+        estiloToastHeader: "",
+        estiloToastBody: "",
+        delayToast: 0,
+        autoHideToast: false,
+        hideToastHeader: true,
+        conteudoHeader: "",
+        conteudoBody: "",
+        closeToast: {},
+      });
+
+      useEffect(() => {
+        if(props.listItensOrcamentoIntumescente.length > 0){
+
+          calcularValoresIntumescente().then((listItensIntumescente)=>{
+            if(listItensIntumescente){
+              setItensOrcamentoIntumescenteDisplay(listItensIntumescente.map((item) => (
+                <ItemOrcamentoIntumescente 
+                  ItemOrcamentoIntumescente={item}
+                  salvarItemOrcamentoIntumescente={(itemOrcamentoIntumescente, fazerAposCadastrar)=> 
+                    salvarItemOrcamentoIntumescente(itemOrcamentoIntumescente, fazerAposCadastrar)}
+                  deletarItemOrcamentoIntumescente={(itensOrcamentoId)=>
+                    deletarItemOrcamentoIntumescente(itensOrcamentoId)}
+                  atualizarItemOrcamentoIntescente={(itemOrcamentoIntumescente)=>
+                    atualizarItemOrcamentoIntescente(itemOrcamentoIntumescente)}/>
+              )))
+            }
+          });
+
+        }
+      }, [dadosCadastroMaterial.materialIdOrcamentoIntumescente.valor,
+          dadosCadastro.trrf.valor,
+          props.listItensOrcamentoIntumescente]);
+
+      useEffect(() => {
+          if(props.orcamentoSelecionado.PRODUTO){
+              setDadosCadastro({
+                  ...dadosCadastro,
+                  grupo: {...dadosCadastro.grupo, valor: props.orcamentoSelecionado.GRUPO},
+                  ocupacaoUso: {...dadosCadastro.ocupacaoUso, valor: props.orcamentoSelecionado.OCUPACAO_USO},
+                  divisao: {...dadosCadastro.divisao, valor: props.orcamentoSelecionado.DIVISAO},
+                  classe: {...dadosCadastro.classe, valor: props.orcamentoSelecionado.CLASSE},
+                  trrf: {...dadosCadastro.trrf, valor: props.orcamentoSelecionado.TEMPO_RESISTENCIA_FOGO},
+                  qtdeLitrosTotal: {...dadosCadastro.qtdeLitrosTotal, valor: props.orcamentoSelecionado.QTDE_LITROS_TOTAL},
+                  percentualPerda: {...dadosCadastro.percentualPerda, valor: props.orcamentoSelecionado.PERCENTUAL_PERDA},
+                  qtdeBaldes: {...dadosCadastro.qtdeBaldes, valor: props.orcamentoSelecionado.QTDE_BALDES},
+                  qtdeBaldesReal: {...dadosCadastro.qtdeBaldesReal, valor: props.orcamentoSelecionado.QTDE_BALDES_REAL},
+                  valorUnitarioIntumescente: {...dadosCadastro.valorUnitarioIntumescente, valor: props.orcamentoSelecionado.VALOR_UNITARIO_INTUMESCENTE},
+              })
+
+              setDadosCadastroMaterial({
+                  ...dadosCadastroMaterial,
+                  materialIdOrcamentoIntumescente: { ...dadosCadastroMaterial.materialIdOrcamentoIntumescente, valor: props.materialOrcamentoIntumescente.MATERIAL_ID },
+                  nomeMaterial: { ...dadosCadastroMaterial.nomeMaterial, valor: props.materialOrcamentoIntumescente.NOME_MATERIAL},
+                  pessoaId: { ...dadosCadastroMaterial.pessoaId, valor: props.materialOrcamentoIntumescente.FABRICANTE.PESSOA_ID},
+                  nomePessoa: { ...dadosCadastroMaterial.nomePessoa, valor: props.materialOrcamentoIntumescente.FABRICANTE.NOME_PESSOA},
+              })
+          }
+      }, [props.orcamentoSelecionado, props.materialOrcamentoIntumescente])
     
     useEffect(() => {
         
-        setGrupoDisplay(intumescenteUtils.listGrupo.map((item) => (<option value={item}>{item}</option>)))
-        setOcupacaoUsoDisplay(intumescenteUtils.listOcupacaoUso.map((item) => (<option value={item}>{item}</option>)))
-        setDivisaoDisplay(filtrarDivisao(dadosCadastro.grupo.valorPadrao, intumescenteUtils.listDivisao).map((item) => (<option value={item.substring(2, item.length)}>{item.substring(2, item.length)}</option>)))
-        setTrrfDisplay(intumescenteUtils.listTrrf.map((item) => (<option value={item}>{item}</option>)))
+        setGrupoDisplay(intumescenteUtils.listGrupo.map((item) => (montarOption(item))))
+        setOcupacaoUsoDisplay(intumescenteUtils.listOcupacaoUso.map((item) => (montarOption(item))))
+        setTrrfDisplay(intumescenteUtils.listTrrf.map((item) => (montarOption(item))))
 
     }, [])
 
     useEffect(() => {
-        if(dadosCadastro.grupo.valor){
-            setDivisaoDisplay(filtrarDivisao(dadosCadastro.grupo.valor, intumescenteUtils.listDivisao).map((item) => (<option value={item.substring(2, item.length)}>{item.substring(2, item.length)}</option>)))
-        }
+        setDivisaoDisplay(filtrarDivisao(dadosCadastro.grupo.valor, intumescenteUtils.listDivisao).map((item) => (montarOptionDivisao(item))));
     }, [dadosCadastro.grupo.valor])
+
+    const montarObjIntumescente = (obj) => {
+        return {
+          ORCAMENTO_ID: 0,
+          NOME_OBRA: "",
+          REFERENCIA: "",
+          PRAZO_ENTREGA: "",
+          DIAS_TRABALHADO: 0,
+          DATA_CRIACAO_ORCAMENTO: new Date(),
+          A_C: "",
+          TIPO_OBRA: "Intumescente",
+          GRUPO: obj.grupo.valor,
+          OCUPACAO_USO: obj.ocupacaoUso.valor,
+          DIVISAO: obj.divisao.valor,
+          CLASSE: obj.classe.valor,
+          TEMPO_RESISTENCIA_FOGO: obj.trrf.valor,
+          QTDE_LITROS_TOTAL: parseFloat(obj.qtdeLitrosTotal.valor),
+          PERCENTUAL_PERDA: parseFloat(obj.percentualPerda.valor),
+          QTDE_BALDES: parseFloat(obj.qtdeBaldes.valor),
+          QTDE_BALDES_REAL: parseFloat(obj.qtdeBaldesReal.valor),
+          VALOR_UNITARIO_INTUMESCENTE: parseFloat(obj.valorUnitarioIntumescente.valor),
+          TOTAIS_ORCAMENTO: {},
+          CLIENTE_ORCAMENTO: {
+            PESSOA_ID: 0,
+            NOME_CLIENTE: "",
+            RG: "",
+            CPF: "",
+            CNPJ: "",
+            TIPO_CADASTRO: "",
+            TIPO_PESSOA: "",
+            LIST_ENDERECO: [
+              {
+                PESSOA_ID: 0,
+                ENDERECO_ID: 0,
+                CEP: "",
+                LOGRADOURO: "",
+                NUMERO_ENDERECO: "",
+                COMPLEMENTO: "",
+                BAIRRO: "",
+                CIDADE: "",
+                ESTADO: "",
+                UF: "",
+                ENDERECO_PADRAO: false,
+              },
+            ],
+            LIST_CONTATO: [],
+          },
+          PRODUTO: {
+            MATERIAL_ID: obj.produto.materialIdOrcamentoIntumescente.valor,
+            NOME_MATERIAL: obj.produto.nomeMaterial.valor,
+            DESCRICAO_MATERIAL: "",
+            TIPO_MATERIAL: "",
+            FABRICANTE: {
+              PESSOA_ID: obj.produto.pessoaId.valor,
+              NOME_PESSOA: "",
+              RG: "",
+              CPF: "",
+              CNPJ: "",
+              TIPO_CADASTRO: "",
+              TIPO_PESSOA: "",
+              LIST_ENDERECO: [],
+              LIST_CONTATO: [],
+            },
+          },
+          LIST_MAO_OBRA_ORCAMENTO: [],
+          LIST_CUSTO_ORCAMENTO: [],
+          LIST_EQUIPAMENTO_ORCAMENTO: [],
+          LIST_MATERIAL_ORCAMENTO: [],
+          LIST_ITENS_ORCAMENTO_INTUMESCENTE: []
+        };
+      };
+
+      const calcularValoresIntumescente = async () => {
+
+        let orcamentoSelecionado = { ...props.orcamentoSelecionado }
+
+        orcamentoSelecionado.PRODUTO.MATERIAL_ID = parseInt(dadosCadastroMaterial.materialIdOrcamentoIntumescente.valor)
+        orcamentoSelecionado.TEMPO_RESISTENCIA_FOGO = dadosCadastro.trrf.valor
+
+        return await fetch(props.linkBackEnd + "/orcamentoIntumescente/valoresIntumescente", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(orcamentoSelecionado),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            return data.LIST_ITENS_ORCAMENTO_INTUMESCENTE
+          })
+          .catch((error) => {
+            return error
+          });
+      }
 
     const filtrarDivisao = (grupo, listDivisao) => {
         return listDivisao.filter((item) => item.substring(0, 1) === grupo)
+    }
+
+    const montarOption = (item) => {
+        if(item == "naoSelecionado"){
+            return <option value={item.substring(2, item.length)}>Não selecionado</option>
+        }else{
+            return <option value={item}>{item}</option>
+        }
+    }
+
+    const montarOptionDivisao = (item) => {
+        if(item.substring(2, item.length) == "naoSelecionado"){
+            return <option value={item.substring(2, item.length)}>Não selecionado</option>
+        }else{
+            return <option value={item.substring(2, item.length)}>{item.substring(2, item.length)}</option>
+        }
     }
 
     const selecionarMaterialOrcamentoIntumescente = (material) => {
@@ -103,6 +282,136 @@ function Intumescente(props) {
         }
       };
 
+      const atualizarCadastro = () => {
+        const dadosOrcamento = validacaoDadosUtils.validarDados(dadosCadastro);
+        const dadosMaterial = validacaoDadosUtils.validarDados(dadosCadastroMaterial);
+    
+        let houveErro = false;
+    
+        houveErro = exibirCamposErro(dadosOrcamento, houveErro);
+        houveErro = exibirCamposErro(dadosMaterial, houveErro);
+    
+        if (houveErro) {
+          return;
+        }
+    
+        dadosOrcamento.produto = dadosCadastroMaterial;
+
+        const objOrcamento = montarObjIntumescente(dadosOrcamento)
+    
+        fetch(props.linkBackEnd + "/orcamentoIntumescente/" + props.orcamentoSelecionado.ORCAMENTO_ID, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(objOrcamento),
+        }).then((data) => {
+          if (data.ok) {
+
+            props.recarregarOrcamentoIntumescente(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID);
+            props.recarregarTotaisOrcamento(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID);
+            
+            objOrcamento.CLIENTE_ORCAMENTO = props.clienteOrcamento;
+    
+            const msg = "Cadastro atualizado com sucesso";
+    
+            exibirTost("sucesso", msg);
+          } else {
+            const msg = "Erro ao efetuar atualização";
+    
+            exibirTost("erro", msg);
+          }
+        });
+      };
+
+      const salvarItemOrcamentoIntumescente = (itemOrcamentoIntumescente, fazerAposCadastrar) => {
+        fetch(props.linkBackEnd + "/itensOrcamentoIntumescente/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(itemOrcamentoIntumescente),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            
+            //props.adicionarItemOrcamentoGeral(props.listItensOrcamentoGeral, data);
+    
+            props.recarregarTotaisOrcamento(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID);
+    
+            const msg = "Cadastro efetuado com sucesso";
+            exibirTost("sucesso", msg);
+    
+            if (fazerAposCadastrar) {
+              fazerAposCadastrar(data);
+            }
+          })
+          .catch(() => {
+            const msg = "Erro ao efetuar cadastro";
+    
+            exibirTost("erro", msg);
+          });
+      };
+    
+      const deletarItemOrcamentoIntumescente = (itensOrcamentoId) => {
+        fetch(
+          props.linkBackEnd +
+            "/itensOrcamentoIntumescente/deletar?itensOrcamentoId=" +
+            itensOrcamentoId,
+          {
+            method: "DELETE",
+          }
+        ).then((data) => {
+          if (data.ok) {
+    
+            props.recarregarTotaisOrcamento(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID);
+    
+            props.removerItemOrcamentoGeral(
+              props.listItensOrcamentoGeral,
+              itensOrcamentoId
+            );
+    
+            const msg = "Exclusão efetuada com sucesso";
+    
+            exibirTost("sucesso", msg);
+          } else {
+            const msg = "Erro ao efetuar exclusão";
+    
+            exibirTost("erro", msg);
+          }
+        });
+      };
+    
+      const atualizarItemOrcamentoIntescente = (itemOrcamentoIntumescente) => {
+        fetch(
+          props.linkBackEnd + "/itensOrcamentoIntumescente/" + itemOrcamentoIntumescente.ITENS_ORCAMENTO_ID,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(itemOrcamentoIntumescente),
+          }
+        ).then((data) => {
+          if (data.ok) {
+    
+            props.recarregarTotaisOrcamento(props.linkBackEnd, props.orcamentoSelecionado.ORCAMENTO_ID);
+            
+            //props.recarregarItensOrcamentoGeral(props.linkBackEnd, itemOrcamentoIntumescente.ORCAMENTO_ID);
+    
+            const index = props.listItensOrcamentoGeral.findIndex(
+              (elemento) =>
+                elemento.ITENS_ORCAMENTO_ID == itemOrcamentoIntumescente.ITENS_ORCAMENTO_ID
+            );
+    
+            props.listItensOrcamentoGeral[index] = itemOrcamentoIntumescente;
+    
+            //montarComponente();
+    
+            const msg = "Atualização efetuada com sucesso";
+            exibirTost("sucesso", msg);
+          } else {
+            const msg = "Erro ao efetuar atualização";
+    
+            exibirTost("erro", msg);
+          }
+        });
+      };
+
     const exibirCamposErro = (dados, houveErro) => {
         Object.keys(dados).map((nomeCampo) => {
           if (!dados[nomeCampo].valido) {
@@ -124,6 +433,41 @@ function Intumescente(props) {
         document.getElementById(id).classList.remove("is-invalid");
       };
 
+      const exibirTost = (tipo, mensagem) => {
+        switch (tipo) {
+          case "sucesso":
+            setConfigToast({
+              estiloToast: "",
+              estiloToastHeader: "estiloToastSucesso",
+              estiloToastBody: "estiloToastSucesso",
+              delayToast: 3000,
+              autoHideToast: true,
+              hideToastHeader: false,
+              conteudoHeader: "",
+              conteudoBody: mensagem,
+              closeToast: () => setShowToast(),
+            });
+            setShowToast(true);
+            break;
+          case "erro":
+            setConfigToast({
+              estiloToast: "",
+              estiloToastHeader: "estiloToastErro",
+              estiloToastBody: "estiloToastErro",
+              delayToast: 6000,
+              autoHideToast: true,
+              hideToastHeader: false,
+              conteudoHeader: "",
+              conteudoBody: mensagem,
+              closeToast: () => setShowToast(),
+            });
+            setShowToast(true);
+            break;
+          default:
+            break;
+        }
+      };
+
       const listenerClick = () => {
         setShowResultadoMaterial(false);
       };
@@ -135,13 +479,26 @@ function Intumescente(props) {
       }
 
     const handleInputChange = (event) => {
-        setDadosCadastro({
-          ...dadosCadastro,
-          [event.target.name]: {
-            ...dadosCadastro[event.target.name],
-            valor: event.target.value,
-          },
-        });
+
+        if(event.target.name == "grupo"){
+            setDadosCadastro({
+                ...dadosCadastro,
+                [event.target.name]: {
+                  ...dadosCadastro[event.target.name],
+                  valor: event.target.value,
+                },
+                divisao: {...dadosCadastro.divisao, valor : ""}
+              });
+        }else{
+            setDadosCadastro({
+              ...dadosCadastro,
+              [event.target.name]: {
+                ...dadosCadastro[event.target.name],
+                valor: event.target.value,
+              },
+            });
+        }
+
       };
 
     return (
@@ -152,7 +509,7 @@ function Intumescente(props) {
                         <div className="col-lg-6 col-sm-12 position-initial">
                             <div className="form-group">
                                 <div className="form-row">
-                                    <div className="col-lg-3 col-sm-2 mb-15 position-initial">
+                                    <div className="col-lg-5 col-sm-2 mb-15 position-initial">
                                         <label>Grupo</label>
                                         <select
                                             id="campo-grupo"
@@ -163,7 +520,7 @@ function Intumescente(props) {
                                             onFocus={(event) => removerErro(event.target.id)} >
                                             {grupoDisplay}
                                         </select>
-                                        <span className="invalid-feedback msg-erro-grupo" id="erro-orcamento"></span>
+                                        <span className="invalid-feedback msg-erro-grupo" id="erro-grupo"></span>
                                     </div>
                                     <div className="col-lg col-sm-10 position-initial">
                                         <label>Ocupação de uso</label>
@@ -176,7 +533,7 @@ function Intumescente(props) {
                                             onFocus={(event) => removerErro(event.target.id)} >
                                             {ocupacaoUsoDisplay}
                                         </select>
-                                        <span className="invalid-feedback msg-erro-ocupacaoUso" id="erro-orcamento"></span>
+                                        <span className="invalid-feedback msg-erro-ocupacaoUso" id="erro-ocupacaoUso"></span>
                                     </div>
                                 </div>
                             </div>
@@ -193,7 +550,7 @@ function Intumescente(props) {
                                             onFocus={(event) => removerErro(event.target.id)} >
                                             {divisaoDisplay}
                                         </select>
-                                        <span className="invalid-feedback msg-erro-divisao" id="erro-orcamento"></span>
+                                        <span className="invalid-feedback msg-erro-divisao" id="erro-divisao"></span>
                                     </div>
                                 </div>
                             </div>
@@ -214,12 +571,12 @@ function Intumescente(props) {
                                                 <span className="input-group-text">m/h</span>
                                             </div>
                                         </div>
-                                        <span className="invalid-feedback msg-erro-classe" id="erro-orcamento"></span>
+                                        <span className="invalid-feedback msg-erro-classe" id="erro-classe"></span>
                                     </div>
                                     <div className="col-6 position-initial">
                                         <label>TRRF</label>
                                         <select
-                                            id="campo-rttf"
+                                            id="campo-trrf"
                                             className="form-control"
                                             name="trrf"
                                             value={dadosCadastro.trrf.valor}
@@ -227,7 +584,7 @@ function Intumescente(props) {
                                             onFocus={(event) => removerErro(event.target.id)} >
                                             {trrf}
                                         </select>
-                                        <span className="invalid-feedback msg-erro-trrf" id="erro-orcamento"></span>
+                                        <span className="invalid-feedback msg-erro-trrf" id="erro-trrf"></span>
                                     </div>
                                 </div>
                             </div>
@@ -315,35 +672,150 @@ function Intumescente(props) {
                                 </div>
                             </div>
                         </fieldset>
+                        <span className="invalid-feedback msg-erro-materialIdOrcamentoIntumescente" id="erro-materialIdOrcamentoIntumescente"></span>
                     </div>
                 </div>
             </div>
         </div>
         <div id="cadastro-list-perfil">
-                <button
-                type="button"
-                className="btn"
-                //onClick={() => setShowModalMaoObraOrcamento(true)}
-                >
-                Adicionar perfil
-                </button>
-            <div id="list-perfil">
+          {props.orcamentoSelecionado.PRODUTO && props.orcamentoSelecionado.TEMPO_RESISTENCIA_FOGO && (
+            <>
+              <button type="button" className="btn" onClick={()=> setShowModalItemIntumescente(true)}>
+                  Adicionar perfil
+              </button>
+            </>
+          )}
                 
+            <div id="list-perfil">
+              {itensOrcamentoIntumescenteDisplay}
             </div>
-        </div>
-        <div id="cadastro-intumescente-avancado"></div>
-        <div id="totais-intumescente"></div>
+            <div className="form-group">
+                <div className="form-row">
+                    <div className="col-6">
+                        <div className="form-group">
+                            <div className="form-row">
+                                <div className="col">
+                                    <label>Perda</label>
+                                    <div className="input-group mb-5 position-initial">
+                                        <input
+                                            type="number"
+                                            name="percentualPerda"
+                                            id="campo-percentualPerda"
+                                            className="form-control position-initial"
+                                            value={dadosCadastro.percentualPerda.valor}
+                                            onChange={(event) => handleInputChange(event)}
+                                            onFocus={(event) => removerErro(event.target.id)}/>
+                                        <div className="input-group-append">
+                                            <span className="input-group-text">%</span>
+                                        </div>
+                                        <span className="invalid-feedback msg-erro-percentualPerda" id="erro-percentualPerda"></span>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <label>Valor Intumescente</label>
+                                        <input
+                                            type="text"
+                                            name="valorUnitarioIntumescente"
+                                            id="campo-valorUnitarioIntumescente"
+                                            className="form-control position-initial"
+                                            value={dadosCadastro.valorUnitarioIntumescente.valor}
+                                            onChange={(event) => handleInputChange(event)}
+                                            onFocus={(event) => removerErro(event.target.id)}/>
+                                        <span className="invalid-feedback msg-erro-valorUnitarioIntumescente" id="erro-valorUnitarioIntumescente"></span>
+                                </div>
+                                <div className="col d-flex flex-column justify-content-end">
+                                    <button type="button" className="btn btn-orcamentaria w-100-pc">Recalcular</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <div className="form-row">
+                                <div className="col">
+                                    <label>Qtde de litros</label>
+                                        <input
+                                            type="text"
+                                            name="qtdeLitrosTotal"
+                                            id="campo-qtdeLitrosTotal"
+                                            className="form-control position-initial"
+                                            value={dadosCadastro.qtdeLitrosTotal.valor}
+                                            onChange={(event) => handleInputChange(event)}
+                                            onFocus={(event) => removerErro(event.target.id)}
+                                            readOnly/>
+                                        <span className="invalid-feedback msg-erro-qtdeLitrosTotal" id="erro-qtdeLitrosTotal"></span>
+                                </div>
+                                <div className="col">
+                                    <label>Qtde de baldes + perda</label>
+                                        <input
+                                            type="text"
+                                            name="qtdeBaldesReal"
+                                            id="campo-qtdeBaldesReal"
+                                            className="form-control position-initial"
+                                            value={dadosCadastro.qtdeBaldesReal.valor}
+                                            onChange={(event) => handleInputChange(event)}
+                                            onFocus={(event) => removerErro(event.target.id)}
+                                            readOnly/>
+                                        <span className="invalid-feedback msg-erro-qtdeBaldesReal" id="erro-qtdeBaldesReal"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-6">
+                        <div id="totais-intumescente">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="form-group">
+                <div className="form-row">
+                    <div className="col-12 d-flex justify-content-end">
+                        <button type="button" className="btn btn-success w-100-px" onClick={()=>atualizarCadastro()}>Atualizar</button>
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <div>
+        <ToastControl
+          showToast={showToast}
+          closeToast={configToast.closeToast}
+          delayToast={configToast.delayToast}
+          autoHideToast={configToast.autoHideToast}
+          estiloToastHeader={configToast.estiloToastHeader}
+          estiloToastBody={configToast.estiloToastBody}
+          hideToastHeader={configToast.hideToastHeader}
+          conteudoHeader={configToast.conteudoHeader}
+          conteudoBody={configToast.conteudoBody}
+        ></ToastControl>
+      </div>
+      <div>
+          <ModalItemIntumescente 
+          show={showModalItemIntumescente}
+          onHide={()=>setShowModalItemIntumescente(false)} 
+          salvarItemOrcamentoIntumescente={(itemOrcamentoIntumescente, fazerAposCadastrar)=> 
+            salvarItemOrcamentoIntumescente(itemOrcamentoIntumescente, fazerAposCadastrar)}
+          deletarItemOrcamentoIntumescente={(itensOrcamentoId)=>
+            deletarItemOrcamentoIntumescente(itensOrcamentoId)}
+          atualizarItemOrcamentoIntescente={(itemOrcamentoIntumescente)=>
+            atualizarItemOrcamentoIntescente(itemOrcamentoIntumescente)}
+          />
+          
+      </div>
     </div>
     )
 }
 
 const mapStateToProps = (state) => ({
     linkBackEnd: state.backEnd.link,
-    listItensOrcamentoGeral: state.orcamento.listItensOrcamentoGeral,
+    listItensOrcamentoIntumescente: state.orcamento.listItensOrcamentoIntumescente,
     orcamentoSelecionado: state.orcamento.orcamentoSelecionado,
+    materialOrcamentoIntumescente: state.orcamento.materialOrcamentoIntumescente
   });
   
-  const mapDispatchToProps = (dispatch) => ({});
+  const mapDispatchToProps = (dispatch) => ({
+    recarregarTotaisOrcamento : (linkBackEnd, orcamentoId) => dispatch(orcamentoActions.recarregarTotaisOrcamento(linkBackEnd, orcamentoId)),
+    recarregarOrcamentoIntumescente : (linkBackEnd, orcamentoId) => dispatch(orcamentoActions.recarregarOrcamentoIntumescente(linkBackEnd, orcamentoId)),
+    selecionarOrcamentoSimples : (orcamento) => dispatch(orcamentoActions.selecionarOrcamentoSimples(orcamento))
+  });
   
   export default connect(
     mapStateToProps,
