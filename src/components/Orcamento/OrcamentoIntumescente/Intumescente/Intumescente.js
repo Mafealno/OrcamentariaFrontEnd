@@ -44,7 +44,9 @@ function Intumescente(props) {
         qtdeBaldesReal: { ...dadosCampo, valorPadrao: 0 },
         areaTotal: { ...dadosCampo, valorPadrao: 0 },
         valorUnitarioIntumescente: { ...dadosCampo, valorPadrao: 0 },
-        valorTotal: { ...dadosCampo, valorPadrao: 0 },
+        valorBaldeIntumescente: { ...dadosCampo, valorPadrao: 0 },
+        valorTotalMaoObra: { ...dadosCampo, valorPadrao: 0 },
+        valorTotalProduto: { ...dadosCampo, valorPadrao: 0 },
     });
 
     const [dadosCadastroMaterial, setDadosCadastroMaterial] = useState({
@@ -86,6 +88,7 @@ function Intumescente(props) {
                   qtdeBaldes: {...dadosCadastro.qtdeBaldes, valor: props.orcamentoSelecionado.QTDE_BALDES},
                   qtdeBaldesReal: {...dadosCadastro.qtdeBaldesReal, valor: props.orcamentoSelecionado.QTDE_BALDES_REAL},
                   valorUnitarioIntumescente: {...dadosCadastro.valorUnitarioIntumescente, valor: props.orcamentoSelecionado.VALOR_UNITARIO_INTUMESCENTE},
+                  valorBaldeIntumescente: {...dadosCadastro.valorBaldeIntumescente, valor: props.orcamentoSelecionado.VALOR_BALDE_INTUMESCENTE},
               })
 
               setDadosCadastroMaterial({
@@ -134,6 +137,7 @@ function Intumescente(props) {
     }, [itensOrcamentoIntumescenteValoresAtualizados,
         dadosCadastro.trrf.valor,
         dadosCadastro.valorUnitarioIntumescente.valor,
+        dadosCadastro.valorBaldeIntumescente.valor,
         dadosCadastro.percentualPerda.valor,
         dadosCadastroMaterial.materialIdOrcamentoIntumescente.valor])
 
@@ -157,6 +161,7 @@ function Intumescente(props) {
           QTDE_BALDES: parseFloat(obj.qtdeBaldes.valor),
           QTDE_BALDES_REAL: parseFloat(obj.qtdeBaldesReal.valor),
           VALOR_UNITARIO_INTUMESCENTE: parseFloat(obj.valorUnitarioIntumescente.valor),
+          VALOR_BALDE_INTUMESCENTE: parseFloat(obj.valorBaldeIntumescente.valor),
           TOTAIS_ORCAMENTO: {},
           CLIENTE_ORCAMENTO: {
             PESSOA_ID: 0,
@@ -209,9 +214,11 @@ function Intumescente(props) {
       };
 
       const calcularTotaisIntumescente = () =>{
-        if(itensOrcamentoIntumescenteValoresAtualizados.length && dadosCadastro.valorUnitarioIntumescente.valor && dadosCadastro.percentualPerda.valor){
+        if(itensOrcamentoIntumescenteValoresAtualizados.length && dadosCadastro.valorUnitarioIntumescente.valor 
+          && dadosCadastro.percentualPerda.valor && dadosCadastro.valorBaldeIntumescente.valor){
         
-          const valoresCalculados = intumescenteUtils.calcularTotaisIntumescente(itensOrcamentoIntumescenteValoresAtualizados, dadosCadastro.valorUnitarioIntumescente.valor, dadosCadastro.percentualPerda.valor)
+          const valoresCalculados = intumescenteUtils.calcularTotaisIntumescente(itensOrcamentoIntumescenteValoresAtualizados, 
+            dadosCadastro.valorUnitarioIntumescente.valor, dadosCadastro.percentualPerda.valor, dadosCadastro.valorBaldeIntumescente.valor)
   
           setDadosCadastro({
             ...dadosCadastro,
@@ -219,7 +226,8 @@ function Intumescente(props) {
             qtdeBaldes: { ...dadosCadastro.qtdeBaldes, valor: valoresCalculados.QtdeBaldes },
             qtdeBaldesReal: { ...dadosCadastro.qtdeBaldesReal, valor: valoresCalculados.QtdeBaldesPerda },
             areaTotal: { ...dadosCadastro.areaTotal, valor: valoresCalculados.AreaTotal },
-            valorTotal: { ...dadosCadastro.valorTotal, valor: valoresCalculados.ValorTotal },
+            valorTotalMaoObra: { ...dadosCadastro.valorTotalMaoObra, valor: valoresCalculados.ValorTotalMaoObra },
+            valorTotalProduto: { ...dadosCadastro.valorTotalProduto, valor: valoresCalculados.ValorTotalProduto },
           })
         }
       }
@@ -741,21 +749,38 @@ function Intumescente(props) {
                                     </div>
                                 </div>
                                 <div className="col">
-                                    <label>Valor unitário</label>
-                                        <div className="input-group mb-5 position-initial">
-                                            <div className="input-group-append">
-                                              <span className="input-group-text">R$</span>
-                                            </div>
-                                          <input
-                                              type="text"
-                                              name="valorUnitarioIntumescente"
-                                              id="campo-valorUnitarioIntumescente"
-                                              className="form-control position-initial"
-                                              value={dadosCadastro.valorUnitarioIntumescente.valor}
-                                              onChange={(event) => handleInputChange(event)}
-                                              onFocus={(event) => removerErro(event.target.id)}/>
-                                          </div>
-                                        <span className="invalid-feedback msg-erro-valorUnitarioIntumescente" id="erro-valorUnitarioIntumescente"></span>
+                                    <label>Valor balde</label>
+                                    <div className="input-group mb-5 position-initial">
+                                        <div className="input-group-append">
+                                          <span className="input-group-text">R$</span>
+                                        </div>
+                                      <input
+                                          type="text"
+                                          name="valorBaldeIntumescente"
+                                          id="campo-valorBaldeIntumescente"
+                                          className="form-control position-initial"
+                                          value={dadosCadastro.valorBaldeIntumescente.valor}
+                                          onChange={(event) => handleInputChange(event)}
+                                          onFocus={(event) => removerErro(event.target.id)}/>
+                                      </div>
+                                    <span className="invalid-feedback msg-erro-valorBaldeIntumescente" id="erro-valorBaldeIntumescente"></span>
+                                </div>
+                                <div className="col">
+                                    <label>Valor mão obra</label>
+                                    <div className="input-group mb-5 position-initial">
+                                        <div className="input-group-append">
+                                          <span className="input-group-text">R$</span>
+                                        </div>
+                                      <input
+                                          type="text"
+                                          name="valorUnitarioIntumescente"
+                                          id="campo-valorUnitarioIntumescente"
+                                          className="form-control position-initial"
+                                          value={dadosCadastro.valorUnitarioIntumescente.valor}
+                                          onChange={(event) => handleInputChange(event)}
+                                          onFocus={(event) => removerErro(event.target.id)}/>
+                                    </div>
+                                    <span className="invalid-feedback msg-erro-valorUnitarioIntumescente" id="erro-valorUnitarioIntumescente"></span>
                                 </div>
                                 <div className="col d-flex flex-column justify-content-end">
                                     <button type="button" className="btn btn-orcamentaria w-100-pc" onClick={()=> calcularTotaisIntumescente()}>Recalcular</button>
@@ -796,13 +821,17 @@ function Intumescente(props) {
                     <div className="col-6">
                         <div id="totais-intumescente">
                             <div className="form-row h-100-pc">
-                              <div className="col-6 d-flex flex-column align-items-center justify-content-center">
+                              <div className="col-4 d-flex flex-column align-items-center justify-content-center">
                                 <div className="titulo-totais-intumescente">Total de Baldes + Perda</div>
                                 <div>{dadosCadastro.qtdeBaldesReal.valor}</div>
                               </div>
-                              <div className="col-6 d-flex flex-column align-items-center justify-content-center">
-                                <div className="titulo-totais-intumescente">SubTotal</div>
-                                <div>{"R$ " + dadosCadastro.valorTotal.valor}</div>
+                              <div className="col-4 d-flex flex-column align-items-center justify-content-center">
+                                <div className="titulo-totais-intumescente">Subtotal mão obra</div>
+                                <div>{"R$ " + dadosCadastro.valorTotalMaoObra.valor}</div>
+                              </div>
+                              <div className="col-4 d-flex flex-column align-items-center justify-content-center">
+                                <div className="titulo-totais-intumescente">Subtotal produto</div>
+                                <div>{"R$ " + dadosCadastro.valorTotalProduto.valor}</div>
                               </div>
                             </div>
                         </div>

@@ -40,6 +40,8 @@ function TotaisOrcamento(props) {
                     }]
 
                     itens = transformarLista("ITENS_INTUMESCENTE", props.orcamentoSelecionado.DIAS_TRABALHADO, props.listItensOrcamentoIntumescente)
+                    itens.itens = [...itens.itens, "Valor produto intumescente"]  
+                    itens.valores = [...itens.valores, (Math.round(props.orcamentoSelecionado.QTDE_BALDES_REAL + 0.4)) * props.orcamentoSelecionado.VALOR_BALDE_INTUMESCENTE]  
                 }
 
                     setItensTotaisItensDisplay(<></>);
