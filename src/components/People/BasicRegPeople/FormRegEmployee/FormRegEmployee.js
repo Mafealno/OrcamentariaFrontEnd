@@ -6,12 +6,26 @@ import React, { useState, useEffect } from "react";
 import "./FormRegEmployee.css";
 import { connect } from "react-redux";
 import ModalConfirm from "../../../ModalConfirm/ModalConfirm";
+import ToastControl from "../../../ToastControl/ToastControl";
 import * as validacaoDadosUtils from "../../../../utils/validacaoDados";
 
 function FormRegEmployee(props) {
   let dadosCampo = { ...validacaoDadosUtils.dadosCampo };
 
   let [showModalConfirm, setShowModalConfirm] = useState(false);
+  let [showToast, setShowToast] = useState(false);
+    
+  let [configToast, setConfigToast] = useState({
+    estiloToast: "",
+    estiloToastHeader: "",
+    estiloToastBody: "",
+    delayToast: 0,
+    autoHideToast: false,
+    hideToastHeader: true,
+    conteudoHeader: "",
+    conteudoBody: "",
+    closeToast: {},
+  });
   let [dadosCadastro, setDadosCadastro] = useState({
     pessoaId: { ...dadosCampo, valorPadrao: 0 },
     nome: { ...dadosCampo, requerido: true },
@@ -110,6 +124,41 @@ function FormRegEmployee(props) {
     document.getElementById(id).classList.remove("is-invalid");
   };
 
+  const exibirTost = (tipo, mensagem) => {
+    switch (tipo) {
+      case "sucesso":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastSucesso",
+          estiloToastBody: "estiloToastSucesso",
+          delayToast: 3000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: mensagem,
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      case "erro":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastErro",
+          estiloToastBody: "estiloToastErro",
+          delayToast: 6000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: mensagem,
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      default:
+        break;
+    }
+  };
+
   const salvarCadastro = () => {
     const dadosFuncionario = validacaoDadosUtils.validarDados(dadosCadastro);
 
@@ -118,6 +167,8 @@ function FormRegEmployee(props) {
     houveErro = exibirCamposErro(dadosFuncionario);
 
     if (houveErro) {
+      const msgErro = "Houveram erros na validação dos campos";
+      exibirTost("erro", msgErro);
       return;
     }
 
@@ -138,6 +189,8 @@ function FormRegEmployee(props) {
     houveErro = exibirCamposErro(dadosFuncionario);
 
     if (houveErro) {
+      const msgErro = "Houveram erros na validação dos campos";
+      exibirTost("erro", msgErro);
       return;
     }
 
@@ -316,6 +369,19 @@ function FormRegEmployee(props) {
           tituloModalConfirm={"Confirmar exclusão: " + dadosCadastro.nome.valor}
         />
       </div>
+      <div>
+        <ToastControl
+          showToast={showToast}
+          closeToast={configToast.closeToast}
+          delayToast={configToast.delayToast}
+          autoHideToast={configToast.autoHideToast}
+          estiloToastHeader={configToast.estiloToastHeader}
+          estiloToastBody={configToast.estiloToastBody}
+          hideToastHeader={configToast.hideToastHeader}
+          conteudoHeader={configToast.conteudoHeader}
+          conteudoBody={configToast.conteudoBody}
+        ></ToastControl>
+      </div>	
     </>
   );
 }

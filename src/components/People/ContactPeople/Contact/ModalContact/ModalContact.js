@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from "react";
 import "./ModalContact.css";
 import ModalControl from "../../../../ModalControl/ModalControl";
+import ToastControl from "../../../../ToastControl/ToastControl";
 import * as PeopleActions from "../../../../../store/actions/people";
 import * as validacaoDadosUtils from "../../../../../utils/validacaoDados";
 import { connect } from "react-redux";
@@ -14,6 +15,19 @@ function ModalContact(props) {
   let [telefone, setTelefone] = useState(true);
   let [celular, setCelular] = useState(true);
   let [email, setEmail] = useState(true);
+  let [showToast, setShowToast] = useState(false);
+    
+  let [configToast, setConfigToast] = useState({
+    estiloToast: "",
+    estiloToastHeader: "",
+    estiloToastBody: "",
+    delayToast: 0,
+    autoHideToast: false,
+    hideToastHeader: true,
+    conteudoHeader: "",
+    conteudoBody: "",
+    closeToast: {},
+  });
 
   let [dadosCadastro, setDadosCadastro] = useState({
     pessoaId: { ...dadosCampo, requerido: true },
@@ -130,6 +144,41 @@ function ModalContact(props) {
     document.getElementById(id).classList.remove("is-invalid");
   };
 
+  const exibirTost = (tipo, mensagem) => {
+    switch (tipo) {
+      case "sucesso":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastSucesso",
+          estiloToastBody: "estiloToastSucesso",
+          delayToast: 3000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: mensagem,
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      case "erro":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastErro",
+          estiloToastBody: "estiloToastErro",
+          delayToast: 6000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: mensagem,
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      default:
+        break;
+    }
+  };
+
   const definirFormatoPorTipoContato = (dadosCadastro) => {
     switch (dadosCadastro.tipoContato.valor) {
       case "Telefone":
@@ -164,6 +213,8 @@ function ModalContact(props) {
     houveErro = exibirCamposErro(dadosContato, houveErro);
 
     if (houveErro) {
+      const msgErro = "Houveram erros na validação dos campos";
+      exibirTost("erro", msgErro);
       return;
     }
     props.salvarContato(montarObj(dadosContato));
@@ -180,6 +231,8 @@ function ModalContact(props) {
     houveErro = exibirCamposErro(dadosContato, houveErro);
 
     if (houveErro) {
+      const msgErro = "Houveram erros na validação dos campos";
+      exibirTost("erro", msgErro);
       return;
     }
 
@@ -395,6 +448,19 @@ function ModalContact(props) {
           </>
         }
       />
+      <div>
+        <ToastControl
+          showToast={showToast}
+          closeToast={configToast.closeToast}
+          delayToast={configToast.delayToast}
+          autoHideToast={configToast.autoHideToast}
+          estiloToastHeader={configToast.estiloToastHeader}
+          estiloToastBody={configToast.estiloToastBody}
+          hideToastHeader={configToast.hideToastHeader}
+          conteudoHeader={configToast.conteudoHeader}
+          conteudoBody={configToast.conteudoBody}
+        ></ToastControl>
+      </div>
     </>
   );
 }

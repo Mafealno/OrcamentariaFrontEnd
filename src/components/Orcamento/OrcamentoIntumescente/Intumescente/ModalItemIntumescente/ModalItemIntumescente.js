@@ -318,6 +318,8 @@ function ModalItemIntumescente(props) {
         houveErro = exibirCamposErro(dadosPerfilItemOrcamentoIntumescente, houveErro);
 
         if (houveErro) {
+          const msgErro = "Houveram erros na validação dos campos";
+          exibirTost("erro", msgErro);
           return;
         }
     
@@ -338,6 +340,8 @@ function ModalItemIntumescente(props) {
         houveErro = exibirCamposErro(dadosPerfilItemOrcamentoIntumescente, houveErro);
 
         if (houveErro) {
+          const msgErro = "Houveram erros na validação dos campos";
+          exibirTost("erro", msgErro);
           return;
         }
     

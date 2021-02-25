@@ -6,6 +6,7 @@ import "./ModalItemOrcamentoGeral.css";
 import ModalControl from "../../../../ModalControl/ModalControl";
 import ResultSearchMaterial from "./ResultSearchMaterial/ResultSearchMaterial";
 import ModalConfirm from "../../../../ModalConfirm/ModalConfirm";
+import ToastControl from "../../../../ToastControl/ToastControl";
 import * as validacaoDadosUtils from "../../../../../utils/validacaoDados";
 
 import { connect } from "react-redux";
@@ -18,6 +19,19 @@ function ModalItemOrcamentoGeral(props) {
   let [showResultadoMaterial, setShowResultadoMaterial] = useState(false);
   let [dataMaterial, setDataMaterial] = useState([]);
   let [showModalConfirm, setShowModalConfirm] = useState(false);
+  let [showToast, setShowToast] = useState(false);
+    
+  let [configToast, setConfigToast] = useState({
+    estiloToast: "",
+    estiloToastHeader: "",
+    estiloToastBody: "",
+    delayToast: 0,
+    autoHideToast: false,
+    hideToastHeader: true,
+    conteudoHeader: "",
+    conteudoBody: "",
+    closeToast: {},
+  });
 
   let [dadosCadastro, setDadosCadastro] = useState({
     orcamentoId: { ...dadosCampo, valorPadrao: 0 },
@@ -264,7 +278,10 @@ function ModalItemOrcamentoGeral(props) {
     houveErro = exibirCamposErro(dadosItemOrcamentoGeral, houveErro);
 
     houveErro = exibirCamposErro(dadosMaterialItemOrcamentoGeral, houveErro);
+    
     if (houveErro) {
+      const msgErro = "Houveram erros na validação dos campos";
+      exibirTost("erro", msgErro);
       return;
     }
 
@@ -287,7 +304,10 @@ function ModalItemOrcamentoGeral(props) {
     houveErro = exibirCamposErro(dadosItemOrcamentoGeral, houveErro);
 
     houveErro = exibirCamposErro(dadosMaterialItemOrcamentoGeral, houveErro);
+    
     if (houveErro) {
+      const msgErro = "Houveram erros na validação dos campos";
+      exibirTost("erro", msgErro);
       return;
     }
 
@@ -330,6 +350,41 @@ function ModalItemOrcamentoGeral(props) {
 
   const removerErro = (id) => {
     document.getElementById(id).classList.remove("is-invalid");
+  };
+
+  const exibirTost = (tipo, mensagem) => {
+    switch (tipo) {
+      case "sucesso":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastSucesso",
+          estiloToastBody: "estiloToastSucesso",
+          delayToast: 3000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: mensagem,
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      case "erro":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastErro",
+          estiloToastBody: "estiloToastErro",
+          delayToast: 6000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: mensagem,
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      default:
+        break;
+    }
   };
 
   const buscarMaterial = () => {
@@ -744,6 +799,19 @@ function ModalItemOrcamentoGeral(props) {
             "Confirma exclusão? O dados não poderão ser recuperados"
           }
         />
+      </div>
+      <div>
+        <ToastControl
+          showToast={showToast}
+          closeToast={configToast.closeToast}
+          delayToast={configToast.delayToast}
+          autoHideToast={configToast.autoHideToast}
+          estiloToastHeader={configToast.estiloToastHeader}
+          estiloToastBody={configToast.estiloToastBody}
+          hideToastHeader={configToast.hideToastHeader}
+          conteudoHeader={configToast.conteudoHeader}
+          conteudoBody={configToast.conteudoBody}
+        ></ToastControl>
       </div>
     </>
   );

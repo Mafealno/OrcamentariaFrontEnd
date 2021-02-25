@@ -334,6 +334,8 @@ function Intumescente(props) {
         houveErro = exibirCamposErro(dadosMaterial, houveErro);
     
         if (houveErro) {
+          const msgErro = "Houveram erros na validação dos campos";
+          exibirTost("erro", msgErro);
           return;
         }
     
@@ -766,7 +768,7 @@ function Intumescente(props) {
                                     <span className="invalid-feedback msg-erro-valorBaldeIntumescente" id="erro-valorBaldeIntumescente"></span>
                                 </div>
                                 <div className="col">
-                                    <label>Valor mão obra</label>
+                                    <label>Mão obra</label>
                                     <div className="input-group mb-5 position-initial">
                                         <div className="input-group-append">
                                           <span className="input-group-text">R$</span>

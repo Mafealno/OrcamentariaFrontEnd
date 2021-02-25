@@ -198,6 +198,8 @@ function BasicRegEquipamento(props) {
     houveErro = exibirCamposErro(dadosPessoa, houveErro);
 
     if (houveErro) {
+      const msgErro = "Houveram erros na validação dos campos";
+      exibirTost("erro", msgErro);
       return;
     }
 
@@ -253,6 +255,8 @@ function BasicRegEquipamento(props) {
     houveErro = exibirCamposErro(dadosPessoa, houveErro);
 
     if (houveErro) {
+      const msgErro = "Houveram erros na validação dos campos";
+      exibirTost("erro", msgErro);
       return;
     }
 

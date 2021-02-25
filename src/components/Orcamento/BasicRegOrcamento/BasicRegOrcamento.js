@@ -586,6 +586,8 @@ function BasicRegOrcamento(props) {
     houveErro = exibirCamposErro(dadosEnderecoCliente, houveErro);
 
     if (houveErro) {
+      const msgErro = "Houveram erros na validação dos campos";
+      exibirTost("erro", msgErro);
       return;
     }
 
@@ -672,6 +674,8 @@ function BasicRegOrcamento(props) {
     houveErro = exibirCamposErro(dadosEnderecoCliente, houveErro);
 
     if (houveErro) {
+      const msgErro = "Houveram erros na validação dos campos";
+      exibirTost("erro", msgErro);
       return;
     }
 

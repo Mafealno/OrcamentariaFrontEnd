@@ -394,6 +394,8 @@ function ModalMaoObraOrcamento(props) {
     let houveErro = exibirCamposErro(dadosMaoObra, false);
 
     if (houveErro) {
+      const msgErro = "Houveram erros na validação dos campos";
+      exibirTost("erro", msgErro);
       return;
     }
 
@@ -406,6 +408,8 @@ function ModalMaoObraOrcamento(props) {
     let houveErro = exibirCamposErro(dadosMaoObra, false);
 
     if (houveErro) {
+      const msgErro = "Houveram erros na validação dos campos";
+      exibirTost("erro", msgErro);
       return;
     }
 

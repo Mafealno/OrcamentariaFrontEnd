@@ -216,6 +216,8 @@ function ItemCustoMaoObraOrcamento(props) {
     houveErro = exibirCamposErro(dadosCusto, houveErro);
 
     if (houveErro) {
+      const msgErro = "Houveram erros na validação dos campos";
+      exibirTost("erro", msgErro);
       return;
     }
 
@@ -263,6 +265,8 @@ function ItemCustoMaoObraOrcamento(props) {
     houveErro = exibirCamposErro(dadosCusto, houveErro);
 
     if (houveErro) {
+      const msgErro = "Houveram erros na validação dos campos";
+      exibirTost("erro", msgErro);
       return;
     }
 

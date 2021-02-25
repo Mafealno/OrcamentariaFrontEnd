@@ -6,6 +6,7 @@ import "./ModalMaterialOrcamento.css";
 import ModalControl from "../../../ModalControl/ModalControl";
 import ResultSearchMaterial from "./ResultSearchMaterial/ResultSearchMaterial";
 import ModalConfirm from "../../../ModalConfirm/ModalConfirm";
+import ToastControl from "../../../ToastControl/ToastControl";
 import * as validacaoDadosUtils from "../../../../utils/validacaoDados";
 import { connect } from "react-redux";
 
@@ -16,6 +17,20 @@ export function ModalMaterialOrcamento(props) {
   let [showResultadoMaterial, setShowResultadoMaterial] = useState(false);
   let [dataMaterial, setDataMaterial] = useState([]);
   let [showModalConfirm, setShowModalConfirm] = useState(false);
+  let [showToast, setShowToast] = useState(false);
+    
+  let [configToast, setConfigToast] = useState({
+    estiloToast: "",
+    estiloToastHeader: "",
+    estiloToastBody: "",
+    delayToast: 0,
+    autoHideToast: false,
+    hideToastHeader: true,
+    conteudoHeader: "",
+    conteudoBody: "",
+    closeToast: {},
+  });
+
   let [dadosCadastro, setDadosCadastro] = useState({
     materialOrcamentoId: { ...dadosCampo, valorPadrao: 0 },
     modalMaterialId: { ...dadosCampo, requerido: true },
@@ -167,6 +182,42 @@ export function ModalMaterialOrcamento(props) {
     document.getElementById(id).classList.remove("is-invalid");
   };
 
+  const exibirTost = (tipo, mensagem) => {
+    switch (tipo) {
+      case "sucesso":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastSucesso",
+          estiloToastBody: "estiloToastSucesso",
+          delayToast: 3000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: mensagem,
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      case "erro":
+        setConfigToast({
+          estiloToast: "",
+          estiloToastHeader: "estiloToastErro",
+          estiloToastBody: "estiloToastErro",
+          delayToast: 6000,
+          autoHideToast: true,
+          hideToastHeader: false,
+          conteudoHeader: "",
+          conteudoBody: mensagem,
+          closeToast: () => setShowToast(),
+        });
+        setShowToast(true);
+        break;
+      default:
+        break;
+    }
+  };
+
+
   const montarObj = (obj) => {
     return {
       MATERIAL_ORCAMENTO_ID: obj.materialOrcamentoId.valor,
@@ -210,6 +261,8 @@ export function ModalMaterialOrcamento(props) {
     houveErro = exibirCamposErro(dadosCadastro);
 
     if (houveErro) {
+      const msgErro = "Houveram erros na validação dos campos";
+      exibirTost("erro", msgErro);
       return;
     }
 
@@ -227,6 +280,8 @@ export function ModalMaterialOrcamento(props) {
     houveErro = exibirCamposErro(dadosCadastro);
 
     if (houveErro) {
+      const msgErro = "Houveram erros na validação dos campos";
+      exibirTost("erro", msgErro);
       return;
     }
 
@@ -464,6 +519,19 @@ export function ModalMaterialOrcamento(props) {
                 tituloModalConfirm="Confirmar exclusão?"
               />
             </div>
+            <div>
+              <ToastControl
+                showToast={showToast}
+                closeToast={configToast.closeToast}
+                delayToast={configToast.delayToast}
+                autoHideToast={configToast.autoHideToast}
+                estiloToastHeader={configToast.estiloToastHeader}
+                estiloToastBody={configToast.estiloToastBody}
+                hideToastHeader={configToast.hideToastHeader}
+                conteudoHeader={configToast.conteudoHeader}
+                conteudoBody={configToast.conteudoBody}
+              ></ToastControl>
+            </div>	
           </>
         }
       />
