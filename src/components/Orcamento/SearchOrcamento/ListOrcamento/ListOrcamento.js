@@ -14,6 +14,7 @@ function ListOrcamento(props) {
   let [itemOrcamentoDisplay, setItemOrcamentoDisplay] = useState([]);
 
   useEffect(() => {
+    props.selecionarOrcamento({});
     props.listarOrcamento(props.linkBackEnd);
   }, []);
 
