@@ -7,7 +7,7 @@ import "./BasicRegMaterial.css";
 import ResultSearchProvider from "./ResultSearchProvider/ResultSearchProvider";
 import ModalConfirm from "../../ModalConfirm/ModalConfirm";
 import ToastControl from "../../ToastControl/ToastControl";
-import * as MaterialActions from "../../../store/actions/material";
+import * as materialActions from "../../../store/actions/material";
 import * as validacaoDadosUtils from "../../../utils/validacaoDados";
 import { connect } from "react-redux";
 
@@ -572,9 +572,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   selecionarMaterial: (material) =>
-    dispatch(MaterialActions.selecionarMaterial(material)),
+    dispatch(materialActions.selecionarMaterial(material)),
   recarregarMaterial: (materialId, linkBackEnd) =>
-    dispatch(MaterialActions.recarregarMaterial(materialId, linkBackEnd)),
+    dispatch(materialActions.recarregarMaterial(materialId, linkBackEnd)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BasicRegMaterial);

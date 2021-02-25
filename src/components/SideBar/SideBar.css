@@ -124,11 +124,12 @@ a.dropdown-item {
 }
 
 .dropdown-item {
-  color: white;
-}
-
-.dropdown-item {
   margin: 1rem 0 !important;
+  color: white;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 @supports (position: fixed) {

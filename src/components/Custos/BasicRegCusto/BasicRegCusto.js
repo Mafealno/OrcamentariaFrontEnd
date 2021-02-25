@@ -6,6 +6,7 @@ import "./BasicRegCusto.css";
 import * as CustoActions from "../../../store/actions/custo";
 import ModalConfirm from "../../ModalConfirm/ModalConfirm";
 import ToastControl from "../../ToastControl/ToastControl";
+import ResetTelas from "../../ResetTelas/ResetTelas";
 import * as validacaoDadosUtils from "../../../utils/validacaoDados";
 
 import { connect } from "react-redux";
@@ -408,6 +409,9 @@ function BasicRegCusto(props) {
           }
         />
       </div>
+      <>
+        <ResetTelas />
+      </>
     </>
   );
 }

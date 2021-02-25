@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import "./BasicRegCartaCobertura.css";
+import ResetTelas from "../../../ResetTelas/ResetTelas";
 import { connect } from "react-redux";
 import * as validacaoDadosUtils from "../../../../utils/validacaoDados";
 
@@ -109,6 +110,9 @@ function BasicRegCartaCobertura(props) {
           readOnly
         />
       </div>
+      <>
+        <ResetTelas />
+      </>
     </div>
   );
 }

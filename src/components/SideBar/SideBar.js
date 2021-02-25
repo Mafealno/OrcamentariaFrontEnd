@@ -1,10 +1,33 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable jsx-a11y/alt-text */
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./SideBar.css";
 import logo from "../../img/logo.png";
 
 export default function SideBar(props) {
+
+  const [stringPesquisa, setStringPesquisa] = useState("");
+  const menus = ['Pessoas', 'Materiais', 'Equipamentos', 'Custos', 'Carta de Cobertura', 'Orçamento']
+
+  useEffect(() => {
+    if(stringPesquisa){
+      menus.forEach(menu => { 
+        document.getElementById("menu-" + menu).classList.add("d-none")
+      })
+
+      const menusFiltrados = menus.filter((item)=> item.toLowerCase().indexOf(stringPesquisa.toLowerCase()) > -1)
+
+      if(menusFiltrados){
+        menusFiltrados.forEach(menu => {document.getElementById("menu-" + menu).classList.remove("d-none")});
+      }
+    }else{
+        menus.forEach(menu => { 
+          document.getElementById("menu-" + menu).classList.remove("d-none");
+        })
+    }
+  }, [stringPesquisa])
+
   return (
     <div className="inSideBar">
       <a href="#main-menu" id="main-menu-toggle" className="menu-toggle">
@@ -27,6 +50,7 @@ export default function SideBar(props) {
                 type="text"
                 className="form-control"
                 placeholder="Procurar menu"
+                onChange={(event)=> setStringPesquisa(event.target.value)}
               ></input>
             </div>
           </li>

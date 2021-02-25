@@ -8,6 +8,7 @@ import ResultSearchClient from "./ResultSearchClient/ResultSearchClient";
 import * as orcamentoActions from "../../../store/actions/orcamento";
 import ModalConfirm from "../../ModalConfirm/ModalConfirm";
 import ToastControl from "../../ToastControl/ToastControl";
+import ResetTelas from "../../ResetTelas/ResetTelas";
 import * as validacaoDadosUtils from "../../../utils/validacaoDados";
 import { connect } from "react-redux";
 
@@ -1168,6 +1169,9 @@ function BasicRegOrcamento(props) {
           }
         />
       </div>
+      <>
+      <ResetTelas telaAtual={"orcamento"} />
+      </>
     </div>
   );
 }

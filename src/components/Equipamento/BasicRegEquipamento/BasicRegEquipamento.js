@@ -7,6 +7,7 @@ import "./BasicRegEquipamento.css";
 import ResultSearchProvider from "./ResultSearchProvider/ResultSearchProvider";
 import ModalConfirm from "../../ModalConfirm/ModalConfirm";
 import ToastControl from "../../ToastControl/ToastControl";
+import ResetTelas from "../../ResetTelas/ResetTelas";
 import * as EquipamentoActions from "../../../store/actions/equipamento";
 import * as validacaoDadosUtils from "../../../utils/validacaoDados";
 import { connect } from "react-redux";
@@ -543,6 +544,9 @@ function BasicRegEquipamento(props) {
           }
         />
       </div>
+      <>
+        <ResetTelas />
+      </>
     </div>
   );
 }

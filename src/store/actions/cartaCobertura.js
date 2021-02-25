@@ -108,6 +108,16 @@ export function removerComponenteItems(listComponenteItems, keyComponente) {
   };
 }
 
+export function zerarListComponenteItems(listComponenteItems) {
+  
+  listComponenteItems = [];
+
+  return {
+    type: "ZERAR_COMPONENTE_ITEM_LIST",
+    listComponenteItems,
+  };
+}
+
 export function alterarStatusComponente(
   listComponenteItems,
   keyComponente,

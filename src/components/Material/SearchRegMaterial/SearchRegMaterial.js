@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import "./SearchRegMaterial.css";
 import ResultSearchMaterial from "./ResultSearchMaterial/ResultSearchMaterial";
+import ResetTelas from "../../ResetTelas/ResetTelas";
 import { connect } from "react-redux";
 
 function SearchRegMaterial(props) {
@@ -86,6 +87,9 @@ function SearchRegMaterial(props) {
         </div>
         <div className="col-4 div-buscar-material"></div>
       </div>
+      <>
+        <ResetTelas />
+      </>
     </>
   );
 }

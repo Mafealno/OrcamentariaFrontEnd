@@ -24,21 +24,17 @@ export default function App() {
       <Router>
         <div id="sideBar">
           <SideBar>
-            <MenuOption name="Pessoas" icon="fa fa-bars" path="/pessoas" />
-            <MenuOption name="Materais" icon="fa fa-bars" path="/materiais" />
-            <MenuOption
-              name="Equipamento"
-              icon="fa fa-bars"
-              path="/equipamentos"
-            />
-            <MenuOption name="Custos" icon="fa fa-bars" path="/custos" />
-            <DropdownButton name="Carta de Cobertura" icon="fa fa-bars">
+            <MenuOption name="Pessoas" icon="fa fa-bars" path="/pessoas" id="menu-Pessoas" />
+            <MenuOption name="Materais" icon="fa fa-bars" path="/materiais" id="menu-Materiais"/>
+            <MenuOption name="Equipamentos" icon="fa fa-bars" path="/equipamentos" id="menu-Equipamentos"/>
+            <MenuOption name="Custos" icon="fa fa-bars" path="/custos" id="menu-Custos"/>
+            <DropdownButton name="Carta de Cobertura" icon="fa fa-bars" id="menu-Carta de Cobertura">
               <DropdownOption path="/cartaCobertura">Cadastrar</DropdownOption>
               <DropdownOption path="/consultarCartaCobertura">
                 Consultar/Editar
               </DropdownOption>
             </DropdownButton>
-            <DropdownButton name="Orçamento" icon="fa fa-bars">
+            <DropdownButton name="Orçamento" icon="fa fa-bars" id="menu-Orçamento">
               <DropdownOption path="/orcamentoIntumescente">
                 Orçamento Intumescente
               </DropdownOption>

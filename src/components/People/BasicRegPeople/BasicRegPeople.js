@@ -4,7 +4,8 @@ import React, { useState, useEffect } from "react";
 import "./BasicRegPeople.css";
 import FormRegClientProvider from "./FormRegClientProvider/FormRegClientProvider";
 import FormRegEmployee from "./FormRegEmployee/FormRegEmployee";
-import * as PeopleActions from "../../../store/actions/people";
+import ResetTelas from "../../ResetTelas/ResetTelas";
+import * as peopleActions from "../../../store/actions/people";
 import { connect } from "react-redux";
 import ToastControl from "../../ToastControl/ToastControl";
 
@@ -235,6 +236,9 @@ function BasicRegPeople(props) {
           conteudoBody={configToast.conteudoBody}
         ></ToastControl>
       </div>
+      <>
+        <ResetTelas/>
+      </>
     </>
   );
 }
@@ -246,9 +250,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   selecionarPessoa: (pessoa) =>
-    dispatch(PeopleActions.selecionarPessoa(pessoa)),
+    dispatch(peopleActions.selecionarPessoa(pessoa)),
   recarregarPessoa: (pessoaId, linkBackEnd) =>
-    dispatch(PeopleActions.recarregarPessoa(pessoaId, linkBackEnd)),
+    dispatch(peopleActions.recarregarPessoa(pessoaId, linkBackEnd)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BasicRegPeople);

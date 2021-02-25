@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function MenuOption(props) {
   return (
-    <li>
+    <li id={props.id}>
       <Link to={props.path}>
         <p className="item-menu">
           <span className={props.icon} aria-hidden="true"></span>

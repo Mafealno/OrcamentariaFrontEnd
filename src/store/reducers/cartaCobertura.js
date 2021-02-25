@@ -41,6 +41,11 @@ export default function cartaCobertura(state = ESTADO_INICIAL, action) {
         ...state,
         listComponenteItems: action.listComponenteItems,
       };
+    case "ZERAR_COMPONENTE_ITEM_LIST":
+      return {
+        ...state,
+        listComponenteItems: action.listComponenteItems,
+      };
     case "LISTAR_CARTA_COBERTURA_INICIADA":
       return {
         ...(state = Object.assign({}, state, {
