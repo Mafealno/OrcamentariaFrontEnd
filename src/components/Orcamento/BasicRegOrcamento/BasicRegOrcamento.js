@@ -529,7 +529,7 @@ function BasicRegOrcamento(props) {
         LIST_ENDERECO: [
           {
             PESSOA_ID: obj.pessoa.pessoaId.valor,
-            ENDERECO_ID: obj.pessoa.endereco.enderecoId.valor,
+            ENDERECO_ID: obj.pessoa.endereco.enderecoId.valor || 0,
             CEP: "",
             LOGRADOURO: "",
             NUMERO_ENDERECO: "",
