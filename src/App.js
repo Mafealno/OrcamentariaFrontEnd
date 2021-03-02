@@ -17,6 +17,7 @@ import UpdateCartaCobertura from "./components/CartaCobertura/UpdateCartaCobertu
 import OrcamentoGeral from "./components/Orcamento/OrcamentoGeral/OrcamentoGeral";
 import OrcamentoIntumescente from "./components/Orcamento/OrcamentoIntumescente/OrcamentoIntumescente";
 import SearchOrcamento from "./components/Orcamento/SearchOrcamento/SearchOrcamento";
+import ArquivoOrcamento from "./components/Orcamento/GerarOrcamento/ArquivoOrcamento/ArquivoOrcamento";
 
 export default function App() {
   return (
@@ -66,6 +67,10 @@ export default function App() {
           <Route
             path="/consultarOrcamento"
             render={() => <SearchOrcamento />}
+          />
+          <Route
+            path="/orcamentoPDF"
+            render={() => <ArquivoOrcamento />}
           />
         </div>
       </Router>

@@ -6,7 +6,8 @@ import ListMaoObraOrcamento from "../ListMaoObraOrcamento/ListMaoObraOrcamento";
 import ListEquipamentosOrcamento from "../ListEquipamentosOrcamento/ListEquipamentosOrcamento";
 import ListMateriaisOrcamento from "../ListMateriaisOrcamento/ListMateriaisOrcamento";
 import ListCustoOrcamento from "../ListCustoOrcamento/ListCustoOrcamento";
-import TotaisOrcamento from "../TotaisOrcamento/TotaisOrcamento"
+import TotaisOrcamento from "../TotaisOrcamento/TotaisOrcamento";
+import GerarOrcamento from "../GerarOrcamento/GerarOrcamento";
 import { Provider } from "react-redux";
 
 import store from "../../../store/store";
@@ -77,6 +78,14 @@ export default function OrcamentoGeral() {
                 >
                   Totais
                 </a>
+                <a
+                  className="nav-item nav-link col position-initial text-center"
+                  id="aba-gerar-orcamento"
+                  data-toggle="tab"
+                  href="#conteudo-gerar-orcamento"
+                >
+                  Gerar PDF
+                </a>
               </>
             )}
           </div>
@@ -143,6 +152,22 @@ export default function OrcamentoGeral() {
               aria-labelledby="aba-totais"
             >
               <TotaisOrcamento />
+            </div>
+            <div
+              className="tab-pane fade conteudo-aba-orcamento"
+              id="conteudo-totais"
+              role="tabpanel"
+              aria-labelledby="aba-totais"
+            >
+              <TotaisOrcamento />
+            </div>
+            <div
+              className="tab-pane fade conteudo-aba-orcamento"
+              id="conteudo-gerar-orcamento"
+              role="tabpanel"
+              aria-labelledby="aba-gerar-orcamento"
+            >
+              <GerarOrcamento />
             </div>
           </>
         </div>
