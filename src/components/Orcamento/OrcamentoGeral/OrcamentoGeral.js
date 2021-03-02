@@ -78,14 +78,14 @@ export default function OrcamentoGeral() {
                 >
                   Totais
                 </a>
-                <a
+                {/* <a
                   className="nav-item nav-link col position-initial text-center"
                   id="aba-gerar-orcamento"
                   data-toggle="tab"
                   href="#conteudo-gerar-orcamento"
                 >
                   Gerar PDF
-                </a>
+                </a> */}
               </>
             )}
           </div>

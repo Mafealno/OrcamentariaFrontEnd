@@ -23,8 +23,8 @@ function Coluna(props) {
     });
   
     return (
-        <View style={[styles.coluna, styles.centralizar_texto, props.tamanho]}>
-            <Text style={styles.fonte}>{props.children}</Text>
+        <View style={[styles.coluna, styles.centralizar_texto, props.estilo]}>
+            <Text style={[styles.fonte, props.estiloFonte]}>{props.children}</Text>
         </View>
     )
 }

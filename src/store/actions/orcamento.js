@@ -427,6 +427,20 @@ export function adicionarItemCustosMaoObraDisplay(
   };
 }
 
+export function adicionarListFormaPagto(
+  listFormaPagto,
+  listAddFormaPagto
+) {
+  listFormaPagto = [...listAddFormaPagto];
+
+  return {
+    type: "ADICIONAR_LIST_FORMA_PAGTO",
+    listFormaPagto,
+  };
+}
+
+
+
 export function removerItemCustosMaoObraDisplay(
   listCustosMaoObraDisplay,
   keyComponente

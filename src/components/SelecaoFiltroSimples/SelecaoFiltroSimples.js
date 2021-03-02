@@ -22,7 +22,7 @@ function SelecaoFiltroSimples(props) {
                 <label className="form-check-label">{item.nome}</label>
             </div>
         )))
-    }, [props.camposMontar.lenght])
+    }, [props.camposMontar.length])
 
     return (
         <div id="containerSelecaoFiltroSimples">

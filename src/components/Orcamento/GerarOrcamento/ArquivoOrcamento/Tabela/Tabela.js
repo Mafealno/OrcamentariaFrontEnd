@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 
 function Tabela(props) {
     return (
-        <View style={[styles.tabela, {height: props.tamanho}]}>
+        <View style={[styles.tabela, props.estilo]}>
             {props.children}                    
         </View>
     )

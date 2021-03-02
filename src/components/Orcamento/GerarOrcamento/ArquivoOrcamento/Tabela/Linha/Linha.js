@@ -14,7 +14,7 @@ function Linha(props) {
     });
 
     return (
-        <View style={styles.linha}>
+        <View style={[styles.linha, props.estilo]}>
             {props.children}
         </View>
     )

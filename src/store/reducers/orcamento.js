@@ -11,6 +11,7 @@ const ESTADO_INICIAL = {
   listMaterialOrcamento: [],
   listOrcamento: [],
   listCustosMaoObraDisplay: [],
+  listFormaPagto: []
 };
 
 export default function orcamento(state = ESTADO_INICIAL, action) {
@@ -99,6 +100,11 @@ export default function orcamento(state = ESTADO_INICIAL, action) {
       return {
         ...state,
         listCustosMaoObraDisplay: action.listCustosMaoObraDisplay,
+      };
+    case "ADICIONAR_LIST_FORMA_PAGTO":
+      return {
+        ...state,
+        listFormaPagto: action.listFormaPagto,
       };
     case "REMOVER_ITEM_ORCAMENTO_GERAL":
       return {
