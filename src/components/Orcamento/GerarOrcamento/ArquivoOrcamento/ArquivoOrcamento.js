@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable eqeqeq */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import "./ArquivoOrcamento.css";
-import NewWindow from 'react-new-window'
 import { Page, Text, View, Document, Image, Link, StyleSheet } from '@react-pdf/renderer';
 import { PDFViewer } from '@react-pdf/renderer';
 import Tabela from "./Tabela/Tabela";
@@ -783,8 +782,8 @@ function ArquivoOrcamento(props) {
                         </Page>
                     </Document>
                 </PDFViewer>
-                )}
-            </>
+            )}
+        </>
     ) 
 }
 
