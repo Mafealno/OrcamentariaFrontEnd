@@ -36,8 +36,8 @@ function BasicRegOrcamento(props) {
 
   let [dadosCadastro, setDadosCadastro] = useState({
     orcamentoId: { ...dadosCampo, valorPadrao: 0 },
-    nomeObra: { ...dadosCampo, requerido: true },
-    a_c: { ...dadosCampo, requerido: true },
+    nomeObra: { ...dadosCampo, requerido: true , tamanhoMax: 60 },
+    a_c: { ...dadosCampo, requerido: true, tamanhoMax: 60 },
     prazoEntrega: { ...dadosCampo, requerido: true },
     diasTrabalhado: {
       ...dadosCampo,
@@ -827,6 +827,7 @@ function BasicRegOrcamento(props) {
                       name="nomeObra"
                       id="campo-nomeObra"
                       value={dadosCadastro.nomeObra.valor}
+                      maxLength={dadosCadastro.nomeObra.tamanhoMax}
                       onChange={(event) => handleInputChange(event)}
                       onFocus={(event) => removerErro(event.target.id)}
                     />
@@ -844,6 +845,7 @@ function BasicRegOrcamento(props) {
                       id="campo-a_c"
                       value={dadosCadastro.a_c.valor}
                       onChange={(event) => handleInputChange(event)}
+                      maxLength={dadosCadastro.a_c.tamanhoMax}
                       onFocus={(event) => removerErro(event.target.id)}
                     />
                     <span

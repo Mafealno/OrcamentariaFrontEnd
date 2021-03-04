@@ -33,9 +33,9 @@ function ModalContact(props) {
     pessoaId: { ...dadosCampo, requerido: true },
     contatoId: { ...dadosCampo, valorPadrao: 0 },
     tipoContato: { ...dadosCampo, requerido: true },
-    contato: { ...dadosCampo, requerido: true },
-    ddd: { ...dadosCampo, formato: /^[1-9]{1}[0-9]{1}$/ },
-    ramal: { ...dadosCampo, formato: /^\d{1,10}$/ },
+    contato: { ...dadosCampo, requerido: true, tamanhoMax: 30 },
+    ddd: { ...dadosCampo, formato: /^[1-9]{1}[0-9]{1}$/, tamanhoMax: 2 },
+    ramal: { ...dadosCampo, formato: /^\d{1,10}$/, tamanhoMax: 10 },
     contatoPadrao: { ...dadosCampo, valorPadrao: false },
   });
 
@@ -346,6 +346,7 @@ function ModalContact(props) {
                         name="contato"
                         id="campo-contato"
                         value={dadosCadastro.contato.valor}
+                        maxLength={dadosCadastro.contato.tamanhoMax}
                         onChange={(event) => handleInputChange(event)}
                         onFocus={(event) => removerErro(event.target.id)}
                       />
@@ -373,6 +374,7 @@ function ModalContact(props) {
                             : celular
                         }
                         value={dadosCadastro.ddd.valor}
+                        maxLength={dadosCadastro.ddd.tamanhoMax}
                         onChange={(event) => handleInputChange(event)}
                         onFocus={(event) => removerErro(event.target.id)}
                       />
@@ -392,6 +394,7 @@ function ModalContact(props) {
                             : telefone
                         }
                         value={dadosCadastro.ramal.valor}
+                        maxLength={dadosCadastro.ramal.tamanhoMax}
                         onChange={(event) => handleInputChange(event)}
                         onFocus={(event) => removerErro(event.target.id)}
                       />

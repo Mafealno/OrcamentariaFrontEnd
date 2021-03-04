@@ -36,4 +36,5 @@ export const dadosCampo = {
   formato: "",
   msgErro: "",
   valido: false,
+  tamanhoMax: 9999,
 };

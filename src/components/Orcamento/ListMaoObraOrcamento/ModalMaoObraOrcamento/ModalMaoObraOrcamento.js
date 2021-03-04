@@ -523,8 +523,6 @@ function ModalMaoObraOrcamento(props) {
                           name="pessoaId"
                           id="campo-pessoaId"
                           value={dadosCadastro.pessoaId.valor}
-                          onChange={(event) => handleInputChange(event)}
-                          onFocus={(event) => removerErro(event.target.id)}
                           readOnly
                         />
                         <span
@@ -540,8 +538,6 @@ function ModalMaoObraOrcamento(props) {
                           name="nomePessoa"
                           id="campo-nomePessoa"
                           value={dadosCadastro.nomePessoa.valor}
-                          onChange={(event) => handleInputChange(event)}
-                          onFocus={(event) => removerErro(event.target.id)}
                           readOnly
                         />
                         <span
@@ -561,8 +557,6 @@ function ModalMaoObraOrcamento(props) {
                           name="cargo"
                           id="campo-cargo"
                           value={dadosCadastro.cargo.valor}
-                          onChange={(event) => handleInputChange(event)}
-                          onFocus={(event) => removerErro(event.target.id)}
                           readOnly
                         />
                         <span
@@ -578,8 +572,6 @@ function ModalMaoObraOrcamento(props) {
                           name="valorDiario"
                           id="campo-valorDiario"
                           value={dadosCadastro.valorDiario.valor}
-                          onChange={(event) => handleInputChange(event)}
-                          onFocus={(event) => removerErro(event.target.id)}
                           readOnly
                         />
                         <span
@@ -595,8 +587,6 @@ function ModalMaoObraOrcamento(props) {
                           name="status"
                           id="campo-status"
                           value={dadosCadastro.status.valor}
-                          onChange={(event) => handleInputChange(event)}
-                          onFocus={(event) => removerErro(event.target.id)}
                           readOnly
                         />
                         <span

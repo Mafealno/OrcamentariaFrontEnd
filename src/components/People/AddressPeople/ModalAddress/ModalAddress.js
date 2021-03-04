@@ -28,13 +28,13 @@ function ModalAddress(props) {
   let [dadosCadastro, setDadosCadastro] = useState({
     pessoaId: { ...dadosCampo, requerido: true },
     enderecoId: { ...dadosCampo, valorPadrao: 0 },
-    cep: { ...dadosCampo, formato: /^\d{3}\d{2}?\d{3}$/ },
-    logradouro: { ...dadosCampo, requerido: true },
-    numero: { ...dadosCampo, requerido: true },
-    complemento: { ...dadosCampo },
-    bairro: { ...dadosCampo },
-    cidade: { ...dadosCampo, requerido: true },
-    estado: { ...dadosCampo, requerido: true },
+    cep: { ...dadosCampo, formato: /^\d{3}\d{2}?\d{3}$/, tamanhoMax: 9 },
+    logradouro: { ...dadosCampo, requerido: true, tamanhoMax: 100 },
+    numero: { ...dadosCampo, requerido: true, tamanhoMax: 10 },
+    complemento: { ...dadosCampo, tamanhoMax: 40 },
+    bairro: { ...dadosCampo, tamanhoMax: 40 },
+    cidade: { ...dadosCampo, requerido: true, tamanhoMax: 40 },
+    estado: { ...dadosCampo, requerido: true, tamanhoMax: 40 },
     uf: { ...dadosCampo },
     enderecoPadrao: { ...dadosCampo, valorPadrao: false },
   });
@@ -251,6 +251,7 @@ function ModalAddress(props) {
                           className="form-control"
                           placeholder="000.00-000"
                           value={dadosCadastro.cep.valor}
+                          maxLength={dadosCadastro.cep.tamanhoMax}
                           onChange={(event) => handleInputChange(event)}
                           onFocus={(event) => removerErro(event.target.id)}
                         />
@@ -265,6 +266,7 @@ function ModalAddress(props) {
                           id="campo-logradouro"
                           placeholder="Rua Aristides Alves"
                           value={dadosCadastro.logradouro.valor}
+                          maxLength={dadosCadastro.logradouro.tamanhoMax}
                           onChange={(event) => handleInputChange(event)}
                           onFocus={(event) => removerErro(event.target.id)}
                         />
@@ -286,6 +288,7 @@ function ModalAddress(props) {
                           id="campo-numero"
                           placeholder="Ex: 56"
                           value={dadosCadastro.numero.valor}
+                          maxLength={dadosCadastro.numero.tamanhoMax}
                           onChange={(event) => handleInputChange(event)}
                           onFocus={(event) => removerErro(event.target.id)}
                         />
@@ -303,6 +306,7 @@ function ModalAddress(props) {
                           id="campo-complemento"
                           placeholder="Perto do açougue"
                           value={dadosCadastro.complemento.valor}
+                          maxLength={dadosCadastro.complemento.tamanhoMax}
                           onChange={(event) => handleInputChange(event)}
                           onFocus={(event) => removerErro(event.target.id)}
                         />
@@ -320,6 +324,7 @@ function ModalAddress(props) {
                           id="campo-bairro"
                           placeholder="Praça da Árvore"
                           value={dadosCadastro.bairro.valor}
+                          maxLength={dadosCadastro.bairro.tamanhoMax}
                           onChange={(event) => handleInputChange(event)}
                           onFocus={(event) => removerErro(event.target.id)}
                         />
@@ -337,6 +342,7 @@ function ModalAddress(props) {
                           id="campo-cidade"
                           placeholder="São Paulo"
                           value={dadosCadastro.cidade.valor}
+                          maxLength={dadosCadastro.cidade.tamanhoMax}
                           onChange={(event) => handleInputChange(event)}
                           onFocus={(event) => removerErro(event.target.id)}
                         />

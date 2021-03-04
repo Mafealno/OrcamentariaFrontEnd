@@ -28,16 +28,12 @@ function FormRegEmployee(props) {
   });
   let [dadosCadastro, setDadosCadastro] = useState({
     pessoaId: { ...dadosCampo, valorPadrao: 0 },
-    nome: { ...dadosCampo, requerido: true },
+    nome: { ...dadosCampo, requerido: true, tamanhoMax: 60 },
     tipo: { ...dadosCampo, valorPadrao: "F" },
-    rg: { ...dadosCampo, formato: /^\d{2}(\.)?\d{3}(\.)?\d{3}(\-)?\d{1}$/ },
-    cpf: {
-      ...dadosCampo,
-      requerido: true,
-      formato: /^\d{3}(\.)?\d{3}(\.)?\d{3}(\-)?\d{2}$/,
-    },
-    cnpj: { ...dadosCampo },
-    cargo: { ...dadosCampo, valorPadrao: "Pintor" },
+    rg: { ...dadosCampo, formato: /^\d{2}(\.)?\d{3}(\.)?\d{3}(\-)?\d{1}$/, tamanhoMax: 9 },
+    cpf: { ...dadosCampo, requerido: true, formato: /^\d{3}(\.)?\d{3}(\.)?\d{3}(\-)?\d{2}$/, tamanhoMax: 11},
+    cnpj: { ...dadosCampo, tamanhoMax: 14 },
+    cargo: { ...dadosCampo, valorPadrao: "Pintor", tamanhoMax: 20 },
     valorDiario: { ...dadosCampo, requerido: true },
     dataAdmissao: { ...dadosCampo, valorPadrao: new Date() },
     status: { ...dadosCampo, valorPadrao: "Ativo" },
@@ -223,8 +219,9 @@ function FormRegEmployee(props) {
           className="form-control"
           name="nome"
           id="campo-nome"
-          value={dadosCadastro.nome.valor}
           placeholder="Ex: João da Silva"
+          value={dadosCadastro.nome.valor}
+          maxLength={dadosCadastro.nome.tamanhoMax}
           onChange={(event) => handleInputChange(event)}
           onFocus={(event) => removerErro(event.target.id)}
         />
@@ -240,7 +237,8 @@ function FormRegEmployee(props) {
               name="rg"
               id="campo-rg"
               value={dadosCadastro.rg.valor}
-              placeholder="Ex: 00.000.000-0"
+              placeholder="Ex: 000000000"
+              maxLength={dadosCadastro.rg.tamanhoMax}
               onChange={(event) => handleInputChange(event)}
               onFocus={(event) => removerErro(event.target.id)}
             />
@@ -253,8 +251,9 @@ function FormRegEmployee(props) {
               className="form-control"
               name="cpf"
               id="campo-cpf"
+              placeholder="Ex: 00000000000"
               value={dadosCadastro.cpf.valor}
-              placeholder="Ex: 000.000.000-00"
+              maxLength={dadosCadastro.cpf.tamanhoMax}
               onChange={(event) => handleInputChange(event)}
               onFocus={(event) => removerErro(event.target.id)}
             />
@@ -271,6 +270,7 @@ function FormRegEmployee(props) {
               name="cargo"
               id="campo-cargo"
               value={dadosCadastro.cargo.valor}
+              maxLength={dadosCadastro.cargo.tamanhoMax}
               onChange={(event) => handleInputChange(event)}
               onFocus={(event) => removerErro(event.target.id)}
             >

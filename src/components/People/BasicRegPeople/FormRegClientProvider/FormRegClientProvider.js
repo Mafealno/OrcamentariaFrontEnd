@@ -3,6 +3,7 @@
 /* eslint-disable eqeqeq */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
+import { mask, unMask } from 'remask'
 import "./FormRegClientProvider.css";
 import { connect } from "react-redux";
 import ModalConfirm from "../../../ModalConfirm/ModalConfirm";
@@ -30,13 +31,10 @@ function FormClientReg(props) {
 
   let [dadosCadastro, setDadosCadastro] = useState({
     tipoPessoa: { ...dadosCampo, requerido: true },
-    nome: { ...dadosCampo, requerido: true },
-    rg: { ...dadosCampo, formato: /^\d{2}(\.)?\d{3}(\.)?\d{3}(\-)?\d{1}$/ },
-    cpf: { ...dadosCampo, formato: /^\d{3}(\.)?\d{3}(\.)?\d{3}(\-)?\d{2}$/ },
-    cnpj: {
-      ...dadosCampo,
-      formato: /^\d{2}(\.)?\d{3}(\.)?\d{3}(\/)?\d{4}(\-)?\d{2}$/,
-    },
+    nome: { ...dadosCampo, requerido: true, tamanhoMax: 60 },
+    rg: { ...dadosCampo, formato: /^\d{2}(\.)?\d{3}(\.)?\d{3}(\-)?\d{1}$/, tamanhoMax: 9 },
+    cpf: { ...dadosCampo, formato: /^\d{3}(\.)?\d{3}(\.)?\d{3}(\-)?\d{2}$/, tamanhoMax: 14 },
+    cnpj: { ...dadosCampo, formato: /^\d{2}(\.)?\d{3}(\.)?\d{3}(\/)?\d{4}(\-)?\d{2}$/, tamanhoMax: 14 },
   });
 
   useEffect(() => {
@@ -188,7 +186,7 @@ function FormClientReg(props) {
       ...dadosCadastro,
       [event.target.name]: {
         ...dadosCadastro[event.target.name],
-        valor: event.target.value,
+        valor: unMask(event.target.value || '', ['999.999.999-99']),
       },
     });
   };
@@ -236,6 +234,7 @@ function FormClientReg(props) {
               id="campo-nome"
               value={dadosCadastro.nome.valor}
               placeholder="Ex: João da Silva"
+              maxLength={dadosCadastro.nome.tamanhoMax}
               onChange={(event) => handleInputChange(event)}
               onFocus={(event) => removerErro(event.target.id)}
             />
@@ -253,7 +252,8 @@ function FormClientReg(props) {
                   name="rg"
                   id="campo-rg"
                   value={dadosCadastro.rg.valor}
-                  placeholder="Ex: 00.000.000-0"
+                  placeholder="Ex: 000000000"
+                  maxLength={dadosCadastro.rg.tamanhoMax}
                   onChange={(event) => handleInputChange(event)}
                   onFocus={(event) => removerErro(event.target.id)}
                 />
@@ -266,8 +266,9 @@ function FormClientReg(props) {
                   className="form-control"
                   name="cpf"
                   id="campo-cpf"
-                  placeholder="Ex: 000.000.000-00"
-                  value={dadosCadastro.cpf.valor}
+                  placeholder="Ex: 00000000000"
+                  value={mask(dadosCadastro.cpf.valor || '', ['999.999.999-99'])}
+                  maxLength={dadosCadastro.cpf.tamanhoMax}
                   onChange={(event) => handleInputChange(event)}
                   onFocus={(event) => removerErro(event.target.id)}
                 />
@@ -285,8 +286,9 @@ function FormClientReg(props) {
                 className="form-control"
                 name="cnpj"
                 id="campo-cnpj"
-                placeholder="Ex: 00.000.000/0000-00"
+                placeholder="Ex: 00000000000000"
                 value={dadosCadastro.cnpj.valor}
+                maxLength={dadosCadastro.cnpj.tamanhoMax}
                 onChange={(event) => handleInputChange(event)}
                 onFocus={(event) => removerErro(event.target.id)}
               />

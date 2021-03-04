@@ -398,8 +398,6 @@ function ModalCustoOrcamento(props) {
                                     id="campo-tipoCusto"
                                     name="tipoCusto"
                                     value={dadosCadastro.tipoCusto.valor}
-                                    onChange={(event) => handleInputChange(event)}
-                                    onFocus={(event) => removerErro(event.target.id)}
                                     readOnly
                                   />
                                   <span
@@ -415,8 +413,6 @@ function ModalCustoOrcamento(props) {
                                     id="campo-valorCusto"
                                     name="valorCusto"
                                     value={dadosCadastro.valorCusto.valor}
-                                    onChange={(event) => handleInputChange(event)}
-                                    onFocus={(event) => removerErro(event.target.id)}
                                     readOnly
                                   />
                                   <span

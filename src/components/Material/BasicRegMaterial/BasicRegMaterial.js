@@ -34,9 +34,9 @@ function BasicRegMaterial(props) {
 
   let [dadosCadastro, setDadosCadastro] = useState({
     materialId: { ...dadosCampo, valorPadrao: 0 },
-    nomeMaterial: { ...dadosCampo, requerido: true },
-    descricaoMaterial: { ...dadosCampo },
-    tipoMaterial: { ...dadosCampo, requerido: true },
+    nomeMaterial: { ...dadosCampo, requerido: true, tamanhoMax: 50 },
+    descricaoMaterial: { ...dadosCampo, tamanhoMax: 100 },
+    tipoMaterial: { ...dadosCampo, requerido: true, tamanhoMax: 20 },
   });
 
   let [dadosFabricante, setDadosFabricante] = useState({
@@ -394,6 +394,7 @@ function BasicRegMaterial(props) {
                 name="nomeMaterial"
                 id="campo-nomeMaterial"
                 value={dadosCadastro.nomeMaterial.valor}
+                maxLength={dadosCadastro.nomeMaterial.tamanhoMax}
                 onChange={(event) => handleInputChange(event)}
                 onFocus={(event) => removerErro(event.target.id)}
               />
@@ -408,6 +409,7 @@ function BasicRegMaterial(props) {
                 name="tipoMaterial"
                 id="campo-tipoMaterial"
                 value={dadosCadastro.tipoMaterial.valor}
+                maxLength={dadosCadastro.tipoMaterial.tamanhoMax}
                 onChange={(event) => handleInputChange(event)}
                 onFocus={(event) => removerErro(event.target.id)}
               />
@@ -424,6 +426,7 @@ function BasicRegMaterial(props) {
               name="descricaoMaterial"
               id="campo-descricaoMaterial"
               value={dadosCadastro.descricaoMaterial.valor}
+              maxLength={dadosCadastro.descricaoMaterial.tamanhoMax}
               onChange={(event) => handleInputChange(event)}
               onFocus={(event) => removerErro(event.target.id)}
             />

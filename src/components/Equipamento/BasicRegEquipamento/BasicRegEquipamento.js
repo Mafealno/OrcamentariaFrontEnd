@@ -34,8 +34,8 @@ function BasicRegEquipamento(props) {
 
   let [dadosCadastro, setDadosCadastro] = useState({
     equipamentoId: { ...dadosCampo, valorPadrao: 0 },
-    nomeEquipamento: { ...dadosCampo, requerido: true },
-    descricaoEquipamento: { ...dadosCampo },
+    nomeEquipamento: { ...dadosCampo, requerido: true, tamanhoMax: 50 },
+    descricaoEquipamento: { ...dadosCampo, tamanhoMax: 100 },
   });
 
   let [dadosFabricante, setDadosFabricante] = useState({
@@ -385,6 +385,7 @@ function BasicRegEquipamento(props) {
                 name="nomeEquipamento"
                 id="campo-nomeEquipamento"
                 value={dadosCadastro.nomeEquipamento.valor}
+                maxLength={dadosCadastro.nomeEquipamento.tamanhoMax}
                 onChange={(event) => handleInputChange(event)}
                 onFocus={(event) => removerErro(event.target.id)}
               />
@@ -405,6 +406,7 @@ function BasicRegEquipamento(props) {
               id="campo-descricaoEquipamento"
               value={dadosCadastro.descricaoEquipamento.valor}
               onChange={(event) => handleInputChange(event)}
+              maxLength={dadosCadastro.descricaoEquipamento.tamanhoMax}
               onFocus={(event) => removerErro(event.target.id)}
             />
             <span

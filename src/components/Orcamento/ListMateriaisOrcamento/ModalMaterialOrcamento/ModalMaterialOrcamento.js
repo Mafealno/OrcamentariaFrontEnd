@@ -432,7 +432,7 @@ export function ModalMaterialOrcamento(props) {
                           <div className="col">
                             <label>Valor unitário</label>
                             <input
-                              type="text"
+                              type="number"
                               className="form-control"
                               id="campo-valorUnitario"
                               name="valorUnitario"
@@ -448,7 +448,7 @@ export function ModalMaterialOrcamento(props) {
                           <div className="col">
                             <label>Quantidade</label>
                             <input
-                              type="text"
+                              type="number"
                               className="form-control"
                               id="campo-quantidade"
                               name="quantidade"

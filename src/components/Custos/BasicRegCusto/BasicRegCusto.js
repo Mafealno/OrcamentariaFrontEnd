@@ -30,8 +30,8 @@ function BasicRegCusto(props) {
   });
   let [dadosCadastro, setDadosCadastro] = useState({
     custoId: { ...dadosCampo, valorPadrao: 0 },
-    nomeCusto: { ...dadosCampo, requerido: true },
-    descricaoCusto: { ...dadosCampo },
+    nomeCusto: { ...dadosCampo, requerido: true, tamanhoMax: 30 },
+    descricaoCusto: { ...dadosCampo, tamanhoMax: 100 },
     valorCusto: { ...dadosCampo, requerido: true },
     tipoCusto: {
       ...dadosCampo,
@@ -288,6 +288,7 @@ function BasicRegCusto(props) {
                   name="nomeCusto"
                   id="campo-nomeCusto"
                   value={dadosCadastro.nomeCusto.valor}
+                  maxLength={dadosCadastro.nomeCusto.tamanhoMax}
                   onChange={(event) => handleInputChange(event)}
                   onFocus={(event) => removerErro(event.target.id)}
                 />
@@ -305,6 +306,7 @@ function BasicRegCusto(props) {
                   name="descricaoCusto"
                   id="campo-descricaoCusto"
                   value={dadosCadastro.descricaoCusto.valor}
+                  maxLength={dadosCadastro.descricaoCusto.tamanhoMax}
                   onChange={(event) => handleInputChange(event)}
                   onFocus={(event) => removerErro(event.target.id)}
                 />

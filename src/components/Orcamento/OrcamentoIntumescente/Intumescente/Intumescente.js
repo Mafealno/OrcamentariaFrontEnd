@@ -604,6 +604,7 @@ function Intumescente(props) {
                                                 id="campo-classe"
                                                 className="form-control position-initial"
                                                 value={dadosCadastro.classe.valor}
+                                                maxLength={dadosCadastro.classe.tamanhoMax}
                                                 onChange={(event) => handleInputChange(event)}
                                                 onFocus={(event) => removerErro(event.target.id)}/>
                                             <div className="input-group-append">
@@ -756,7 +757,7 @@ function Intumescente(props) {
                                           <span className="input-group-text">R$</span>
                                         </div>
                                       <input
-                                          type="text"
+                                          type="number"
                                           name="valorBaldeIntumescente"
                                           id="campo-valorBaldeIntumescente"
                                           className="form-control position-initial"
@@ -773,7 +774,7 @@ function Intumescente(props) {
                                           <span className="input-group-text">R$</span>
                                         </div>
                                       <input
-                                          type="text"
+                                          type="number"
                                           name="valorUnitarioIntumescente"
                                           id="campo-valorUnitarioIntumescente"
                                           className="form-control position-initial"
@@ -798,8 +799,6 @@ function Intumescente(props) {
                                             id="campo-qtdeLitrosTotal"
                                             className="form-control position-initial"
                                             value={dadosCadastro.qtdeLitrosTotal.valor}
-                                            onChange={(event) => handleInputChange(event)}
-                                            onFocus={(event) => removerErro(event.target.id)}
                                             readOnly/>
                                         <span className="invalid-feedback msg-erro-qtdeLitrosTotal" id="erro-qtdeLitrosTotal"></span>
                                 </div>
@@ -811,8 +810,6 @@ function Intumescente(props) {
                                             id="campo-qtdeBaldes"
                                             className="form-control position-initial"
                                             value={dadosCadastro.qtdeBaldes.valor}
-                                            onChange={(event) => handleInputChange(event)}
-                                            onFocus={(event) => removerErro(event.target.id)}
                                             readOnly/>
                                         <span className="invalid-feedback msg-erro-qtdeBaldes" id="erro-qtdeBaldes"></span>
                                 </div>

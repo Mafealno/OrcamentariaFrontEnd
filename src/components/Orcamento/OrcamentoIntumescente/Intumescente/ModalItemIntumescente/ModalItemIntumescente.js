@@ -540,7 +540,7 @@ function ModalItemIntumescente(props) {
                                 <div className="col">
                                     <label>Quantidade</label>
                                     <input 
-                                        type="text"
+                                        type="number"
                                         name="qtde"
                                         className="form-control"
                                         id="campo-qtde"
@@ -552,7 +552,7 @@ function ModalItemIntumescente(props) {
                                 <div className="col">
                                     <label>Comprimento</label>
                                     <input 
-                                        type="text"
+                                        type="number"
                                         name="valorComprimento"
                                         className="form-control"
                                         id="campo-valorComprimento"

@@ -60,9 +60,10 @@ function ModalItemOrcamentoGeral(props) {
     ambienteAplicacao: {
       ...dadosCampo,
       requerido: true,
+      tamanhoMax: 50
     },
-    localAplicacao: { ...dadosCampo },
-    acaoAplicar: { ...dadosCampo },
+    localAplicacao: { ...dadosCampo, requerido: true, tamanhoMax: 50 },
+    acaoAplicar: { ...dadosCampo, tamanhoMax: 400 },
   });
 
   let [dadosCadastroMaterial, setDadosCadastroMaterial] = useState({
@@ -509,6 +510,7 @@ function ModalItemOrcamentoGeral(props) {
                         name="ambienteAplicacao"
                         id="campo-ambienteAplicacao"
                         value={dadosCadastro.ambienteAplicacao.valor}
+                        maxLength={dadosCadastro.ambienteAplicacao.tamanhoMax}
                         onChange={(event) => handleInputChange(event)}
                         onFocus={(event) => removerErro(event.target.id)}
                         list={"ambiente"}
@@ -527,6 +529,7 @@ function ModalItemOrcamentoGeral(props) {
                         name="localAplicacao"
                         id="campo-localAplicacao"
                         value={dadosCadastro.localAplicacao.valor}
+                        maxLength={dadosCadastro.localAplicacao.tamanhoMax}
                         onChange={(event) => handleInputChange(event)}
                         onFocus={(event) => removerErro(event.target.id)}
                       />
@@ -543,6 +546,7 @@ function ModalItemOrcamentoGeral(props) {
                         id="campo-acaoAplicar"
                         rows="3"
                         value={dadosCadastro.acaoAplicar.valor}
+                        maxLength={dadosCadastro.acaoAplicar.tamanhoMax}
                         onChange={(event) => handleInputChange(event)}
                         onFocus={(event) => removerErro(event.target.id)}
                       />
@@ -557,7 +561,7 @@ function ModalItemOrcamentoGeral(props) {
                           <div className="col">
                             <label>Comprimento</label>
                             <input
-                              type="text"
+                              type="number"
                               className="form-control"
                               name="valorComprimento"
                               id="campo-valorComprimento"
@@ -573,7 +577,7 @@ function ModalItemOrcamentoGeral(props) {
                           <div className="col">
                             <label>Largura</label>
                             <input
-                              type="text"
+                              type="number"
                               className="form-control"
                               name="valorLargura"
                               id="campo-valorLargura"
@@ -593,7 +597,7 @@ function ModalItemOrcamentoGeral(props) {
                           <div className="col">
                             <label>Valor do M²</label>
                             <input
-                              type="text"
+                              type="number"
                               className="form-control"
                               name="valorM2"
                               id="campo-valorM2"
@@ -609,8 +613,8 @@ function ModalItemOrcamentoGeral(props) {
                           <div className="col">
                             <label>Área (M²)</label>
                             <input
-                              type="text"
-                              className="form-control"
+                              type="number"
+                              className="form-control borda-vermelha"
                               name="area"
                               id="campo-area"
                               value={dadosCadastro.area.valor}
