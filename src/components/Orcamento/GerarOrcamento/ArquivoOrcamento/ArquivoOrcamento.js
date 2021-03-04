@@ -53,10 +53,10 @@ const styles = StyleSheet.create({
   },
   titulo_vermelho: {
     fontSize: 11,
-    color: 'red'
+    color: '#B50707'
   },
   destaque_vermelho: {
-      color: 'red',
+      color: '#B50707',
       fontWeight: 'bold'
   },
   negrito: {
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   cabecalho: {
     textTransform: 'uppercase',
-    color: 'red',
+    color: '#B50707',
     fontWeight: 'ultrabold',
     fontSize: 11,
     width: '100%',
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     display: 'flex', 
     flexGrow: 1,
     justifyContent: 'flex-end',
-    color: 'red',
+    color: '#B50707',
     fontWeight: 'bold',
     fontSize: 11,
     textAlign: 'center',
@@ -271,7 +271,7 @@ function ArquivoOrcamento(props) {
                                 </View>
                                 <View style={[styles.sessao]}>
                                     <Text style={[styles.textoPadrao]}>
-                                        O sistema de proteção passiva por <Link style={[{color: 'red'}]}>PINTURAS INTUMESCENTES</Link> é processo 
+                                        O sistema de proteção passiva por <Link style={[{color: '#B50707'}]}>PINTURAS INTUMESCENTES</Link> é processo 
                                         de proteção de estruturas metálicas e ou outros materiais previstas por normas nacionais e internacionais 
                                         para que em um determinado local em situação de fogo possa haver tempo de evacuação do local, assim 
                                         também como tempo de chegada e saída do local pelo Corpo de Bombeiros, entre outras autoridades com 
@@ -480,7 +480,7 @@ function ArquivoOrcamento(props) {
                                     <Tabela estilo={{height : 20}}>
                                         <Linha>
                                             <Coluna estilo={{width: 350, backgroundColor: '#95B3D7'}}>Produtos + Mão de Obra / Aplicação</Coluna>
-                                            <Coluna estilo={{flexGrow: 1, backgroundColor: '#DCE6F1', color: 'red'}}>R$ {props.totaisOrcamento.TOTAIS_ITENS.toFixed(2)}</Coluna>
+                                            <Coluna estilo={{flexGrow: 1, backgroundColor: '#DCE6F1', color: '#B50707'}}>R$ {props.totaisOrcamento.TOTAIS_ITENS.toFixed(2)}</Coluna>
                                         </Linha>
                                     </Tabela>
                                 </View>
@@ -497,9 +497,9 @@ function ArquivoOrcamento(props) {
                                                     <Coluna estilo={{flexGrow: 1, maxWidth: '100%', backgroundColor: '#95B3D7'}}>CONDIÇÕES DE PAGAMENTO - FATURAMENTO</Coluna>
                                                 </Linha>
                                                 <Linha>
-                                                    <Coluna estilo={{width: 150, backgroundColor: '#95B3D7', color: 'red'}}>Fornecedor</Coluna>
-                                                    <Coluna estilo={{flexGrow: 1, backgroundColor: '#DCE6F1', color: 'red'}}>ITENS</Coluna>
-                                                    <Coluna estilo={{width: 150, backgroundColor: '#DCE6F1', color: 'red'}}>PRAZO DE PAGAMENTO</Coluna>
+                                                    <Coluna estilo={{width: 150, backgroundColor: '#95B3D7', color: '#B50707'}}>Fornecedor</Coluna>
+                                                    <Coluna estilo={{flexGrow: 1, backgroundColor: '#DCE6F1', color: '#B50707'}}>ITENS</Coluna>
+                                                    <Coluna estilo={{width: 150, backgroundColor: '#DCE6F1', color: '#B50707'}}>PRAZO DE PAGAMENTO</Coluna>
                                                 </Linha>
                                                 {props.listFormaPagto.map((item) => {
                                                     return(
@@ -572,7 +572,7 @@ function ArquivoOrcamento(props) {
                                         </Linha>
                                         <Linha>
                                             <Coluna estilo={{width: 30}}>5</Coluna>
-                                            <Coluna estilo={{color: 'red', maxWidth: '93%'}}>
+                                            <Coluna estilo={{color: '#B50707', maxWidth: '93%'}}>
                                                 Cotação realizada por projetos enviados por e-mail, sendo necessário uma confirmação em campo.
                                             </Coluna>
                                         </Linha>

@@ -23,17 +23,17 @@ export default function App() {
       <Router>
         <div id="sideBar">
           <SideBar>
-            <MenuOption name="Pessoas" icon="fa fa-bars" path="/pessoas" id="menu-Pessoas" />
-            <MenuOption name="Materais" icon="fa fa-bars" path="/materiais" id="menu-Materiais"/>
-            <MenuOption name="Equipamentos" icon="fa fa-bars" path="/equipamentos" id="menu-Equipamentos"/>
-            <MenuOption name="Custos" icon="fa fa-bars" path="/custos" id="menu-Custos"/>
-            <DropdownButton name="Carta de Cobertura" icon="fa fa-bars" id="menu-Carta de Cobertura">
+            <MenuOption name="Pessoas" icon="fa fa-user" path="/pessoas" id="menu-Pessoas" />
+            <MenuOption name="Materais" icon="fa fa-product-hunt " path="/materiais" id="menu-Materiais"/>
+            <MenuOption name="Equipamentos" icon="fa fa-cogs" path="/equipamentos" id="menu-Equipamentos"/>
+            <MenuOption name="Custos" icon="fa fa-contao" path="/custos" id="menu-Custos"/>
+            <DropdownButton name="Carta de Cobertura" icon="fa fa-table" id="menu-Carta de Cobertura">
               <DropdownOption path="/cartaCobertura">Cadastrar</DropdownOption>
               <DropdownOption path="/consultarCartaCobertura">
                 Consultar/Editar
               </DropdownOption>
             </DropdownButton>
-            <DropdownButton name="Orçamento" icon="fa fa-bars" id="menu-Orçamento">
+            <DropdownButton name="Orçamento" icon="fa fa-file-text-o" id="menu-Orçamento">
               <DropdownOption path="/orcamentoIntumescente">
                 Orçamento Intumescente
               </DropdownOption>

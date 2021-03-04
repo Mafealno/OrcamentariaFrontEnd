@@ -24,7 +24,7 @@ input[type="radio"]:active {
   width: 130px;
   text-align: center;
   align-items: center;
-  color: #d40808;
+  color: #B50707;
 }
 
 .item-selecao-filtro-simples:first-child {
@@ -33,6 +33,6 @@ input[type="radio"]:active {
 }
 
 .item-selecao-filtro-simples > label {
-  color: #d40808;
+  color: #B50707;
   font-weight: bold;
 }

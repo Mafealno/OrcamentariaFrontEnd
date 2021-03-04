@@ -49,7 +49,7 @@ export default function SideBar(props) {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Procurar menu"
+                placeholder="Filtrar menu"
                 onChange={(event)=> setStringPesquisa(event.target.value)}
               ></input>
             </div>

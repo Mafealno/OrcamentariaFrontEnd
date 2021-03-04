@@ -32,7 +32,7 @@
 .invalid-feedback {
   width: auto !important;
   margin-top: 0 !important;
-  color: #d40808;
+  color: #B50707;
   font-weight: bold;
 }
 
@@ -54,8 +54,8 @@
 }
 
 .btn-orcamentaria {
-  background-color: #d40808;
-  border-color: #d40808;
+  background-color: #B50707;
+  border-color: #B50707;
   color: white;
 }
 
@@ -116,7 +116,7 @@ label {
 
   #sideBar {
     grid-area: sideBar;
-    background-color: #d40808;
+    background-color: #B50707;
     height: 100vh;
     padding: 0px;
     width: 20%;
@@ -151,4 +151,12 @@ label {
     display: inline-block;
     margin-bottom: 1.5rem;
   }
+}
+
+input, textarea, button{
+  border-radius: 0 !important;
+}
+
+textarea{
+  resize: none !important;
 }

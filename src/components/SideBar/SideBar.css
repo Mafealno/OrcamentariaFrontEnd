@@ -64,7 +64,7 @@ ul {
   box-shadow: -8px 0 8px rgba(0, 0, 0, 0.5);
   min-height: 100%;
   max-width: 250px;
-  background-color: #d40808;
+  background-color: #B50707;
 }
 
 .main-menu a {
@@ -149,7 +149,7 @@ a.dropdown-item {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d40808;
+  background: #B50707;
   border: 1px white solid;
 }
 
