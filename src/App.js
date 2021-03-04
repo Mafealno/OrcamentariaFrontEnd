@@ -66,6 +66,8 @@ export default function App() {
             path="/consultarOrcamento"
             render={() => <SearchOrcamento />}
           />
+          <div id="containerOrcamentoPDF">
+          </div>
         </div>
       </Router>
     </div>

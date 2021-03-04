@@ -21,6 +21,10 @@
   background-color: #e3e3e3;
 }
 
+.col-laptop-esconder {
+  display: block;
+}
+
 .col-mobile-esconder {
   display: none;
 }
@@ -133,6 +137,10 @@ label {
 
   .col-mobile-esconder {
     display: block;
+  }
+
+  .col-laptop-esconder {
+    display: none;
   }
 
   .modal-body {

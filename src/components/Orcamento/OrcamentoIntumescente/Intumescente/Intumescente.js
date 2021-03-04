@@ -724,16 +724,15 @@ function Intumescente(props) {
               </button>
             </>
           )}
-                
             <div id="list-perfil">
               {itensOrcamentoIntumescenteDisplay}
             </div>
             <div className="form-group">
                 <div className="form-row">
-                    <div className="col-6">
+                    <div className="col-lg-6 col-12 position-initial">
                         <div className="form-group">
                             <div className="form-row">
-                                <div className="col">
+                                <div className="col-lg-3 col-6 position-initial">
                                     <label>Perda</label>
                                     <div className="input-group mb-5 position-initial">
                                         <input
@@ -750,7 +749,7 @@ function Intumescente(props) {
                                         <span className="invalid-feedback msg-erro-percentualPerda" id="erro-percentualPerda"></span>
                                     </div>
                                 </div>
-                                <div className="col">
+                                <div className="col-lg-3 col-6 position-initial">
                                     <label>Valor balde</label>
                                     <div className="input-group mb-5 position-initial">
                                         <div className="input-group-append">
@@ -767,7 +766,7 @@ function Intumescente(props) {
                                       </div>
                                     <span className="invalid-feedback msg-erro-valorBaldeIntumescente" id="erro-valorBaldeIntumescente"></span>
                                 </div>
-                                <div className="col">
+                                <div className="col-lg-3 col-12 position-initial">
                                     <label>Mão obra</label>
                                     <div className="input-group mb-5 position-initial">
                                         <div className="input-group-append">
@@ -784,14 +783,14 @@ function Intumescente(props) {
                                     </div>
                                     <span className="invalid-feedback msg-erro-valorUnitarioIntumescente" id="erro-valorUnitarioIntumescente"></span>
                                 </div>
-                                <div className="col d-flex flex-column justify-content-end">
-                                    <button type="button" className="btn btn-orcamentaria w-100-pc" onClick={()=> calcularTotaisIntumescente()}>Recalcular</button>
+                                <div className="col-lg-3 col-12 position-initial d-flex flex-column justify-content-end">
+                                    <button type="button" className="btn btn-orcamentaria btn-intumescente-recalcular w-100-pc" onClick={()=> calcularTotaisIntumescente()}>Recalcular</button>
                                 </div>
                             </div>
                         </div>
                         <div className="form-group">
                             <div className="form-row">
-                                <div className="col">
+                                <div className="col-lg-6 col-12 position-initial">
                                     <label>Qtde de litros</label>
                                         <input
                                             type="text"
@@ -804,7 +803,7 @@ function Intumescente(props) {
                                             readOnly/>
                                         <span className="invalid-feedback msg-erro-qtdeLitrosTotal" id="erro-qtdeLitrosTotal"></span>
                                 </div>
-                                <div className="col">
+                                <div className="col-lg-6 col-12 position-initial">
                                     <label>Quantidade de baldes</label>
                                         <input
                                             type="text"
@@ -820,18 +819,18 @@ function Intumescente(props) {
                             </div>
                         </div>
                     </div>
-                    <div className="col-6">
+                    <div className="col-lg-6 col-12 position-initial">
                         <div id="totais-intumescente">
                             <div className="form-row h-100-pc">
-                              <div className="col-4 d-flex flex-column align-items-center justify-content-center">
+                              <div className="col-lg-4 col-12 position-initial d-flex flex-column align-items-center justify-content-center">
                                 <div className="titulo-totais-intumescente">Total de Baldes + Perda</div>
                                 <div>{dadosCadastro.qtdeBaldesReal.valor}</div>
                               </div>
-                              <div className="col-4 d-flex flex-column align-items-center justify-content-center">
+                              <div className="col-lg-4 col-12 position-initial d-flex flex-column align-items-center justify-content-center">
                                 <div className="titulo-totais-intumescente">Subtotal mão obra</div>
                                 <div>{"R$ " + dadosCadastro.valorTotalMaoObra.valor}</div>
                               </div>
-                              <div className="col-4 d-flex flex-column align-items-center justify-content-center">
+                              <div className="col-lg-4 col-12 position-initial d-flex flex-column align-items-center justify-content-center">
                                 <div className="titulo-totais-intumescente">Subtotal produto</div>
                                 <div>{"R$ " + dadosCadastro.valorTotalProduto.valor}</div>
                               </div>
@@ -842,7 +841,7 @@ function Intumescente(props) {
             </div>
             <div className="form-group">
                 <div className="form-row">
-                    <div className="col-12 d-flex justify-content-end">
+                    <div className="col-12 position-initial d-flex justify-content-end">
                         <button type="button" className="btn btn-success w-100-px" onClick={()=>atualizarCadastro()}>Atualizar</button>
                     </div>
                 </div>

@@ -13,14 +13,6 @@
   justify-content: center;
 }
 
-#totais-intumescente {
-  background-color: #d40808;
-  height: 154px;
-  color: white;
-  border-radius: 10px;
-  padding: 3%;
-}
-
 #list-custo-orcamento {
   max-height: 500px;
   height: 500px;

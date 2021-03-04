@@ -5,8 +5,9 @@ import ArquivoOrcamento from "./ArquivoOrcamento/ArquivoOrcamento"
 import * as orcamentoActions from "../../../store/actions/orcamento";
 import { Provider } from "react-redux";
 import store from "../../../store/store";
+import NewWindow from 'react-new-window'
 import { connect } from "react-redux";
-import { render } from '@testing-library/react';
+import ReactDOM from "react-dom"
 
 function GerarOrcamento(props) {
 
@@ -54,7 +55,12 @@ function GerarOrcamento(props) {
 
     props.adicionarListFormaPagto(props.listFormaPagto, listFormaPagtoAdd)
 
-    render(<Provider store={store}><ArquivoOrcamento /></Provider>)
+    ReactDOM.render(
+    <Provider store={store}>
+      <NewWindow onUnload={()=> ReactDOM.unmountComponentAtNode(document.getElementById("containerOrcamentoPDF"))}>
+        <ArquivoOrcamento />
+      </NewWindow>
+    </Provider>, document.getElementById("containerOrcamentoPDF"))
     
   }
 
@@ -184,14 +190,12 @@ function GerarOrcamento(props) {
           </fieldset>
         </div>
         <div className="container-btn-gerar-orcamento">
-          {/* <Link to="/orcamentoPDF"> */}
             <button 
             type="button" 
             className="btn btn-orcamentaria" 
             onClick={() => gerarOrcamento()}>
               Gerar orçamento
             </button>
-          {/* </Link> */}
         </div>
       </div>
       

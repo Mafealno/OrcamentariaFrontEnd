@@ -680,11 +680,8 @@ function BasicRegOrcamento(props) {
       return;
     }
 
-    if (
-      dadosOrcamento.diasTrabalhado.valor > dadosOrcamento.prazoEntrega.valor
-    ) {
-      const msg =
-        "O dias de trabalho não podem ser maiores que o prazo da obra";
+    if (dadosOrcamento.diasTrabalhado.valor > dadosOrcamento.prazoEntrega.valor) {
+      const msg = "O dias de trabalho não podem ser maiores que o prazo da obra";
       exibirTost("erro", msg);
       return;
     }
@@ -698,12 +695,17 @@ function BasicRegOrcamento(props) {
       body: JSON.stringify(montarObjGeral(dadosOrcamento)),
     }).then((data) => {
       if (data.ok) {
-
+        
         props.recarregarTotaisOrcamento(props.linkBackEnd, dadosCadastro.orcamentoId.valor);
 
         const objOrcamento = montarObjGeral(dadosOrcamento)
         objOrcamento.CLIENTE_ORCAMENTO = props.clienteOrcamento
-        props.selecionarOrcamentoSimples(objOrcamento);
+        
+        if(objOrcamento.TIPO_OBRA == "Intumescente"){
+          props.recarregarOrcamentoIntumescente(props.linkBackEnd, objOrcamento.ORCAMENTO_ID)
+        }else{
+          props.selecionarOrcamentoSimples(objOrcamento);
+        }
 
         const msg = "Cadastro atualizado com sucesso";
 
@@ -1187,9 +1189,12 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(orcamentoActions.selecionarOrcamento(orcamento)),
   selecionarClienteOrcamento: (clienteOrcamento) =>
     dispatch(orcamentoActions.selecionarClienteOrcamento(clienteOrcamento)),
-    recarregarTotaisOrcamento : (linkBackEnd, orcamentoId) =>
+  recarregarTotaisOrcamento : (linkBackEnd, orcamentoId) =>
     dispatch(orcamentoActions.recarregarTotaisOrcamento(linkBackEnd, orcamentoId)),
-    selecionarOrcamentoSimples : (orcamento) => dispatch(orcamentoActions.selecionarOrcamentoSimples(orcamento))
+  selecionarOrcamentoSimples : (orcamento) => 
+    dispatch(orcamentoActions.selecionarOrcamentoSimples(orcamento)),
+  recarregarOrcamentoIntumescente : (linkBackEnd, orcamentoId) =>
+    dispatch(orcamentoActions.recarregarOrcamentoIntumescente(linkBackEnd, orcamentoId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BasicRegOrcamento);

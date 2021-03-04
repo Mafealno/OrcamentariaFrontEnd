@@ -16,10 +16,10 @@ export default function ItemOrcamentoIntumescente(props) {
         aria-controls={"opcoes-ITENS_ORCAMENTO_ID-" + props.ItemOrcamentoIntumescente.ITENS_ORCAMENTO_ID}
       >
         <div className="row">
-          <div className="col-xl-2 col-3 col-mobile-esconder center titulo-item-orcamento-intumescente">
+          <div className="col-xl-2 col-5 center titulo-item-orcamento-intumescente">
             Referência
           </div>
-          <div className="col-xl-2 col-9 center titulo-item-orcamento-intumescente">
+          <div className="col-xl-2 col-7 center position-initial titulo-item-orcamento-intumescente">
             Perfil
           </div>
           <div className="col-xl-2 col-mobile-esconder center titulo-item-orcamento-intumescente">
@@ -31,15 +31,15 @@ export default function ItemOrcamentoIntumescente(props) {
           <div className="col-xl-1 col-mobile-esconder center titulo-item-orcamento-intumescente">
             Area
           </div>
-          <div className="col-xl-3 center titulo-item-orcamento-intumescente">
+          <div className="col-xl-3 center col-mobile-esconder titulo-item-orcamento-intumescente">
             Qtde de Litros
           </div>
         </div>
         <div className="row">
-          <div className="col-xl-2 col-mobile-esconder col-3 center">
+          <div className="col-xl-2 col-5 center">
             {props.ItemOrcamentoIntumescente.REFERENCIA}
           </div>
-          <div className="col-xl-2 col-9 limitar-texto-1 center">
+          <div className="col-xl-2 col-7 position-initial limitar-texto-1 center">
             {props.ItemOrcamentoIntumescente.PERFIL.NOME_PERFIL}
           </div>
           <div className="col-xl-2 col-mobile-esconder center">
@@ -51,7 +51,7 @@ export default function ItemOrcamentoIntumescente(props) {
           <div className="col-xl-1 col-mobile-esconder center">
             {props.ItemOrcamentoIntumescente.AREA.toFixed(2)}
           </div>
-          <div className="col-xl-3 center">
+          <div className="col-xl-3 col-mobile-esconder center">
             {props.ItemOrcamentoIntumescente.QTDE_LITROS.toFixed(2)}
           </div>
         </div>

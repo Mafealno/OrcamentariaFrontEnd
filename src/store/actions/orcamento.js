@@ -302,6 +302,11 @@ export function recarregarOrcamentoIntumescente(linkBackEnd, orcamentoId) {
           type: "RECARREGAR_ORCAMENTO_INTUMESCENTE_CONCLUIDA",
           orcamentoSelecionado: data[0],
         });
+
+        dispatch({
+          type: "SELECIONAR_CLIENTE_ORCAMENTO",
+          clienteOrcamento: data[0].CLIENTE_ORCAMENTO,
+        });
         
         dispatch({
           type: "SELECIONAR_ITENS_ORCAMENTO_INTUMESCENTE",

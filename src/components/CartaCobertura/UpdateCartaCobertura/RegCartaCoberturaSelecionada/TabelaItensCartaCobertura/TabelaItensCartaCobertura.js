@@ -101,16 +101,17 @@ function TabelaItensCartaCobertura(props) {
       }
     ).then((data) => {
       if (data.ok) {
+        
         const msg = "Referência deletada com sucesso";
-
-        exibirTost(
-          "sucesso",
-          msg,
+        exibirTost("sucesso", msg,
           props.removerItemCartaCoberturaEditar(
             props.cartaCoberturaEditar,
             cartaCobertura.CARTA_COBERTURA_ID
           )
         );
+      }else{
+        const msg = "Erro ao excluir referência";
+        exibirTost("erro", msg)
       }
     });
   };

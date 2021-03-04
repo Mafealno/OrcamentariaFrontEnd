@@ -76,7 +76,7 @@ function ModalItemIntumescente(props) {
             itensOrcamentoId: { ...dadosCadastro.itensOrcamentoId, valor: props.dados.ITENS_ORCAMENTO_ID },
             numeroLinha: { ...dadosCadastro.numeroLinha, valor: props.dados.NUMERO_LINHA },
             valorComprimento: {...dadosCadastro.valorComprimento, valor: props.dados.VALOR_COMPRIMENTO },
-            area: { ...dadosCadastro.area, valor: props.dados.AREA },
+            area: { ...dadosCadastro.area, valor: parseFloat(props.dados.AREA.toFixed(2)) },
             referencia: { ...dadosCadastro.referencia, valor: props.dados.REFERENCIA },
             numeroFaces: { ...dadosCadastro.numeroFaces, valor: props.dados.NUMERO_FACES },
             valorHp: { ...dadosCadastro.valorHp, valor: parseFloat(props.dados.VALOR_HP.toFixed(2)) },
@@ -503,7 +503,7 @@ function ModalItemIntumescente(props) {
                 </div>
                 <div className="form-group">
                   <div className="form-row">
-                    <div className="col-6">
+                    <div className="col-lg-6 col-12">
                         <div className="form-group">
                             <div className="form-row">
                                 <div className="col">
@@ -563,7 +563,7 @@ function ModalItemIntumescente(props) {
                                 </div>
                             </div>
                         </div>
-                        <div className="form-group">
+                        <div className="form-group col-mobile-esconder">
                             <div className="form-row">
                               <div className="col-12" id="margin-top-button-calcular-modal-item-intumescente">
                                 <button type="button" className="btn btn-orcamentaria w-100-pc" onClick={()=> calcularValores()}>Calcular</button>
@@ -571,7 +571,7 @@ function ModalItemIntumescente(props) {
                             </div>
                         </div>
                     </div>
-                    <div className="col-6">
+                    <div className="col-lg-6 col-12">
                         <fieldset id="campo-perfilId" className="fieldset-perfil-modal-item-intumescente">
                             <div id="container-search-perfil-modal-orcamento-intumescente">
                                 <div className="form-group">
@@ -605,7 +605,7 @@ function ModalItemIntumescente(props) {
                             </div>
                             <div className="form-group">
                                 <div className="form-row">
-                                    <div className="col-9">
+                                    <div className="col-12">
                                         <label>Perfil</label>
                                         <input 
                                             type="text"
@@ -615,21 +615,11 @@ function ModalItemIntumescente(props) {
                                             value={dadosCadastroPerfil.nomePerfil.valor} 
                                             readOnly/>
                                     </div>
-                                    <div className="col-3">
-                                        <label>Tipo</label>
-                                        <input 
-                                            type="text"
-                                            name="tipoPerfil"
-                                            className="form-control"
-                                            id="campo-tipoPerfil"
-                                            value={dadosCadastroPerfil.tipoPerfil.valor} 
-                                            readOnly/>
-                                    </div>
                                 </div>
                             </div>
                             <div className="form-group">
                                 <div className="form-row">
-                                    <div className="col">
+                                    <div className="col-lg col-4">
                                         <label>D</label>
                                         <input 
                                             type="text"
@@ -640,7 +630,7 @@ function ModalItemIntumescente(props) {
                                             readOnly/>
                                         <span className="invalid-feedback" id="erro-valorD"></span>
                                     </div>
-                                    <div className="col">
+                                    <div className="col-lg col-4">
                                         <label>BF</label>
                                         <input 
                                             type="text"
@@ -651,7 +641,7 @@ function ModalItemIntumescente(props) {
                                             readOnly/>
                                         <span className="invalid-feedback" id="erro-valorBf"></span>
                                     </div>
-                                    <div className="col">
+                                    <div className="col-lg col-4">
                                         <label>TW</label>
                                         <input 
                                             type="text"
@@ -664,7 +654,7 @@ function ModalItemIntumescente(props) {
                                             readOnly/>
                                         <span className="invalid-feedback" id="erro-valorTw"></span>
                                     </div>
-                                    <div className="col">
+                                    <div className="col-lg col-6">
                                         <label>TF</label>
                                         <input 
                                             type="text"
@@ -675,7 +665,7 @@ function ModalItemIntumescente(props) {
                                             readOnly/>
                                         <span className="invalid-feedback" id="erro-valorTf"></span>
                                     </div>
-                                    <div className="col">
+                                    <div className="col-lg col-6">
                                         <label>KG/M</label>
                                         <input 
                                             type="text"
@@ -692,6 +682,13 @@ function ModalItemIntumescente(props) {
                         <span className="invalid-feedback" id="erro-perfilId"></span>
                     </div>
                   </div>
+                </div>
+                <div className="form-group col-laptop-esconder">
+                    <div className="form-row">
+                      <div className="col-12" id="margin-top-button-calcular-modal-item-intumescente">
+                        <button type="button" className="btn btn-orcamentaria w-100-pc" onClick={()=> calcularValores()}>Calcular</button>
+                      </div>
+                    </div>
                 </div>
                 <div className="form-group">
                   <div className="form-row">
@@ -764,7 +761,7 @@ function ModalItemIntumescente(props) {
                           </div>
                         <span className="invalid-feedback" id="erro-valorEspessura"></span>
                     </div>
-                    <div className="col">
+                    <div className="col-lg col-12">
                         <label>Total de Litros</label>
                         <input 
                             type="text"
