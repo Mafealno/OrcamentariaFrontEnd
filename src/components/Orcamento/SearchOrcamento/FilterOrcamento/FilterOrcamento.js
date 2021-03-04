@@ -77,7 +77,7 @@ function FilterOrcamento(props) {
             disabled={filtrado}
             onClick={() => filtrarOrcamento()}
           >
-            Buscar
+            Filtrar
           </button>
         </div>
       </div>
