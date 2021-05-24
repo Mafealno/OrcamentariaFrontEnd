@@ -3,6 +3,7 @@
 /* eslint-disable eqeqeq */
 import React, { useState, useEffect } from "react";
 import "./ModalContact.css";
+import { mask, unMask } from 'remask';
 import ModalControl from "../../../../ModalControl/ModalControl";
 import ToastControl from "../../../../ToastControl/ToastControl";
 import * as PeopleActions from "../../../../../store/actions/people";
@@ -38,6 +39,8 @@ function ModalContact(props) {
     ramal: { ...dadosCampo, formato: /^\d{1,10}$/, tamanhoMax: 10 },
     contatoPadrao: { ...dadosCampo, valorPadrao: false },
   });
+
+  const mascaras = ['9999-9999', '9.9999-9999'];
 
   useEffect(() => {
     if(props.show){
@@ -270,7 +273,7 @@ function ModalContact(props) {
       ...dadosCadastro,
       [event.target.name]: {
         ...dadosCadastro[event.target.name],
-        valor: event.target.value,
+        valor: unMask(event.target.value || '', mascaras),
       },
     });
   };
@@ -345,7 +348,8 @@ function ModalContact(props) {
                         className="form-control"
                         name="contato"
                         id="campo-contato"
-                        value={dadosCadastro.contato.valor}
+                        value={dadosCadastro.tipoContato.valor != "Email" ?
+                          mask(dadosCadastro.contato.valor || '', mascaras) : dadosCadastro.contato.valor}
                         maxLength={dadosCadastro.contato.tamanhoMax}
                         onChange={(event) => handleInputChange(event)}
                         onFocus={(event) => removerErro(event.target.id)}

@@ -4,11 +4,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from "react";
 import "./BasicRegOrcamento.css";
+import { mask, unMask } from 'remask';
 import ResultSearchClient from "./ResultSearchClient/ResultSearchClient";
-import * as orcamentoActions from "../../../store/actions/orcamento";
 import ModalConfirm from "../../ModalConfirm/ModalConfirm";
 import ToastControl from "../../ToastControl/ToastControl";
 import ResetTelas from "../../ResetTelas/ResetTelas";
+import * as orcamentoActions from "../../../store/actions/orcamento";
 import * as validacaoDadosUtils from "../../../utils/validacaoDados";
 import { connect } from "react-redux";
 
@@ -72,6 +73,8 @@ function BasicRegOrcamento(props) {
     cidade: { ...dadosCampo },
     uf: { ...dadosCampo },
   });
+
+  const mascaras = ['99.999.999-9', '999.999.999-99', '99.999.999/9999-99'];
 
   useEffect(() => {
     if (dadosCadastro.orcamentoId.valor) {
@@ -259,7 +262,7 @@ function BasicRegOrcamento(props) {
         dadosCadastroCliente.listContato.valor.map((contato) => {
           let contatoFormatado = "";
           if (contato.TIPO_CONTATO != "Email") {
-            contatoFormatado = "(" + contato.DDD + ") " + contato.CONTATO;
+            contatoFormatado = "(" + contato.DDD + ") " + mask(contato.CONTATO, ['9999-9999', '9.9999-9999']);
           } else {
             contatoFormatado = contato.CONTATO;
           }
@@ -778,7 +781,7 @@ function BasicRegOrcamento(props) {
       ...dadosCadastro,
       [event.target.name]: {
         ...dadosCadastro[event.target.name],
-        valor: event.target.value,
+        valor: unMask(event.target.value || '', mascaras),
       },
     });
   };
@@ -1000,7 +1003,7 @@ function BasicRegOrcamento(props) {
                         type="text"
                         className="form-control"
                         name="rg"
-                        value={dadosCadastroCliente.rg.valor}
+                        value={mask(dadosCadastroCliente.rg.valor || '', mascaras)}
                         readOnly
                       />
                     </div>
@@ -1010,7 +1013,7 @@ function BasicRegOrcamento(props) {
                         type="text"
                         className="form-control"
                         name="cpf"
-                        value={dadosCadastroCliente.cpf.valor}
+                        value={mask(dadosCadastroCliente.cpf.valor || '', mascaras)}
                         readOnly
                       />
                     </div>
@@ -1020,7 +1023,7 @@ function BasicRegOrcamento(props) {
                         type="text"
                         className="form-control"
                         name="cnpj"
-                        value={dadosCadastroCliente.cnpj.valor}
+                        value={mask(dadosCadastroCliente.cnpj.valor || '', mascaras)}
                         readOnly
                       />
                     </div>

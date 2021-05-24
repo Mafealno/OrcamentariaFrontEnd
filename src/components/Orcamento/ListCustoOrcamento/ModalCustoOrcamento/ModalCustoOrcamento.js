@@ -263,16 +263,6 @@ function ModalCustoOrcamento(props) {
           buscarCusto();
         }
       };
-    
-      const handleInputChange = (event) => {
-        setDadosCadastro({
-          ...dadosCadastro,
-          [event.target.name]: {
-            ...dadosCadastro[event.target.name],
-            valor: event.target.value,
-          },
-        });
-      };
 
     return (
         <>

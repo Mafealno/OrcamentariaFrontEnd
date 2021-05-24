@@ -32,7 +32,7 @@
 .invalid-feedback {
   width: auto !important;
   margin-top: 0 !important;
-  color: #B50707;
+  color: #b50707;
   font-weight: bold;
 }
 
@@ -54,8 +54,8 @@
 }
 
 .btn-orcamentaria {
-  background-color: #B50707;
-  border-color: #B50707;
+  background-color: #b50707;
+  border-color: #b50707;
   color: white;
 }
 
@@ -116,7 +116,7 @@ label {
 
   #sideBar {
     grid-area: sideBar;
-    background-color: #B50707;
+    background-color: #b50707;
     height: 100vh;
     padding: 0px;
     width: 20%;
@@ -153,10 +153,19 @@ label {
   }
 }
 
-input, textarea, button{
+input,
+textarea,
+button,
+.form-control {
   border-radius: 0 !important;
 }
 
-textarea{
+textarea {
   resize: none !important;
+}
+
+input[type="radio"]:checked {
+  color: #b50707;
+  background-color: #b50707;
+  border: #b50707 solid 1px;
 }

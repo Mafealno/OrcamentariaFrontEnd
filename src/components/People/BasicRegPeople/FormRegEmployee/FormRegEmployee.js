@@ -4,10 +4,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import "./FormRegEmployee.css";
-import { connect } from "react-redux";
+import { mask, unMask } from 'remask';
 import ModalConfirm from "../../../ModalConfirm/ModalConfirm";
 import ToastControl from "../../../ToastControl/ToastControl";
 import * as validacaoDadosUtils from "../../../../utils/validacaoDados";
+import { connect } from "react-redux";
 
 function FormRegEmployee(props) {
   let dadosCampo = { ...validacaoDadosUtils.dadosCampo };
@@ -30,14 +31,16 @@ function FormRegEmployee(props) {
     pessoaId: { ...dadosCampo, valorPadrao: 0 },
     nome: { ...dadosCampo, requerido: true, tamanhoMax: 60 },
     tipo: { ...dadosCampo, valorPadrao: "F" },
-    rg: { ...dadosCampo, formato: /^\d{2}(\.)?\d{3}(\.)?\d{3}(\-)?\d{1}$/, tamanhoMax: 9 },
-    cpf: { ...dadosCampo, requerido: true, formato: /^\d{3}(\.)?\d{3}(\.)?\d{3}(\-)?\d{2}$/, tamanhoMax: 11},
-    cnpj: { ...dadosCampo, tamanhoMax: 14 },
+    rg: { ...dadosCampo, formato: /^\d{2}(\.)?\d{3}(\.)?\d{3}(\-)?\d{1}$/, tamanhoMax: 12 },
+    cpf: { ...dadosCampo, requerido: true, formato: /^\d{3}(\.)?\d{3}(\.)?\d{3}(\-)?\d{2}$/, tamanhoMax: 14 },
+    cnpj: { ...dadosCampo, tamanhoMax: 18 },
     cargo: { ...dadosCampo, valorPadrao: "Pintor", tamanhoMax: 20 },
     valorDiario: { ...dadosCampo, requerido: true },
     dataAdmissao: { ...dadosCampo, valorPadrao: new Date() },
     status: { ...dadosCampo, valorPadrao: "Ativo" },
   });
+
+  const mascaras = ['99.999.999-9', '999.999.999-99', '99.999.999/9999-99'];
 
   const montarObj = (obj) => {
     return {
@@ -205,7 +208,7 @@ function FormRegEmployee(props) {
       ...dadosCadastro,
       [event.target.name]: {
         ...dadosCadastro[event.target.name],
-        valor: event.target.value,
+        valor: unMask(event.target.value || '', mascaras),
       },
     });
   };
@@ -236,8 +239,8 @@ function FormRegEmployee(props) {
               className="form-control"
               name="rg"
               id="campo-rg"
-              value={dadosCadastro.rg.valor}
-              placeholder="Ex: 000000000"
+              value={mask(dadosCadastro.rg.valor || '', mascaras)}
+              placeholder="Ex: 00.000.000-0"
               maxLength={dadosCadastro.rg.tamanhoMax}
               onChange={(event) => handleInputChange(event)}
               onFocus={(event) => removerErro(event.target.id)}
@@ -251,8 +254,8 @@ function FormRegEmployee(props) {
               className="form-control"
               name="cpf"
               id="campo-cpf"
-              placeholder="Ex: 00000000000"
-              value={dadosCadastro.cpf.valor}
+              placeholder="Ex: 000.000.000-00"
+              value={mask(dadosCadastro.cpf.valor || '', mascaras)}
               maxLength={dadosCadastro.cpf.tamanhoMax}
               onChange={(event) => handleInputChange(event)}
               onFocus={(event) => removerErro(event.target.id)}

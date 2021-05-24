@@ -3,6 +3,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from "react";
 import "./ModalAddress.css";
+import { mask, unMask } from 'remask';
 import ModalControl from "../../../ModalControl/ModalControl";
 import ToastControl from "../../../ToastControl/ToastControl";
 import * as PeopleActions from "../../../../store/actions/people";
@@ -38,6 +39,8 @@ function ModalAddress(props) {
     uf: { ...dadosCampo },
     enderecoPadrao: { ...dadosCampo, valorPadrao: false },
   });
+
+  const mascaras = ['99999-999']
 
   useEffect(() => {
     if(props.show){
@@ -201,7 +204,7 @@ function ModalAddress(props) {
       ...dadosCadastro,
       [event.target.name]: {
         ...dadosCadastro[event.target.name],
-        valor: event.target.value,
+        valor: unMask(event.target.value || '', mascaras),
       },
     });
   };
@@ -249,8 +252,8 @@ function ModalAddress(props) {
                           name="cep"
                           id="campo-cep"
                           className="form-control"
-                          placeholder="000.00-000"
-                          value={dadosCadastro.cep.valor}
+                          placeholder="00000-000"
+                          value={mask(dadosCadastro.cep.valor || '', mascaras)}
                           maxLength={dadosCadastro.cep.tamanhoMax}
                           onChange={(event) => handleInputChange(event)}
                           onFocus={(event) => removerErro(event.target.id)}

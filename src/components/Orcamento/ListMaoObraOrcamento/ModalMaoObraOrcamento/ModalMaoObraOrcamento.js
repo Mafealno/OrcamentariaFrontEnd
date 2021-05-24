@@ -445,16 +445,7 @@ function ModalMaoObraOrcamento(props) {
       buscarFuncionario();
     }
   };
-
-  const handleInputChange = (event) => {
-    setDadosCadastro({
-      ...dadosCadastro,
-      [event.target.name]: {
-        ...dadosCadastro[event.target.name],
-        valor: event.target.value,
-      },
-    });
-  };
+  
   return (
     <>
       <ModalControl
